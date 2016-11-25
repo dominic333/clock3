@@ -1,0 +1,354 @@
+
+
+@media only screen and (max-width: 800px) {
+	
+	/* Force table to not be like tables anymore */
+	#no-more-tables table, 
+	#no-more-tables thead, 
+	#no-more-tables tbody, 
+    #no-more-tables th, 
+	#no-more-tables td, 
+	#no-more-tables tr { 
+		display: block; 
+	}
+
+	/* Hide table headers (but not display: none;, for accessibility) */
+	#no-more-tables thead tr { 
+		position: absolute;
+		top: -9999px;
+		left: -9999px;
+	}
+
+	#no-more-tables tr { border: 1px solid #ccc; }
+
+	#no-more-tables td { 
+		/* Behave  like a "row" */
+		border: none;
+		border-bottom: 1px solid #eee; 
+		position: relative;
+		padding-left: 50%; 
+		white-space: normal;
+		text-align:left;
+	}
+
+	#no-more-tables td:before { 
+		/* Now like a table header */
+		position: absolute;
+		/* Top/left values mimic padding */
+		top: 6px;
+		left: 6px;
+		width: 45%; 
+		padding-right: 10px; 
+		white-space: nowrap;
+		text-align:left;
+		font-weight: bold;
+	}
+
+	/*
+	Label the data
+	*/
+	#no-more-tables td:before { content: attr(data-title); }
+}
+
+
+/*for datatables*/
+
+
+@media only screen and (max-width: 800px) {
+	
+	/* Force table to not be like tables anymore */
+	#list_equipment table, #inspector_unsafe_equipment_table table, #inspector_expiring_equipment_table table,#inspector_scheduled_equipment table,#inspector_inspected_equipment_table table,#inspector_inspected_equipment_table table,#certificate_equipment_table table { 
+		display: block; 
+	}
+    
+    #list_equipment thead, #inspector_unsafe_equipment_table thead, #inspector_expiring_equipment_table thead,#inspector_scheduled_equipment thead, #inspector_inspected_equipment_table thead,#certificate_equipment_table thead { 
+		display: block; 
+	} 
+    
+	#list_equipment tbody, #inspector_unsafe_equipment_table tbody, #inspector_expiring_equipment_table tbody,#inspector_scheduled_equipment tbody, #inspector_inspected_equipment_table tbody,#certificate_equipment_table tbody { 
+		display: block; 
+	}
+
+    #list_equipment th, #inspector_unsafe_equipment_table th, #inspector_expiring_equipment_table th,#inspector_scheduled_equipment th, #inspector_inspected_equipment_table th,#certificate_equipment_table th { 
+		display: block; 
+	}
+    
+	#list_equipment td,#inspector_unsafe_equipment_table td, #inspector_expiring_equipment_table td,#inspector_scheduled_equipment td, #inspector_inspected_equipment_table td,#certificate_equipment_table td { 
+		display: block; 
+	}
+    
+	#list_equipment tr,#inspector_unsafe_equipment_table tr, #inspector_expiring_equipment_table tr,#inspector_scheduled_equipment tr, #inspector_inspected_equipment_table tr,#certificate_equipment_table tr { 
+		display: block; 
+	}
+
+	/* Hide table headers (but not display: none;, for accessibility) */
+	#list_equipment thead tr,#inspector_unsafe_equipment_table thead tr, #inspector_expiring_equipment_table thead tr,#inspector_scheduled_equipment thead tr, #inspector_inspected_equipment_table thead tr,#certificate_equipment_table thead tr { 
+		position: absolute;
+		top: -9999px;
+		left: -9999px;
+	}
+
+	#list_equipment tr,#inspector_unsafe_equipment_table tr, #inspector_expiring_equipment_table tr,#inspector_scheduled_equipment tr, #inspector_inspected_equipment_table tr,#certificate_equipment_table tr { border: 1px solid #ccc; }
+
+	#list_equipment td,#inspector_unsafe_equipment_table td, #inspector_expiring_equipment_table td,#inspector_scheduled_equipment td, #inspector_inspected_equipment_table td,#certificate_equipment_table td { 
+		/* Behave  like a "row" */
+		border: none;
+		border-bottom: 1px solid #eee; 
+		position: relative;
+		padding-left: 50%; 
+		white-space: normal;
+		text-align:left;
+	}
+
+	#list_equipment td:before,#inspector_unsafe_equipment_table td:before,#inspector_expiring_equipment_table td:before,#inspector_scheduled_equipment td:before, #inspector_inspected_equipment_table td:before,#certificate_equipment_table td:before { 
+		/* Now like a table header */
+		position: absolute;
+		/* Top/left values mimic padding */
+		top: 6px;
+		left: 6px;
+		width: 45%; 
+		padding-right: 10px; 
+		white-space: nowrap;
+		text-align:left;
+		font-weight: bold;
+	}
+
+	/*
+	Label the data
+	*/
+	#list_equipment td:before,#inspector_unsafe_equipment_table td:before,#inspector_expiring_equipment_table td:before,#inspector_scheduled_equipment td:before, #inspector_inspected_equipment_table td:before,#certificate_equipment_table td:before { content: attr(data-title); }
+}
+
+/*Schedule tabs*/
+/*--------------------------------------------------------------------------------------------------*/
+
+
+@media only screen and (max-width: 800px) {
+	
+	/* Force table to not be like tables anymore */
+	##list_todays_jobs_inspector table,#list_schedules_inspector table,#list_upcoming_jobs_inspector table,#list_completed_jobs_inspector table{ 
+		display: block; 
+	}
+    
+    #list_todays_jobs_inspector thead,#list_schedules_inspector thead,#list_upcoming_jobs_inspector thead,#list_completed_jobs_inspector thead { 
+		display: block; 
+	} 
+    
+	#list_todays_jobs_inspector tbody,#list_schedules_inspector tbody,#list_upcoming_jobs_inspector tbody,#list_completed_jobs_inspector tbody { 
+		display: block; 
+	}
+
+    #list_todays_jobs_inspector th,#list_schedules_inspector th,#list_upcoming_jobs_inspector th,#list_completed_jobs_inspector th { 
+		display: block; 
+	}
+    
+	#list_todays_jobs_inspector td,#list_schedules_inspector td,#list_upcoming_jobs_inspector td,#list_completed_jobs_inspector td { 
+		display: block; 
+	}
+    
+	#list_todays_jobs_inspector tr,#list_schedules_inspector tr,#list_upcoming_jobs_inspector tr,#list_completed_jobs_inspector tr { 
+		display: block; 
+	}
+
+	/* Hide table headers (but not display: none;, for accessibility) */
+	#list_todays_jobs_inspector thead tr,#list_schedules_inspector thead tr,#list_upcoming_jobs_inspector thead tr,#list_completed_jobs_inspector thead tr { 
+		position: absolute;
+		top: -9999px;
+		left: -9999px;
+	}
+
+	#list_todays_jobs_inspector tr,#list_schedules_inspector tr,#list_upcoming_jobs_inspector tr,#list_completed_jobs_inspector tr { border: 1px solid #ccc; }
+
+	#list_todays_jobs_inspector td,#list_schedules_inspector td,#list_upcoming_jobs_inspector td,#list_completed_jobs_inspector td { 
+		/* Behave  like a "row" */
+		border: none;
+		border-bottom: 1px solid #eee; 
+		position: relative;
+		padding-left: 50%; 
+		white-space: normal;
+		text-align:left;
+	}
+
+	#list_todays_jobs_inspector td:before,#list_schedules_inspector td:before,#list_upcoming_jobs_inspector td:before,#list_completed_jobs_inspector td:before { 
+		/* Now like a table header */
+		position: absolute;
+		/* Top/left values mimic padding */
+		top: 6px;
+		left: 6px;
+		width: 45%; 
+		padding-right: 10px; 
+		white-space: nowrap;
+		text-align:left;
+		font-weight: bold;
+	}
+
+	/*
+	Label the data
+	*/
+	#list_todays_jobs_inspector td:before,#list_schedules_inspector td:before,#list_upcoming_jobs_inspector td:before,#list_completed_jobs_inspector td:before
+    { content: attr(data-title); }
+}
+
+
+
+/*Jobs tabs*/
+/*--------------------------------------------------------------------------------------------------*/
+
+@media only screen and (max-width: 800px) {
+	
+	/* Force table to not be like tables anymore */
+	#list_in_progress_jobs table,#list_pending_approval_jobs table,#list_completed_jobs table,#list_recent_jobs table,
+	#list_in_progress_jobs thead,#list_pending_approval_jobs thead,#list_completed_jobs thead,#list_recent_jobs thead, 
+	#list_in_progress_jobs tbody,#list_pending_approval_jobs tbody,#list_completed_jobs tbody,#list_recent_jobs tbody, 
+    #list_in_progress_jobs th,#list_pending_approval_jobs th,#list_completed_jobs th,#list_recent_jobs th, 
+	#list_in_progress_jobs td,#list_pending_approval_jobs td,#list_completed_jobs td,#list_recent_jobs td, 
+	#list_in_progress_jobs tr,#list_pending_approval_jobs tr,#list_completed_jobs tr,#list_recent_jobs tr { 
+		display: block; 
+	}
+
+	/* Hide table headers (but not display: none;, for accessibility) */
+	#list_in_progress_jobs thead tr,#list_pending_approval_jobs thead tr,#list_completed_jobs thead tr,#list_recent_jobs thead tr { 
+		position: absolute;
+		top: -9999px;
+		left: -9999px;
+	}
+
+	#list_in_progress_jobs tr,#list_pending_approval_jobs tr,#list_completed_jobs tr,#list_recent_jobs tr { border: 1px solid #ccc; }
+
+	#list_in_progress_jobs td,#list_pending_approval_jobs td,#list_completed_jobs td,#list_recent_jobs td { 
+		/* Behave  like a "row" */
+		border: none;
+		border-bottom: 1px solid #eee; 
+		position: relative;
+		padding-left: 50%; 
+		white-space: normal;
+		text-align:left;
+	}
+
+	#list_in_progress_jobs td:before,#list_pending_approval_jobs td:before,#list_completed_jobs td:before,#list_recent_jobs td:before { 
+		/* Now like a table header */
+		position: absolute;
+		/* Top/left values mimic padding */
+		top: 6px;
+		left: 6px;
+		width: 45%; 
+		padding-right: 10px; 
+		white-space: nowrap;
+		text-align:left;
+		font-weight: bold;
+	}
+
+	/*
+	Label the data
+	*/
+	#list_in_progress_jobs td:before,#list_pending_approval_jobs td:before,#list_completed_jobs td:before,#list_recent_jobs td:before { content: attr(data-title); }
+}
+
+
+/*Reports tabs*/
+/*--------------------------------------------------------------------------------------------------*/
+
+
+@media only screen and (max-width: 800px) {
+	
+	/* Force table to not be like tables anymore */
+	#list_inspections table,#list_reports table,
+	#list_inspections thead,#list_reports thead, 
+	#list_inspections tbody,#list_reports tbody, 
+    #list_inspections th,#list_reports th, 
+	#list_inspections td,#list_reports td, 
+	#list_inspections tr,#list_reports tr { 
+		display: block; 
+	}
+
+	/* Hide table headers (but not display: none;, for accessibility) */
+	#list_inspections thead tr,#list_reports thead tr { 
+		position: absolute;
+		top: -9999px;
+		left: -9999px;
+	}
+
+	#list_inspections tr,#list_reports tr { border: 1px solid #ccc; }
+
+	#list_inspections td,#list_reports td { 
+		/* Behave  like a "row" */
+		border: none;
+		border-bottom: 1px solid #eee; 
+		position: relative;
+		padding-left: 50%; 
+		white-space: normal;
+		text-align:left;
+	}
+
+	#list_inspections td:before,#list_reports td:before { 
+		/* Now like a table header */
+		position: absolute;
+		/* Top/left values mimic padding */
+		top: 6px;
+		left: 6px;
+		width: 45%; 
+		padding-right: 10px; 
+		white-space: nowrap;
+		text-align:left;
+		font-weight: bold;
+	}
+
+	/*
+	Label the data
+	*/
+	#list_inspections td:before,#list_reports td:before { content: attr(data-title); }
+}
+
+/*Defn tabs*/
+/*--------------------------------------------------------------------------------------------------*/
+
+
+@media only screen and (max-width: 800px) {
+	
+	/* Force table to not be like tables anymore */
+	#list_types table,#list_specifications table,
+	#list_types thead,#list_specifications thead, 
+	#list_types tbody,#list_specifications tbody, 
+    #list_types th,#list_specifications th, 
+	#list_types td,#list_specifications td, 
+	#list_types tr,#list_specifications tr { 
+		display: block; 
+	}
+
+	/* Hide table headers (but not display: none;, for accessibility) */
+	#list_types thead tr,#list_specifications thead tr { 
+		position: absolute;
+		top: -9999px;
+		left: -9999px;
+	}
+
+	#list_types tr,#list_specifications tr { border: 1px solid #ccc; }
+
+	#list_types td,#list_specifications td { 
+		/* Behave  like a "row" */
+		border: none;
+		border-bottom: 1px solid #eee; 
+		position: relative;
+		padding-left: 50%; 
+		white-space: normal;
+		text-align:left;
+	}
+
+	#list_types td:before,#list_specifications td:before { 
+		/* Now like a table header */
+		position: absolute;
+		/* Top/left values mimic padding */
+		top: 6px;
+		left: 6px;
+		width: 45%; 
+		padding-right: 10px; 
+		white-space: nowrap;
+		text-align:left;
+		font-weight: bold;
+	}
+
+	/*
+	Label the data
+	*/
+	#list_types td:before,#list_specifications td:before { content: attr(data-title); }
+}

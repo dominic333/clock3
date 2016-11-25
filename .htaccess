@@ -1,0 +1,10 @@
+RewriteEngine on
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule .* index.php/$0 [PT,L] 
+Options -Indexes
+<IfModule mod_headers.c>
+  <FilesMatch ".(eot|ttf|otf|woff)">
+    Header set Access-Control-Allow-Origin: http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css
+  </FilesMatch>
+</IfModule>

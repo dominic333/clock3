@@ -1,0 +1,21 @@
+
+ $(function () {
+     $("#example1").DataTable();
+     $('#example2').DataTable({
+         "paging": true,
+         "lengthChange": false,
+         "searching": false,
+         "ordering": true,
+         "info": true,
+         "autoWidth": false
+     });
+
+
+     //The Calender
+     $("#calendar").datepicker();
+ });
+
+ $(function () {
+     $('#dpfrom').datepicker();
+     $('#dpto').datepicker();
+ })

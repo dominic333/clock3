@@ -1,0 +1,83 @@
+Version 2
+
+tables
+
+departments.
+client_staff.
+inspectors.
+inspector_standards.
+inspector_schedules.
+coordinators.
+equipment_schedules.
+equipment_schedule_details.
+changed owners table.
+menu
+user_personal
+user_role
+
+
+change log
+
+design for login page has been changed
+role module integration
+Changed owner module
+implemented client and client staff
+inspector login
+coordinator login
+Implemented new design for checklist 
+done scheduling.
+
+
+Version 3
+
+tables
+ 
+ inspections
+ inspection_specifications (has been removed)
+ inspection_details
+ equipments (next inspection date has been added)
+ equipment_schedules
+ inspectors (added short_code)
+ reference_standard
+ Equipment(next inspection date)
+ schedule_stages
+ schedule_status
+ 
+ 
+ DROP TABLE `equipment_schedules`, `equipment_schedule_details`, `inspections`, `inspection_details`, `measuring_equipments`, `reference_standards`;
+ 
+ 
+ today changes
+ 
+ inspections
+ inspection details - removed comments
+ equipment schedules
+ 
+ 
+ 
+ 
+change log
+  
+	inspections.
+	client dashboard
+	inspector dashboard
+	coordiantor dashboard
+	
+	
+	latest db changes
+	
+	
+	examination_test - subcontractor ID
+	
+	
+	inspections --crt_generated_by, crt_date 
+ 	test_durations
+ 	examination_test -- durations
+ 	
+ 	inspection_test--schedule_id,schedule_detail_id,validity_till
+  
+
+
+
+
+

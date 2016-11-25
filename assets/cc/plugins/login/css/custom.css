@@ -1,0 +1,42 @@
+/*kevinmaulana1991@gmail.com*/
+/*kevin@mynotepedia.com*/
+.logo {
+    margin-top: 110px;
+}
+
+.foot{
+    font-size: 11px;
+    color: #484545;
+}
+
+/************************************************************************************
+MEDIA QUERIES
+*************************************************************************************/
+/* untuk ukuran 1080px kebawah */
+@media screen and (max-width: 1080px) {
+    .logo {
+        margin-top: 150px;
+    }
+}
+
+/* untuk ukuran layar 700px kebawah */
+@media screen and (max-width: 780px) {
+    .logo {
+        margin-top: 0px;
+    }
+
+    h3.size{
+        font-size: small;
+    }
+
+    .top-content .form-box {
+        padding-top: 0px;
+    }
+
+    img.log{
+        max-width:200px;
+        max-height:55px;
+        width: auto;
+        height: auto;
+    }
+}

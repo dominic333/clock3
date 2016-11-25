@@ -1,0 +1,168 @@
+
+
+            <div class="contentfirst">
+
+                <section class="content-header">
+                    <h1>
+                        Dashboard
+                        <small>Control panel</small>
+                    </h1>
+                    <ol class="breadcrumb">
+                        <li><a href="index.php"><i class="fa fa-home"></i> Dashboard</a></li>
+                    </ol>
+                </section>
+
+                <section class="content">
+
+                    <!-- Small boxes (Stat box) -->
+                    <div class="row">
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <div class="info-box bg-aqua">
+                                <span class="info-box-icon"><i class="fa fa-users"></i></span>
+
+                                <div class="info-box-content">
+                                    <span class="info-box-text">Total Users</span>
+                                    <span class="info-box-number">12</span>
+
+                                    <div class="progress">
+                                        <div class="progress-bar" style="width: 100%"></div>
+                                    </div>
+                                    <span class="progress-description">70% Increase in 30 Days</span>
+                                </div>
+                                <!-- /.info-box-content -->
+                            </div>
+                            <!-- /.info-box -->
+                        </div>
+                        <!-- /.col -->
+
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <div class="info-box bg-red">
+                                <span class="info-box-icon"><i class="fa fa-calendar"></i></span>
+
+                                <div class="info-box-content">
+                                    <span class="info-box-text">Absents</span>
+                                    <span class="info-box-number">1</span>
+
+                                    <div class="progress">
+                                        <div class="progress-bar" style="width: 10%"></div>
+                                    </div>
+                                      <span class="progress-description">
+                                        70% Increase in 30 Days
+                                      </span>
+                                </div>
+                                <!-- /.info-box-content -->
+                            </div>
+                            <!-- /.info-box -->
+                        </div>
+                        <!-- /.col -->
+
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <div class="info-box bg-yellow">
+                                <span class="info-box-icon"><i class="fa fa-clock-o"></i></span>
+
+                                <div class="info-box-content">
+                                    <span class="info-box-text">Late Clock in</span>
+                                    <span class="info-box-number">3</span>
+
+                                    <div class="progress">
+                                        <div class="progress-bar" style="width: 30%"></div>
+                                    </div>
+                                      <span class="progress-description">
+                                        70% Increase in 30 Days
+                                      </span>
+                                </div>
+                                <!-- /.info-box-content -->
+                            </div>
+                            <!-- /.info-box -->
+                        </div>
+                        <!-- /.col -->
+
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <div class="info-box bg-green">
+                                <span class="info-box-icon"><i class="fa fa-circle-o"></i></span>
+
+                                <div class="info-box-content">
+                                    <span class="info-box-text">Early Clock in</span>
+                                    <span class="info-box-number">7</span>
+
+                                    <div class="progress">
+                                        <div class="progress-bar" style="width: 70%"></div>
+                                    </div>
+                                      <span class="progress-description">
+                                        70% Increase in 30 Days
+                                      </span>
+                                </div>
+                                <!-- /.info-box-content -->
+                            </div>
+                            <!-- /.info-box -->
+                        </div>
+                        <!-- /.col -->
+
+                    </div>
+                    <!-- /.row -->
+
+                    <!--========================================================================================================-->
+
+                    <div class="row">
+
+                        <div class="col-md-12">
+                            <div class="box box-danger">
+                                <div class="box-header with-border">
+                                    <h3 class="box-title">My Profile</h3>
+
+                                    <div class="box-tools pull-right">
+                                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
+                                                class="fa fa-minus"></i></button>
+                                    </div>
+                                </div>
+                                <!-- /.box-header -->
+                                <div class="box-body">
+                                    <!-- Widget: user widget style 1 -->
+                                    <div class="box box-widget widget-user-2">
+                                        <!-- Add the bg color to the header using any of the bg-* classes -->
+                                        <div class="widget-user-header bg-gray-light">
+                                            <div class="widget-user-image">
+                                                <img class="img-circle" src="<?php echo base_url();?>assets/snap/images/admin-user.png"
+                                                     alt="User Avatar">
+                                            </div>
+                                            <!-- /.widget-user-image -->
+                                            <h4 class="widget-user-username">Kevin Maulana</h4>
+                                            <h5 class="widget-user-desc">Web Developer</h5>
+                                        </div>
+                                        <div class="box-footer no-padding">
+                                            <ul class="nav nav-stacked">
+                                                <li><a href="#">Company : Cre8</a></li>
+                                                <li><a href="#">Address : Kebayoran Baru</a></li>
+                                                <li><a href="#">Phone Number : +632 123 4567</a></li>
+                                                <li><a href="#">Email : Maria.dlc@voffice.com.ph</a>
+                                                <li><a href="#">Department : IT</a>
+                                                </li>
+                                                <li>
+                                                    <button type="button" class="btn btn-block btn-default">View Profile
+                                                    </button>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <!-- /.widget-user -->
+
+                                </div>
+                                <!-- /.box-body -->
+
+                            </div>
+
+                        </div>
+                        <!-- /.col-md-4 -->
+
+                    </div>
+                    <!-- /.row -->
+
+
+                </section>
+
+            </div>
+            <!--well-->
+
+<!--kevin@mynotepedia.com-->
+<!--kevinmaulana1991@gmail.com-->
+
