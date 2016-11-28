@@ -59,14 +59,7 @@ class Site_settings
 		*/
 	function adminlog($description, $equipment_id='', $schedule_id='', $inspection_id= '')
 	{	
-		$data['description'] 	=	($description);
-		$data['done_by']			=	$this->obj->session->userdata('user_id');
-		$data['time'] 				=	time();
-		$data['ipaddress'] 		=	$_SERVER['REMOTE_ADDR'];
-		$data['equipment_id']	=	$equipment_id;
-		$data['schedule_id']		=	$schedule_id;
-		$data['inspection_id']	=	$inspection_id;
-		$this->obj->db->insert('log',$data);		
+		//		
 	}   
      
      /**

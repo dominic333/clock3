@@ -30,14 +30,15 @@
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
-                        <form class="form-horizontal">
+                        <form class="form-horizontal" role="form" id="contactSupportForm" name="contactSupportForm" action="<?php echo base_url();?>ccadministration/administration/contactsupport" method="post">
                             <div class="box-body">
 
+											<input type="hidden" name="<?=$this->security->get_csrf_token_name()?>" value="<?=$this->security->get_csrf_hash()?>" />
                                 <div class="form-group">
                                     <label class="col-sm-3 control-label">Name</label>
 
                                     <div class="col-sm-7">
-                                        <input type="text" class="form-control" placeholder="Name">
+                                        <input type="text" class="form-control" placeholder="Name" id="senderName" name="senderName">
                                     </div>
                                 </div>
 
@@ -45,14 +46,14 @@
                                     <label for="inputEmail3" class="col-sm-3 control-label">Email</label>
 
                                     <div class="col-sm-7">
-                                        <input type="email" class="form-control" id="inputEmail3" placeholder="Email">
+                                        <input type="email" class="form-control" placeholder="Email" id="senderEmail" name="senderEmail">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-sm-3 control-label">Message</label>
 
                                     <div class="col-sm-7">
-                                        <textarea class="form-control" rows="3" placeholder="Message..."></textarea>
+                                        <textarea class="form-control" rows="3" placeholder="Message..." id="senderMessage" name="senderMessage"></textarea>
                                     </div>
                                 </div>
 

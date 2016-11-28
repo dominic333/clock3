@@ -215,7 +215,7 @@
                             <!-- Add the bg color to the header using any of the bg-* classes -->
                             <div class="widget-user-header bg-gray-light">
                                 <div class="widget-user-image">
-                                		<?php if($company_details->company_logo!=''){?>
+                                		<?php if($company_details->company_logo!='') {?>
                      						<img class="img-circle" src="<?php echo base_url();?>images/company/<?php echo  $company_details->company_logo; ?>">
                      					<?php }else{ ?>
                      						<img class="img-circle" src="<?php echo base_url();?>assets/cc/images/voffice128x128.png" alt="User Avatar">
