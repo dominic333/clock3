@@ -10,8 +10,9 @@ class Dashboard extends MX_Controller
 		parent::__construct();
 		$this->load->library('encryption');
 		$this->authentication->is_logged_in();
+		$this->load->model('Dashboard_model');
 		/*		
-		$this->load->model('Products_model');
+		
 		$this->get_common();
 		*/
 	}
@@ -34,6 +35,9 @@ class Dashboard extends MX_Controller
 		$this->table->set_heading('ID', 'Location', 'Category','Title','Status','Edit', 'Delete');	
 		$this->table->set_caption('<colgroup> <col class="con0"><col class="con1"><col class="con0"><col class="con1"></colgroup>');
 		*/
+		
+		$userIdSess =$this->session->userdata('mid');
+		$this->data['user_data']	=	modules::load('users')->getUserDataFromUserID($userIdSess);
 		$this->data['view']					=	'selfiedashboard/index';
 		$this->load->view('master_selfie', $this->data);	
 		

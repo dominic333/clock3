@@ -30,21 +30,21 @@ class Administration extends MX_Controller
 		
 	}	
 	
-	//Bridge: To fetch user's company info based on user Id
+	//Bridge: To fetch company info based on company Id
 	//Dominic: Nov 25,2016
-	function getUserCompanyInfo($staffId)
+	public function getCompanyInfo($compId)
 	{
 		$build_array 	= array();
-      $build_array   = $this->getThisUserCompanyInfo($staffId);
+      $build_array   = $this->getThisCompanyInfo($compId);
       return $build_array;     
 	}
 
-	//Function: To fetch user's company info based on user Id
+	//Function: To fetch company info based on company Id
 	//Dominic: Nov 25,2016
-	function getThisUserCompanyInfo($staffId)
+	function getThisCompanyInfo($compId)
 	{
-		$userInfo=$this->Users_model->getThisUserDataFromLoginInfo($staffId);
-		return $userInfo;
+		$companyInfo=$this->Administration_model->getThisCompanyInfo($compId);
+		return $companyInfo;
 	}
 
 	function get_common()

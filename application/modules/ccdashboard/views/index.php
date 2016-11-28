@@ -215,17 +215,21 @@
                             <!-- Add the bg color to the header using any of the bg-* classes -->
                             <div class="widget-user-header bg-gray-light">
                                 <div class="widget-user-image">
-                                    <img class="img-circle" src="<?php echo base_url();?>assets/cc/images/voffice128x128.png" alt="User Avatar">
+                                		<?php if($company_details->company_logo!=''){?>
+                     						<img class="img-circle" src="<?php echo base_url();?>images/company/<?php echo  $company_details->company_logo; ?>">
+                     					<?php }else{ ?>
+                     						<img class="img-circle" src="<?php echo base_url();?>assets/cc/images/voffice128x128.png" alt="User Avatar">
+                     					<?php }?>
                                 </div>
                                 <!-- /.widget-user-image -->
-                                <h4 class="widget-user-username">vOffice Philippines Inc</h4>
-                                <h5 class="widget-user-desc">Bonifacio Global City</h5>
+                                <h4 class="widget-user-username"><?php echo $company_details->company_name;?></h4>
+                                <h5 class="widget-user-desc"><?php echo $company_details->company_address;?> </h5>
                             </div>
                             <div class="box-footer no-padding">
                                 <ul class="nav nav-stacked">
-                                    <li><a href="#">Contact Person : Maria Dela Cruz</a></li>
-                                    <li><a href="#">Phone Number : +632 123 4567</a></li>
-                                    <li><a href="#">Email : Maria.dlc@voffice.com.ph</a>
+                                    <li><a href="#">Contact Person : <?php echo $company_details->contact_person;?></a></li>
+                                    <li><a href="#">Phone Number : <?php echo $company_details->contact_number;?></a></li>
+                                    <li><a href="#">Email : <?php echo $company_details->contact_email;?></a>
                                     </li>
                                     <li>
                                     	 <a href="<?php echo base_url();?>ccadministration/administration/contactsupport">

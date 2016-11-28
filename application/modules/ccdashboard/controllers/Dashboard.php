@@ -35,8 +35,9 @@ class Dashboard extends MX_Controller
 		$this->table->set_heading('ID', 'Location', 'Category','Title','Status','Edit', 'Delete');	
 		$this->table->set_caption('<colgroup> <col class="con0"><col class="con1"><col class="con0"><col class="con1"></colgroup>');
 		*/
-		$staffIdSess =$this->session->set_userdata('mid');
-		//$this->data['userCompanyInfo']	=	modules::load('ccadministration')->getUserCompanyInfo($staffIdSess);
+		$compIdSess =$this->session->userdata('coid');
+		//print_r($user_data);
+		$this->data['company_details']	=	modules::load('ccadministration/Administration')->getCompanyInfo($compIdSess);
 		
 		$this->data['view']					=	'ccdashboard/index';
 		$this->load->view('master', $this->data);	

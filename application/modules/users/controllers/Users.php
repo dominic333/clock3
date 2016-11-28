@@ -33,18 +33,18 @@ class Users extends MX_Controller
 	
 	//Bridge: To fetch user info based on user Id
 	//Dominic: Nov 24,2016
-	function getUserDataFromLoginInfo($staffId)
+	function getUserDataFromUserID($staffId)
 	{
 		$build_array 	= array();
-      $build_array   = $this->getThisUserDataFromLoginInfo($staffId);
+      $build_array   = $this->getThisUserDataFromUserID($staffId);
       return $build_array;     
 	}
 
 	//Function: To fetch user info based on user Id
 	//Dominic: Nov 24,2016
-	function getThisUserDataFromLoginInfo($staffId)
+	function getThisUserDataFromUserID($staffId)
 	{
-		$userInfo=$this->Users_model->getThisUserDataFromLoginInfo($staffId);
+		$userInfo=$this->Users_model->getThisUserDataFromUserID($staffId);
 		return $userInfo;
 	}
 

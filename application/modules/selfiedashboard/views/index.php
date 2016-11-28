@@ -116,6 +116,10 @@
                                     </div>
                                 </div>
                                 <!-- /.box-header -->
+                                
+										  <?php foreach($user_data as $row)
+												  { 
+										  ?>
                                 <div class="box-body">
                                     <!-- Widget: user widget style 1 -->
                                     <div class="box box-widget widget-user-2">
@@ -126,15 +130,15 @@
                                                      alt="User Avatar">
                                             </div>
                                             <!-- /.widget-user-image -->
-                                            <h4 class="widget-user-username">Kevin Maulana</h4>
+                                            <h4 class="widget-user-username"><?php echo $row->staff_name; ?></h4>
                                             <h5 class="widget-user-desc">Web Developer</h5>
                                         </div>
                                         <div class="box-footer no-padding">
                                             <ul class="nav nav-stacked">
-                                                <li><a href="#">Company : Cre8</a></li>
+                                                <li><a href="#">Company : <?php echo $row->company_name; ?></a></li>
                                                 <li><a href="#">Address : Kebayoran Baru</a></li>
-                                                <li><a href="#">Phone Number : +632 123 4567</a></li>
-                                                <li><a href="#">Email : Maria.dlc@voffice.com.ph</a>
+                                                <li><a href="#">Phone Number : <?php echo $row->contact_number; ?></a></li>
+                                                <li><a href="#">Email : <?php echo $row->email; ?></a>
                                                 <li><a href="#">Department : IT</a>
                                                 </li>
                                                 <li>
@@ -147,6 +151,7 @@
                                     <!-- /.widget-user -->
 
                                 </div>
+                                <?php } ?>
                                 <!-- /.box-body -->
 
                             </div>
