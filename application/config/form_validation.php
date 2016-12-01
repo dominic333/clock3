@@ -67,7 +67,37 @@ $config = array(
                         'label' => 'Message',
                         'rules' => 'trim|xss_clean|required|prep_for_form'
                 )
-        )		
+        ),
+        'addAnnouncementForm' => array(
+        			array(
+                        'field' => 'title',
+                        'label' => 'Title',
+                        'rules' => 'trim|required|xss_clean|prep_for_form'
+                ),
+                array(
+                        'field' => 'message',
+                        'label' => 'Message',
+                        'rules' => 'trim|required|xss_clean|prep_for_form'
+                )
+        ),
+        'editAnnouncementForm' => array(
+        			array(
+                        'field' => 'ancId',
+                        'label' => 'Id',
+                        'rules' => 'trim|required|xss_clean|prep_for_form'
+                ),
+                array(
+                        'field' => 'title',
+                        'label' => 'Title',
+                        'rules' => 'trim|required|xss_clean|prep_for_form'
+                ),
+                array(
+                        'field' => 'message',
+                        'label' => 'Message',
+                        'rules' => 'trim|required|xss_clean|prep_for_form'
+                )
+        )
+        		
 
 );
 ?>
