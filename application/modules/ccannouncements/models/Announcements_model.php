@@ -11,12 +11,17 @@ class Announcements_model extends CI_Model
 	
 	//Function to fetch all announcements for a company
 	//By Dominic; Dec 01,2016
-	function fetchAnnouncementsList($compId)
+	function fetchAnnouncementsList($compId,$limit='')
    {    
 		$this->db->select('A.id,A.title,A.msg,A.date');
 		$this->db->where('A.co_id',$compId);
 		$this->db->where('A.active',1);
 		$this->db->from('announcements as A');
+		$this->db->order_by('A.date','DESC');
+		if($limit!='') 
+		{
+			$this->db->limit($limit);
+		}
 		$result_company=$this->db->get();
 		//echo $this->db->last_query();
 		return $result_company->result();	
@@ -49,6 +54,13 @@ class Announcements_model extends CI_Model
 							 $this->db->update('announcements', $data);
    
 						    break; 
+			  
+			  case 'Delete':
+			  				 $this->db->where('id', $this->db->escape_str($this->input->post('announcementId')));
+			  				 $this->db->where('co_id',$this->session->userdata('coid'));
+							 $this->db->delete('announcements');
+							 
+							 break;
 	          
            default	:break;
 	  }   

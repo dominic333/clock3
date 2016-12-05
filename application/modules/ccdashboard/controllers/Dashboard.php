@@ -11,10 +11,9 @@ class Dashboard extends MX_Controller
 		$this->load->library('encryption');
 		$this->authentication->is_logged_in();
 		/*		
-		$this->load->model('Products_model');
-		
-		$this->get_common();
+		$this->load->model('Products_model');		
 		*/
+		$this->get_common();
 	}
 	
 	public function index()
@@ -38,6 +37,8 @@ class Dashboard extends MX_Controller
 		$compIdSess =$this->session->userdata('coid');
 		//print_r($user_data);
 		$this->data['company_details']	=	modules::load('ccadministration/Administration')->getCompanyInfo($compIdSess);
+		$limit=4;
+		$this->data['listAnnouncements']	=	modules::load('ccannouncements/announcements')->getLatestAnnouncements($compIdSess,$limit);
 		
 		$this->data['view']					=	'ccdashboard/index';
 		$this->load->view('master', $this->data);	
@@ -47,6 +48,7 @@ class Dashboard extends MX_Controller
 
 	function get_common()
 	{
+		$this->data['footer_includes']			=	'<script src="'.base_url().'js/cc/announcements.js" type="text/javascript"></script>';	
 		/*
 		$this->site_settings->get_site_settings();
 		$this->data['profile']			=	$this->site_settings->personal_details();	

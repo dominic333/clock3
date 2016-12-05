@@ -20,7 +20,8 @@ class Announcements extends MX_Controller
 	public function index()
 	{
 		$compIdSess =$this->session->userdata('coid');
-		$this->data['listAnnouncements']	=	$this->Announcements_model->fetchAnnouncementsList($compIdSess);
+		$limit='';
+		$this->data['listAnnouncements']	=	$this->Announcements_model->fetchAnnouncementsList($compIdSess,$limit);
 		
 		$this->data['view']					=	'ccannouncements/announcements';
 		$this->load->view('master', $this->data);	
@@ -33,7 +34,7 @@ class Announcements extends MX_Controller
 	{	
 		if ($this->form_validation->run('addAnnouncementForm') === FALSE) 
 		{
-			$this->index();
+			redirect('ccannouncements/announcements');
 		}
 		else
 		{
@@ -43,7 +44,7 @@ class Announcements extends MX_Controller
 			//$operation = 'Announcement Has Been Posted with ID '.$announcement_id;
 			//$this->site_settings->adminlog($operation);
 			
-			$this->index();
+			redirect('ccannouncements/announcements');
 		}	
 	}
 	
@@ -53,7 +54,7 @@ class Announcements extends MX_Controller
 	{
 		if ($this->form_validation->run('editAnnouncementForm') === FALSE) 
 		{
-			$this->index();
+			redirect('ccannouncements/announcements');
 		}
 		else
 		{
@@ -64,7 +65,7 @@ class Announcements extends MX_Controller
 			//$operation = 'Announcement Has Been Edited with ID '.$announcement_id;
 			//$this->site_settings->adminlog($operation);
 			
-			$this->index();
+			redirect('ccannouncements/announcements');
 		}	
 	}
 	
@@ -79,9 +80,26 @@ class Announcements extends MX_Controller
 		//$operation = 'Announcement Has Been Deleted with ID '.$announcement_id;
 		//$this->site_settings->adminlog($operation);
 		
-		$this->index();
+		redirect('ccannouncements/announcements');
 	}
-
+	
+	//Bridge to fetch latest announcements and display it in dashboard
+	//By Dominic; Dec 05, 2016
+	function getLatestAnnouncements($compIdSess,$limit)
+	{
+		$build_array 	= array();
+      $build_array   = $this->getAllLatestAnnouncements($compIdSess,$limit);
+      return $build_array;
+	}
+	
+	//Function to fetch latest announcements and display it in dashboard
+	//By Dominic; Dec 05, 2016
+	function getAllLatestAnnouncements($compIdSess,$limit)
+	{
+		$latestAnnouncements	=	$this->Announcements_model->fetchAnnouncementsList($compIdSess,$limit);
+		return $latestAnnouncements;
+	}
+	
 
 	function get_common()
 	{

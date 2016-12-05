@@ -44,7 +44,7 @@
                                 		foreach($listAnnouncements as $announcement)
                                 		{
                                 ?>
-                                <tr>
+                                <tr id="<?php echo 'row'.$announcement->id; ?>">
                                     <td><?php echo $i; ?></td>
                                     <td><?php echo $announcement->date; ?></td>
                                     <td><?php echo $announcement->title; ?></td>
@@ -107,20 +107,20 @@
             <!-- Modal Body -->
             <div class="modal-body">
 
-                <form iid="addAnnouncementForm" name="addAnnouncementForm" class="form-horizontal" role="form" action="<?php echo base_url();?>ccannouncements/announcements/addAnnouncement" method="post">
+                <form id="addAnnouncementForm" name="addAnnouncementForm" class="form-horizontal" role="form" action="<?php echo base_url();?>ccannouncements/announcements/addAnnouncement" method="post">
                     <input type="hidden" name="<?=$this->security->get_csrf_token_name()?>" value="<?=$this->security->get_csrf_hash()?>" />
                     <div class="form-group">
                         <label  class="col-sm-2 control-label">Title</label>
                         <div class="col-sm-10">
                             <input id="title" name="title" type="text" class="form-control"
-                                   placeholder="Title" required/>
+                                   placeholder="Title" required />
                         </div>
                     </div>
                     
                     <div class="form-group">
                         <label class="col-sm-2 control-label">Body</label>
                         <div class="col-sm-10">
-                            <textarea id="message" name="message" class="form-control" rows="3" placeholder="Message..." required></textarea>
+                            <textarea id="message" name="message" class="form-control" rows="3" placeholder="Message..." required ></textarea>
                         </div>
                     </div>
 

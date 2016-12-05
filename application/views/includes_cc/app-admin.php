@@ -48,6 +48,8 @@
 
     <!-- Select2 -->
     <link rel="stylesheet" href="<?php echo base_url();?>assets/cc/plugins/select2/select2.min.css">
+    
+    <link href="<?php echo base_url();?>assets/commoncss/jquery-confirm.css" rel="stylesheet"/>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -55,6 +57,11 @@
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+    
+     <script type="text/javascript">
+      var base_url = '<?php echo base_url();?>';
+      var csrf_token = '<?php echo $this->security->get_csrf_hash()?>';
+    </script>
 </head>
 
 <body class="hold-transition skin-grey-light sidebar-mini fixed">

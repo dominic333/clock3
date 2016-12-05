@@ -32,6 +32,7 @@
     
     <script type="text/javascript">
       var base_url = '<?php echo base_url();?>';
+      var csrf_token = '<?php echo $this->security->get_csrf_hash()?>';
     </script>
 
 </head>
