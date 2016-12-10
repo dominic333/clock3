@@ -119,10 +119,19 @@ class Shifts_model extends CI_Model {
 	//Dominic, December 10,2016
 	function getCompanyMembers($compIdSess)
 	{
-		$this->db->select('planId');
-		$this->db->where('company_id',$compIdSess);
-		$results=$this->db->get('company_plans');
-		return $results->row()->planId;
+	  $this->db->select('SI.staff_id,SI.is_admin,SI.staff_name,SI.login_name,SI.email,SI.contact_number,SI.staff_status,SI.staff_photo,SI.monitor,
+	  				 DS.shift_name,DS.time_zone,DS.shift_name,CI.company_name,D.department_name,SI.work_from_home');
+	  $this->db->from('staff_dept_shift as SDS');
+  	  $this->db->join('staff_info as SI','SI.staff_id=SDS.staff_id');
+  	  $this->db->join('departments as D','D.dept_id=SDS.dept_id');
+  	  $this->db->join('department_shifts as DS','DS.shift_id=SDS.shift_id');
+  	  $this->db->join('company_info as CI','CI.id=D.company_id');
+  	  $this->db->where('SDS.dept_id',$dept_id);
+  	  $this->db->limit($limit, $start);
+     $this->db->order_by("SI.staff_id", "desc");
+	  $query= $this->db->get(); 
+	  //echo $this->db->last_query();                                    
+	  $r     = $query->result();
 	}
 	
 	

@@ -13,9 +13,10 @@ class Selfie extends MX_Controller
 		/*		
 		$this->load->model('Products_model');
 		$this->load->library('encryption');
+		
+		*/
 		$this->authentication->is_logged_in();
 		$this->get_common();
-		*/
 	}
 	
 	/**
@@ -51,6 +52,7 @@ class Selfie extends MX_Controller
 
 	function get_common()
 	{
+		$this->data['listAnnouncements']	=	$this->site_settings->fetchLatestAnnouncementsforUser();
 		/*
 		$this->site_settings->get_site_settings();
 		$this->data['profile']			=	$this->site_settings->personal_details();	

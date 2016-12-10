@@ -10,9 +10,10 @@ class Attendance extends MX_Controller
 		/*		
 		$this->load->model('Products_model');
 		$this->load->library('encryption');
-		$this->authentication->is_logged_in();
+		
 		
 		*/
+		$this->authentication->is_logged_in();
 		$this->get_common();
 	}
 	
@@ -42,6 +43,7 @@ class Attendance extends MX_Controller
 		$this->data['myprivileges']	=	$this->site_settings->myprivileges();
 		
 		*/
+		$this->data['listAnnouncements']	=	$this->site_settings->fetchLatestAnnouncementsforUser();
 		$this->data['footer_includes']			=	'<script src="'.base_url().'js/snap/my-attendance.js" type="text/javascript"></script>';	
 	}
 }

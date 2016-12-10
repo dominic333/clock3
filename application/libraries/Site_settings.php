@@ -103,6 +103,22 @@ class Site_settings
 		$result_notif = $this->obj->db->get();	
 		return $result_notif->result();
 	}
+	
+	//Function to fetch latest announcements for a user
+	//Dominic, December 10,2016
+	public function fetchLatestAnnouncementsforUser()
+	{
+		$compId	= $this->obj->session->userdata('coid');
+		$this->obj->db->select('A.id,A.title,A.msg,A.date');
+		$this->obj->db->where('A.co_id',$compId);
+		$this->obj->db->where('A.active',1);
+		$this->obj->db->from('announcements as A');
+		$this->obj->db->order_by('A.date','DESC');
+		$this->obj->db->limit(4);
+		$result_company=$this->obj->db->get();
+		//echo $this->db->last_query();
+		return $result_company->result();
+	}
      
   
 	//Function to check mobile or table or computer

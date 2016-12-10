@@ -11,10 +11,7 @@ class Dashboard extends MX_Controller
 		$this->load->library('encryption');
 		$this->authentication->is_logged_in();
 		$this->load->model('Dashboard_model');
-		/*		
-		
 		$this->get_common();
-		*/
 	}
 	
 	public function index()
@@ -46,6 +43,7 @@ class Dashboard extends MX_Controller
 
 	function get_common()
 	{
+		$this->data['listAnnouncements']	=	$this->site_settings->fetchLatestAnnouncementsforUser();
 		/*
 		$this->site_settings->get_site_settings();
 		$this->data['profile']			=	$this->site_settings->personal_details();	

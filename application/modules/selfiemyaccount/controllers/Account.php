@@ -10,9 +10,11 @@ class Account extends MX_Controller
 		/*		
 		$this->load->model('Products_model');
 		$this->load->library('encryption');
+		
+		
+		*/
 		$this->authentication->is_logged_in();
 		$this->get_common();
-		*/
 	}
 	
 	public function index()
@@ -33,6 +35,7 @@ class Account extends MX_Controller
 		$this->data['myprivileges']	=	$this->site_settings->myprivileges();
 		$this->data['footer']			=	'<script src="'.base_url().'assets/products/js/products.js" type="text/javascript"></script>';	
 		*/
+		$this->data['listAnnouncements']	=	$this->site_settings->fetchLatestAnnouncementsforUser();
 	}
 }
 
