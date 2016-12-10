@@ -149,7 +149,13 @@ class Shifts extends MX_Controller
 	
 	public function users()
 	{
-
+		//check company type
+		//if sme or free, don't show department dropdown
+		$compIdSess =$this->session->userdata('coid');
+		
+		$this->data['companyType']				=  $this->Shifts_model->getCompanyType($compIdSess);
+		$this->data['company_departments']	=	$this->Shifts_model->departmentsCRUD($compIdSess,'read');
+		$this->data['companyMembers']			=  $this->Shifts_model->getCompanyMembers($compIdSess);
 		$this->data['view']					=	'ccshifts/user';
 		$this->load->view('master', $this->data);	
 		

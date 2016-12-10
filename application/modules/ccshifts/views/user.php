@@ -21,6 +21,18 @@
                 <button class="btn btn-primary pull-right" data-toggle="modal" data-target="#myModalHorizontal">Add New
                     User <span class="fa fa-plus-circle"></span></button>
             </div>
+            <?php if($companyType==3){ ?>
+            <div class="col-md-12">
+               <select name="department" id="department" data-placeholder="-- Select A Department* --"  class="" onchange="document.getElementById('dept_id').value	=this.value;">
+	                  <option value="">-- Select A Department* --</option>
+	                  <?php foreach($company_departments as $row){?>
+	                  <option value="<?php echo $row->dept_id;?>" <?php echo (isset($department) && ($department==$row->dept_id)? 'selected="selected"' : set_select('department',$row->dept_id));?> >
+	                  <?php echo $row->department_name;?>
+	                  </option>
+	                  <?php } ?> 
+	             </select>
+				</div>
+				<?php } ?>
         </div>
 
         </br>

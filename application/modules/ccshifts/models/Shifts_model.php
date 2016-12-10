@@ -104,6 +104,26 @@ class Shifts_model extends CI_Model {
 	      return FALSE;
 	   }
 	}	
+
+	//Function to fetch company type
+	//Dominic, December 10,2016
+	function getCompanyType($compIdSess)
+	{
+		$this->db->select('planId');
+		$this->db->where('company_id',$compIdSess);
+		$results=$this->db->get('company_plans');
+		return $results->row()->planId;
+	}
+	
+	//Function to fetch company members
+	//Dominic, December 10,2016
+	function getCompanyMembers($compIdSess)
+	{
+		$this->db->select('planId');
+		$this->db->where('company_id',$compIdSess);
+		$results=$this->db->get('company_plans');
+		return $results->row()->planId;
+	}
 	
 	
 	

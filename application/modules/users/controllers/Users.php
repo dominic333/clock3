@@ -25,7 +25,7 @@ class Users extends MX_Controller
 	   $this->data['breadcrumb']=$this->breadcrumbcomponent->output();	
 		//set page title	
 		$this->data['admin_page_title'] 	= $this->lang->line('user_heading');
-		$this->data['pagetitle'] 	= 	$this->lang->line('pagetitle_user_list');	
+		$this->data['pagetitle'] 			= 	$this->lang->line('pagetitle_user_list');	
 		$this->list_datatable();
 		$this->data['view']					= $this->lang->line('users').'/list';
 		$this->load->view('master', $this->data);
