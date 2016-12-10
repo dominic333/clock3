@@ -8,12 +8,7 @@ class Announcements extends MX_Controller
 	{
 		parent::__construct();
 		$this->load->model('Announcements_model');
-		/*		
-		
-		$this->load->library('encryption');
 		$this->authentication->is_logged_in();
-		
-		*/
 		$this->get_common();
 	}
 	
@@ -22,7 +17,6 @@ class Announcements extends MX_Controller
 		$compIdSess =$this->session->userdata('coid');
 		$limit='';
 		$this->data['listAnnouncements']	=	$this->Announcements_model->fetchAnnouncementsList($compIdSess,$limit);
-		
 		$this->data['view']					=	'ccannouncements/announcements';
 		$this->load->view('master', $this->data);	
 		
@@ -41,8 +35,12 @@ class Announcements extends MX_Controller
 			$this->Announcements_model->announcementCRUD('Add');
 			$announcement_id=$this->db->insert_id();	
 			// save to log table	
-			//$operation = 'Announcement Has Been Posted with ID '.$announcement_id;
-			//$this->site_settings->adminlog($operation);
+			$operation = 'Announcement Has Been Posted with ID '.$announcement_id;
+			$this->site_settings->adminlog($operation);
+			
+			$nType = 2; //announcements updates
+			$nMsg  = 'New Announcement Added: '.$this->input->post('title');
+			$this->site_settings->addNotification($nType,$nMsg,'');
 			
 			redirect('ccannouncements/announcements');
 		}	
@@ -58,12 +56,16 @@ class Announcements extends MX_Controller
 		}
 		else
 		{
+			$announcement_id=$this->input->post('ancId');	
 			$this->Announcements_model->announcementCRUD('Edit');
-			$announcement_id=$this->db->insert_id();	
 			
 			// save to log table	
-			//$operation = 'Announcement Has Been Edited with ID '.$announcement_id;
-			//$this->site_settings->adminlog($operation);
+			$operation = 'Announcement Has Been Edited with ID '.$announcement_id;
+			$this->site_settings->adminlog($operation);
+			
+			$nType = 2; //announcements updates
+			$nMsg  = 'Announcement Edited: Sl No.'.$announcement_id;
+			$this->site_settings->addNotification($nType,$nMsg,'');
 			
 			redirect('ccannouncements/announcements');
 		}	
@@ -73,12 +75,16 @@ class Announcements extends MX_Controller
 	//By Dominic; Dec 01,2016 
 	function deleteAnnouncement()
 	{
+		$announcement_id=$this->input->post('announcementId');
 		$this->Announcements_model->announcementCRUD('Delete');
-		$announcement_id=$this->db->insert_id();	
 		
 		// save to log table	
-		//$operation = 'Announcement Has Been Deleted with ID '.$announcement_id;
-		//$this->site_settings->adminlog($operation);
+		$operation = 'Announcement Has Been Deleted with ID '.$announcement_id;
+		$this->site_settings->adminlog($operation);
+		
+		$nType = 2; //announcements updates
+		$nMsg  = 'Announcement Deleted Sl No.: '.$announcement_id;
+		$this->site_settings->addNotification($nType,$nMsg,'');
 		
 		redirect('ccannouncements/announcements');
 	}
@@ -104,6 +110,7 @@ class Announcements extends MX_Controller
 	function get_common()
 	{
 		$this->site_settings->get_site_settings();
+		$this->data['mynotifications']			=	$this->site_settings->fetchMyNotifications();
 		$this->data['footer_includes']			=	'<script src="'.base_url().'js/cc/announcements.js" type="text/javascript"></script>';		
 	}
 }

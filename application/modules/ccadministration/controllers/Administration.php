@@ -40,10 +40,10 @@ class Administration extends MX_Controller
 			$this->Administration_model->updateCompanyInfo($companyId);
 	
          // save to log table	
-			//$operation = 'Edited Company Information with ID '.$companyId;
-			//$this->site_settings->adminlog($operation);
+			$operation = 'Edited Company Information with ID '.$companyId;
+			$this->site_settings->adminlog($operation);
 			
-		   $this->index();
+		   redirect('ccadministration/administration');
 		}	
 		
 	}	
@@ -106,6 +106,10 @@ class Administration extends MX_Controller
 			$this->email->subject($subject);		
 	  	 	$this->email->send();
 	  	 	
+	  	 	// save to log table	
+			$operation = 'Sent a contact support mail';
+			$this->site_settings->adminlog($operation);
+	  	 	
 	  	 	$this->data['view']					=	'ccadministration/contact-support';
 		   $this->load->view('master', $this->data);	
 
@@ -135,6 +139,7 @@ class Administration extends MX_Controller
 	function get_common()
 	{
 		$this->data['footer_includes']			=	'<script src="'.base_url().'js/cc/administration.js" type="text/javascript"></script>';
+		$this->data['mynotifications']			=	$this->site_settings->fetchMyNotifications();
 		/*
 		$this->site_settings->get_site_settings();
 		$this->data['profile']			=	$this->site_settings->personal_details();	

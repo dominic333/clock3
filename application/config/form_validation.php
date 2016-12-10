@@ -96,7 +96,31 @@ $config = array(
                         'label' => 'Message',
                         'rules' => 'trim|required|xss_clean|prep_for_form'
                 )
-        )
+        ),
+        'addDepartmentForm' => array(
+        			array(
+                        'field' => 'department',
+                        'label' => 'Department',
+                        'rules' => 'trim|required|xss_clean|prep_for_form'
+                )
+        ),
+       'editDepartmentForm' => array(
+	  			array(
+	               'field' => 'dept_id',
+	               'label' => 'Department Id',
+	               'rules' => 'trim|required|xss_clean|prep_for_form'
+		       ),
+		       array(
+		               'field' => 'company_id',
+		               'label' => 'Company Id',
+		               'rules' => 'trim|required|xss_clean|prep_for_form'
+		       ),
+		       array(
+		               'field' => 'department',
+		               'label' => 'Department',
+		               'rules' => 'trim|required|xss_clean|prep_for_form'
+		       )
+        ),
         		
 
 );

@@ -49,9 +49,10 @@ class Dashboard extends MX_Controller
 	function get_common()
 	{
 		$this->data['footer_includes']			=	'<script src="'.base_url().'js/cc/announcements.js" type="text/javascript"></script>';	
+		$this->data['mynotifications']			=	$this->site_settings->fetchMyNotifications();	
 		/*
 		$this->site_settings->get_site_settings();
-		$this->data['profile']			=	$this->site_settings->personal_details();	
+		
 		$this->data['menus_all']		= 	modules::load('menus')->get_menus();
 		$this->data['myprivileges']	=	$this->site_settings->myprivileges();
 		$this->data['footer']			=	'<script src="'.base_url().'assets/products/js/products.js" type="text/javascript"></script>';	

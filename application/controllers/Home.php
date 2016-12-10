@@ -64,6 +64,7 @@ class Home extends MX_Controller
 
 					foreach($user_data as $row)
 					{
+						$userID= $row->staff_id;
 						ini_set( 'session.name', 'vattdashb' );
 						$this->session->set_userdata('mid', $row->staff_id);
 						$this->session->set_userdata('coid', $row->id);
@@ -73,7 +74,9 @@ class Home extends MX_Controller
 						$this->session->set_userdata('logged_in', true);						
 					}
 
-					//$this->site_settings->loginlog(1);
+					// save to log table	
+					$operation = 'Login Success: user ID '.$userID;
+					$this->site_settings->adminlog($operation);
 					
 					//if staff, redirect to snap dashboard; no need to go to cc dashboard
 					if($row->is_admin==0)
@@ -92,8 +95,7 @@ class Home extends MX_Controller
 					  $this->data = array(
 						   'alert' => '<span class="log_fail">Login Failed</span>'
 					  );
-					  //$this->data['is_mobile']=$this->check_mobile();
-					  //$this->site_settings->loginlog(0);
+					  
 					  $this->load->view('login', $this->data);
 				}
 			}		

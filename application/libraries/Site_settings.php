@@ -32,7 +32,9 @@ class Site_settings
 	function Site_settings()
 	{
 		$CI = $this->obj =& get_instance();
+      //$CI->load->library('session');
 		$CI->load->library('encryption');
+		$CI->load->library('Mobile_Detect');
 	}
 	/**
 		*  @author : Bigil Michael
@@ -51,32 +53,73 @@ class Site_settings
 		return true;  		
 	}
 	
-  	/**
-		*  @author : Bigil Michael
-		*  @date :11-02-2016
-		*  @desc:Function to save log details
-		*  @return true/false
-		*/
-	function adminlog($description, $equipment_id='', $schedule_id='', $inspection_id= '')
+   // Function to log operations
+   // Dominic: December 06,2016
+	function adminlog($description)
 	{	
-		//		
+		$data['description'] = ascii_to_entities($description);
+		$data['username'] = $this->obj->session->userdata('mid');
+		$data['date'] = date('Y-m-d');
+		$data['time'] = date('H:i:s');
+		$data['ipaddress'] = $_SERVER['REMOTE_ADDR'];	
+		$data['device']=$this->check_mobile();
+		$data['log'] = $data['date']." : ".$data['time']." : User ".$data['username']." : ".$data['description']." : from ".$data['ipaddress']." device: ".$data['device'].PHP_EOL;
+		$path= $this->obj->lang->line("absolute_path")."log/".date('MY').".txt";	
+		write_file($path, $data['log'], 'a+');			
 	}   
+	
+	//Function to add a notification
+	// Dominic: December 09,2016
+	function addNotification($nType,$nMsg,$absenteeID='')
+	{
+	   $compId						= $this->obj->session->userdata('coid');
+	  	$data['companyid'] 		= $compId;
+	  	$data['nType'] 			= $nType;
+	  	$data['nMsg'] 				= $nMsg;
+	  	$data['absenteeID'] 		= $absenteeID;
+	  	$data['actionBy'] 		= $this->obj->session->userdata('mid');
+		
+		
+		$result_settings	=	$this->obj->db->query("SELECT staff_id FROM staff_info WHERE company_id=".$compId." AND is_admin=1 AND staff_status=1");
+		$rows	=	$result_settings->result();
+		foreach($rows as $row)
+		{
+			$data['userID'] 			= $row->staff_id;
+			$data['nDateTime'] 		=  date('Y-m-d H:i:s');
+			
+			$this->obj->db->insert('notifications',$data);
+		}
+	}
+	
+	//Function to fetch my notifications
+	//Dominic, December 10,2016
+	public function fetchMyNotifications()
+	{
+	  	$this->obj->db->select('N.*, SI.staff_name');
+		$this->obj->db->where('N.userID',$this->obj->session->userdata('mid'));     	
+	  	$this->obj->db->from('notifications AS N');			  		
+		$this->obj->db->join('staff_info AS SI', 'N.actionBy = SI.staff_id','LEFT');		
+		$this->obj->db->order_by('N.nDateTime','DESC');	
+		$result_notif = $this->obj->db->get();	
+		return $result_notif->result();
+	}
      
-     /**
-		*  @author : Lissy SR
-		*  @date :11-02-2016
-		*  @desc:Function to get currently logged in user details
-		*  @return row as array
-		*/
-     function personal_details(){     		
-     		$this->obj->db->select('U.*, UP.*');
-			$this->obj->db->where('U.id',$this->obj->session->userdata('user_id'));     	
-		  	$this->obj->db->from('users AS U');		
-			$this->obj->db->join('user_personal as UP','UP.user_id=U.id',  'LEFT');     		
-     		$result_privileges = $this->obj->db->get();
-     		//echo $this->obj->db->last_query();
-     		return $result_privileges->row();
-     }
+  
+	//Function to check mobile or table or computer
+	function check_mobile()
+	{
+		
+		$detect = new Mobile_Detect();
+    	if ($detect->isMobile() || $detect->isTablet() || $detect->isAndroidOS()) 
+    	{
+        return 'Mobile';
+    	}
+    	else
+    	{
+    		return 'PC';
+    	}
+	}  
+   
 	  /**
 		*  @author : Lissy SR
 		*  @date :25-02-2016
