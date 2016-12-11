@@ -41,7 +41,7 @@ class Account extends MX_Controller
 
 			$staffnameSess =$this->session->userdata('staffname');
 			$nType = 5; //company updates
-			$nMsg  =  $staffnameSess.' updated profile';
+			$nMsg  =  'User profile updated';
 			$this->site_settings->addNotification($nType,$nMsg,'');
 
 			redirect('selfiemyaccount/account/');
