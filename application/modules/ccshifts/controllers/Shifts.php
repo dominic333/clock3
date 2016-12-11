@@ -51,7 +51,7 @@ class Shifts extends MX_Controller
 				// save to log table	
 				$operation = 'New department added with ID '.$dept_id.' under company '.$compIdSess;
 				$this->site_settings->adminlog($operation);
-				
+
 				$nType = 3; //company updates
 				$nMsg  = 'New Department Added: '.$this->input->post('department');
 				$this->site_settings->addNotification($nType,$nMsg,'');

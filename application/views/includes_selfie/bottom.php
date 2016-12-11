@@ -34,6 +34,8 @@
 <!-- bootstrap time picker -->
 <script src="<?php echo base_url();?>assets/snap/plugins/timepicker/bootstrap-timepicker.min.js"></script>
 
+<script  src="<?php echo base_url();?>assets/common/jquery.validate.min.js"  ></script>
+<script src="<?php echo base_url();?>assets/common/jquery-confirm.min.js" type="text/javascript"></script>
 <script>
 
     //Function to show latest announcement details on a modal popup (in dashboard)

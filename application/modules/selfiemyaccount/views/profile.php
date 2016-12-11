@@ -5,7 +5,7 @@
     <section class="content-header">
         <h1>
             View Profile
-            <small>Lorem Ipsum ...</small>
+            <small></small>
         </h1>
         <ol class="breadcrumb">
             <li><a href="<?php echo base_url();?>selfiemyaccount/account"><i class="fa fa-user"></i> Account</a></li>
@@ -15,7 +15,25 @@
 
     <section class="content">
 
+        <?php
 
+        foreach($user_data as $row)
+        {
+            if($row->staff_photo!='')
+            {
+                $userImage= $row->staff_photo;
+            }
+            else
+            {
+                $userImage='';
+            }
+            $fullName=$row->staff_name;
+            $loginName= $row->login_name;
+            $contactno =$row->contact_number;
+            $email=$row->email;
+            $companyName= $row->company_name;
+        }
+        ?>
         <!-- ANNOUNCEMENTS-->
         <div class="row">
 
@@ -24,33 +42,38 @@
                     <div class="box-header">
 
                         <div class="user-block">
+                            <?php if($userImage!=''){ ?>
+                                <img class="img-circle" src="<?php echo base_url();?>images/users/<?php echo  $userImage; ?>">
+                            <?php } else { ?>
                             <img class="img-circle" src="<?php echo base_url();?>assets/snap/images/admin-user.png" alt="User Image">
-                            <button class="btn btn-warning pull-right" href="javascript:void(0)">Edit Profile</button>
-                                <span class="username">Cre8</span>
-                                <span class="description">Indonesia</span>
+                            <?php } ?>
+                            <button id="editProfileBtn" name="editProfileBtn"  class="btn btn-warning pull-right" href="javascript:void(0)">Edit Profile</button>
+                                <span class="username"><?php echo $fullName; ?></span>
+                                <span class="description"><?php echo $companyName; ?></span>
                         </div>
 
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
-                        <form class="form-horizontal">
+                        <form class="form-horizontal" role="form" id="editProfileForm" name="editProfileForm" action="<?php echo base_url();?>selfiemyaccount/account/updateUserInfo" method="post" >
                             <div class="box-body">
 
-
+                                <input type="hidden" name="<?=$this->security->get_csrf_token_name()?>" value="<?=$this->security->get_csrf_hash()?>" />
                                 <div class="form-group">
-                                    <label class="col-sm-3 control-label">Full Name</label>
+                                    <label for="fullName" class="col-sm-3 control-label">Full Name</label>
 
                                     <div class="col-sm-7">
-                                        <input type="text" class="form-control" placeholder="Full Name" required>
+                                        <input id="fullName" name="fullName" value="<?php echo (isset($fullName)) ? $fullName :set_value(''); ?>" type="text" class="form-control readOnlyApplied" placeholder="Full Name" required readonly>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-3 control-label">Login Name</label>
+                                    <label for="loginName" class="col-sm-3 control-label">Login Name</label>
 
                                     <div class="col-sm-7">
-                                        <input type="text" class="form-control" placeholder="Login Name" required>
+                                        <input id="loginName" name="loginName" value="<?php echo (isset($loginName)) ? $loginName :set_value(''); ?>" type="text" class="form-control readOnlyApplied" placeholder="Login Name" required readonly>
                                     </div>
                                 </div>
+                                <!--
                                 <div class="form-group">
                                     <label class="col-sm-3 control-label">Company</label>
 
@@ -58,6 +81,7 @@
                                         <input type="text" class="form-control" placeholder="Company" required>
                                     </div>
                                 </div>
+
                                 <div class="form-group">
                                     <label class="col-sm-3 control-label">Address</label>
 
@@ -65,20 +89,22 @@
                                         <input type="text" class="form-control" placeholder="Address" required>
                                     </div>
                                 </div>
+                                -->
                                 <div class="form-group">
-                                    <label for="inputEmail3" class="col-sm-3 control-label">Email</label>
+                                    <label for="email" class="col-sm-3 control-label">Email</label>
 
                                     <div class="col-sm-7">
-                                        <input type="email" class="form-control" id="inputEmail3" placeholder="Email" required>
+                                        <input id="email" name="email" value="<?php echo (isset($email)) ? $email :set_value(''); ?>" type="email" class="form-control readOnlyApplied"  placeholder="Email" required readonly>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-3 control-label">Contact Number</label>
+                                    <label for="contactNumber" class="col-sm-3 control-label">Contact Number</label>
 
                                     <div class="col-sm-7">
-                                        <input type="text" class="form-control" placeholder="Contact Number" required>
+                                        <input id="contactNumber" name="contactNumber" value="<?php echo (isset($contactno)) ? $contactno :set_value(''); ?>" type="text" class="form-control readOnlyApplied" placeholder="Contact Number" required readonly>
                                     </div>
                                 </div>
+                                <!--
                                 <div class="form-group">
                                     <label class="col-sm-3 control-label">Department</label>
 
@@ -93,7 +119,7 @@
                                         <input type="text" class="form-control" placeholder="Shift" required>
                                     </div>
                                 </div>
-
+                                -->
                             </div>
                             <!-- /.box-body -->
                             <div class="box-footer">

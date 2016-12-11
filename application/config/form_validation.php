@@ -121,7 +121,28 @@ $config = array(
 		               'rules' => 'trim|required|xss_clean|prep_for_form'
 		       )
         ),
-        		
+    'editProfileForm' => array(
+        array(
+            'field' => 'fullName',
+            'label' => 'Full Name',
+            'rules' => 'trim|required|xss_clean|prep_for_form'
+        ),
+        array(
+            'field' => 'loginName',
+            'label' => 'Login Name',
+            'rules' => 'trim|required|xss_clean|alpha_numeric|prep_for_form'
+        ),
+        array(
+            'field' => 'email',
+            'label' => 'Email',
+            'rules' => 'trim|required|xss_clean|valid_email|prep_for_form'
+        ),
+        array(
+            'field' => 'contactNumber',
+            'label' => 'Contact Number',
+            'rules' => 'trim|required|xss_clean|prep_for_form'
+        )
+    )
 
 );
 ?>

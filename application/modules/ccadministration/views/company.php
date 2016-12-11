@@ -5,7 +5,7 @@
     <section class="content-header">
         <h1>
             View / Edit Company
-            <small>Lorem Ipsum...</small>
+            <small></small>
         </h1>
         <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-lock"></i> Administrative</a></li>

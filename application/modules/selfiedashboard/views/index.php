@@ -134,15 +134,15 @@
                                             </div>
                                             <!-- /.widget-user-image -->
                                             <h4 class="widget-user-username"><?php echo $row->staff_name; ?></h4>
-                                            <h5 class="widget-user-desc">Web Developer</h5>
+                                             <h5 class="widget-user-desc">Web Developer</h5>
                                         </div>
                                         <div class="box-footer no-padding">
                                             <ul class="nav nav-stacked">
                                                 <li><a href="#">Company : <?php echo $row->company_name; ?></a></li>
-                                                <li><a href="#">Address : Kebayoran Baru</a></li>
+                                               <!-- <li><a href="#">Address : Kebayoran Baru</a></li> -->
                                                 <li><a href="#">Phone Number : <?php echo $row->contact_number; ?></a></li>
                                                 <li><a href="#">Email : <?php echo $row->email; ?></a>
-                                                <li><a href="#">Department : IT</a>
+                                                <li><a href="#">Department : <?php echo $row->department_name; ?></a>
                                                 </li>
                                                 <li>
                                                     <button type="button" class="btn btn-block btn-default">View Profile
