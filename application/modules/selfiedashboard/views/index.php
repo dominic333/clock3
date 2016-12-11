@@ -116,18 +116,21 @@
                                     </div>
                                 </div>
                                 <!-- /.box-header -->
-                                
-										  <?php foreach($user_data as $row)
-												  { 
-										  ?>
+                                <?php foreach($user_data as $row)
+                                {
+                                ?>
                                 <div class="box-body">
                                     <!-- Widget: user widget style 1 -->
                                     <div class="box box-widget widget-user-2">
                                         <!-- Add the bg color to the header using any of the bg-* classes -->
                                         <div class="widget-user-header bg-gray-light">
                                             <div class="widget-user-image">
+                                                <?php if($row->staff_photo!='') {?>
+                                                    <img class="img-circle" src="<?php echo base_url();?>images/users/<?php echo  $row->staff_photo; ?>">
+                                                <?php } else{ ?>
                                                 <img class="img-circle" src="<?php echo base_url();?>assets/snap/images/admin-user.png"
                                                      alt="User Avatar">
+                                                <?php } ?>
                                             </div>
                                             <!-- /.widget-user-image -->
                                             <h4 class="widget-user-username"><?php echo $row->staff_name; ?></h4>
