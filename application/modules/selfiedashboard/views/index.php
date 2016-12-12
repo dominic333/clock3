@@ -15,6 +15,7 @@
                 <section class="content">
 
                     <!-- Small boxes (Stat box) -->
+							<?php /* ?>                    
                     <div class="row">
                         <div class="col-md-6 col-sm-6 col-xs-12">
                             <div class="info-box bg-aqua">
@@ -99,6 +100,7 @@
                         <!-- /.col -->
 
                     </div>
+                    <?php */ ?>
                     <!-- /.row -->
 
                     <!--========================================================================================================-->
@@ -145,8 +147,8 @@
                                                 <li><a href="#">Department : <?php echo $row->department_name; ?></a>
                                                 </li>
                                                 <li>
-                                                    <button type="button" class="btn btn-block btn-default">View Profile
-                                                    </button>
+                                                    <a href="<?php echo base_url();?>selfiemyaccount/account" class="btn btn-block btn-default" >View Profile
+                                                    </a>
                                                 </li>
                                             </ul>
                                         </div>

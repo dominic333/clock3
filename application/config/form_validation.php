@@ -121,7 +121,7 @@ $config = array(
 		               'rules' => 'trim|required|xss_clean|prep_for_form'
 		       )
         ),
-    'editProfileForm' => array(
+     'editProfileForm' => array(
         array(
             'field' => 'fullName',
             'label' => 'Full Name',
@@ -142,7 +142,24 @@ $config = array(
             'label' => 'Contact Number',
             'rules' => 'trim|required|xss_clean|prep_for_form'
         )
-    )
+    ),
+    'remote_login_frm' => array(
+        array(
+            'field' => 'rstaff_name',
+            'label' => 'User Name',
+            'rules' => 'trim|required|xss_clean|prep_for_form'
+        ),
+        array(
+            'field' => 'rremotelogin',
+            'label' => 'Login Name',
+            'rules' => 'trim|required|xss_clean|prep_for_form'
+        ),
+        array(
+            'field' => 'rstaff_id',
+            'label' => 'Id',
+            'rules' => 'trim|required|xss_clean|prep_for_form'
+        )
+    ),
 
 );
 ?>

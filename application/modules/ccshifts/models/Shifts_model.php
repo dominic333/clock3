@@ -116,22 +116,108 @@ class Shifts_model extends CI_Model {
 	}
 	
 	//Function to fetch company members
-	//Dominic, December 10,2016
+	//Dominic, December 12,2016 
 	function getCompanyMembers($compIdSess)
 	{
-	  $this->db->select('SI.staff_id,SI.is_admin,SI.staff_name,SI.login_name,SI.email,SI.contact_number,SI.staff_status,SI.staff_photo,SI.monitor,
-	  				 DS.shift_name,DS.time_zone,DS.shift_name,CI.company_name,D.department_name,SI.work_from_home');
-	  $this->db->from('staff_dept_shift as SDS');
-  	  $this->db->join('staff_info as SI','SI.staff_id=SDS.staff_id');
-  	  $this->db->join('departments as D','D.dept_id=SDS.dept_id');
-  	  $this->db->join('department_shifts as DS','DS.shift_id=SDS.shift_id');
-  	  $this->db->join('company_info as CI','CI.id=D.company_id');
-  	  $this->db->where('SDS.dept_id',$dept_id);
-  	  $this->db->limit($limit, $start);
-     $this->db->order_by("SI.staff_id", "desc");
+	   //SELECT staff_info.staff_id,department_shifts.shift_id,departments.dept_id,staff_info.is_admin,staff_info.staff_name,staff_info.login_name,
+	   //staff_info.email,staff_info.contact_number,staff_info.staff_photo,staff_info.monitor,staff_info.work_from_home,staff_info.staff_type,
+	   //department_shifts.shift_name,departments.department_name 
+		//FROM staff_info
+		//LEFT JOIN staff_dept_shift ON staff_dept_shift.staff_id=staff_info.staff_id
+		//LEFT JOIN department_shifts ON department_shifts.shift_id=staff_dept_shift.shift_id
+		//LEFT JOIN departments ON departments.dept_id=department_shifts.dept_id
+		//WHERE staff_info.staff_status=1 AND staff_info.company_id=84
+		
+	  $this->db->select('staff_info.staff_id,department_shifts.shift_id,departments.dept_id,staff_info.is_admin,staff_info.staff_name,staff_info.login_name,
+	  							staff_info.email,staff_info.contact_number,staff_info.staff_photo,staff_info.monitor,staff_info.work_from_home,staff_info.staff_type,
+	  							department_shifts.shift_name,departments.department_name');
+	  $this->db->from('staff_info');
+  	  $this->db->join('staff_dept_shift','staff_dept_shift.staff_id=staff_info.staff_id','LEFT');
+  	  $this->db->join('department_shifts','department_shifts.shift_id=staff_dept_shift.shift_id');
+  	  $this->db->join('departments','departments.dept_id=department_shifts.dept_id');
+  	  $this->db->where('staff_info.staff_status',1);
+  	  $this->db->where('staff_info.company_id',$compIdSess);
+     $this->db->order_by("staff_info.staff_id", "ASC");
 	  $query= $this->db->get(); 
 	  //echo $this->db->last_query();                                    
-	  $r     = $query->result();
+	  return $query->result();
+	}
+	
+	//Function to fetch shifts for a company
+	//Dominic, December 12,2016
+	function fetchCompanyShifts($compId)
+	{
+	  //SELECT shift_id,shift_name FROM department_shifts WHERE shift_status=1 AND comp_id=84
+	  $this->db->select('DS.*');
+	  $this->db->from('department_shifts as DS');
+  	  $this->db->where('DS.comp_id',$compId);
+  	  $this->db->where('DS.shift_status',1);
+	  $query= $this->db->get(); 
+	  //echo $this->db->last_query();                                    
+	  return $query->result();
+	}
+	
+		//Function to manage Users	
+	function save($type='' ,$filename='' ,$user_id='')
+   {
+			switch($type){
+				          
+	        case 'Add_Users':	
+												$data = array(		
+													'company_id' 	  => $this->session->userdata('coid'),                        
+													'is_admin' 		  => $this->db->escape_str($this->input->post('is_admin')),                        
+													'staff_name' 	  => $this->db->escape_str($this->input->post('staff_name')),                        
+													'login_name' 	  => $this->db->escape_str($this->input->post('login_name')),                        
+													'password' 		  => md5($this->db->escape_str($this->input->post('password'))),                        
+													'email' 			  => $this->db->escape_str($this->input->post('email')),                      
+													'contact_number' => $this->db->escape_str($this->input->post('contact_number')),                      
+													'monitor' 		  => $this->db->escape_str($this->input->post('monitor')), 
+													'work_from_home' 		  => $this->db->escape_str($this->input->post('remotelogin'))                      
+	                      	 			);
+												$this->db->insert('staff_info', $data);
+	               
+	         							break; 
+	         							
+	        case 'Edit_Users':	
+												$data = array(		
+													                        
+													'staff_name' 			=> $this->db->escape_str($this->input->post('staff_name')),                        
+													'email' 			=> $this->db->escape_str($this->input->post('email')),                        
+													'contact_number' 			=> $this->db->escape_str($this->input->post('contact_number'))                                             	                      	 				
+	                      	 				                           
+						  		 				);
+						  		 				
+												$this->db->where('staff_id',$this->input->post('staff_id'));
+												$this->db->update('staff_info', $data);
+	               
+	         							break;
+	         							
+	        case 'Edit_Monitoring':	
+												$data = array(		                      
+													'monitor' 	=> $this->db->escape_str($this->input->post('mmonitor'))                       	                      	 				                    	                      	 				
+	                      	 				                           
+						  		 				);
+						  		 				
+												$this->db->where('staff_id',$this->input->post('mstaff_id'));
+												$this->db->update('staff_info', $data);
+	               
+	         							break;
+	         							
+	        case 'Edit_RemoteL':	
+												$data = array(		                   	                      	 				
+													'work_from_home' 	=> $this->db->escape_str($this->input->post('rremotelogin'))                       	                      	 					                      	 				                           
+						  		 				);
+						  		 				
+												$this->db->where('staff_id',$this->input->post('rstaff_id'));
+												$this->db->update('staff_info', $data);
+	               
+	         							break;	         								         							
+	         							
+	         							
+	          
+           default		:break;
+	  }   
+	                      
 	}
 	
 	
