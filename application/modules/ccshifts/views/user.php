@@ -345,7 +345,7 @@
 	         
 	         <div class="form-group">
 	            <label>UserName</label>
-	            <input type="text" name="login_name" id="login_name" class="form-control" placeholder="Login name of Staff"  value="" disabled="">
+	            <input type="text" name="login_name" id="login_name" class="form-control" placeholder="Login name of Staff"  value="" readonly>
 	         </div>
 	         
 	         <div class="form-group">
@@ -388,12 +388,12 @@
             	 
             	 <div class="form-group">
                       <label class="reset_password">Enter New Password<span class="mandatory">*</span></label>
-                      <input class="reset_password form-control" type="text" name="password" id="password" value="" />
+                      <input class="reset_password form-control" type="password" name="password" id="password" value="" />
                 </div>
                 
                 <div class="form-group">
                       <label class="reset_password">Confirm Password<span class="mandatory">*</label>
-                      <input class="reset_password form-control" type="text" name="confrim_password" id="confrim_password" value="" />
+                      <input class="reset_password form-control" type="password" name="confrim_password" id="confrim_password" value="" />
                 </div>
                 
                <input type="hidden" name="user_name" id="user_name" value="" >

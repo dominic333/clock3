@@ -358,7 +358,7 @@ $(document).ready(function(){
 			 .closest('.control-group').removeClass('error').addClass('success');
 			},
 			 submitHandler: function(form) {
-			 	  var post_url = base_url+"admin/users/forgot_user";
+			 	  var post_url = base_url+"ccshifts/shifts/forgot_user";
 			 	  $.ajax({
 					 url: post_url,
 					 data:$('#forgot_user_frm').serialize(),
@@ -420,8 +420,7 @@ $(document).ready(function(){
 		     }
 		    
 		   }, 
-		       
-		         
+			 
 			highlight: function(element) {
 				  $(element).closest('.control-group').removeClass('success').addClass('error');
 			 },

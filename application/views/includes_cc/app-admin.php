@@ -120,7 +120,8 @@
                                             	 ">
                                             
                                             </i> 
-                                            <?php echo $row->nMsg.' :'.$row->staff_name; ?>
+                                            <?php echo $row->nMsg; ?>
+                                            <?php //echo $row->nMsg.' :'.$row->staff_name; ?>
                                         </a>
                                     </li>
 

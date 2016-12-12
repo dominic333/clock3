@@ -155,39 +155,116 @@ class Shifts extends MX_Controller
 	}
 	
 	//function to modify remote login feature
-	//By Sajeev (Nov 25,2015)
+	//By Dominic, Dec 12,2016
 	function edit_remote_login()
 	{
-		
 		if ($this->form_validation->run('remote_login_frm') === FALSE) 
 		{
 			redirect('ccshifts/shifts/users');
 		}
 		else
 		{
-			$check_department_exist=$this->Shifts_model->department_exist();
-			if(count($check_department_exist)>0)
+			$this->Shifts_model->save('Edit_RemoteL','' );
+	      	$staff_id = $this->input->post('rstaff_id');
+			$rvaule=$this->input->post('rremotelogin');
+			if($rvaule==1)
 			{
-				$this->data['alert'] = 'Department already exist';
-				redirect('ccshifts/shifts');
+				$rval='Enabled';
 			}
-			else 
+			else
 			{
-				$this->Shifts_model->save('Edit_RemoteL','' );
-	      	$staff_id = $this->input->post('rstaff_id');	
-				// save to log table	
-				$operation = 'Modified Remote Login for staff ID '.$staff_id;
+				$rval='Disabled';
+			}
+			// save to log table
+			$operation = 'Modified Remote Login for staff ID '.$staff_id;
          	$this->site_settings->adminlog($operation);
 				
-				$nType = 3; //company updates
-				$nMsg  = 'Remote Login Modified for '.$this->input->post('rstaff_name');
-				$this->site_settings->addNotification($nType,$nMsg,'');
+			$nType = 3; //company updates
+			$nMsg  = 'Remote Login '.$rval.' for '.$this->input->post('rstaff_name');
+			$this->site_settings->addNotification($nType,$nMsg,'');
 				
-				redirect('ccshifts/shifts/users');
-			}			
+			redirect('ccshifts/shifts/users');
 		}	
 	}
 
+	//Function to change monitor attendance feature
+	//By Dominic, Dec 12,2016
+	function edit_monitor_attendance()
+	{
+		if ($this->form_validation->run('monitor_attendance_frm') === FALSE)
+		{
+			redirect('ccshifts/shifts/users');
+		}
+		else
+		{
+			$this->Shifts_model->save('Edit_Monitoring','' );
+			$staff_id = $this->input->post('mstaff_id');
+			$mvalue=$this->input->post('mmonitor');
+			if($mvalue==1)
+			{
+				$mval='Enabled';
+			}
+			else
+			{
+				$mval='Disabled';
+			}
+			// save to log table
+			$operation = 'Edited Monitor Attendance for staff with ID '.$staff_id;
+			$this->site_settings->adminlog($operation);
+
+			$nType = 3; //company updates
+			$nMsg  = 'Attendance Monitoring '.$mval.' for '.$this->input->post('mstaff_name');
+			$this->site_settings->addNotification($nType,$nMsg,'');
+			redirect('ccshifts/shifts/users');
+		}
+	}
+
+	//Function to reset password
+	//By Dominic, Dec 12,2016
+	function forgot_user()
+	{
+		if ($this->form_validation->run('forgot_user_frm') === FALSE)
+		{
+			echo "failed";
+		}
+		else
+		{
+			//$this->send_password_reset_email();
+			$this->Shifts_model->reset_password();
+			$staff_id = $this->input->post('user_id');
+			// save to log table
+			$operation = 'Password Changed for staff with ID '.$staff_id;
+			$this->site_settings->adminlog($operation);
+
+			$nType = 3; //company updates
+			$nMsg  = 'Password Changed for '.$this->input->post('user_name');
+			$this->site_settings->addNotification($nType,$nMsg,'');
+			echo "password";
+		}
+	}
+
+	//Function to edit user info
+	//By Dominic, Dec 12,2016
+	function edit_user()
+	{
+		if ($this->form_validation->run('edit_user_frm') === FALSE)
+		{
+			redirect('ccshifts/shifts/users');
+		}
+		else
+		{
+			$this->Shifts_model->save('Edit_Users','' );
+			$staff_id = $this->input->post('staff_id');
+			// save to log table
+			$operation = 'Edited staff with ID '.$staff_id;
+			$this->site_settings->adminlog($operation);
+
+			$nType = 3; //company updates
+			$nMsg  = 'Updated Info of '.$this->input->post('staff_name');
+			$this->site_settings->addNotification($nType,$nMsg,'');
+			redirect('ccshifts/shifts/users');
+		}
+	}
 	
 	//Function to delete users
 	//@Author Farveen
@@ -209,66 +286,6 @@ class Shifts extends MX_Controller
 				</script>";
 			exit();
 		}
-	}
-	
-	//function to edit users
-	//@author Farveen
-	function edit_user(){
-		if($this->input->post('Submit')&&$this->input->post('staff_id')!=''){
-			$this->Users_model->save('Edit_Users','' );
-	      $staff_id = $this->input->post('staff_id');	
-		   // save to log table 
-			$operation = 'Edited staff with ID '.$staff_id;
-         $this->site_settings->adminlog($operation);
-			//redirect('/'.$this->lang->line("admin").'/departments/modify_departments');
-			echo "<script>
-				alert('User Edited Successfully');
-				window.location.href='".base_url().$this->lang->line("admin")."/users/modify_users';
-				</script>";
-			exit();
-		}else{
-			redirect('/'.$this->lang->line("admin").'/users/modify_users');
-		}
-	}
-	
-	//function to change monitor attendance feature
-	//By Sajeev (Nov 25,2015)
-	function edit_monitor_attendance()
-	{
-		if($this->input->post('Submit')&&$this->input->post('mstaff_id')!='')
-		{
-			$this->Users_model->save('Edit_Monitoring','' );
-	      $staff_id = $this->input->post('mstaff_id');	
-		   // save to log table 
-			$operation = 'Edited Monitor Attendance for staff with ID '.$staff_id;
-         $this->site_settings->adminlog($operation);
-			//redirect('/'.$this->lang->line("admin").'/departments/modify_departments');
-			echo "<script>
-				alert('User Edited Successfully');
-				window.location.href='".base_url().$this->lang->line("admin")."/users/modify_users';
-				</script>";
-			exit();
-		}
-		else
-		{
-			redirect('/'.$this->lang->line("admin").'/users/modify_users');
-		}
-	}
-	
-	//Function to reset password/passcode
-	//@author FArveen
-	function forgot_user() 
-	{
-		if(($this->input->post('user_id'))&&($this->input->post('Submit'))&&($this->input->post('user_email')))
-		{
-			$this->send_password_reset_email();
-			$this->Users_model->reset_password();
-			echo "password";
-		}
-		else
-		{
-			echo "failed";
-		}	
 	}
 	
 	

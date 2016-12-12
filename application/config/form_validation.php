@@ -160,6 +160,82 @@ $config = array(
             'rules' => 'trim|required|xss_clean|prep_for_form'
         )
     ),
+    'monitor_attendance_frm' => array(
+        array(
+            'field' => 'mstaff_name',
+            'label' => 'User Name',
+            'rules' => 'trim|required|xss_clean|prep_for_form'
+        ),
+        array(
+            'field' => 'mmonitor',
+            'label' => 'Monitor',
+            'rules' => 'trim|required|xss_clean|prep_for_form'
+        ),
+        array(
+            'field' => 'mstaff_id',
+            'label' => 'Id',
+            'rules' => 'trim|required|xss_clean|prep_for_form'
+        )
+    ),
+    'forgot_user_frm' => array(
+        array(
+            'field' => 'password',
+            'label' => 'Password',
+            'rules' => 'trim|required|xss_clean|prep_for_form'
+        ),
+        array(
+            'field' => 'confrim_password',
+            'label' => 'Confirm Password',
+            'rules' => 'trim|required|xss_clean|prep_for_form'
+        ),
+        array(
+            'field' => 'user_name',
+            'label' => 'User Name',
+            'rules' => 'trim|required|xss_clean|prep_for_form'
+        ),
+        array(
+            'field' => 'user_login',
+            'label' => 'Login Name',
+            'rules' => 'trim|required|xss_clean|prep_for_form'
+        ),
+        array(
+            'field' => 'user_email',
+            'label' => 'Email',
+            'rules' => 'trim|required|xss_clean|prep_for_form|valid_email'
+        ),
+        array(
+            'field' => 'user_id',
+            'label' => 'User Id',
+            'rules' => 'trim|required|xss_clean|prep_for_form'
+        )
+    ),
+    'edit_user_frm' => array(
+        array(
+            'field' => 'staff_name',
+            'label' => 'Staff Name',
+            'rules' => 'trim|required|xss_clean|prep_for_form'
+        ),
+        array(
+            'field' => 'login_name',
+            'label' => 'Login Name',
+            'rules' => 'trim|required|xss_clean|prep_for_form'
+        ),
+        array(
+            'field' => 'email',
+            'label' => 'User Name',
+            'rules' => 'trim|required|xss_clean|prep_for_form|valid_email'
+        ),
+        array(
+            'field' => 'contact_number',
+            'label' => 'Contact Number',
+            'rules' => 'trim|required|xss_clean|prep_for_form'
+        ),
+        array(
+            'field' => 'staff_id',
+            'label' => 'User Id',
+            'rules' => 'trim|required|xss_clean|prep_for_form'
+        )
+    )
 
 );
 ?>

@@ -157,70 +157,78 @@ class Shifts_model extends CI_Model {
 	  return $query->result();
 	}
 	
-		//Function to manage Users	
+	//Function to manage Users	
+	//Dominic, December 12,2016
 	function save($type='' ,$filename='' ,$user_id='')
-   {
-			switch($type){
+    {
+		switch($type)
+		{
 				          
 	        case 'Add_Users':	
-												$data = array(		
-													'company_id' 	  => $this->session->userdata('coid'),                        
-													'is_admin' 		  => $this->db->escape_str($this->input->post('is_admin')),                        
-													'staff_name' 	  => $this->db->escape_str($this->input->post('staff_name')),                        
-													'login_name' 	  => $this->db->escape_str($this->input->post('login_name')),                        
-													'password' 		  => md5($this->db->escape_str($this->input->post('password'))),                        
-													'email' 			  => $this->db->escape_str($this->input->post('email')),                      
-													'contact_number' => $this->db->escape_str($this->input->post('contact_number')),                      
-													'monitor' 		  => $this->db->escape_str($this->input->post('monitor')), 
-													'work_from_home' 		  => $this->db->escape_str($this->input->post('remotelogin'))                      
-	                      	 			);
-												$this->db->insert('staff_info', $data);
+				$data = array(
+					'company_id' 	  => $this->session->userdata('coid'),
+					'is_admin' 		  => $this->db->escape_str($this->input->post('is_admin')),
+					'staff_name' 	  => $this->db->escape_str($this->input->post('staff_name')),
+					'login_name' 	  => $this->db->escape_str($this->input->post('login_name')),
+					'password' 		  => md5($this->db->escape_str($this->input->post('password'))),
+					'email' 		  => $this->db->escape_str($this->input->post('email')),
+					'contact_number' => $this->db->escape_str($this->input->post('contact_number')),
+					'monitor' 		  => $this->db->escape_str($this->input->post('monitor')),
+					'work_from_home'  => $this->db->escape_str($this->input->post('remotelogin'))
+				);
+				$this->db->insert('staff_info', $data);
 	               
-	         							break; 
+				break;
 	         							
 	        case 'Edit_Users':	
-												$data = array(		
+				$data = array(
 													                        
-													'staff_name' 			=> $this->db->escape_str($this->input->post('staff_name')),                        
-													'email' 			=> $this->db->escape_str($this->input->post('email')),                        
-													'contact_number' 			=> $this->db->escape_str($this->input->post('contact_number'))                                             	                      	 				
-	                      	 				                           
-						  		 				);
+					'staff_name' 		=> $this->db->escape_str($this->input->post('staff_name')),
+					'email' 			=> $this->db->escape_str($this->input->post('email')),
+					'contact_number' 	=> $this->db->escape_str($this->input->post('contact_number'))
+				);
 						  		 				
-												$this->db->where('staff_id',$this->input->post('staff_id'));
-												$this->db->update('staff_info', $data);
+				$this->db->where('staff_id',$this->input->post('staff_id'));
+				$this->db->update('staff_info', $data);
 	               
-	         							break;
+				break;
 	         							
 	        case 'Edit_Monitoring':	
-												$data = array(		                      
-													'monitor' 	=> $this->db->escape_str($this->input->post('mmonitor'))                       	                      	 				                    	                      	 				
-	                      	 				                           
-						  		 				);
+				$data = array(
+					'monitor' 	=> $this->db->escape_str($this->input->post('mmonitor'))
+				);
 						  		 				
-												$this->db->where('staff_id',$this->input->post('mstaff_id'));
-												$this->db->update('staff_info', $data);
+				$this->db->where('staff_id',$this->input->post('mstaff_id'));
+				$this->db->update('staff_info', $data);
 	               
-	         							break;
+				break;
 	         							
 	        case 'Edit_RemoteL':	
-												$data = array(		                   	                      	 				
-													'work_from_home' 	=> $this->db->escape_str($this->input->post('rremotelogin'))                       	                      	 					                      	 				                           
-						  		 				);
+				$data = array(
+					'work_from_home' 	=> $this->db->escape_str($this->input->post('rremotelogin'))
+				);
 						  		 				
-												$this->db->where('staff_id',$this->input->post('rstaff_id'));
-												$this->db->update('staff_info', $data);
+				$this->db->where('staff_id',$this->input->post('rstaff_id'));
+				$this->db->update('staff_info', $data);
 	               
-	         							break;	         								         							
-	         							
-	         							
-	          
+				break;
+
            default		:break;
-	  }   
-	                      
+	    }
 	}
 	
-	
+	//Function to reset Password for selected client()
+	//Dominic, December 12,2016
+	function reset_password(){
+		if($this->input->post('user_id'))
+		{
+			$data['password']	=  md5($this->db->escape_str($this->input->post('password')));
+			$this->db->where('email',$this->input->post('user_email'));
+			$this->db->where('staff_id',$this->input->post('user_id'));
+			$this->db->where('company_id',$this->session->userdata('coid'));
+			$this->db->update('staff_info',$data);
+		}
+	}
 	
 	
 }
