@@ -115,29 +115,29 @@ $(document).ready(function(){
 	  //By Dominic; Dec 12,2016 
 	  $(document).on('click','.delete_user_link',function (e) {
 		e.preventDefault();
-		var staff_id 			= $(this).data('staff_id');
+		var staff_id 		= $(this).data('staff_id');
 		var staff_name 		= $(this).data('staff_name');
-		if(staff_id!=''){
+		if(staff_id!='')
+		{
 			$.confirm({
 			    title: 'confirm To Delete ',
 			    content: 'Deleting '+staff_name+' will delete the user and also will delete user from thier shifts, Are you sure to continue with this action',
 			    confirm: function(){
-			      window.location = base_url+"admin/users/delete_users/"+staff_id +".html";
+			      window.location = base_url+"ccshifts/shifts/delete_users/"+staff_id +"/"+staff_name;
 			    },
 			    cancel:  function(){
 			       
 			    },
 			});
-			
-		}else{
+		}
+		else
+		{
 			$.alert({
 			    title: 'Invalid Data\'s ',
 			    content: 'Invalid Data,Please Try Other User To Edit',
 			    confirm: function(){
-			      
 			    },
 			    cancel:  function(){
-			       
 			    },
 			});
 		}
@@ -420,7 +420,7 @@ $(document).ready(function(){
 		     }
 		    
 		   }, 
-			 
+
 			highlight: function(element) {
 				  $(element).closest('.control-group').removeClass('success').addClass('error');
 			 },

@@ -163,7 +163,6 @@ class Shifts_model extends CI_Model {
     {
 		switch($type)
 		{
-				          
 	        case 'Add_Users':	
 				$data = array(
 					'company_id' 	  => $this->session->userdata('coid'),
@@ -219,7 +218,8 @@ class Shifts_model extends CI_Model {
 	
 	//Function to reset Password for selected client()
 	//Dominic, December 12,2016
-	function reset_password(){
+	function reset_password()
+	{
 		if($this->input->post('user_id'))
 		{
 			$data['password']	=  md5($this->db->escape_str($this->input->post('password')));
@@ -228,6 +228,15 @@ class Shifts_model extends CI_Model {
 			$this->db->where('company_id',$this->session->userdata('coid'));
 			$this->db->update('staff_info',$data);
 		}
+	}
+
+	//Function to delete the users
+	//Dominic, December 12,2016
+	function delete_users($staff_id)
+	{
+		$this->db->delete('staff_info', array('staff_id' => $staff_id));
+		$this->db->delete('staff_dept_shift', array('staff_id' => $staff_id));
+
 	}
 	
 	

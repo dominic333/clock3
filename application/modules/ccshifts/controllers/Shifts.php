@@ -267,24 +267,25 @@ class Shifts extends MX_Controller
 	}
 	
 	//Function to delete users
-	//@Author Farveen
-	function delete_users($staff_id){
-		if($staff_id!=''){
-			$this->Users_model->delete_users($staff_id);
+	//By Dominic, Dec 12,2016
+	function delete_users($staff_id,$staff_name)
+	{
+		if($staff_id!='')
+		{
+			$this->Shifts_model->delete_users($staff_id);
 			// save to log table 
 			$operation = 'Deleted staff with ID '.$staff_id;
-         $this->site_settings->adminlog($operation);
-			echo "<script>
-				alert('User Deleted Successfully');
-				window.location.href='".base_url().$this->lang->line("admin")."/users/modify_users';
-				</script>";
-			exit();
-		}else{
-			echo "<script>
-				alert('Sorry No Staff Id Found');
-				window.location.href='".base_url().$this->lang->line("admin")."/users/modify_users';
-				</script>";
-			exit();
+         	$this->site_settings->adminlog($operation);
+
+			$nType = 3; //company updates
+			$nMsg  = 'Deleted user '.$staff_name;
+			$this->site_settings->addNotification($nType,$nMsg,'');
+
+			redirect('ccshifts/shifts/users');
+		}
+		else
+		{
+			redirect('ccshifts/shifts/users');
 		}
 	}
 	
