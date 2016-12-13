@@ -313,6 +313,13 @@ class Shifts_model extends CI_Model {
 	   $this->db->delete('department_ip');
 	}
 	
+	//Function to fetch all shifts for a company
+	//Dominic, December 13,2016
+	function get_department_shifts($compIdSess)
+	{
+	
+	}
+	
 	
 }
 

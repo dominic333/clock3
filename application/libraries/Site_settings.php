@@ -44,13 +44,13 @@ class Site_settings
 		*/
 	function get_site_settings()
 	{		
-		date_default_timezone_set('Asia/Kolkata');
+		date_default_timezone_set('Asia/Singapore');
 		$result_settings	=	$this->obj->db->query('SELECT * FROM settings');
 		$rows	=	$result_settings->result();
 		foreach($rows as $row){
 			$this->obj->config->set_item($row->config_key, $row->config_value);
 		}
-		return true;  		
+		return true; 		
 	}
 	
    // Function to log operations

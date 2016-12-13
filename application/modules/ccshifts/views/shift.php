@@ -22,7 +22,7 @@
                     <div class="box-header">
                         <h3 class="box-title">Manage Shifts</h3>
                         <a href="#" class="btn btn-primary btn-sm pull-right" data-toggle="modal"
-                           data-target="#myModalHorizontal">Add Shift <span
+                           data-target="#addNewShift">Add Shift <span
                                 class="fa fa-plus-circle"
                                 aria-hidden="true"></span></a>
                     </div>
@@ -83,7 +83,7 @@
 
 
 <!--=======================================Modal Form========================================-->
-<div class="modal fade" id="myModalHorizontal" tabindex="-1" role="dialog"
+<div class="modal fade" id="addNewShift" tabindex="-1" role="dialog"
      aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -106,8 +106,16 @@
                     <div class="form-group">
                         <label class="col-sm-2 control-label">Shift Name</label>
                         <div class="col-sm-6">
-                            <input type="text" class="form-control" placeholder="Shift Name" required/>
+                            <input type="text" name="shift_name" id="shift_name" class="form-control" placeholder="Shift Name" required/>
                         </div>
+                    </div>
+                    <div class="form-group">
+                        <select name="timezone" id="timezone" class="selectpicker form-control chosen-select">
+                        <option value="">-- Select A Time Zone* --</option>
+                        <?php foreach($timezone_lists as $row){?>
+                        <option value="<?php echo $row['zone'];?>" ><?php echo $row['diff_from_GMT'] . ' - ' . str_replace("/", " / ",$row['zone'])?></option>
+                        <?php } ?>  
+                   </select>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label">Monday</label>
@@ -115,7 +123,7 @@
                             <!-- time Picker -->
                             <div class="bootstrap-timepicker">
                                 <div class="input-group">
-                                    <input type="text" class="form-control timepicker">
+                                    <input type="text" class="form-control timepicker starttimes" name="starttime_mon" id="starttime_mon"  data-field="time" readonly placeholder="Monday Shift Start Time">
 
                                     <div class="input-group-addon">
                                         <i class="fa fa-clock-o"></i>
@@ -129,13 +137,21 @@
                             <!-- time Picker -->
                             <div class="bootstrap-timepicker">
                                 <div class="input-group">
-                                    <input type="text" class="form-control timepicker">
+                                    <input type="text" class="form-control timepicker endtimes" name="endtime_mon" id="endtime_mon" data-field="time" readonly  placeholder="Monday Shift End Time">
 
                                     <div class="input-group-addon">
                                         <i class="fa fa-clock-o"></i>
                                     </div>
                                 </div>
                                 <!-- /.input group -->
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                        	<div class="checkbox">
+                                <label class="control-label">
+                                    <input type="checkbox" name="mon_off" id="mon_off" class="" value="1" />
+                                    <strong>Mark as off day</strong>
+                                </label>
                             </div>
                         </div>
 
@@ -146,7 +162,7 @@
                             <!-- time Picker -->
                             <div class="bootstrap-timepicker">
                                 <div class="input-group">
-                                    <input type="text" class="form-control timepicker">
+                                    <input type="text" class="form-control timepicker starttimes" name="starttime_tues" id="starttime_tues" data-field="time" readonly  placeholder="Tuesday Shift Start Time">
 
                                     <div class="input-group-addon">
                                         <i class="fa fa-clock-o"></i>
@@ -160,24 +176,32 @@
                             <!-- time Picker -->
                             <div class="bootstrap-timepicker">
                                 <div class="input-group">
-                                    <input type="text" class="form-control timepicker">
+                                    <input type="text" class="form-control timepicker endtimes" name="endtime_tues" id="endtime_tues" data-field="time" readonly  placeholder="Tuesday Shift End Time">
 
                                     <div class="input-group-addon">
                                         <i class="fa fa-clock-o"></i>
                                     </div>
                                 </div>
                                 <!-- /.input group -->
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                        	<div class="checkbox">
+                                <label class="control-label">
+                                    <input type="checkbox" name="tues_off" id="tues_off" class="" value="1" />
+                                    <strong>Mark as off day</strong>
+                                </label>
                             </div>
                         </div>
 
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">Tuesday</label>
+                        <label class="col-sm-2 control-label">Wednesday</label>
                         <div class="col-sm-3">
                             <!-- time Picker -->
                             <div class="bootstrap-timepicker">
                                 <div class="input-group">
-                                    <input type="text" class="form-control timepicker">
+                                    <input type="text" class="form-control timepicker starttimes" name="starttime_wed" id="starttime_wed" data-field="time" readonly  placeholder="Wednesday Shift Start Time">
 
                                     <div class="input-group-addon">
                                         <i class="fa fa-clock-o"></i>
@@ -191,13 +215,21 @@
                             <!-- time Picker -->
                             <div class="bootstrap-timepicker">
                                 <div class="input-group">
-                                    <input type="text" class="form-control timepicker">
+                                    <input type="text" class="form-control timepicker endtimes" name="endtime_wed" id="endtime_wed" data-field="time" readonly  placeholder="Wednesday Shift End Time">
 
                                     <div class="input-group-addon">
                                         <i class="fa fa-clock-o"></i>
                                     </div>
                                 </div>
                                 <!-- /.input group -->
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                        	<div class="checkbox">
+                                <label class="control-label">
+                                    <input type="checkbox" name="wed_off" id="wed_off" class="" value="1" />
+                                    <strong>Mark as off day</strong>
+                                </label>
                             </div>
                         </div>
 
@@ -208,7 +240,7 @@
                             <!-- time Picker -->
                             <div class="bootstrap-timepicker">
                                 <div class="input-group">
-                                    <input type="text" class="form-control timepicker">
+                                    <input type="text" class="form-control timepicker starttimes" name="starttime_thurs" id="starttime_thurs" data-field="time" readonly  placeholder="Thursday Shift Start Time">
 
                                     <div class="input-group-addon">
                                         <i class="fa fa-clock-o"></i>
@@ -222,13 +254,21 @@
                             <!-- time Picker -->
                             <div class="bootstrap-timepicker">
                                 <div class="input-group">
-                                    <input type="text" class="form-control timepicker">
+                                    <input type="text" class="form-control timepicker endtimes" name="endtime_thurs" id="endtime_thurs" data-field="time" readonly  placeholder="Thursday Shift End Time">
 
                                     <div class="input-group-addon">
                                         <i class="fa fa-clock-o"></i>
                                     </div>
                                 </div>
                                 <!-- /.input group -->
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                        	<div class="checkbox">
+                                <label class="control-label">
+                                    <input type="checkbox" name="thurs_off" id="thurs_off" class="" value="1" />
+                                    <strong>Mark as off day</strong>
+                                </label>
                             </div>
                         </div>
 
@@ -239,7 +279,7 @@
                             <!-- time Picker -->
                             <div class="bootstrap-timepicker">
                                 <div class="input-group">
-                                    <input type="text" class="form-control timepicker">
+                                    <input type="text" class="form-control timepicker starttimes" name="starttime_fri" id="starttime_fri" data-field="time" readonly  placeholder="Friday Shift Start Time">
 
                                     <div class="input-group-addon">
                                         <i class="fa fa-clock-o"></i>
@@ -253,13 +293,21 @@
                             <!-- time Picker -->
                             <div class="bootstrap-timepicker">
                                 <div class="input-group">
-                                    <input type="text" class="form-control timepicker">
+                                    <input type="text" class="form-control timepicker endtimes" name="endtime_fri" id="endtime_fri" data-field="time" readonly  placeholder="Friday Shift End Time">
 
                                     <div class="input-group-addon">
                                         <i class="fa fa-clock-o"></i>
                                     </div>
                                 </div>
                                 <!-- /.input group -->
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                        	<div class="checkbox">
+                                <label class="control-label">
+                                    <input type="checkbox" name="fri_off" id="fri_off" class="" value="1" />
+                                    <strong>Mark as off day</strong>
+                                </label>
                             </div>
                         </div>
 
@@ -270,7 +318,7 @@
                             <!-- time Picker -->
                             <div class="bootstrap-timepicker">
                                 <div class="input-group">
-                                    <input type="text" class="form-control timepicker">
+                                    <input type="text" class="form-control timepicker starttimes" name="starttime_sat" id="starttime_sat" data-field="time" readonly  placeholder="Saturday Shift Start Time">
 
                                     <div class="input-group-addon">
                                         <i class="fa fa-clock-o"></i>
@@ -284,7 +332,7 @@
                             <!-- time Picker -->
                             <div class="bootstrap-timepicker">
                                 <div class="input-group">
-                                    <input type="text" class="form-control timepicker">
+                                    <input type="text" class="form-control timepicker endtimes" name="endtime_sat" id="endtime_sat" data-field="time" readonly  placeholder="Saturday Shift End Time">
 
                                     <div class="input-group-addon">
                                         <i class="fa fa-clock-o"></i>
@@ -293,12 +341,58 @@
                                 <!-- /.input group -->
                             </div>
                         </div>
+                        <div class="col-sm-3">
+                        	<div class="checkbox">
+                                <label class="control-label">
+                                    <input type="checkbox" name="sat_off" id="sat_off" class="" value="1" />
+                                    <strong>Mark as off day</strong>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Sunday</label>
+                        <div class="col-sm-3">
+                            <!-- time Picker -->
+                            <div class="bootstrap-timepicker">
+                                <div class="input-group">
+                                    <input type="text" class="form-control timepicker starttimes" name="starttime_sun" id="starttime_sun" data-field="time" readonly  placeholder="Sunday Shift Start Time">
+
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-clock-o"></i>
+                                    </div>
+                                </div>
+                                <!-- /.input group -->
+                            </div>
+                        </div>
+                        <label class="col-sm-1 control-label">To</label>
+                        <div class="col-sm-3">
+                            <!-- time Picker -->
+                            <div class="bootstrap-timepicker">
+                                <div class="input-group">
+                                    <input type="text" class="form-control timepicker endtimes" name="endtime_sun" id="endtime_sun" data-field="time" readonly  placeholder="Sunday Shift End Time">
+
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-clock-o"></i>
+                                    </div>
+                                </div>
+                                <!-- /.input group -->
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                        	<div class="checkbox">
+                                <label class="control-label">
+                                    <input type="checkbox" name="sun_off" id="sun_off" class="" value="1" />
+                                    <strong>Mark as off day</strong>
+                                </label>
+                            </div>
+                        </div>
                     </div>
                     <div class="form-group">
                         <div class="col-sm-12 col-sm-offset-1">
                             <div class="checkbox">
                                 <label class="control-label">
-                                    <input type="checkbox">
+                                    <input type="checkbox" name="all_day_same" id="all_day_same" class="" />
                                     <strong>Use same time for all work days</strong>
                                 </label>
                             </div>

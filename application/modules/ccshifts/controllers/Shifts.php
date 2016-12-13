@@ -433,17 +433,18 @@ class Shifts extends MX_Controller
 	
 	public function shifts()
 	{
+		$compIdSess 							=	 $this->session->userdata('coid');
+		$shifts 									= 	 $this->Shifts_model->get_department_shifts($compIdSess);
 		$this->data['view']					=	'ccshifts/shift';
-		$this->data['footer_includes']			=	'<script src="'.base_url().'js/cc/shifts.js" type="text/javascript"></script>';
+		$this->data['footer_includes']	=	'<script src="'.base_url().'js/cc/shifts.js" type="text/javascript"></script>';
 		$this->load->view('master', $this->data);		
 	}
 
 	function get_common()
 	{
 		$this->data['mynotifications']			=	$this->site_settings->fetchMyNotifications();
-		
-		/*
 		$this->site_settings->get_site_settings();
+		/*
 		$this->data['profile']			=	$this->site_settings->personal_details();	
 		$this->data['menus_all']		= 	modules::load('menus')->get_menus();
 		$this->data['myprivileges']	=	$this->site_settings->myprivileges();

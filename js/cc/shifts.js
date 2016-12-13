@@ -16,7 +16,8 @@ $(document).ready(function(){
 
   //Timepicker
   $(".timepicker").timepicker({
-      showInputs: false
+      showInputs: false,
+      showMeridian:false
   });
   
   
