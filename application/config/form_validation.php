@@ -340,6 +340,23 @@ $config = array(
         array('field'   => 'wed_off'	, 'label'   => 'Wednesday Off', 'rules'   => 'trim|xss_clean'),
         array('field'   => 'tues_off'	, 'label'   => 'Tuesday Off', 'rules'   => 'trim|xss_clean'),
         array('field'   => 'mon_off'	, 'label'   => 'Monday Off', 'rules'   => 'trim|xss_clean')
-    )
+    ),
+    'formUpdateNotificationTime' => array(
+        array(
+            'field' => 'shift_id',
+            'label' => 'Shift Id',
+            'rules' => 'trim|required|xss_clean|prep_for_form'
+        ),
+        array(
+            'field' => 'comp_id',
+            'label' => 'Company ID',
+            'rules' => 'trim|required|xss_clean|prep_for_form'
+        ),
+        array(
+            'field' => 'notify_time',
+            'label' => 'Notification Time',
+            'rules' => 'trim|required|xss_clean|prep_for_form'
+        )
+    ),
 );
 ?>

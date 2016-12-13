@@ -5,7 +5,7 @@
 		private function getConnection()
 		{	
 			                   // hostname,   username,     password,   database
-			$con=mysqli_connect("localhost","clock2","d3fault","clock2")OR die('Could not Connect the Database');		
+			$con=mysqli_connect("localhost","root","","clock2")OR die('Could not Connect the Database');
 			return $con;
 		}
 		

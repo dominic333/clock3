@@ -217,5 +217,53 @@ $(document).ready(function(){
                 .closest('.control-group').removeClass('error').addClass('success');
         }
     });
+
+    //Function to open update notification time modal popup
+    //By Dominic; Dec 13,2016
+    $(document).on('click','.updateNotificationTime',function (e)
+    {
+        e.preventDefault();
+        $('#formUpdateNotificationTime')[0].reset();
+        var shift_name		=		$(this).attr("data-shift_name");
+        var comp_id	        =		$(this).attr("data-comp_id");
+        var shift_id	    =		$(this).attr("data-shift_id");
+        var notify_time	    =		$(this).attr("data-notify_time");
+
+
+        $('#formUpdateNotificationTime #shift_name').val(shift_name);
+        $('#formUpdateNotificationTime #comp_id').val(comp_id);
+        $('#formUpdateNotificationTime #shift_id').val(shift_id);
+        $('#formUpdateNotificationTime #notify_time').val(notify_time);
+
+        $('#updateNotificationTime').modal('show');
+    });
+
+    //Function to validate update notification time form
+    //By Dominic; Dec 13,2016
+    $('#formUpdateNotificationTime').validate(
+        {
+            rules: {
+                shift_name: {
+                    required: true
+                },
+                notify_time: {
+                    required: true
+                },
+                shift_id:{
+                    required: true
+                },
+                comp_id:{
+                    required: true
+                }
+            },
+            highlight: function(element) {
+                $(element).closest('.control-group').removeClass('success').addClass('error');
+            },
+            success: function(element) {
+                element
+                    .text('').addClass('valid')
+                    .closest('.control-group').removeClass('error').addClass('success');
+            }
+        });
 });
 

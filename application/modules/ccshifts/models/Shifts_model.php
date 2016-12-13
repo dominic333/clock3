@@ -445,17 +445,81 @@ class Shifts_model extends CI_Model {
 				break;
 
 			case 'Modify_Shifts':
+
+				if ($this->input->post('sun_off') == '1')
+				{
+					$sun_off=1;
+				}
+				else
+				{
+					$sun_off=0;
+				}
+
+				if ($this->input->post('sat_off') == '1')
+				{
+					$sat_off=1;
+				}
+				else
+				{
+					$sat_off=0;
+				}
+
+				if ($this->input->post('fri_off') == '1')
+				{
+					$fri_off=1;
+				}
+				else
+				{
+					$fri_off=0;
+				}
+
+				if ($this->input->post('thurs_off') == '1')
+				{
+					$thurs_off=1;
+				}
+				else
+				{
+					$thurs_off=0;
+				}
+
+				if ($this->input->post('wed_off') == '1')
+				{
+					$wed_off=1;
+				}
+				else
+				{
+					$wed_off=0;
+				}
+
+				if ($this->input->post('tues_off') == '1')
+				{
+					$tues_off=1;
+				}
+				else
+				{
+					$tues_off=0;
+				}
+
+				if ($this->input->post('mon_off') == '1')
+				{
+					$mon_off=1;
+				}
+				else
+				{
+					$mon_off=0;
+				}
+
 				$data = array(
 
 					'time_zone' 			=> $this->db->escape_str($this->input->post('timezone')),
 
-					'monday' 				=> $this->checkifGraveYard($this->input->post('starttime_mon'),$this->input->post('endtime_mon')),
-					'tuesday' 				=> $this->checkifGraveYard($this->input->post('starttime_tues'),$this->input->post('endtime_tues')),
-					'wednesday' 			=> $this->checkifGraveYard($this->input->post('starttime_wed'),$this->input->post('endtime_wed')),
-					'thursday' 				=> $this->checkifGraveYard($this->input->post('starttime_thurs'),$this->input->post('endtime_thurs')),
-					'friday' 				=> $this->checkifGraveYard($this->input->post('starttime_fri'),$this->input->post('endtime_fri')),
-					'saturday' 				=> $this->checkifGraveYard($this->input->post('starttime_sat'),$this->input->post('endtime_sat')),
-					'sunday' 				=> $this->checkifGraveYard($this->input->post('starttime_sun'),$this->input->post('endtime_sun')),
+					'monday' 				=> $this->checkifGraveYard($this->input->post('starttime_mon'),$this->input->post('endtime_mon'),$mon_off),
+					'tuesday' 				=> $this->checkifGraveYard($this->input->post('starttime_tues'),$this->input->post('endtime_tues'),$tues_off),
+					'wednesday' 			=> $this->checkifGraveYard($this->input->post('starttime_wed'),$this->input->post('endtime_wed'),$wed_off),
+					'thursday' 				=> $this->checkifGraveYard($this->input->post('starttime_thurs'),$this->input->post('endtime_thurs'),$thurs_off),
+					'friday' 				=> $this->checkifGraveYard($this->input->post('starttime_fri'),$this->input->post('endtime_fri'),$fri_off),
+					'saturday' 				=> $this->checkifGraveYard($this->input->post('starttime_sat'),$this->input->post('endtime_sat'),$sat_off),
+					'sunday' 				=> $this->checkifGraveYard($this->input->post('starttime_sun'),$this->input->post('endtime_sun'),$sun_off),
 
 					'monday_starttime' 	=> $this->db->escape_str($this->input->post('starttime_mon')),
 					'tuesday_starttime' 	=> $this->db->escape_str($this->input->post('starttime_tues')),
@@ -473,10 +537,16 @@ class Shifts_model extends CI_Model {
 					'saturday_endtime' 	=> $this->db->escape_str($this->input->post('endtime_sat'))
 				);
 
-				$this->db->where('dept_id',$this->input->post('department'));
-				$this->db->where('shift_id',$this->input->post('shift'));
+				$this->db->where('comp_id',$this->input->post('comp_id'));
+				$this->db->where('shift_id',$this->input->post('shift_id'));
 				$this->db->update('department_shifts', $data);
 
+				break;
+			case 'Updated_Notify_Time':
+				$data['notify_time'] = $this->db->escape_str($this->input->post('notify_time'));
+				$this->db->where('comp_id',$this->input->post('comp_id'));
+				$this->db->where('shift_id',$this->input->post('shift_id'));
+				$this->db->update('department_shifts', $data);
 				break;
 
 			default		:break;

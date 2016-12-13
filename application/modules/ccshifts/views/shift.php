@@ -77,7 +77,12 @@
                                            class="btn btn-success btn-sm editShiftTime" href="#" data-toggle="tooltip" data-placement="bottom" title="Edit Shift Details">
                                             <span class="fa fa-edit"></span>
                                         </a>
-                                        <a class="btn btn-warning btn-sm" href="#" data-toggle="tooltip" data-placement="bottom" title="Update Notification time"><span class="fa fa-clock-o"></span>
+                                        <a class="btn btn-warning btn-sm updateNotificationTime" href="#"
+                                           data-shift_id="<?php echo $row->shift_id; ?>"
+                                           data-comp_id="<?php echo $row->comp_id; ?>"
+                                           data-shift_name="<?php echo $row->shift_name; ?>"
+                                           data-notify_time="<?php echo $row->notify_time; ?>"
+                                           data-toggle="tooltip" data-placement="bottom" title="Update Notification time"><span class="fa fa-clock-o"></span>
                                     </td>
                                 </tr>
                                 <?php $i++; } ?>
@@ -474,7 +479,7 @@
                     <div class="form-group">
                         <label class="col-sm-2 control-label">Shift Name</label>
                         <div class="col-sm-6">
-                            <input type="text" name="shift_name" id="shift_name" class="form-control" placeholder="Shift Name" required/>
+                            <input type="text" name="shift_name" id="shift_name" class="form-control" placeholder="Shift Name" required readonly/>
                         </div>
                     </div>
                     <?php //$timezone_lists=timezone_lists();?>
@@ -784,7 +789,7 @@
                         Cancel
                     </button>
                     <button type="submit" class="btn btn-success">
-                        Add Shift
+                        Update This Shift
                     </button>
                 </div>
             </form>
@@ -793,4 +798,67 @@
 </div>
 <!--=======================================End Of Edit Shift Modal Form========================================-->
 
+<!--=======================================Edit announcement Modal Form========================================-->
+<div class="modal fade" id="updateNotificationTime" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <button type="button" class="close"
+                        data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">
+                   Update Notification Time
+                </h4>
+            </div>
 
+            <!-- Modal Body -->
+            <div class="modal-body">
+
+                <form id="formUpdateNotificationTime" name="formUpdateNotificationTime" class="form-horizontal" role="form" action="<?php echo base_url();?>ccshifts/shifts/updateNotificationTime" method="post">
+                    <input type="hidden" name="<?=$this->security->get_csrf_token_name()?>" value="<?=$this->security->get_csrf_hash()?>" />
+                    <input type="hidden" name="shift_id" id="shift_id" />
+                    <input type="hidden" name="comp_id" id="comp_id" />
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Shift Name</label>
+                        <div class="col-sm-6">
+                            <input type="text" name="shift_name" id="shift_name" class="form-control" placeholder="Shift Name" required readonly/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Notification Time</label>
+                        <div class="col-sm-6">
+                            <!-- time Picker -->
+                            <div class="bootstrap-timepicker">
+                                <div class="input-group">
+                                    <input type="text" class="form-control timepicker endtimes" name="notify_time" id="notify_time" data-field="time" readonly  placeholder="Notification Time">
+
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-clock-o"></i>
+                                    </div>
+                                </div>
+                                <!-- /.input group -->
+                            </div>
+                        </div>
+                    </div>
+            </div>
+
+            <!-- Modal Footer -->
+            <div class="modal-footer">
+                <button type="reset" class="btn btn-danger"
+                        data-dismiss="modal">
+                    Cancel
+                </button>
+                <button type="submit" class="btn btn-success">
+                    Update Notification Time
+                </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!--=======================================End Of Edit announcement Modal Form========================================-->

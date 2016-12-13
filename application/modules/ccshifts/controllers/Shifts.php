@@ -479,14 +479,39 @@ class Shifts extends MX_Controller
 		else
 		{
 			$compIdSess =$this->session->userdata('coid');
-			$this->Shifts_model->shiftsCRUD('Add_Shifts','' );
-			$shift_id = $this->db->insert_id();
+			$this->Shifts_model->shiftsCRUD('Modify_Shifts','' );
+			$shift_id = $this->input->post('shift_id');
 			// save to log table
-			$operation = 'Added Shift with ID '.$shift_id.' for company '.$compIdSess;
+			$operation = 'Modified Shift with ID '.$shift_id.' for company '.$compIdSess;
 			$this->site_settings->adminlog($operation);
 
 			$nType = 3; //announcements updates
-			$nMsg  = 'New Shift Added '.$this->input->post('shift_name');
+			$nMsg  = 'Shift Modified '.$this->input->post('shift_name');
+			$this->site_settings->addNotification($nType,$nMsg,'');
+
+			redirect('ccshifts/shifts/shifts');
+		}
+	}
+
+	//Function to update Notification Time
+	//By Dominic, Dec 13,2016
+	function  updateNotificationTime()
+	{
+		if ($this->form_validation->run('formUpdateNotificationTime') === FALSE)
+		{
+			redirect('ccshifts/shifts/shifts');
+		}
+		else
+		{
+			$compIdSess =$this->session->userdata('coid');
+			$this->Shifts_model->shiftsCRUD('Updated_Notify_Time','' );
+			$shift_id = $this->input->post('shift_id');
+			// save to log table
+			$operation = 'Updated Notification TIme for Shift with ID '.$shift_id.' for company '.$compIdSess;
+			$this->site_settings->adminlog($operation);
+
+			$nType = 3; //announcements updates
+			$nMsg  = 'Notification Time Updated for Shift '.$this->input->post('shift_name');
 			$this->site_settings->addNotification($nType,$nMsg,'');
 
 			redirect('ccshifts/shifts/shifts');
