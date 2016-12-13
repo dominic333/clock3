@@ -235,7 +235,43 @@ $config = array(
             'label' => 'User Id',
             'rules' => 'trim|required|xss_clean|prep_for_form'
         )
-    )
+    ),
+    'user_shiftchange_frm' => array(
+        array(
+            'field' => 'ststaff_name',
+            'label' => 'Staff Name',
+            'rules' => 'trim|required|xss_clean|prep_for_form'
+        ),
+        array(
+            'field' => 'ststaffType',
+            'label' => 'Staff Type',
+            'rules' => 'trim|required|xss_clean|prep_for_form'
+        ),
+        array(
+            'field' => 'ststaff_id',
+            'label' => 'User Id',
+            'rules' => 'trim|required|xss_clean|prep_for_form'
+        )
+    ),
+    'frm_add_department_ip' => array(
+        array(
+            'field' => 'department_ip',
+            'label' => 'IP Address',
+            'rules' => 'trim|required|xss_clean|prep_for_form'
+        )
+    ),
+    'frm_edit_whitelisted_ip' => array(
+        array(
+            'field' => 'department_ip',
+            'label' => 'IP Address',
+            'rules' => 'trim|required|xss_clean|prep_for_form'
+        ),
+        array(
+            'field' => 'whitelist_id',
+            'label' => 'ID',
+            'rules' => 'trim|required|xss_clean|prep_for_form'
+        )
+    ),
 
 );
 ?>

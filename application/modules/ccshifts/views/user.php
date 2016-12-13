@@ -92,6 +92,7 @@
                         <!-- /.widget-user -->
 
                         <div class="box-footer text-center">
+                            <a href="javascript:void(0)" class="btn btn-success fa fa-briefcase change_user_shiftType" data-toggle="tooltip" data-placement="bottom" title="Change Shift Type" data-staff_id="<?php echo $member->staff_id; ?>" data-staff_name="<?php echo $member->staff_name; ?>" data-login_name="<?php echo $member->login_name; ?>"   data-staff_photo="<?php echo $staff_photo; ?>" data-staff_type="<?php echo $member->staff_type; ?>" ></a>
                             <a href="javascript:void(0)" class="btn btn-success fa fa-edit edit_user_link" data-toggle="tooltip" data-placement="bottom" title="Edit User?" data-staff_id="<?php echo $member->staff_id; ?>" data-staff_name="<?php echo $member->staff_name; ?>" data-login_name="<?php echo $member->login_name; ?>"  data-email="<?php echo $member->email; ?>" data-contact_number="<?php echo $member->contact_number; ?>" data-staff_photo="<?php echo $staff_photo; ?>" ></a>
                             <a href="javascript:void(0)" class="btn btn-success fa fa-tag forgot_user_link" data-toggle="tooltip" data-placement="bottom" title="Change Password?" data-staff_id="<?php echo $member->staff_id; ?>" data-staff_name="<?php echo $member->staff_name; ?>" data-login_name="<?php echo $member->login_name; ?>"  data-email="<?php echo $member->email; ?>"  ></a>
                             <a href="javascript:void(0)" class="btn btn-success fa fa-map-marker rremote_login_link" data-toggle="tooltip" data-placement="bottom" title="Remote Login?" data-staff_id="<?php echo $member->staff_id; ?>" data-staff_name="<?php echo $member->staff_name; ?>" data-remotelogin="<?php echo $member->work_from_home; ?>" data-staff_photo="<?php echo $staff_photo; ?>" ></a>
@@ -415,3 +416,52 @@
 	</div><!-- /.modal --> 
 		
 <!--reset password ends-->
+
+ <!-- User Shift Change Modal starts -->
+<div class="modal fade" id="user_shiftType_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Remote Login</h4>
+      </div>
+      <div class="modal-body">
+         <form  role="form" id="user_shiftchange_frm" name="user_shiftchange_frm" action="<?php echo base_url();?>ccshifts/shifts/change_user_shift_type" method="post" >
+            <div class="">
+			    	<div class="profile text-center no-box-shadow">
+			      	<div class="profile-head"></div>
+			          	<div class="edit-profile-photo">
+			            	<img class="" id="ststaff_photo_src" src="">
+			            </div>
+			      </div>
+			   </div>
+			   
+	        <div class="form-group">
+	            <label>Name</label>
+	            <input type="text" name="ststaff_name" id="ststaff_name"  class="form-control" placeholder="Staff Name" value=""  >	            
+	         </div>	         
+	         
+	         
+	         <div class="form-group">	            
+               <select  name="ststaffType"  id="ststaffType" class="selectpicker form-control">
+                  <option value="">-- Change Staff Type? --</option>
+                  <option value="1" >Normal Shift user</option>
+                	<option value="2" >Flexible Shift User</option>                         
+               </select>
+	         </div>  	         
+	         
+	         <input type="hidden" name="ststaff_id"  id="ststaff_id" value=""/>
+	         <input type="hidden" name="<?=$this->security->get_csrf_token_name()?>" value="<?=$this->security->get_csrf_hash()?>" />
+            <input type="hidden" name="Submit" value="Submit"/> 
+	               
+        </form>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger pull-left show_active" data-dismiss="modal">Close</button>
+          <button  form="user_shiftchange_frm" type="submit"  id="reset_pass_subt" name="Submit" value="Submit"  class="btn btn-success show_active" >Update</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- User Shift Change Modal ends -->

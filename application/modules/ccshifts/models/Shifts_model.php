@@ -211,6 +211,16 @@ class Shifts_model extends CI_Model {
 				$this->db->update('staff_info', $data);
 	               
 				break;
+				
+				case 'Edit_StaffType':	
+				$data = array(
+					'staff_type' 	=> $this->db->escape_str($this->input->post('ststaffType'))
+				);
+						  		 				
+				$this->db->where('staff_id',$this->input->post('ststaff_id'));
+				$this->db->update('staff_info', $data);
+	               
+				break;
 
            default		:break;
 	    }
@@ -237,6 +247,70 @@ class Shifts_model extends CI_Model {
 		$this->db->delete('staff_info', array('staff_id' => $staff_id));
 		$this->db->delete('staff_dept_shift', array('staff_id' => $staff_id));
 
+	}
+	
+	//Function to fetch whitelisted IPs
+	//Dominic, December 13,2016
+	function getWhiteListedIPs($compIdSess)
+	{
+		//SELECT department_ip.id,department_ip.ip_address,departments.department_name FROM department_ip
+		//LEFT JOIN departments ON department_ip.department_id=departments.dept_id
+		//WHERE department_ip.company_id=84 AND department_ip.status=1
+		
+	  $this->db->select('department_ip.id,department_ip.ip_address,departments.department_name');
+	  $this->db->from('department_ip');
+  	  $this->db->join('departments','departments.dept_id=department_ip.department_id','LEFT');
+  	  $this->db->where('department_ip.company_id',$compIdSess);
+  	  $this->db->where('department_ip.status',1);
+     $this->db->order_by("department_ip.id", "ASC");
+	  $query= $this->db->get(); 
+	  //echo $this->db->last_query();                                    
+	  return $query->result();
+	
+	}
+	
+	//Function to check whether the ip address already added or not
+	//Dominic, December 13,2016
+	function check_ip_exist()
+	{
+		$this->db->where('ip_address',$this->input->post('department_ip'));
+		//$this->db->where('department_id',$this->input->post('department'));
+		$this->db->where('company_id',$this->session->userdata('coid'));
+		$departments_ips = $this->db->get('department_ip');
+		return $departments_ips->result();		
+		
+	}
+	
+	//Function to save department ip
+	//Dominic, December 13,2016
+	function add_department_ip($ip_addr)
+	{
+		$data = array(		
+					'company_id' 			=> $this->session->userdata('coid'),                           
+					//'department_id' 			=> $this->db->escape_str($department),                           
+	            'ip_address' 	=> $this->db->escape_str($ip_addr),                            
+					);
+		$this->db->insert('department_ip', $data);	
+	}
+	
+	//Function to edit a whitelisted IP
+	//Dominic, December 13,2016
+	function edit_department_ip($whitelist_id,$ip_addr)
+	{
+		$data['ip_address']	=  $ip_addr;
+		$this->db->where('id',$whitelist_id);
+		$this->db->where('company_id',$this->session->userdata('coid'));
+		$this->db->update('department_ip',$data);
+	}
+	
+	//Function to delete a whitelisted IP
+	//Dominic, December 13,2016
+	function delete_department_ip($id,$ip)
+	{
+		$this->db->where('id', $id);
+  		$this->db->where('ip_address',$ip);
+  		$this->db->where('company_id',$this->session->userdata('coid'));
+	   $this->db->delete('department_ip');
 	}
 	
 	

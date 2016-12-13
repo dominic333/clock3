@@ -278,6 +278,67 @@ $(document).ready(function(){
 				});
 			}	
 		});
+		
+		//Change Staff Type- Flexible/Normal
+		//By Dominic; Dec 13,2016 
+		$(document).on('click','.change_user_shiftType',function (e) 
+		{
+			e.preventDefault();
+			var staff_id 			= $(this).data('staff_id');
+			var staff_name 		= $(this).data('staff_name');
+			var staff_photo 		= $(this).data('staff_photo');
+			var login_name 		= $(this).data('login_name');
+			var staff_type 		= $(this).data('staff_type');
+		
+			if(staff_id!='')
+			{
+				document.getElementById("ststaff_id").value=staff_id;
+				document.getElementById("ststaff_name").value=staff_name;
+				document.getElementById("ststaff_photo_src").setAttribute("src", staff_photo);
+				document.getElementById("ststaffType").value=staff_type;
+				document.getElementById('ststaff_name').readOnly = true;
+				$('#user_shiftType_modal').modal('show');		
+			}
+			else
+			{
+				$.alert({
+				    title: 'Invalid Data\'s ',
+				    content: 'Invalid Data,Please Try Other User To Edit',
+				    confirm: function(){
+				      
+				    },
+				    cancel:  function(){
+				       
+				    },
+				});
+			}	
+		});
+		
+		//Form Validations for Change Staff Type Form
+		//By Dominic; Dec 13,2016 
+		$('#user_shiftchange_frm').validate(
+		 {
+		  rules: {
+		     ststaff_name: 
+		     {
+			     lettersonly: true,
+			     required: true,
+			  },
+		     ststaffType: 
+		     {
+			     required: true
+			  } 
+		    
+		   },                 
+			highlight: function(element) {
+				  $(element).closest('.control-group').removeClass('success').addClass('error');
+			 },
+			 success: function(element) {
+			  element
+			 .text('').addClass('valid')
+			 .closest('.control-group').removeClass('error').addClass('success');
+			}
+		});
 	
 	
 		//Form Validations for Monitor Attendance Form

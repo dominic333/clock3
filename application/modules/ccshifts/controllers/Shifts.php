@@ -218,6 +218,38 @@ class Shifts extends MX_Controller
 			redirect('ccshifts/shifts/users');
 		}
 	}
+	
+	//Function to change staff type of a user
+	//By Dominic, Dec 13,2016
+	function change_user_shift_type()
+	{
+		if ($this->form_validation->run('user_shiftchange_frm') === FALSE)
+		{
+			redirect('ccshifts/shifts/users');
+		}
+		else
+		{
+			$this->Shifts_model->save('Edit_StaffType','' );
+			$staff_id = $this->input->post('ststaff_id');
+			$ststaffType=$this->input->post('ststaffType');
+			if($ststaffType==1)
+			{
+				$staffType='Normal Shift User';
+			}
+			else
+			{
+				$staffType='Flexible Shift User';
+			}
+			// save to log table
+			$operation = 'Edited Staff Type for staff with ID '.$staff_id;
+			$this->site_settings->adminlog($operation);
+
+			$nType = 3; //company updates
+			$nMsg  = $this->input->post('ststaff_name').' changed to '.$staffType;
+			$this->site_settings->addNotification($nType,$nMsg,'');
+			redirect('ccshifts/shifts/users');
+		}
+	}
 
 	//Function to reset password
 	//By Dominic, Dec 12,2016
@@ -289,13 +321,109 @@ class Shifts extends MX_Controller
 		}
 	}
 	
+		//Function to list white-listed IPs
+		//By Dominic, Dec 13,2016
+		public function whitelistips()
+		{
+			$compIdSess =$this->session->userdata('coid');
+		
+			$this->data['whitelistedIps']				=  $this->Shifts_model->getWhiteListedIPs($compIdSess);
+			$this->data['view']					=	'ccshifts/white-list-ips';
+			$this->data['footer_includes']			=	'<script src="'.base_url().'js/cc/whitelistips.js" type="text/javascript"></script>';
+			$this->load->view('master', $this->data);	
+		}
 	
-	public function whitelistips()
-	{
-		$this->data['view']					=	'ccshifts/white-list-ips';
-		$this->data['footer_includes']			=	'<script src="'.base_url().'js/cc/whitelistips.js" type="text/javascript"></script>';
-		$this->load->view('master', $this->data);	
-	}
+	
+		//Function to add white-listed IPs
+		//By Dominic, Dec 13,2016
+		function add_department_ips()
+		{			
+			if ($this->form_validation->run('frm_add_department_ip') === FALSE) 
+			{
+				redirect('ccshifts/shifts/whitelistips');
+			}
+			else
+			{	
+				$compIdSess =$this->session->userdata('coid');
+				$check_ip_exist=$this->Shifts_model->check_ip_exist();
+				if(count($check_ip_exist)>0)
+				{
+					redirect('ccshifts/shifts/whitelistips');
+				}
+				else 
+				{		
+					$ip_addr=$this->input->post('department_ip');					
+					$this->Shifts_model->add_department_ip($ip_addr);
+					
+	            // save to log table	
+					$operation = 'New IP whitelisted '.$ip_addr.' for company '.$compIdSess;
+					$this->site_settings->adminlog($operation);
+					
+					$nType = 3; //company updates
+					$nMsg  = 'White-listed IP: '.$ip_addr;
+					$this->site_settings->addNotification($nType,$nMsg,'');
+					
+					redirect('ccshifts/shifts/whitelistips');
+			   }							
+			}				
+		}
+	
+	
+		//Function to modify white-listed IPs
+		//By Dominic, Dec 13,2016
+		function modify_department_ips()
+		{
+			if ($this->form_validation->run('frm_edit_whitelisted_ip') === FALSE) 
+			{
+				redirect('ccshifts/shifts/whitelistips');
+			}
+			else
+			{	
+				$compIdSess =$this->session->userdata('coid');
+				$check_ip_exist=$this->Shifts_model->check_ip_exist();
+				if(count($check_ip_exist)>0)
+				{
+					redirect('ccshifts/shifts/whitelistips');
+				}
+				else 
+				{	
+		
+					$whitelist_id=$this->input->post('whitelist_id');			
+					$ip_addr=$this->input->post('department_ip');					
+					$this->Shifts_model->edit_department_ip($whitelist_id,$ip_addr);
+					
+	            // save to log table	
+					$operation = 'Edited whitelisted IP'.$ip_addr.' for company '.$compIdSess;
+					$this->site_settings->adminlog($operation);
+					
+					$nType = 3; //company updates
+					$nMsg  = 'Edited White-listed IP: '.$ip_addr;
+					$this->site_settings->addNotification($nType,$nMsg,'');
+					
+					redirect('ccshifts/shifts/whitelistips');
+			   }							
+			}
+		}
+		
+		//Function to delete a whitelisted ip
+		//By Dominic, Dec 13,2016
+		function deleteWhiteListedIP()
+		{
+			$id=$this->input->post('id');
+			$ip=$this->input->post('ip');
+			$this->Shifts_model->delete_department_ip($id,$ip);
+			
+			// save to log table	
+			$operation = 'Deleted White listed IP '.$ip;
+			$this->site_settings->adminlog($operation);
+			
+			$nType = 3; //announcements updates
+			$nMsg  = 'Removed White listed IP '.$ip;
+			$this->site_settings->addNotification($nType,$nMsg,'');
+			
+			echo 'deleted';
+		}	
+		
 	
 	public function assignmonitor()
 	{
@@ -313,6 +441,7 @@ class Shifts extends MX_Controller
 	function get_common()
 	{
 		$this->data['mynotifications']			=	$this->site_settings->fetchMyNotifications();
+		
 		/*
 		$this->site_settings->get_site_settings();
 		$this->data['profile']			=	$this->site_settings->personal_details();	
