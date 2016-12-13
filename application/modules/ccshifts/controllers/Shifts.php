@@ -434,7 +434,7 @@ class Shifts extends MX_Controller
 	public function shifts()
 	{
 		$compIdSess 							=	 $this->session->userdata('coid');
-		$shifts 									= 	 $this->Shifts_model->get_department_shifts($compIdSess);
+		$shifts 									= 	 $this->Shifts_model->get_all_shifts($compIdSess);
 		$this->data['view']					=	'ccshifts/shift';
 		$this->data['footer_includes']	=	'<script src="'.base_url().'js/cc/shifts.js" type="text/javascript"></script>';
 		$this->load->view('master', $this->data);		

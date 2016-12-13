@@ -315,9 +315,16 @@ class Shifts_model extends CI_Model {
 	
 	//Function to fetch all shifts for a company
 	//Dominic, December 13,2016
-	function get_department_shifts($compIdSess)
+	function get_all_shifts($compIdSess)
 	{
-	
+	  $this->db->select('DS.*');
+	  $this->db->from('department_shifts AS DS');
+  	  $this->db->where('DS.comp_id',$compIdSess);
+  	  $this->db->where('DS.shift_status',1);
+     $this->db->order_by("DS.shift_id", "ASC");
+	  $query= $this->db->get(); 
+	  //echo $this->db->last_query();                                    
+	  return $query->result();
 	}
 	
 	
