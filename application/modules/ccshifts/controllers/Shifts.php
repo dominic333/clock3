@@ -392,7 +392,7 @@ class Shifts extends MX_Controller
 					$ip_addr=$this->input->post('department_ip');					
 					$this->Shifts_model->edit_department_ip($whitelist_id,$ip_addr);
 					
-	            // save to log table	
+	            	// save to log table
 					$operation = 'Edited whitelisted IP'.$ip_addr.' for company '.$compIdSess;
 					$this->site_settings->adminlog($operation);
 					
@@ -430,14 +430,67 @@ class Shifts extends MX_Controller
 		$this->data['view']					=	'ccshifts/assignment';
 		$this->load->view('master', $this->data);		
 	}
-	
+
+	//Function to load shifts
+	//By Dominic, Dec 13,2016
 	public function shifts()
 	{
-		$compIdSess 							=	 $this->session->userdata('coid');
-		$shifts 									= 	 $this->Shifts_model->get_all_shifts($compIdSess);
-		$this->data['view']					=	'ccshifts/shift';
+		$compIdSess 					=	 $this->session->userdata('coid');
+		$this->data['shifts'] 			= 	 $this->Shifts_model->get_all_shifts($compIdSess);
+		$this->data['timezone_lists'] 	= 	 $this->Shifts_model->get_all_timezones();
+		$this->data['view']				=	'ccshifts/shift';
 		$this->data['footer_includes']	=	'<script src="'.base_url().'js/cc/shifts.js" type="text/javascript"></script>';
 		$this->load->view('master', $this->data);		
+	}
+
+	//Function to add a shift
+	//By Dominic, Dec 13,2016
+	function add_shifts()
+	{
+		if ($this->form_validation->run('frm_add_shifts') === FALSE)
+		{
+			redirect('ccshifts/shifts/shifts');
+		}
+		else
+		{
+			$compIdSess =$this->session->userdata('coid');
+			$this->Shifts_model->shiftsCRUD('Add_Shifts','' );
+			$shift_id = $this->db->insert_id();
+			// save to log table
+			$operation = 'Added Shift with ID '.$shift_id.' for company '.$compIdSess;
+			$this->site_settings->adminlog($operation);
+
+			$nType = 3; //announcements updates
+			$nMsg  = 'New Shift Added '.$this->input->post('shift_name');
+			$this->site_settings->addNotification($nType,$nMsg,'');
+
+			redirect('ccshifts/shifts/shifts');
+		}
+	}
+
+	//Function to modify a shift
+	//By Dominic, Dec 13,2016
+	function modify_shifts()
+	{
+		if ($this->form_validation->run('frm_edit_shifts') === FALSE)
+		{
+			redirect('ccshifts/shifts/shifts');
+		}
+		else
+		{
+			$compIdSess =$this->session->userdata('coid');
+			$this->Shifts_model->shiftsCRUD('Add_Shifts','' );
+			$shift_id = $this->db->insert_id();
+			// save to log table
+			$operation = 'Added Shift with ID '.$shift_id.' for company '.$compIdSess;
+			$this->site_settings->adminlog($operation);
+
+			$nType = 3; //announcements updates
+			$nMsg  = 'New Shift Added '.$this->input->post('shift_name');
+			$this->site_settings->addNotification($nType,$nMsg,'');
+
+			redirect('ccshifts/shifts/shifts');
+		}
 	}
 
 	function get_common()

@@ -321,10 +321,198 @@ class Shifts_model extends CI_Model {
 	  $this->db->from('department_shifts AS DS');
   	  $this->db->where('DS.comp_id',$compIdSess);
   	  $this->db->where('DS.shift_status',1);
-     $this->db->order_by("DS.shift_id", "ASC");
+      $this->db->order_by("DS.shift_id", "ASC");
 	  $query= $this->db->get(); 
 	  //echo $this->db->last_query();                                    
 	  return $query->result();
+	}
+
+	//Function to fetch timezones
+	//Dominic, December 13,2016
+	function get_all_timezones()
+	{
+		$this->db->select('Z.*');
+		$this->db->from('zone AS Z');
+		$this->db->order_by("Z.zone_name", "ASC");
+		$query= $this->db->get();
+		//echo $this->db->last_query();
+		return $query->result();
+	}
+
+	//Function for shifts
+	//Dominic, December 13,2016
+	function shiftsCRUD($type='' ,$filename='' ,$user_id='')
+	{
+		switch($type){
+
+			case 'Add_Shifts':
+
+				if ($this->input->post('sun_off') == '1')
+				{
+					$sun_off=1;
+				}
+				else
+				{
+					$sun_off=0;
+				}
+
+				if ($this->input->post('sat_off') == '1')
+				{
+					$sat_off=1;
+				}
+				else
+				{
+					$sat_off=0;
+				}
+
+				if ($this->input->post('fri_off') == '1')
+				{
+					$fri_off=1;
+				}
+				else
+				{
+					$fri_off=0;
+				}
+
+				if ($this->input->post('thurs_off') == '1')
+				{
+					$thurs_off=1;
+				}
+				else
+				{
+					$thurs_off=0;
+				}
+
+				if ($this->input->post('wed_off') == '1')
+				{
+					$wed_off=1;
+				}
+				else
+				{
+					$wed_off=0;
+				}
+
+				if ($this->input->post('tues_off') == '1')
+				{
+					$tues_off=1;
+				}
+				else
+				{
+					$tues_off=0;
+				}
+
+				if ($this->input->post('mon_off') == '1')
+				{
+					$mon_off=1;
+				}
+				else
+				{
+					$mon_off=0;
+				}
+
+				$data = array(
+					'comp_id' 				=> $this->session->userdata('coid'),
+					'shift_name' 			=> $this->db->escape_str($this->input->post('shift_name')),
+					'time_zone' 			=> $this->db->escape_str($this->input->post('timezone')),
+
+					'monday' 				=> $this->checkifGraveYard($this->input->post('starttime_mon'),$this->input->post('endtime_mon'),$mon_off),
+					'tuesday' 				=> $this->checkifGraveYard($this->input->post('starttime_tues'),$this->input->post('endtime_tues'),$tues_off),
+					'wednesday' 			=> $this->checkifGraveYard($this->input->post('starttime_wed'),$this->input->post('endtime_wed'),$wed_off),
+					'thursday' 				=> $this->checkifGraveYard($this->input->post('starttime_thurs'),$this->input->post('endtime_thurs'),$thurs_off),
+					'friday' 				=> $this->checkifGraveYard($this->input->post('starttime_fri'),$this->input->post('endtime_fri'),$fri_off),
+					'saturday' 				=> $this->checkifGraveYard($this->input->post('starttime_sat'),$this->input->post('endtime_sat'),$sat_off),
+					'sunday' 				=> $this->checkifGraveYard($this->input->post('starttime_sun'),$this->input->post('endtime_sun'),$sun_off),
+
+					'monday_starttime' 		=> $this->db->escape_str($this->input->post('starttime_mon')),
+					'tuesday_starttime' 	=> $this->db->escape_str($this->input->post('starttime_tues')),
+					'wednesday_starttime'	=> $this->db->escape_str($this->input->post('starttime_wed')),
+					'thursday_starttime' 	=> $this->db->escape_str($this->input->post('starttime_thurs')),
+					'friday_starttime' 		=> $this->db->escape_str($this->input->post('starttime_fri')),
+					'saturday_starttime' 	=> $this->db->escape_str($this->input->post('starttime_sat')),
+					'sunday_starttime' 		=> $this->db->escape_str($this->input->post('starttime_sun')),
+
+					'monday_endtime' 		=> $this->db->escape_str($this->input->post('endtime_mon')),
+					'tuesday_endtime' 		=> $this->db->escape_str($this->input->post('endtime_tues')),
+					'wednesday_endtime'		=> $this->db->escape_str($this->input->post('endtime_wed')),
+					'thursday_endtime' 		=> $this->db->escape_str($this->input->post('endtime_thurs')),
+					'friday_endtime' 		=> $this->db->escape_str($this->input->post('endtime_fri')),
+					'saturday_endtime' 		=> $this->db->escape_str($this->input->post('endtime_sat')),
+					'sunday_endtime' 		=> $this->db->escape_str($this->input->post('endtime_sun')),
+					'notify_time' 			=> $this->db->escape_str($this->input->post('notify_time'))
+				);
+				$this->db->insert('department_shifts', $data);
+
+				break;
+
+			case 'Modify_Shifts':
+				$data = array(
+
+					'time_zone' 			=> $this->db->escape_str($this->input->post('timezone')),
+
+					'monday' 				=> $this->checkifGraveYard($this->input->post('starttime_mon'),$this->input->post('endtime_mon')),
+					'tuesday' 				=> $this->checkifGraveYard($this->input->post('starttime_tues'),$this->input->post('endtime_tues')),
+					'wednesday' 			=> $this->checkifGraveYard($this->input->post('starttime_wed'),$this->input->post('endtime_wed')),
+					'thursday' 				=> $this->checkifGraveYard($this->input->post('starttime_thurs'),$this->input->post('endtime_thurs')),
+					'friday' 				=> $this->checkifGraveYard($this->input->post('starttime_fri'),$this->input->post('endtime_fri')),
+					'saturday' 				=> $this->checkifGraveYard($this->input->post('starttime_sat'),$this->input->post('endtime_sat')),
+					'sunday' 				=> $this->checkifGraveYard($this->input->post('starttime_sun'),$this->input->post('endtime_sun')),
+
+					'monday_starttime' 	=> $this->db->escape_str($this->input->post('starttime_mon')),
+					'tuesday_starttime' 	=> $this->db->escape_str($this->input->post('starttime_tues')),
+					'wednesday_starttime'=> $this->db->escape_str($this->input->post('starttime_wed')),
+					'thursday_starttime' => $this->db->escape_str($this->input->post('starttime_thurs')),
+					'friday_starttime' 	=> $this->db->escape_str($this->input->post('starttime_fri')),
+					'saturday_starttime' => $this->db->escape_str($this->input->post('starttime_sat')),
+					'sunday_starttime' 	=> $this->db->escape_str($this->input->post('starttime_sun')),
+
+					'monday_endtime' 		=> $this->db->escape_str($this->input->post('endtime_mon')),
+					'tuesday_endtime' 	=> $this->db->escape_str($this->input->post('endtime_tues')),
+					'wednesday_endtime'	=> $this->db->escape_str($this->input->post('endtime_wed')),
+					'thursday_endtime' 	=> $this->db->escape_str($this->input->post('endtime_thurs')),
+					'friday_endtime' 		=> $this->db->escape_str($this->input->post('endtime_fri')),
+					'saturday_endtime' 	=> $this->db->escape_str($this->input->post('endtime_sat'))
+				);
+
+				$this->db->where('dept_id',$this->input->post('department'));
+				$this->db->where('shift_id',$this->input->post('shift'));
+				$this->db->update('department_shifts', $data);
+
+				break;
+
+			default		:break;
+		}
+
+	}
+
+	//Function to check graveyard shift or not
+	//Dominic, December 13,2016
+	function checkifGraveYard($start_time,$end_time,$off_day)
+	{
+		if($off_day==1)
+		{
+			$graveyard=0; //non working day
+		}
+		else
+		{
+			$dtA = new DateTime($start_time);
+			$dtB = new DateTime($end_time);
+
+			if ( $dtA > $dtB )
+			{
+				// Yes Graveyard
+				//echo 'dtA > dtB';
+				// $graveyard = 1;
+				$graveyard = 1;
+			}
+			else
+			{
+				// Not Graveyard
+				//echo 'dtA <= dtB';
+				// $graveyard = 0;
+				$graveyard = 2;
+			}
+		}
+		return $graveyard;
 	}
 	
 	

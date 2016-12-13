@@ -272,6 +272,74 @@ $config = array(
             'rules' => 'trim|required|xss_clean|prep_for_form'
         )
     ),
+    'frm_add_shifts' => array(
+        array('field'   => 'shift_name'	, 'label'   => 'Shift Name', 'rules'   => 'trim|required|xss_clean'),
+        array('field'   => 'timezone'	, 'label'   => 'Timezone', 'rules'   => 'trim|required|xss_clean'),
 
+        array('field'   => 'starttime_mon'	, 'label'   => 'Monday StartTime', 'rules'   => 'trim|xss_clean'),
+        array('field'   => 'endtime_mon'	, 'label'   => 'Monday EndTime', 'rules'   => 'trim|xss_clean'),
+
+        array('field'   => 'starttime_tues', 'label'   => 'Tuesday StartTime', 'rules'   => 'trim|xss_clean'),
+        array('field'   => 'endtime_tues'	, 'label'   => 'Tuesday EndTime', 'rules'   => 'trim|xss_clean'),
+
+        array('field'   => 'starttime_wed'	, 'label'   => 'Wednesday StartTime', 'rules'   => 'trim|xss_clean'),
+        array('field'   => 'endtime_wed'	, 'label'   => 'Wednesday EndTime', 'rules'   => 'trim|xss_clean'),
+
+        array('field'   => 'starttime_thurs'	, 'label'   => 'Thursday StartTime', 'rules'   => 'trim|xss_clean'),
+        array('field'   => 'endtime_thurs'	, 'label'   => 'Thursday EndTime', 'rules'   => 'trim|xss_clean'),
+
+        array('field'   => 'starttime_fri'	, 'label'   => 'Friday StartTime', 'rules'   => 'trim|xss_clean'),
+        array('field'   => 'endtime_fri'	, 'label'   => 'Friday EndTime', 'rules'   => 'trim|xss_clean'),
+
+        array('field'   => 'starttime_sat'	, 'label'   => 'Saturday StartTime', 'rules'   => 'trim|xss_clean'),
+        array('field'   => 'endtime_sat'	, 'label'   => 'Saturday EndTime', 'rules'   => 'trim|xss_clean'),
+
+        array('field'   => 'starttime_sun'	, 'label'   => 'Sunday StartTime', 'rules'   => 'trim|xss_clean'),
+        array('field'   => 'endtime_sun'	, 'label'   => 'Sunday EndTime', 'rules'   => 'trim|xss_clean'),
+
+        array('field'   => 'sun_off'	, 'label'   => 'Sunday Off', 'rules'   => 'trim|xss_clean'),
+        array('field'   => 'sat_off'	, 'label'   => 'Saturday Off', 'rules'   => 'trim|xss_clean'),
+        array('field'   => 'fri_off'	, 'label'   => 'Friday Off', 'rules'   => 'trim|xss_clean'),
+        array('field'   => 'thurs_off'	, 'label'   => 'Thursday Off', 'rules'   => 'trim|xss_clean'),
+        array('field'   => 'wed_off'	, 'label'   => 'Wednesday Off', 'rules'   => 'trim|xss_clean'),
+        array('field'   => 'tues_off'	, 'label'   => 'Tuesday Off', 'rules'   => 'trim|xss_clean'),
+        array('field'   => 'mon_off'	, 'label'   => 'Monday Off', 'rules'   => 'trim|xss_clean')
+    ),
+    'frm_edit_shifts' => array(
+        array('field'   => 'shift_id'	, 'label'   => 'Shift Id', 'rules'   => 'trim|required|xss_clean'),
+        array('field'   => 'comp_id'	, 'label'   => 'Company Id', 'rules'   => 'trim|required|xss_clean'),
+
+        array('field'   => 'shift_name'	, 'label'   => 'Shift Name', 'rules'   => 'trim|required|xss_clean'),
+        array('field'   => 'timezone'	, 'label'   => 'Timezone', 'rules'   => 'trim|required|xss_clean'),
+
+        array('field'   => 'starttime_mon'	, 'label'   => 'Monday StartTime', 'rules'   => 'trim|xss_clean'),
+        array('field'   => 'endtime_mon'	, 'label'   => 'Monday EndTime', 'rules'   => 'trim|xss_clean'),
+
+        array('field'   => 'starttime_tues', 'label'   => 'Tuesday StartTime', 'rules'   => 'trim|xss_clean'),
+        array('field'   => 'endtime_tues'	, 'label'   => 'Tuesday EndTime', 'rules'   => 'trim|xss_clean'),
+
+        array('field'   => 'starttime_wed'	, 'label'   => 'Wednesday StartTime', 'rules'   => 'trim|xss_clean'),
+        array('field'   => 'endtime_wed'	, 'label'   => 'Wednesday EndTime', 'rules'   => 'trim|xss_clean'),
+
+        array('field'   => 'starttime_thurs'	, 'label'   => 'Thursday StartTime', 'rules'   => 'trim|xss_clean'),
+        array('field'   => 'endtime_thurs'	, 'label'   => 'Thursday EndTime', 'rules'   => 'trim|xss_clean'),
+
+        array('field'   => 'starttime_fri'	, 'label'   => 'Friday StartTime', 'rules'   => 'trim|xss_clean'),
+        array('field'   => 'endtime_fri'	, 'label'   => 'Friday EndTime', 'rules'   => 'trim|xss_clean'),
+
+        array('field'   => 'starttime_sat'	, 'label'   => 'Saturday StartTime', 'rules'   => 'trim|xss_clean'),
+        array('field'   => 'endtime_sat'	, 'label'   => 'Saturday EndTime', 'rules'   => 'trim|xss_clean'),
+
+        array('field'   => 'starttime_sun'	, 'label'   => 'Sunday StartTime', 'rules'   => 'trim|xss_clean'),
+        array('field'   => 'endtime_sun'	, 'label'   => 'Sunday EndTime', 'rules'   => 'trim|xss_clean'),
+
+        array('field'   => 'sun_off'	, 'label'   => 'Sunday Off', 'rules'   => 'trim|xss_clean'),
+        array('field'   => 'sat_off'	, 'label'   => 'Saturday Off', 'rules'   => 'trim|xss_clean'),
+        array('field'   => 'fri_off'	, 'label'   => 'Friday Off', 'rules'   => 'trim|xss_clean'),
+        array('field'   => 'thurs_off'	, 'label'   => 'Thursday Off', 'rules'   => 'trim|xss_clean'),
+        array('field'   => 'wed_off'	, 'label'   => 'Wednesday Off', 'rules'   => 'trim|xss_clean'),
+        array('field'   => 'tues_off'	, 'label'   => 'Tuesday Off', 'rules'   => 'trim|xss_clean'),
+        array('field'   => 'mon_off'	, 'label'   => 'Monday Off', 'rules'   => 'trim|xss_clean')
+    )
 );
 ?>
