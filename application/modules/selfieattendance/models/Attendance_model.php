@@ -166,21 +166,23 @@ class Attendance_model extends CI_Model {
 		
 	}
 
-	//Modified By Sajeev: if conditon for all; All Departments; (Nov 23,2015)	
-	function getAllUsersinDept($dept_id,$company_id)
+	//Modified to fetch staffs based on shift id (Dec 14,2016)
+	function getAllUsersinDept($sel_shift,$company_id)
 	{      	
 		//$tz_data_q = "SELECT staff_id FROM staff_dept_shift WHERE dept_id='$dept_id'";
-		$this->db->select('SDS.staff_id');
-		$this->db->from('staff_dept_shift AS SDS');
-		$this->db->join('departments as DEPT','DEPT.dept_id=SDS.dept_id','left');
-		if($dept_id!='all')
-		{
-		$this->db->where('SDS.dept_id',$dept_id);
-		}
-		$this->db->where('DEPT.company_id',$company_id);
+		$this->db->select('staff_dept_shift.staff_id');
+		$this->db->from('department_shifts');
+		$this->db->join('staff_dept_shift','staff_dept_shift.shift_id=department_shifts.shift_id','left');
+		$this->db->where('department_shifts.comp_id',$company_id);
+		$this->db->where('department_shifts.shift_id',$sel_shift);
 		$result=$this->db->get();
 		//echo $this->db->last_query();
 		return $result->result_array();
+		
+		//SELECT department_shifts.shift_id,staff_dept_shift.staff_id
+		//FROM department_shifts
+		//LEFT JOIN staff_dept_shift ON staff_dept_shift.shift_id=department_shifts.shift_id
+		//WHERE department_shifts.comp_id=84 AND department_shifts.shift_id=213
        
 	}
 
