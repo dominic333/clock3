@@ -147,7 +147,7 @@ class Shifts extends MX_Controller
 		$this->data['companyType']				=  $this->Shifts_model->getCompanyType($compIdSess);
 		$this->data['company_departments']	=	$this->Shifts_model->departmentsCRUD($compIdSess,'read');
 		$this->data['company_shifts']			=	$this->Shifts_model->fetchCompanyShifts($compIdSess);
-		$this->data['company_members']			=  $this->Shifts_model->getCompanyMembers($compIdSess);
+		$this->data['company_members']		=  $this->Shifts_model->getCompanyMembers($compIdSess);
 		$this->data['view']					=	'ccshifts/user';
 		$this->data['footer_includes']			=	'<script src="'.base_url().'js/cc/administration.js" type="text/javascript"></script>';
 		$this->load->view('master', $this->data);	
@@ -424,13 +424,6 @@ class Shifts extends MX_Controller
 			echo 'deleted';
 		}	
 		
-	
-	public function assignmonitor()
-	{
-		$this->data['view']					=	'ccshifts/assignment';
-		$this->load->view('master', $this->data);		
-	}
-
 	//Function to load shifts
 	//By Dominic, Dec 13,2016
 	public function shifts()
@@ -517,6 +510,30 @@ class Shifts extends MX_Controller
 			redirect('ccshifts/shifts/shifts');
 		}
 	}
+	
+	//Function to fetch shifts of a company
+	//By Dominic, Dec 14,2016
+	function fetchCompanyShifts($compIdSess)
+	{
+		$company_shifts		=	$this->Shifts_model->fetchCompanyShifts($compIdSess);
+		return $company_shifts;
+	}
+	
+	//Bridge to fetch shifts of a company
+	//By Dominic, Dec 14,2016
+	function fetchShiftsofaCompany($compIdSess)
+	{
+		$build_array 	= array();
+      $build_array   = $this->fetchCompanyShifts($compIdSess);
+      return $build_array;  
+	}
+	
+	public function assignmonitor()
+	{
+		$this->data['view']					=	'ccshifts/assignment';
+		$this->load->view('master', $this->data);		
+	}
+
 
 	function get_common()
 	{
