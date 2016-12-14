@@ -52,7 +52,6 @@ class Administration extends MX_Controller
 	//By Dominic, Nov 28,2016
 	public function contactsupport()
 	{
-
 		if ($this->form_validation->run('editCompanyInfoForm') === FALSE) 
 		{
 			$this->data['view']					=	'ccadministration/contact-support';
@@ -95,8 +94,7 @@ class Administration extends MX_Controller
 		   
 		   //$bcc_list = array('sean@flexiesolutions.com', 'albert.goh@flexiesolutions.com');
 		   $bcc_list = array('dominiccliff88@gmail.com');
-		   
-		   
+		   		   
 		   //$template = $this->load->view($this->lang->line('admin').'/company/contact_template',$this->data,TRUE); 
 			$this->email->from($email_from, $user);			
 	  		$this->email->to($email_to);
@@ -112,7 +110,6 @@ class Administration extends MX_Controller
 	  	 	
 	  	 	$this->data['view']					=	'ccadministration/contact-support';
 		   $this->load->view('master', $this->data);	
-
 		}	
 		
 	}	

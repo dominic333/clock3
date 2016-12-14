@@ -136,7 +136,7 @@
                             <input type="text" name="shift_name" id="shift_name" class="form-control" placeholder="Shift Name" required/>
                         </div>
                     </div>
-                    <?php //$timezone_lists=timezone_lists();?>
+                    <?php //$timezone_lista=timezone_lists(); var_dump($timezone_lista); ?>
                     <div class="form-group">
                         <label class="col-sm-2 control-label">Timezones</label>
                         <div class="col-sm-6">

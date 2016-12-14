@@ -358,5 +358,17 @@ $config = array(
             'rules' => 'trim|required|xss_clean|prep_for_form'
         )
     ),
+    'frm_attendance_search' => array(
+        array(
+            'field' => 'date_from',
+            'label' => 'From Date',
+            'rules' => 'trim|required|xss_clean|prep_for_form'
+        ),
+        array(
+            'field' => 'date_to',
+            'label' => 'To Date',
+            'rules' => 'trim|required|xss_clean|prep_for_form'
+        )
+    )
 );
 ?>
