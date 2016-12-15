@@ -135,73 +135,95 @@
             </div>
 
             <!-- Modal Body -->
+            <form  role="form" class="form-horizontal" id="frm_add_users" name="frm_add_users" action="<?php echo base_url();?>ccshifts/shifts/add_users" method="post" >
             <div class="modal-body">
 
-                <form class="form-horizontal" role="form">
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Full Name</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" placeholder="Full Name" required/>
+                            <input id="staff_name" name="staff_name" type="text" class="form-control" placeholder="Full Name" required/>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Login Name</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" placeholder="Login Name" required/>
+                            <input id="login_name" name="login_name" type="text" class="form-control" placeholder="Login Name" required/>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">Company</label>
+                        <label class="col-sm-3 control-label">Password</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" placeholder="Company" required/>
+                            <input id="password" name="password" type="password" class="form-control" placeholder="Company" required/>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">Address</label>
+                        <label class="col-sm-3 control-label">Confirm Password</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" placeholder="Address" required/>
+                            <input id="cpassword" name="cpassword" type="password" class="form-control" placeholder="Address" required/>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Email</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" placeholder="Email" required/>
+                            <input id="email" name="email" type="text" class="form-control" placeholder="Email" required/>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Contact Number</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" placeholder="Contact Number" required/>
+                            <input id="contact_number" name="contact_number" type="text" class="form-control" placeholder="Contact Number" required/>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label  class="col-sm-3 control-label">Department</label>
-                        <div class="col-sm-9">
-                            <select class="form-control selectdept" style="width: 100%;">
-                                <option selected="selected">-- Select a Department --</option>
-                                <option>All Departments</option>
-                                <option>Finance Department</option>
-                                <option>IT Department</option>
-                                <option>GA Department</option>
-                                <option>HR Department</option>
-                            </select>
-                        </div>
-                    </div>
+
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Shift</label>
                         <div class="col-sm-9">
-                            <select class="form-control selectshift" style="width: 100%;">
-                                <option selected="selected">-- Select a Shift --</option>
-                                <option>08.00am - 05.00pm</option>
-                                <option>09.00am - 06.00pm</option>
-                                <option>10.00am - 07.00pm</option>
-                                <option>11.00am - 08.00pm</option>
+                            <select name="shifts" id="shifts" data-placeholder="-- Select A Shift* --"  class="form-control selectdept" style="width: 100%;" >
+                                <option value="">-- All Shifts --</option>
+                                <?php foreach($company_shifts as $shift){?>
+                                    <option value="<?php echo $shift->shift_id;?>">
+                                        <?php echo $shift->shift_name;?>
+                                    </option>
+                                <?php } ?>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label  class="col-sm-3 control-label">Monitoring</label>
+                        <div class="col-sm-9">
+                            <select id="monitor" name="monitor" class="form-control selectdept" style="width: 100%;">
+                                <option value="" selected="selected">-- Monitor This User Attendance? --</option>
+                                <option value="1">Monitor User Attendance</option>
+                                <option value="0">DO NOT Monitor User Attendance</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label  class="col-sm-3 control-label">Remote Login</label>
+                        <div class="col-sm-9">
+                            <select id="remotelogin" name="remotelogin" class="form-control selectdept" style="width: 100%;">
+                                <option value="" selected="selected">-- Remote Login --</option>
+                                <option value="1">Enabled</option>
+                                <option value="0">Disabled</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label  class="col-sm-3 control-label">Administrative Rights</label>
+                        <div class="col-sm-9">
+                            <select id="is_admin" name="is_admin" class="form-control selectdept" style="width: 100%;">
+                                <option value="" selected="selected">-- Administrative Rights --</option>
+                                <option value="0">User HAVE NO Admin Rights</option>
+                                <option value="1">User HAVE Admin Rights</option>
                             </select>
                         </div>
                     </div>
 
             </div>
-
+                <input type="hidden" name="<?=$this->security->get_csrf_token_name()?>" value="<?=$this->security->get_csrf_hash()?>" />
             <!-- Modal Footer -->
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger"
@@ -211,8 +233,8 @@
                 <button type="submit" class="btn btn-success">
                     Add
                 </button>
-                </form>
             </div>
+            </form>
         </div>
     </div>
 </div>

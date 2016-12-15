@@ -491,6 +491,55 @@ $(document).ready(function(){
 			 .closest('.control-group').removeClass('error').addClass('success');
 			}
 		});
-	
 
+		//Function to validate add user form
+		//By Dominic; Dec 15,2016
+		$('#frm_add_users').validate(
+		{
+			rules: {
+				staff_name: {
+					required: true,
+					lettersonly:true
+				},
+				login_name: {
+					required: true
+				},
+				password:{
+					required: true
+				},
+				cpassword:{
+					equalTo: "#password",
+					required: true
+				},
+				email:{
+					required: true,
+					email:true
+				},
+				contact_number:{
+					required: true,
+					number:true,
+					maxlength:12
+				},
+				shifts:{
+					required: true
+				},
+				monitor:{
+					required: true
+				},
+				remotelogin:{
+					required: true
+				},
+				is_admin:{
+					required: true
+				}
+			},
+			highlight: function(element) {
+				$(element).closest('.control-group').removeClass('success').addClass('error');
+			},
+			success: function(element) {
+				element
+					.text('').addClass('valid')
+					.closest('.control-group').removeClass('error').addClass('success');
+			}
+		});
 });

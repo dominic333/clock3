@@ -153,6 +153,37 @@ class Shifts extends MX_Controller
 		$this->load->view('master', $this->data);	
 		
 	}
+
+	funcation add_users()
+	{
+		if ($this->form_validation->run('frm_add_users') === FALSE)
+		{
+		redirect('ccshifts/shifts/users');
+		}
+		else
+		{
+			$this->Shifts_model->save('Edit_RemoteL','' );
+			$staff_id = $this->input->post('rstaff_id');
+			$rvaule=$this->input->post('rremotelogin');
+			if($rvaule==1)
+			{
+				$rval='Enabled';
+			}
+			else
+			{
+				$rval='Disabled';
+			}
+			// save to log table
+			$operation = 'New User Added with staff ID '.$staff_id;
+			$this->site_settings->adminlog($operation);
+
+			$nType = 1; //company updates
+			$nMsg  = 'New User Added '..$this->input->post('staff_name');
+			$this->site_settings->addNotification($nType,$nMsg,'');
+
+			redirect('ccshifts/shifts/users');
+		}
+	}
 	
 	//function to modify remote login feature
 	//By Dominic, Dec 12,2016

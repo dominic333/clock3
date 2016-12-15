@@ -32,11 +32,6 @@ $(document).ready(function(){
 	//Call Geolocation 
 	getGeoLocation();
 	
-	// Elements for taking the snapshot
-	var canvas = document.getElementById('canvas');
-	var context = canvas.getContext('2d');
-	var video = document.getElementById('videoElement');
-	
 	// Trigger photo take
 	/*
 	document.getElementById("snap").addEventListener("click", function() {
@@ -51,7 +46,7 @@ $(document).ready(function(){
 		image.src = canvas.toDataURL("image/png",1.0);
 		return image;
 	}
-	
+
 	function getGeoLocation() 
 	{
 	    var cord= '';
@@ -95,8 +90,13 @@ $(document).ready(function(){
 		if(geolocation!='')
 		{
 			//$('#take_selfie_subt').attr('id','');
+			// Elements for taking the snapshot
+			var canvas = document.getElementById('canvas');
+			var context = canvas.getContext('2d');
+			var video = document.getElementById('videoElement');
 			context.drawImage(video, 0, 0, 640, 480);
 	  		var img= convertCanvasToImage();
+			
 	  		//console.log(img);
 	  		if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) 
 	  		{
@@ -111,14 +111,6 @@ $(document).ready(function(){
 		{
 			alert('Location Needed To Be Shared in order to mark Attendance');
 			window.location.reload();
-			/*
-			$.confirm({
-			    title: 'Share Location!!',
-			    content: 'Location Needed To Be Shared in order to mark Attendance',
-			    confirm: function(){window.location.reload();},
-			    cancel: function(){ window.location.reload();}
-			});
-			*/
 		}
    });
    
@@ -127,7 +119,7 @@ $(document).ready(function(){
 		//http://stackoverflow.com/a/28309845/4119740
       var data_uri = img;
       var staffid  = staff_id;
-      var image_fmt = 'jpeg';
+      var image_fmt = 'png';
       var ctype = document.getElementById('vclocktype').value;
       var geolocation = document.getElementById('geolocation').value;
       var furl = base_url+'selfieattendance/attendance/whosaroundtoday';
@@ -136,7 +128,9 @@ $(document).ready(function(){
 	    {
 			var url = base_url+'selfiemarking/selfie/save_selfie';
 			//document.getElementById('selfie-loader').style.display = 'block';
-			var file =  data_uri;
+			var file =  data_uri.src;
+			//console.log(file);
+			
 	    	var formdata = new FormData();
 	    	formdata.append("base64image", file);
 	    	formdata.append('csrf_test_name',csrf_token);
@@ -151,50 +145,22 @@ $(document).ready(function(){
 	    }
 	    else
 	    {
-	    	 //$('#take_selfie_modal').modal('hide');
 	    	 if(geolocation==''&&geolocation!=0){
 	    	 	alert('Snap Shot Failed. Please Share Your Location');
-	    	 	/*	$.alert({
-						title: 'Snap Shot Failed',
-					   content: 'Please Share Your Location',
-					   confirm: function(){ },
-					   cancel: function(){ },
-					});*/
 	    	 }
 	    }
   }
   
   function uploadcomplete(event,furl){
     var response	=	event.target.responseText.trim();
-    //document.getElementById('selfie-loader').style.display = 'none';
     if(response=='Failed')
     {
     	alert('Snap Shot Failed. Please Contact your Administrator.');
-    	/*$.alert({
-	    title: 'Snap Shot Failed',
-	    content: 'The Snap Shot Failed. Please Contact your Administrator',
-	    confirm: function(){
-	       
-	    },
-	    cancel: function(){
-	       
-	    },
-		});*/
     }
     else
     {
     	alert('Clock-in Alert!!');
     	window.location.replace(furl);
-    	/*$.alert({
-	    title: 'Clock-in Alert!!',
-	    content: response,
-	    confirm: function(){
-	    	 window.location.replace(furl);
-	    },
-	    cancel: function(){
-	       window.location.replace(furl);
-	    },
-		});*/
     }
   }
 

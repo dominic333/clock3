@@ -369,6 +369,58 @@ $config = array(
             'label' => 'To Date',
             'rules' => 'trim|required|xss_clean|prep_for_form'
         )
+    ),
+    'frm_add_users' => array(
+        array(
+            'field' => 'staff_name',
+            'label' => 'From Date',
+            'rules' => 'trim|required|xss_clean|prep_for_form'
+        ),
+        array(
+            'field' => 'login_name',
+            'label' => 'To Date',
+            'rules' => 'trim|required|xss_clean|prep_for_form'
+        ),
+        array(
+            'field' => 'password',
+            'label' => 'From Date',
+            'rules' => 'trim|required|xss_clean|prep_for_form'
+        ),
+        array(
+            'field' => 'cpassword',
+            'label' => 'To Date',
+            'rules' => 'trim|required|xss_clean|prep_for_form'
+        ),
+        array(
+            'field' => 'email',
+            'label' => 'From Date',
+            'rules' => 'trim|required|xss_clean|prep_for_form'
+        ),
+        array(
+            'field' => 'contact_number',
+            'label' => 'To Date',
+            'rules' => 'trim|required|xss_clean|prep_for_form'
+        ),
+        array(
+            'field' => 'shifts',
+            'label' => 'From Date',
+            'rules' => 'trim|required|xss_clean|prep_for_form'
+        ),
+        array(
+            'field' => 'monitor',
+            'label' => 'To Date',
+            'rules' => 'trim|required|xss_clean|prep_for_form'
+        ),
+        array(
+            'field' => 'remotelogin',
+            'label' => 'From Date',
+            'rules' => 'trim|required|xss_clean|prep_for_form'
+        ),
+        array(
+            'field' => 'is_admin',
+            'label' => 'To Date',
+            'rules' => 'trim|required|xss_clean|prep_for_form'
+        )
     )
 );
 ?>

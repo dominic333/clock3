@@ -26,16 +26,9 @@ class Selfie extends MX_Controller
 			if ($statid=="")
 				$counter++;
 		}
-		if($tzone=='Asia/Kolkata')
-		{
-			//ini_alter('date.timezone','Asia/Calcutta');
-			date_default_timezone_set('Asia/Calcutta');
-		}
-		else
-		{
-			date_default_timezone_set($tzone);
-		}
-		
+
+		date_default_timezone_set($tzone);
+
 		$today = date("Y-m-d / G:i:s", time());
 		$ptoday = date("Y-m-d", time());
 		
@@ -61,13 +54,13 @@ class Selfie extends MX_Controller
 		$image_fmt 	= $this->input->post('image_fmt');
 		$staffid 	= $this->input->post('staffid');
 		$geolocation= $this->input->post('geolocation');
-		$img 			= $this->input->post('base64image');
+		$img 		= $this->input->post('base64image');
 		$clock_type	= $this->input->post('clktype');
 		
 		$shiftid 	= $this->Selfie_model->getStaffShiftid($staffid);
 		$tzone 		= $this->Selfie_model->getStaffTimeZone($shiftid);
 		date_default_timezone_set($tzone);
-		
+
 		$result = substr($img, 0, 9);
 		if($result=='[removed]'){ //Checking It Existed or not
 		  	$img = str_replace('[removed]', '', $img);
@@ -76,8 +69,27 @@ class Selfie extends MX_Controller
 		$img 			= str_replace(' ', '+', $img);
 		//$img 			= substr($img,strpos($img,",")+1);// remove the prefix
 		$data 		= base64_decode($img);
-		
+		$extension= '.png';
+		/*
+
+		if (strpos($img, 'data:image/png;base64') !== false)
+		{
+			$img = str_replace('data:image/png;base64,', '', $img);
+			$img = str_replace(' ', '+', $img);
+			$data = base64_decode($img);
+			$extension= '.png';
+		}
+
+		if (strpos($img, 'data:image/jpeg;base64') !== false)
+		{
+			$img = str_replace('data:image/jpeg;base64,', '', $img);
+			$img = str_replace(' ', '+', $img);
+			$data = base64_decode($img);
+			$extension= '.jpeg';
+		}
+		*/
 		$log_path = "/home/clockin/www/selfies/aLog/";
+		//$log_path = "C:/xampp/htdocs/clockin3/selfies/aLog/";
 		$file_name = $log_path;
 		$logdatetime = date("Y-m-d-H_i_s", time());
 		$datein = date("Y-m-d", time());
@@ -85,14 +97,16 @@ class Selfie extends MX_Controller
 		$in_day = date("l", time());
 		$in_day = strtolower($in_day);
 		
-		$p_in_file = $staffid."-".$logdatetime."-".$clock_type.".png";
+		$p_in_file = $staffid."-".$logdatetime."-".$clock_type.$extension;
 		
 		$in_file = $file_name.$p_in_file;
 		
 		$upload_path = $log_path.$p_in_file;
 		
 		//if ( ! file_put_contents($upload_path, $data)){
-		if ( ! write_file($upload_path,$data)){
+		if ( ! write_file($upload_path,$data))
+		{
+			//echo $img;
 			echo "Failed";
 		}else{
 			
@@ -134,9 +148,9 @@ class Selfie extends MX_Controller
 			
 			// save to log table	
 			$operation = 'Staff with id:'.$staffid.'. Has '.$clock_type .'.';
-	      $this->site_settings->adminlog($operation);
-	      
-	      echo "Clock $clock_type Logged at $showlogdatetime";
+	        $this->site_settings->adminlog($operation);
+			//echo $img;
+	        echo "Clock $clock_type Logged at $showlogdatetime";
 		}		
    }
 

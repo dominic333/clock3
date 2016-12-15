@@ -418,7 +418,7 @@ class Attendance extends MX_Controller
 	function findWhoAllAround($staff,$sel_shift,$compIdSess)
    {
    	//http://192.168.11.13/projects/clock2/assets/cc/images/admin-user.png"
-   	$url_log_path 	 	=  "../../selfies/aLog";
+   	$url_log_path 	 	=  "../../../selfies/aLog";
    	//$url_log_path 	 	=  "/home/clockin/www/selfies/aLog";
    	$absent_image 		= "image-absent.jpg";
 		$non_work_image 	= "image-nonwork.jpg";
