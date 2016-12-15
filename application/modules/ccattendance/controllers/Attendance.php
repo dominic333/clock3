@@ -81,8 +81,8 @@ class Attendance extends MX_Controller
 	function myAttendanceTablulaData($f_from_date,$f_to_date,$staff)
 	{			
 		$attendance_table='';
-		//$file_path 	 =  "../selfies/aLog/";
-		$file_path 	 	=  "/home/clockin/www/selfies/aLog/";
+		$file_path 	 =  "../../selfies/aLog/";
+		//$file_path 	 	=  "/home/clockin/www/selfies/aLog/";
 		$r_cnt 		 = 1;	
 		// Store date to process due to BETWEEN difficiency
 		$q_date = array();
@@ -418,13 +418,13 @@ class Attendance extends MX_Controller
 	function findWhoAllAround($staff,$sel_shift,$compIdSess)
    {
    	//http://192.168.11.13/projects/clock2/assets/cc/images/admin-user.png"
-   	//$url_log_path 	 	=  "../../../selfies/aLog";
-   	$url_log_path 	 	=  "/home/clockin/www/selfies/aLog";
-   	$absent_image 		= "admin-user.png";
-		$non_work_image 	= "admin-user.png";
-		$no_selfies_image = "admin-user.png";
+   	$url_log_path 	 	=  "../../selfies/aLog";
+   	//$url_log_path 	 	=  "/home/clockin/www/selfies/aLog";
+   	$absent_image 		= "image-absent.jpg";
+		$non_work_image 	= "image-nonwork.jpg";
+		$no_selfies_image = "avatar.png";
 		$del_image 			= "icon-delete.png";
-		$avatar_path		=	base_url()."assets/cc/images"; 
+		$avatar_path		=	base_url()."images/avatars";
    	$department_attendance='';  
    		
    	$tz 		= $this->Attendance_model->getShiftTZviaStaffid($staff);
