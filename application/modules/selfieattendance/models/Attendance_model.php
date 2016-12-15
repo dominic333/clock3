@@ -174,7 +174,11 @@ class Attendance_model extends CI_Model {
 		$this->db->from('department_shifts');
 		$this->db->join('staff_dept_shift','staff_dept_shift.shift_id=department_shifts.shift_id','left');
 		$this->db->where('department_shifts.comp_id',$company_id);
-		$this->db->where('department_shifts.shift_id',$sel_shift);
+		if($sel_shift!='all')
+		{
+		 $this->db->where('department_shifts.shift_id',$sel_shift);
+		}
+		
 		$result=$this->db->get();
 		//echo $this->db->last_query();
 		return $result->result_array();

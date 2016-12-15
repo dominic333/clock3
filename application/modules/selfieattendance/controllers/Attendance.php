@@ -84,7 +84,8 @@ class Attendance extends MX_Controller
 	function myAttendanceTablulaData($f_from_date,$f_to_date,$staff)
 	{			
 		$attendance_table='';
-		$file_path 	 =  "../selfies/aLog/";
+		//$file_path 	 =  "../selfies/aLog/";
+		$file_path 	 	=  "/home/clockin/www/selfies/aLog/";
 		$r_cnt 		 = 1;	
 		// Store date to process due to BETWEEN difficiency
 		$q_date = array();
@@ -419,7 +420,8 @@ class Attendance extends MX_Controller
 	function findWhoAllAround($staff,$sel_shift,$compIdSess)
    {
    	//http://192.168.11.13/projects/clock2/assets/cc/images/admin-user.png"
-   	$url_log_path 	 	=  "../../../selfies/aLog";
+   	//$url_log_path 	 	=  "../../../selfies/aLog";
+   	$url_log_path 	 	=  "/home/clockin/www/selfies/aLog";
    	$absent_image 		= "admin-user.png";
 		$non_work_image 	= "admin-user.png";
 		$no_selfies_image = "admin-user.png";
@@ -550,7 +552,7 @@ class Attendance extends MX_Controller
 				$department_attendance	.=	'<div class="col-md-4" data-user_id="'.$staffid.'">
 													                <div class="box box-danger">
 													                    <div class="box-header with-border">
-													                        <h3 class="box-title">Department</h3>
+													                        <h3 class="box-title">'.$staffname.'</h3>
 													
 													                        <div class="box-tools pull-right">
 													                            <span class="label label-success">v</span>

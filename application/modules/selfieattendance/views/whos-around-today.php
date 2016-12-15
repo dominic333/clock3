@@ -27,7 +27,7 @@
 			                        <div class="form-group">
 			                            <label>Select Shift</label>
 			                            <select name="shifts" id="shifts" onchange="document.getElementById('shift_id').value	=this.value;document.getElementById('frm_who_around').submit();" data-placeholder="-- Select A Shift* --"  class="form-control select2" style="width: 100%;" >
-								                  <option value="">-- All Shifts --</option>
+								                  <option value="all" <?php echo (isset($shifts) && ($shifts=='all')? 'selected="selected"' : set_select('shifts','all'));?> >-- All Shifts --</option>
 								                  <?php foreach($company_shifts as $shift){?>
 								                  <option value="<?php echo $shift->shift_id;?>" <?php echo (isset($shifts) && ($shifts==$shift->shift_id)? 'selected="selected"' : set_select('shifts',$shift->shift_id));?> >
 								                  <?php echo $shift->shift_name;?>
