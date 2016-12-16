@@ -118,24 +118,6 @@ class Home extends MX_Controller
 		
 
 /*  ---------------------------------------------------------------------clockin v3 ends ----------------------------------------------------------          */
-		
-		//Function to check mobile or table or computer
-		function check_mobile()
-		{
-			$this->load->library('Mobile_Detect');
-			$detect = new Mobile_Detect();
-	    	if ($detect->isMobile() || $detect->isTablet() || $detect->isAndroidOS()) 
-	    	{
-	        return true;
-	    	}
-	    	else
-	    	{
-	    		return false;
-	    	}
-		}
-
-		
-
-			
+				
 				
 }

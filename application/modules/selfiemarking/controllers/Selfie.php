@@ -148,9 +148,32 @@ class Selfie extends MX_Controller
 			
 			// save to log table	
 			$operation = 'Staff with id:'.$staffid.'. Has '.$clock_type .'.';
-	        $this->site_settings->adminlog($operation);
+	      $this->site_settings->adminlog($operation);
 			//echo $img;
-	        echo "Clock $clock_type Logged at $showlogdatetime";
+			$sName=$this->session->userdata('staffname');
+			if ($clock_type == "brkOut")
+			{
+				$notifyMsg=' : Took a break';
+			}
+			else if ($clock_type == "brkin")
+			{
+				$notifyMsg=' : Back from break';
+			}
+			else if ($clock_type == "in")
+			{
+				$notifyMsg=' : Clocked In';
+			}
+			else 
+			{
+				$notifyMsg=' : Clocked Out';
+			}
+			
+			$nType = 1; //clockin updates
+			$nMsg  = $sName.$notifyMsg;
+			$this->site_settings->addNotification($nType,$nMsg,'');
+			
+			
+	      echo "Clock $clock_type Logged at $showlogdatetime";
 		}		
    }
 

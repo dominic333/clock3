@@ -548,9 +548,11 @@ class Attendance extends MX_Controller
 				
 	       }
 				
-				$selfie_icon	=	(isset($mobile))?(($mobile==0)?'<i class="fa fa-desktop"></i>':'<i class="fa fa-mobile"></i>'):'';
-				$map_icon		=	(isset($geolocation)&&($geolocation!='')&&($geolocation!=0))?'<a href="#" data-image="http://maps.googleapis.com/maps/api/staticmap?center='.$geolocation.'&zoom=18&markers=color:red|label:A|'.$geolocation.'&scale=false&size=560x370&maptype=roadmap&format=png&visual_refresh=true" data-alt="Google Map of '.$geolocation.'" class="attendance_map_link" ><i class="fa fa-map-marker"></i></a>':'';
-						
+				//$selfie_icon	=	(isset($mobile))?(($mobile==0)?'<i class="fa fa-desktop"></i>':'<i class="fa fa-mobile"></i>'):'';
+				//$map_icon		=	(isset($geolocation)&&($geolocation!='')&&($geolocation!=0))?'<a href="#" data-image="http://maps.googleapis.com/maps/api/staticmap?center='.$geolocation.'&zoom=18&markers=color:red|label:A|'.$geolocation.'&scale=false&size=560x370&maptype=roadmap&format=png&visual_refresh=true" data-alt="Google Map of '.$geolocation.'" class="attendance_map_link" ><i class="fa fa-map-marker"></i></a>':'';
+				
+				$selfie_icon='';	
+				$map_icon='';	
 				$department_attendance	.=	'<div class="col-md-4" data-user_id="'.$staffid.'">
 													                <div class="box box-danger">
 													                    <div class="box-header with-border">
@@ -602,4 +604,3 @@ class Attendance extends MX_Controller
 		$this->data['footer_includes']			=	'<script src="'.base_url().'js/snap/my-attendance.js" type="text/javascript"></script>';	
 	}
 }
-
