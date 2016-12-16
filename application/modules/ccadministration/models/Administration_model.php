@@ -7,43 +7,44 @@ class Administration_model extends CI_Model {
 		parent::__construct();
 	}
 	
-	//Function to check login valid or not
-	//Dominic: Nov 24,2016
-	function check_login()
+	//Function To fetch company info based on company Id
+	//Dominic: Nov 25,2016
+	function getThisCompanyInfo($compId)
    {    
-   	//SELECT SI.staff_id,SI.is_admin,ST.id AS staffTypeId
-		//FROM staff_info AS SI 
-		//LEFT JOIN company_info AS CI ON CI.id=SI.company_id 
-		//LEFT JOIN staff_types AS ST ON ST.id=SI.staff_type
-		//WHERE CI.company_login='' AND SI.login_name='' AND SI.password=''
-		       
-      $this->username = $this->input->post('name');
-      $this->db->where('SI.login_name', $this->username);	
-      $this->password = md5($this->input->post('password'));
-      $this->db->where('SI.password', $this->password);
-      $this->companyname = $this->input->post('companyName');
-      
-      $this->db->where('CI.company_login', $this->companyname);
-      
-      $this->db->where('SI.staff_status', 1);
-  		$this->db->select('SI.staff_id,CI.id,SI.staff_name,SI.is_admin,ST.id AS staffTypeId');
-   	$this->db->from('staff_info AS SI');
-   	$this->db->join('company_info AS CI','CI.id = SI.company_id');	   
-   	$this->db->join('staff_types AS ST','ST.id=SI.staff_type');	   
-   	$result_user = $this->db->get();	
-   	//echo $this->db->last_query();
-   	
-   	if($result_user->num_rows() > 0)
-   	{ 
-			return $result_user->row()->staff_id;
-		}
-		else
-		{
-			return 0;
-		}
-		
-		//$result_user->free_result();
-		
+		$this->db->select('CI.*,CP.max_users');
+		$this->db->where('CI.id',$compId);
+		$this->db->where('CI.company_status',1);
+		$this->db->from('company_info as CI');
+		$this->db->join('company_plans as CP','CP.company_id=CI.id','LEFT');
+		$result_company=$this->db->get();
+		//echo $this->db->last_query();
+		return $result_company->row();	
+    }
+    
+    //Function to update company info 
+    //Dominic : Nov 28, 2016
+    function updateCompanyInfo($companyId)
+    {
+    	$data = array(		
+								         
+                	 'contact_person' 	=> $this->db->escape_str($this->input->post('companyContactPerson')),                              
+                	 'contact_number' 	=> $this->db->escape_str($this->input->post('companyContactNumber')),                              
+                	 'contact_email' 		=> $this->db->escape_str($this->input->post('companyEmail')),                              
+                	 'company_address' 	=> $this->db->escape_str($this->input->post('companyAddress'))                              
+                	 //'company_city' 		=> $this->db->escape_str($this->input->post('company_city')),                              
+                	 //'company_state' 		=> $this->db->escape_str($this->input->post('company_state')),                              
+                	 //'company_postcode' 	=> $this->db->escape_str($this->input->post('company_postcode')),                              
+                	 //'company_country' 	=> $this->db->escape_str($this->input->post('company_country')),                              
+			  		 );
+			  	/*	 
+		  		if($filename)
+		  		{
+				   $data['company_logo']=$filename;
+  	  			}
+  	  			*/
+           
+       $this->db->where('id',$companyId);
+       $this->db->update('company_info',$data);
     }
 	
 }

@@ -1,6 +1,6 @@
 
  $(function () {
-     $("#example1").DataTable();
+     $("#myattendance").DataTable();
      $('#example2').DataTable({
          "paging": true,
          "lengthChange": false,
@@ -16,6 +16,6 @@
  });
 
  $(function () {
-     $('#dpfrom').datepicker();
-     $('#dpto').datepicker();
+     $('#date_from').datepicker({dateFormat: 'dd/mm/yy'});
+     $('#date_to').datepicker({dateFormat: 'dd/mm/yy'});
  })

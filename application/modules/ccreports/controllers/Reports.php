@@ -28,6 +28,7 @@ class Reports extends MX_Controller
 
 	function get_common()
 	{
+		$this->data['mynotifications']			=	$this->site_settings->fetchMyNotifications();
 		/*
 		$this->site_settings->get_site_settings();
 		$this->data['profile']			=	$this->site_settings->personal_details();	

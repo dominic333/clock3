@@ -25,7 +25,7 @@ class Users extends MX_Controller
 	   $this->data['breadcrumb']=$this->breadcrumbcomponent->output();	
 		//set page title	
 		$this->data['admin_page_title'] 	= $this->lang->line('user_heading');
-		$this->data['pagetitle'] 	= 	$this->lang->line('pagetitle_user_list');	
+		$this->data['pagetitle'] 			= 	$this->lang->line('pagetitle_user_list');	
 		$this->list_datatable();
 		$this->data['view']					= $this->lang->line('users').'/list';
 		$this->load->view('master', $this->data);
@@ -33,18 +33,18 @@ class Users extends MX_Controller
 	
 	//Bridge: To fetch user info based on user Id
 	//Dominic: Nov 24,2016
-	function getUserDataFromLoginInfo($staffId)
+	function getUserDataFromUserID($staffId)
 	{
 		$build_array 	= array();
-      $build_array   = $this->getThisUserDataFromLoginInfo($staffId);
+      $build_array   = $this->getThisUserDataFromUserID($staffId);
       return $build_array;     
 	}
 
 	//Function: To fetch user info based on user Id
 	//Dominic: Nov 24,2016
-	function getThisUserDataFromLoginInfo($staffId)
+	function getThisUserDataFromUserID($staffId)
 	{
-		$userInfo=$this->Users_model->getThisUserDataFromLoginInfo($staffId);
+		$userInfo=$this->Users_model->getThisUserDataFromUserID($staffId);
 		return $userInfo;
 	}
 

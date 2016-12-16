@@ -7,7 +7,7 @@ class Users_model extends CI_Model {
 		parent::__construct();
 	}
 
-	function getThisUserDataFromLoginInfo($staffId)
+	function getThisUserDataFromUserID($staffId)
 	{
 		
 		//SELECT SI.staff_id,SI.is_admin,ST.id AS staffTypeId
@@ -19,12 +19,14 @@ class Users_model extends CI_Model {
       $this->db->where('SI.staff_id', $staffId);
       
       $this->db->where('SI.staff_status', 1);
-  		$this->db->select('SI.staff_id,SI.company_id,SI.is_admin,SI.staff_name,SI.login_name,SI.email,SI.work_from_home,
-  		  						 CI.id,CI.company_name,ST.id AS staffTypeId');
+  		$this->db->select('SI.staff_id,SI.company_id,SI.is_admin,SI.staff_name,SI.login_name,SI.email,SI.work_from_home,SI.contact_number,SI.staff_photo,
+  		  						 CI.id,CI.company_name,ST.id AS staffTypeId,D.department_name,SDS.shift_id');
    	$this->db->from('staff_info AS SI');
-   	$this->db->join('company_info AS CI','CI.id = SI.company_id');	   
+   	$this->db->join('company_info AS CI','CI.id = SI.company_id');
    	$this->db->join('staff_types AS ST','ST.id=SI.staff_type');	   
-   	$resultUser = $this->db->get();	
+   	$this->db->join('staff_dept_shift AS SDS','SDS.staff_id=SI.staff_id');
+   	$this->db->join('departments AS D','SDS.dept_id=D.dept_id');
+   	$resultUser = $this->db->get();
    	//echo $this->db->last_query();
 		return $resultUser->result();
 	}

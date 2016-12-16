@@ -33,3 +33,24 @@
 
 <!-- bootstrap time picker -->
 <script src="<?php echo base_url();?>assets/snap/plugins/timepicker/bootstrap-timepicker.min.js"></script>
+
+<script  src="<?php echo base_url();?>assets/common/jquery.validate.min.js"  ></script>
+<script src="<?php echo base_url();?>assets/common/jquery-confirm.min.js" type="text/javascript"></script>
+<script>
+
+    //Function to show latest announcement details on a modal popup (in dashboard)
+    //By Dominic; Dec 05,2016
+    $(document).on('click','.latestAnnouncementClass',function (e)
+    {
+        e.preventDefault();
+        var description		=		$(this).attr("data-description");
+        var postedDate			=		$(this).attr("data-postedDate");
+        var title				=		$(this).attr("data-title");
+
+        $('#latestAnnouncementTitle').html(title);
+        $('#latestAnnouncementPostedDate').html(postedDate);
+        $('#latestAnnouncementMsg').html(description);
+        $('#latestAnnouncementInfo').modal('show');
+    });
+
+</script>

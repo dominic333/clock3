@@ -6,7 +6,7 @@
     <section class="content-header">
         <h1>
             Announcements
-            <small>Lorem Ipsum...</small>
+            <small>...</small>
         </h1>
         <ol class="breadcrumb">
             <li><a href="<?php echo base_url();?>ccannouncements/announcements"><i class="fa fa-bullhorn"></i> Announcements</a></li>
@@ -21,14 +21,14 @@
                 <div class="box box-danger">
                     <div class="box-header">
                         <h3 class="box-title">Posted Announcements</h3>
-                        <a href="#" class="btn btn-primary btn-sm pull-right" data-toggle="modal" data-target="#myModalHorizontal">Create Announcement <span
+                        <a href="#" class="btn btn-primary btn-sm pull-right" data-toggle="modal" data-target="#addAnnouncementModal">Create Announcement <span
                                 class="fa fa-plus-circle"
                                 aria-hidden="true"></span></a>
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
                         <div class="table-responsive">
-                            <table id="example1" class="table table-bordered table-striped">
+                            <table id="announcementsTable" class="table table-bordered table-striped">
                                 <thead>
                                 <tr>
                                     <th>No</th>
@@ -39,51 +39,31 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>01-01-2016</td>
-                                    <td>Lorem Ipsum</td>
-                                    <td>Lorem Ipsum</td>
-                                    <td><a class="btn btn-success btn-sm" href="#"><span class="fa fa-edit"></span>
-                                            <a class="btn btn-danger btn-sm" href="#"><span class="fa fa-trash"></span>
+                                <?php
+                                    $i=1;
+                                		foreach($listAnnouncements as $announcement)
+                                		{
+                                ?>
+                                <tr id="<?php echo 'row'.$announcement->id; ?>">
+                                    <td><?php echo $i; ?></td>
+                                    <td><?php echo $announcement->date; ?></td>
+                                    <td><?php echo $announcement->title; ?></td>
+                                    <td><?php echo $announcement->msg; ?></td>
+                                    <td>
+                                    		<a class="btn btn-success btn-sm editThisAnnouncement" href="#" data-toggle="modal" 
+                                    		   data-announcementId="<?php echo $announcement->id; ?>" data-announcementTitle="<?php echo $announcement->title; ?>" data-announcementMsg="<?php echo $announcement->msg; ?>" >
+                                    	   <span class="fa fa-edit"></span>
+                                    	   </a>
+                                    	   
+                                          <a class="btn btn-danger btn-sm deleteThisAnnouncement" href="#" data-announcementId="<?php echo $announcement->id; ?>">
+                                          <span class="fa fa-trash"></span>
+                                          </a>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>01-01-2016</td>
-                                    <td>Lorem Ipsum</td>
-                                    <td>Lorem Ipsum</td>
-                                    <td><a class="btn btn-success btn-sm" href="#"><span class="fa fa-edit"></span>
-                                            <a class="btn btn-danger btn-sm" href="#"><span class="fa fa-trash"></span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td>01-01-2016</td>
-                                    <td>Lorem Ipsum</td>
-                                    <td>Lorem Ipsum</td>
-                                    <td><a class="btn btn-success btn-sm" href="#"><span class="fa fa-edit"></span>
-                                            <a class="btn btn-danger btn-sm" href="#"><span class="fa fa-trash"></span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>4</td>
-                                    <td>01-01-2016</td>
-                                    <td>Lorem Ipsum</td>
-                                    <td>Lorem Ipsum</td>
-                                    <td><a class="btn btn-success btn-sm" href="#"><span class="fa fa-edit"></span>
-                                            <a class="btn btn-danger btn-sm" href="#"><span class="fa fa-trash"></span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>5</td>
-                                    <td>01-01-2016</td>
-                                    <td>Lorem Ipsum</td>
-                                    <td>Lorem Ipsum</td>
-                                    <td><a class="btn btn-success btn-sm" href="#"><span class="fa fa-edit"></span>
-                                            <a class="btn btn-danger btn-sm" href="#"><span class="fa fa-trash"></span>
-                                    </td>
-                                </tr>
+                                <?php
+                                		$i++;
+                                		}
+                                ?>
 
                                 </tbody>
 
@@ -107,8 +87,8 @@
 <!-- /.content-wrapper -->
 
 
-<!--=======================================Modal Form========================================-->
-<div class="modal fade" id="myModalHorizontal" tabindex="-1" role="dialog"
+<!--=======================================Add announcement Modal Form========================================-->
+<div class="modal fade" id="addAnnouncementModal" tabindex="-1" role="dialog"
      aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -127,18 +107,20 @@
             <!-- Modal Body -->
             <div class="modal-body">
 
-                <form class="form-horizontal" role="form">
+                <form id="addAnnouncementForm" name="addAnnouncementForm" class="form-horizontal" role="form" action="<?php echo base_url();?>ccannouncements/announcements/addAnnouncement" method="post">
+                    <input type="hidden" name="<?=$this->security->get_csrf_token_name()?>" value="<?=$this->security->get_csrf_hash()?>" />
                     <div class="form-group">
                         <label  class="col-sm-2 control-label">Title</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control"
-                                   placeholder="Title" required/>
+                            <input id="title" name="title" type="text" class="form-control"
+                                   placeholder="Title" required />
                         </div>
                     </div>
+                    
                     <div class="form-group">
                         <label class="col-sm-2 control-label">Body</label>
                         <div class="col-sm-10">
-                            <textarea class="form-control" rows="3" placeholder="Message..." required></textarea>
+                            <textarea id="message" name="message" class="form-control" rows="3" placeholder="Message..." required ></textarea>
                         </div>
                     </div>
 
@@ -158,5 +140,61 @@
         </div>
     </div>
 </div>
-<!--=======================================End Of Modal Form========================================-->
+<!--=======================================End Of Add announcement Modal Form========================================-->
+
+<!--=======================================Edit announcement Modal Form========================================-->
+<div class="modal fade" id="editAnnouncementModal" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <button type="button" class="close"
+                        data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">
+                    Edit Announcement
+                </h4>
+            </div>
+
+            <!-- Modal Body -->
+            <div class="modal-body">
+
+                <form id="editAnnouncementForm" name="editAnnouncementForm" class="form-horizontal" role="form" action="<?php echo base_url();?>ccannouncements/announcements/editAnnouncement" method="post">
+                    <input type="hidden" name="<?=$this->security->get_csrf_token_name()?>" value="<?=$this->security->get_csrf_hash()?>" />
+                    <input type="hidden" id="ancId" name="ancId"  />
+                    <div class="form-group">
+                        <label  class="col-sm-2 control-label">Title</label>
+                        <div class="col-sm-10">
+                            <input id="title" name="title" type="text" class="form-control"
+                                   placeholder="Title" required/>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Body</label>
+                        <div class="col-sm-10">
+                            <textarea id="message" name="message" class="form-control" rows="3" placeholder="Message..." required></textarea>
+                        </div>
+                    </div>
+
+            </div>
+
+            <!-- Modal Footer -->
+            <div class="modal-footer">
+                <button type="reset" class="btn btn-danger"
+                        data-dismiss="modal">
+                    Cancel
+                </button>
+                <button type="submit" class="btn btn-success">
+                    Post
+                </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!--=======================================End Of Edit announcement Modal Form========================================-->
 

@@ -48,6 +48,8 @@
 
     <!-- Select2 -->
     <link rel="stylesheet" href="<?php echo base_url();?>assets/cc/plugins/select2/select2.min.css">
+    
+    <link href="<?php echo base_url();?>assets/commoncss/jquery-confirm.css" rel="stylesheet"/>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -55,6 +57,11 @@
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+    
+     <script type="text/javascript">
+      var base_url = '<?php echo base_url();?>';
+      var csrf_token = '<?php echo $this->security->get_csrf_hash()?>';
+    </script>
 </head>
 
 <body class="hold-transition skin-grey-light sidebar-mini fixed">
@@ -82,43 +89,43 @@
                 <ul class="nav navbar-nav">
 
                     <!-- Notifications: -->
+                    <?php
+	                     $countNotif= count($mynotifications);
+	                 ?>
                     <li class="dropdown notifications-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <i class="fa fa-bell-o"></i>
-                            <span class="label label-warning">10</span>
+                            <span class="label label-warning"><?php echo $countNotif; ?></span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li class="header">You have 10 notifications</li>
+	                         
+                            <li class="header">You have <?php echo $countNotif; ?> notifications</li>
                             <li>
                                 <!-- inner menu: contains the actual data -->
                                 <ul class="menu">
-                                    <li>
+			                           <?php
+				                           $i=0;
+				                           $labelArray= array('fa-users text-aqua','fa-warning text-yellow','fa-users text-red','fa-shopping-cart text-green','fa-user text-red');
+				                       		foreach($mynotifications as $row)
+				                       		{
+				                        ?>
+                                    <li id="<?php echo 'row'.$row->id; ?>">
                                         <a href="#">
-                                            <i class="fa fa-users text-aqua"></i> 5 new members joined today
+                                            <i class="fa <?php if($row->nType==1){ echo $labelArray[0]; } 
+                                            							else if($row->nType==2){ echo $labelArray[1]; } 
+                                            							else if($row->nType==3){ echo $labelArray[2]; } 
+                                            							else if($row->nType==4){ echo $labelArray[3]; } 
+                                            							else if($row->nType==5){ echo $labelArray[4]; }
+                                            					?>
+                                            	 ">
+                                            
+                                            </i> 
+                                            <?php echo $row->nMsg; ?>
+                                            <?php //echo $row->nMsg.' :'.$row->staff_name; ?>
                                         </a>
                                     </li>
-                                    <li>
-                                        <a href="#">
-                                            <i class="fa fa-warning text-yellow"></i> Very long description here that
-                                            may not fit into the
-                                            page and may cause design problems
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <i class="fa fa-users text-red"></i> 5 new members joined
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <i class="fa fa-shopping-cart text-green"></i> 25 sales made
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <i class="fa fa-user text-red"></i> You changed your username
-                                        </a>
-                                    </li>
+
+                                    <?php } ?>
                                 </ul>
                             </li>
                             <li class="footer"><a href="#">View all</a></li>
