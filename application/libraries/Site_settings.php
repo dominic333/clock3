@@ -1,32 +1,5 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
-/**
-* Site Sentry security library for Code Igniter applications
- * Class Login
- *
- *	PHP version 5.3
- * @category	Settings
- * @package		common
- * @subpackage	settings
- * @author		Bigil Michael <bigil@cliffsupport.com>
- * @license		Cliff Creation
- * @link        http://heims.com/
- * @since		10-02-2016
- * @Version		1.0
- */
-/**
- * File: site_settings.php
- * Class settings
- *
- *	PHP version 5.3
- * @category	Settings
- * @package		common
- * @subpackage	Settings
- * @author		Bigil Michael <bigil@cliffsupport.com>
- * @license		Cliff Creation
- * @link        http://heims.com
- * @since		10-02-2016
- * @Version		1.0
- */
+
 class Site_settings 
 {
 	function Site_settings()
@@ -36,12 +9,7 @@ class Site_settings
 		$CI->load->library('encryption');
 		$CI->load->library('Mobile_Detect');
 	}
-	/**
-		*  @author : Bigil Michael
-		*  @date :11-02-2016
-		*  @desc:Function to set common details  
-		*  @return true/false
-		*/
+
 	function get_site_settings()
 	{		
 		date_default_timezone_set('Asia/Singapore');
@@ -134,8 +102,9 @@ class Site_settings
     	{
     		return 'PC';
     	}
-	}  
+	}   
    
+
 	  /**
 		*  @author : Lissy SR
 		*  @date :25-02-2016

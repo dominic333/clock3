@@ -75,6 +75,31 @@ class Authentication
              redirect('/home/login');
        	 }
      }
+     
+        //Function to check if user has access to allow this function
+     //Dominic, December 17,2016
+     function check_admin_access()
+     {
+     	  //Check if we have session userdata which is possible after successful login
+        if($this->CI->session->userdata('mid') && $this->CI->session->userdata('logged_in'))
+        {
+           if($this->CI->session->userdata('isadmin')==1)
+           {
+             return TRUE;
+           }
+           else
+           {
+           	 $this->CI->session->set_flashdata('feedback','Please login!');
+       		 redirect('/home/logout');
+           }
+        }           
+        else
+        {
+          $this->CI->session->set_flashdata('feedback','Please login!');
+          redirect('/home/logout');
+    	 }
+    	 
+     }
 	
      function logout()
      {

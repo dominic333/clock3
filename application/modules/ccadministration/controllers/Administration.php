@@ -18,6 +18,7 @@ class Administration extends MX_Controller
 	//By Dominic, Nov 28,2016
 	public function index()
 	{
+		$this->authentication->check_admin_access();
 		$compIdSess =$this->session->userdata('coid');
 		//print_r($user_data);
 		$this->data['company_details']	=	$this->getThisCompanyInfo($compIdSess);
@@ -30,6 +31,7 @@ class Administration extends MX_Controller
 	//By Dominic, Nov 28,2016
 	public function updateCompanyInfo()
 	{
+		$this->authentication->check_admin_access();
 		if ($this->form_validation->run('editCompanyInfoForm') === FALSE) 
 		{
 			$this->index();
@@ -52,6 +54,7 @@ class Administration extends MX_Controller
 	//By Dominic, Nov 28,2016
 	public function contactsupport()
 	{
+		$this->authentication->check_admin_access();
 		if ($this->form_validation->run('editCompanyInfoForm') === FALSE) 
 		{
 			$this->data['view']					=	'ccadministration/contact-support';

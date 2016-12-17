@@ -18,6 +18,7 @@ class Attendance extends MX_Controller
 	//Dominic; Dec 14,2016
 	public function index()
 	{
+		$this->authentication->check_admin_access();
 		$this->data['attendance_table']	="<table id='myattendance' class='table table-bordered table-striped'>
 					                                <thead>
 					                                <tr>
@@ -384,6 +385,7 @@ class Attendance extends MX_Controller
 	//Dominic; Dec 14,2016 
 	public function whosaroundtoday()
 	{
+		$this->authentication->check_admin_access();
 		$this->data['department_attendance']= '';	
 		
 		$compIdSess =$this->session->userdata('coid');

@@ -17,10 +17,6 @@ class Dashboard extends MX_Controller
 	public function index()
 	{
 		/*
-		if(!$this->site_settings->has_privilege('List Product'))
-		{
-			redirect('home/permission_error');
-		}
 		$this->breadcrumbcomponent->add('<i class="fa fa-dashboard"></i>Home', base_url());		
 		$this->breadcrumbcomponent->add($this->lang->line('bread_crumb_products'),  '#');
 	   $this->data['breadcrumb']=$this->breadcrumbcomponent->output();
@@ -31,7 +27,7 @@ class Dashboard extends MX_Controller
 		$this->table->set_template($tmpl); 
 		$this->table->set_heading('ID', 'Location', 'Category','Title','Status','Edit', 'Delete');	
 		$this->table->set_caption('<colgroup> <col class="con0"><col class="con1"><col class="con0"><col class="con1"></colgroup>');
-		*/
+		*/	
 		
 		$userIdSess =$this->session->userdata('mid');
 		$this->data['user_data']	=	modules::load('users')->getUserDataFromUserID($userIdSess);

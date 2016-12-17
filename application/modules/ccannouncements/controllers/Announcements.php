@@ -14,6 +14,7 @@ class Announcements extends MX_Controller
 	
 	public function index()
 	{
+		$this->authentication->check_admin_access();
 		$compIdSess =$this->session->userdata('coid');
 		$limit='';
 		$this->data['listAnnouncements']	=	$this->Announcements_model->fetchAnnouncementsList($compIdSess,$limit);
@@ -25,7 +26,8 @@ class Announcements extends MX_Controller
 	//Function to add an announcement
 	//By Dominic; Dec 01,2016 
 	function addAnnouncement()
-	{	
+	{
+		$this->authentication->check_admin_access();	
 		if ($this->form_validation->run('addAnnouncementForm') === FALSE) 
 		{
 			redirect('ccannouncements/announcements');
@@ -50,6 +52,7 @@ class Announcements extends MX_Controller
 	//By Dominic; Dec 01,2016 
 	function editAnnouncement()
 	{
+		$this->authentication->check_admin_access();
 		if ($this->form_validation->run('editAnnouncementForm') === FALSE) 
 		{
 			redirect('ccannouncements/announcements');
@@ -75,6 +78,7 @@ class Announcements extends MX_Controller
 	//By Dominic; Dec 01,2016 
 	function deleteAnnouncement()
 	{
+		$this->authentication->check_admin_access();
 		$announcement_id=$this->input->post('announcementId');
 		$this->Announcements_model->announcementCRUD('Delete');
 		

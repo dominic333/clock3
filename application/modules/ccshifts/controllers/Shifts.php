@@ -17,8 +17,10 @@ class Shifts extends MX_Controller
 		$this->get_common();
 	}
 	
+	//Function to list departments
 	public function index()
 	{
+		$this->authentication->check_admin_access();
 		$compIdSess =$this->session->userdata('coid');
 		$this->data['company_departments']	=	$this->Shifts_model->departmentsCRUD($compIdSess,'read');
 		$this->data['view']						=	'ccshifts/department';
@@ -31,6 +33,7 @@ class Shifts extends MX_Controller
 	//Dominic, December 09,2016
 	public function addDepartments()
 	{
+		$this->authentication->check_admin_access();
 		if ($this->form_validation->run('addDepartmentForm') === FALSE) 
 		{
 			redirect('ccshifts/shifts');
@@ -66,7 +69,7 @@ class Shifts extends MX_Controller
 	//Dominic, December 09,2016
 	function editDepartment()
 	{	
-	
+		$this->authentication->check_admin_access();
 		if ($this->form_validation->run('editDepartmentForm') === FALSE) 
 		{
 			redirect('ccshifts/shifts');
@@ -111,6 +114,7 @@ class Shifts extends MX_Controller
 	//Dominic, December 10,2016
 	function deleteDepartments()
 	{
+		$this->authentication->check_admin_access();
 		if($this->input->post('dept_id')&&$this->input->post('company_id'))
 		{
 			if($this->Shifts_model->check_department_shift_exists()||$this->Shifts_model->check_department_shift_user_exists())
@@ -138,8 +142,10 @@ class Shifts extends MX_Controller
 		}
 	}	
 	
+	//Function to list all users
 	public function users()
 	{
+		$this->authentication->check_admin_access();
 		//check company type
 		//if sme or free, don't show department dropdown
 		$compIdSess =$this->session->userdata('coid');
@@ -154,8 +160,10 @@ class Shifts extends MX_Controller
 		
 	}
 
-	funcation add_users()
+	//Function to add users (incomplete)
+	function add_users()
 	{
+		$this->authentication->check_admin_access();
 		if ($this->form_validation->run('frm_add_users') === FALSE)
 		{
 		redirect('ccshifts/shifts/users');
@@ -178,7 +186,7 @@ class Shifts extends MX_Controller
 			$this->site_settings->adminlog($operation);
 
 			$nType = 1; //company updates
-			$nMsg  = 'New User Added '..$this->input->post('staff_name');
+			$nMsg  = 'New User Added '.$this->input->post('staff_name');
 			$this->site_settings->addNotification($nType,$nMsg,'');
 
 			redirect('ccshifts/shifts/users');
@@ -189,6 +197,7 @@ class Shifts extends MX_Controller
 	//By Dominic, Dec 12,2016
 	function edit_remote_login()
 	{
+		$this->authentication->check_admin_access();
 		if ($this->form_validation->run('remote_login_frm') === FALSE) 
 		{
 			redirect('ccshifts/shifts/users');
@@ -222,6 +231,7 @@ class Shifts extends MX_Controller
 	//By Dominic, Dec 12,2016
 	function edit_monitor_attendance()
 	{
+		$this->authentication->check_admin_access();
 		if ($this->form_validation->run('monitor_attendance_frm') === FALSE)
 		{
 			redirect('ccshifts/shifts/users');
@@ -254,6 +264,7 @@ class Shifts extends MX_Controller
 	//By Dominic, Dec 13,2016
 	function change_user_shift_type()
 	{
+		$this->authentication->check_admin_access();
 		if ($this->form_validation->run('user_shiftchange_frm') === FALSE)
 		{
 			redirect('ccshifts/shifts/users');
@@ -286,6 +297,7 @@ class Shifts extends MX_Controller
 	//By Dominic, Dec 12,2016
 	function forgot_user()
 	{
+		$this->authentication->check_admin_access();		
 		if ($this->form_validation->run('forgot_user_frm') === FALSE)
 		{
 			echo "failed";
@@ -310,6 +322,7 @@ class Shifts extends MX_Controller
 	//By Dominic, Dec 12,2016
 	function edit_user()
 	{
+		$this->authentication->check_admin_access();
 		if ($this->form_validation->run('edit_user_frm') === FALSE)
 		{
 			redirect('ccshifts/shifts/users');
@@ -333,6 +346,7 @@ class Shifts extends MX_Controller
 	//By Dominic, Dec 12,2016
 	function delete_users($staff_id,$staff_name)
 	{
+		$this->authentication->check_admin_access();
 		if($staff_id!='')
 		{
 			$this->Shifts_model->delete_users($staff_id);
@@ -356,6 +370,7 @@ class Shifts extends MX_Controller
 		//By Dominic, Dec 13,2016
 		public function whitelistips()
 		{
+			$this->authentication->check_admin_access();
 			$compIdSess =$this->session->userdata('coid');
 		
 			$this->data['whitelistedIps']				=  $this->Shifts_model->getWhiteListedIPs($compIdSess);
@@ -368,7 +383,8 @@ class Shifts extends MX_Controller
 		//Function to add white-listed IPs
 		//By Dominic, Dec 13,2016
 		function add_department_ips()
-		{			
+		{
+			$this->authentication->check_admin_access();			
 			if ($this->form_validation->run('frm_add_department_ip') === FALSE) 
 			{
 				redirect('ccshifts/shifts/whitelistips');
@@ -404,6 +420,7 @@ class Shifts extends MX_Controller
 		//By Dominic, Dec 13,2016
 		function modify_department_ips()
 		{
+			$this->authentication->check_admin_access();
 			if ($this->form_validation->run('frm_edit_whitelisted_ip') === FALSE) 
 			{
 				redirect('ccshifts/shifts/whitelistips');
@@ -440,6 +457,7 @@ class Shifts extends MX_Controller
 		//By Dominic, Dec 13,2016
 		function deleteWhiteListedIP()
 		{
+			$this->authentication->check_admin_access();
 			$id=$this->input->post('id');
 			$ip=$this->input->post('ip');
 			$this->Shifts_model->delete_department_ip($id,$ip);
@@ -459,6 +477,7 @@ class Shifts extends MX_Controller
 	//By Dominic, Dec 13,2016
 	public function shifts()
 	{
+		$this->authentication->check_admin_access();
 		$compIdSess 					=	 $this->session->userdata('coid');
 		$this->data['shifts'] 			= 	 $this->Shifts_model->get_all_shifts($compIdSess);
 		$this->data['timezone_lists'] 	= 	 $this->Shifts_model->get_all_timezones();
@@ -471,6 +490,7 @@ class Shifts extends MX_Controller
 	//By Dominic, Dec 13,2016
 	function add_shifts()
 	{
+		$this->authentication->check_admin_access();
 		if ($this->form_validation->run('frm_add_shifts') === FALSE)
 		{
 			redirect('ccshifts/shifts/shifts');
@@ -496,6 +516,7 @@ class Shifts extends MX_Controller
 	//By Dominic, Dec 13,2016
 	function modify_shifts()
 	{
+		$this->authentication->check_admin_access();
 		if ($this->form_validation->run('frm_edit_shifts') === FALSE)
 		{
 			redirect('ccshifts/shifts/shifts');
@@ -521,6 +542,7 @@ class Shifts extends MX_Controller
 	//By Dominic, Dec 13,2016
 	function  updateNotificationTime()
 	{
+		$this->authentication->check_admin_access();
 		if ($this->form_validation->run('formUpdateNotificationTime') === FALSE)
 		{
 			redirect('ccshifts/shifts/shifts');
@@ -561,6 +583,7 @@ class Shifts extends MX_Controller
 	
 	public function assignmonitor()
 	{
+		$this->authentication->check_admin_access();
 		$this->data['view']					=	'ccshifts/assignment';
 		$this->load->view('master', $this->data);		
 	}
