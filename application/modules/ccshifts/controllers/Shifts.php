@@ -639,6 +639,54 @@ class Shifts extends MX_Controller
 		echo json_encode($build_array);
 	}
 
+	//Function to assign users to a shift
+	//By Dominic, Dec 19,2016
+	function assignUsersToShift()
+	{
+		$users	=	$this->db->escape_str($this->input->post('users'));
+		$shift	=	$this->db->escape_str($this->input->post('shift'));
+		$this->Shifts_model->removeUserShifts($users);
+		$this->Shifts_model->assignUsersToShift($shift,$users);
+		$inserted = $this->db->insert_id();
+		if($inserted!='')
+		{
+			echo 'updated';
+		}
+		else
+		{
+			echo 'rejected';
+		}
+	}
+
+	//Function to remove monitors from shift
+	//By Dominic, Dec 19,2016
+	function removeMonitorForShift()
+	{
+		$users	=	$this->db->escape_str($this->input->post('users'));
+		$shift	=	$this->db->escape_str($this->input->post('shift'));
+		$this->Shifts_model->removeMonitorUserShifts($users,$shift);
+		echo 'updated';
+	}
+
+	//Function to assign monitors to a shift
+	//By Dominic, Dec 19,2016
+	function assignMonitorForShift()
+	{
+		$users	=	$this->db->escape_str($this->input->post('users'));
+		$shift	=	$this->db->escape_str($this->input->post('shift'));
+		$this->Shifts_model->removeMonitorUserShifts($users,$shift);
+		$this->Shifts_model->assignMonitorForShift($shift,$users);
+		$inserted = $this->db->insert_id();
+		if($inserted!='')
+		{
+			echo 'updated';
+		}
+		else
+		{
+			echo 'rejected';
+		}
+	}
+
 
 	function get_common()
 	{

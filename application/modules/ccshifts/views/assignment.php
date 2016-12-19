@@ -59,7 +59,7 @@
 							}
 					
 				?>
-            <div id="<?php echo 'user'.$member->staff_id; ?>" class="col-md-2">
+            <div id="<?php echo 'user'.$member->staff_id; ?>" class="col-md-4">
                 <!-- USERS LIST -->
                 <div class="box box-danger">
                     <div class="box-header with-border">
@@ -98,8 +98,8 @@
 
         <div class="row">
             <div class="col-md-12 text-center">
-                <button class="btn btn-danger">Cancel</button>
-                <button class="btn btn-success">Assign</button>
+                <button  class="btn btn-danger">Cancel</button>
+                <button id="assignStafftoShiftBtn" name="assignStafftoShiftBtn" class="btn btn-success">Assign</button>
             </div>
         </div>
 
@@ -121,7 +121,7 @@
 							}
 					
 				?>
-            <div id="<?php echo 'monitor'.$member->staff_id; ?>" class="col-md-2">
+            <div id="<?php echo 'monitor'.$member->staff_id; ?>" class="col-md-4">
                 <!-- USERS LIST -->
                 <div class="box box-danger">
                     <div class="box-header with-border">
@@ -161,8 +161,8 @@
 
         <div class="row">
             <div class="col-md-12 text-center">
-                <button class="btn btn-danger">Remove Monitoring</button>
-                <button class="btn btn-success">Assign Monitoring</button>
+                <button id="removeMonitor" name="removeMonitor" class="btn btn-danger">Remove Monitoring</button>
+                <button id="assignMonitor" name="assignMonitor" class="btn btn-success">Assign Monitoring</button>
             </div>
         </div>
 

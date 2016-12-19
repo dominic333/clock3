@@ -360,7 +360,7 @@ class Shifts_model extends CI_Model {
 		$this->db->where('id', $id);
   		$this->db->where('ip_address',$ip);
   		$this->db->where('company_id',$this->session->userdata('coid'));
-	   $this->db->delete('department_ip');
+	    $this->db->delete('department_ip');
 	}
 	
 	//Function to fetch all shifts for a company
@@ -661,9 +661,61 @@ class Shifts_model extends CI_Model {
 	  //echo $this->db->last_query();                                    
 	  return $query->result();
 	}
+
+	//Function to assign users to a shift
+	//By Dominic, Dec 19,2016
+	function assignUsersToShift($shift,$users)
+	{
+		//print_r($users);
+		for($i=0;$i<count($users);$i++)
+		{
+			$data = array(
+				'staff_id' 	  => $users[$i],
+				'shift_id' 	  => $shift
+			);
+			$this->db->insert('staff_dept_shift', $data);
+		}
+	}
+
+	//Function to empty an entire shift before modifying it
+	//By Dominic, Dec 19,2016
+	function removeUserShifts($users)
+	{
+		for($i=0;$i<count($users);$i++)
+		{
+			$this->db->where('staff_id',$users[$i]);
+			$this->db->delete('staff_dept_shift');
+		}
+	}
+
+	//Function to remove monitors from shift
+	//By Dominic, Dec 19,2016
+	function removeMonitorUserShifts($users,$shift)
+	{
+		for($i=0;$i<count($users);$i++)
+		{
+			$this->db->where('staff_id',$users[$i]);
+			$this->db->where('shift_id',$shift);
+			$this->db->where('monitor',1);
+			$this->db->delete('monitor_info');
+		}
+	}
+
+	//Function to assign monitors for shift
+	function assignMonitorForShift($shift,$users)
+	{
+		for($i=0;$i<count($users);$i++)
+		{
+			$data = array(
+				'staff_id' 	  => $users[$i],
+				'shift_id' 	  => $shift,
+				'monitor'	  => 1
+			);
+			$this->db->insert('monitor_info', $data);
+		}
+	}
 	
 
 	
 	
 }
-
