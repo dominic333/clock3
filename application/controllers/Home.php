@@ -57,8 +57,6 @@ class Home extends MX_Controller
 				$staff_id=$this->Home_model->check_login();
 				if($staff_id!=0)
 				{
-      			
-      			
 					$user_data	=	array();
 					$user_data	=	modules::load('users')->getUserDataFromUserID($staff_id);
 
@@ -81,14 +79,13 @@ class Home extends MX_Controller
 					//if staff, redirect to snap dashboard; no need to go to cc dashboard
 					if($row->is_admin==0)
 					{
-						redirect($this->lang->line("snap").'/dashboard');
+						//redirect($this->lang->line("snap").'/dashboard');
+						redirect('selfiemarking/selfie');
 					}
 					else
 					{
 						redirect($this->lang->line("cc").'/dashboard');
-					}	
-					
-					
+					}		
 				}
 				else
 				{

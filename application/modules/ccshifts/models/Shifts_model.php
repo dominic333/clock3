@@ -22,7 +22,6 @@ class Shifts_model extends CI_Model {
    
 						break; 
 						
-						
 		  case 'read':	
 					  $this->db->where('company_id',$compId);
 					  $result=$this->db->get('departments');
@@ -157,10 +156,61 @@ class Shifts_model extends CI_Model {
 	  return $query->result();
 	}
 	
+	//Function to get  maximum users count for the company plan  
+	//Dominic, December 19,2016
+   function getCompanyMaxStaff()
+	{				
+		$this->db->select('max_users');
+		$this->db->from('company_plans');
+		$this->db->where("company_id", $this->session->userdata('coid'));
+		$query= $this->db->get();
+		//echo $this->db->last_query();
+		return $query->row()->max_users;
+	} 
+	
+  //Function to get  maximum users added till date
+  //Dominic, December 19,2016
+  function getCurrentNumUsers()
+  {
+		$this->db->select('staff_id');
+		$this->db->from('staff_info');
+		$this->db->where("company_id", $this->session->userdata('coid'));
+		$query= $this->db->get();
+		//echo $this->db->last_query();
+		return $query->num_rows();     
+  }
+  
+  	//Function to check shift name exits for comoany
+	//Dominic, December 19,2016
+	function check_company_user_login_exists()
+	{
+		$this->db->select('staff_id');
+		$this->db->where('login_name',$this->input->post('login_name'));
+		$results=$this->db->get('staff_info');
+		if($results->num_rows() > 0)
+		{
+	      return TRUE;
+	   } 
+	   else 
+	   {
+	      return FALSE;
+	   }
+	}
+
+	//Dominic, December 19,2016
+	function add_user_shifts($staff_id)
+	{
+		$data = array(		
+			'staff_id' 	  => $staff_id,                                               
+			'shift_id' 	  => $this->db->escape_str($this->input->post('shifts')),                        
+		);
+		$this->db->insert('staff_dept_shift', $data);
+	}		
+	
 	//Function to manage Users	
 	//Dominic, December 12,2016
 	function save($type='' ,$filename='' ,$user_id='')
-    {
+   {
 		switch($type)
 		{
 	        case 'Add_Users':	
@@ -321,7 +371,7 @@ class Shifts_model extends CI_Model {
 	  $this->db->from('department_shifts AS DS');
   	  $this->db->where('DS.comp_id',$compIdSess);
   	  $this->db->where('DS.shift_status',1);
-      $this->db->order_by("DS.shift_id", "ASC");
+     $this->db->order_by("DS.shift_id", "ASC");
 	  $query= $this->db->get(); 
 	  //echo $this->db->last_query();                                    
 	  return $query->result();
@@ -584,6 +634,35 @@ class Shifts_model extends CI_Model {
 		}
 		return $graveyard;
 	}
+	
+	//Function to fetch users under a shift
+	//By Dominic, Dec 19,2016
+	function fetchUsersUnderThisShift($shiftId)
+	{
+		//SELECT staff_id FROM staff_dept_shift WHERE shift_id
+	  $this->db->select('staff_id');
+	  $this->db->from('staff_dept_shift');
+  	  $this->db->where('shift_id',$shiftId);
+	  $query= $this->db->get(); 
+	  //echo $this->db->last_query();                                    
+	  return $query->result();
+	}
+	
+	//Function to fetch users who monitor attendance for a shift
+	//By Dominic, Dec 19,2016
+	function fetchUsersMonitoringAttendanceForShift($shiftId)
+	{
+		//SELECT staff_id FROM monitor_info WHERE shift_id=78 and monitor=1
+	  $this->db->select('staff_id');
+	  $this->db->from('monitor_info');
+  	  $this->db->where('shift_id',$shiftId);
+  	  $this->db->where('monitor',1);
+	  $query= $this->db->get(); 
+	  //echo $this->db->last_query();                                    
+	  return $query->result();
+	}
+	
+
 	
 	
 }

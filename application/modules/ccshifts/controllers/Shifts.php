@@ -160,7 +160,8 @@ class Shifts extends MX_Controller
 		
 	}
 
-	//Function to add users (incomplete)
+	//Function to add users 
+	//By Dominic, Dec 19,2016
 	function add_users()
 	{
 		$this->authentication->check_admin_access();
@@ -170,27 +171,44 @@ class Shifts extends MX_Controller
 		}
 		else
 		{
-			$this->Shifts_model->save('Edit_RemoteL','' );
-			$staff_id = $this->input->post('rstaff_id');
-			$rvaule=$this->input->post('rremotelogin');
-			if($rvaule==1)
+			$max_user 		=	$this->Shifts_model->getCompanyMaxStaff();
+	  		$current_user 	=	$this->Shifts_model->getCurrentNumUsers();
+	  		if($max_user>$current_user)
 			{
-				$rval='Enabled';
+				if($this->Shifts_model->check_company_user_login_exists())
+				{
+					$this->data['alert'] = 'Login Name already exist';
+					$this->load->view('admin/users/add',$this->data);
+				}
+				else
+				{
+					$this->Shifts_model->save('Add_Users','' );
+			      $staff_id = $this->db->insert_id();	
+			      if($staff_id!='')
+			      {
+			      	$this->Shifts_model->add_user_shifts($staff_id);
+			     		//$this->send_user_welcomemail($staff_id);
+				   	
+				   	$operation = 'New User Added with staff ID '.$staff_id;
+						$this->site_settings->adminlog($operation);
+			
+						$nType = 1; //company updates
+						$nMsg  = 'New User Added '.$this->input->post('staff_name');
+						$this->site_settings->addNotification($nType,$nMsg,'');
+			      }
+			      echo "<script>
+						alert('Staff Added Successfully');
+						window.location.href='".base_url()."ccshifts/shifts/users';
+						</script>";
+					exit();
+				}	
 			}
 			else
 			{
-				$rval='Disabled';
-			}
-			// save to log table
-			$operation = 'New User Added with staff ID '.$staff_id;
-			$this->site_settings->adminlog($operation);
-
-			$nType = 1; //company updates
-			$nMsg  = 'New User Added '.$this->input->post('staff_name');
-			$this->site_settings->addNotification($nType,$nMsg,'');
-
-			redirect('ccshifts/shifts/users');
-		}
+				$this->data['alert'] = 'Maximum Nunber User(s) ( '.$max_user.' ) Reached. Please contact us to upgrade your Plan.';
+				redirect('ccshifts/shifts/users');
+			}			
+		}	
 	}
 	
 	//function to modify remote login feature
@@ -458,8 +476,8 @@ class Shifts extends MX_Controller
 		function deleteWhiteListedIP()
 		{
 			$this->authentication->check_admin_access();
-			$id=$this->input->post('id');
-			$ip=$this->input->post('ip');
+			$id=$this->db->escape_str($this->input->post('id'));
+			$ip=$this->db->escape_str($this->input->post('ip'));
 			$this->Shifts_model->delete_department_ip($id,$ip);
 			
 			// save to log table	
@@ -581,11 +599,44 @@ class Shifts extends MX_Controller
       return $build_array;  
 	}
 	
+	//Function to load attendance monitor view
+	//By Dominic, Dec 19,2016
 	public function assignmonitor()
 	{
 		$this->authentication->check_admin_access();
+		
+		$compIdSess =$this->session->userdata('coid');
+		$this->data['company_shifts']			=	$this->Shifts_model->fetchCompanyShifts($compIdSess);
+		$this->data['company_members']		=  $this->Shifts_model->getCompanyMembers($compIdSess);
 		$this->data['view']					=	'ccshifts/assignment';
+		$this->data['footer_includes']	=	'<script src="'.base_url().'js/cc/assign.js" type="text/javascript"></script>';
 		$this->load->view('master', $this->data);		
+	}
+	
+	//Function to fetch users under a shift
+	//By Dominic, Dec 19,2016
+	function fetchUsersUnderThisShift()
+	{
+		$build_array 	= array();
+		$shiftId=$this->db->escape_str($this->input->post('shiftId'));
+		if($shiftId!='')
+		{
+			$build_array   =$this->Shifts_model->fetchUsersUnderThisShift($shiftId);
+		}
+		echo json_encode($build_array);
+	}
+	
+	//Function to fetch users who monitor attendance for a shift
+	//By Dominic, Dec 19,2016
+	function fetchUsersMonitoringAttendanceForShift()
+	{
+		$build_array 	= array();
+		$shiftId=$this->db->escape_str($this->input->post('shiftId'));
+		if($shiftId!='')
+		{
+			$build_array   =$this->Shifts_model->fetchUsersMonitoringAttendanceForShift($shiftId);
+		}
+		echo json_encode($build_array);
 	}
 
 
