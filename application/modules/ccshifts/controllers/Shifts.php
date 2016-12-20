@@ -686,6 +686,15 @@ class Shifts extends MX_Controller
 			echo 'rejected';
 		}
 	}
+	
+	//Bridge to fetch company members
+	function getAllCompanyMembers($compIdSess)
+	{
+		
+		$build_array 	= array();
+      $build_array   = $this->Shifts_model->getCompanyMembers($compIdSess);
+      return $build_array;
+	}
 
 
 	function get_common()

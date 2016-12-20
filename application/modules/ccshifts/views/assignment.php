@@ -6,7 +6,7 @@
     <section class="content-header">
         <h1>
             Assignment
-            <small>Lorem Ipsum ....</small>
+            <small></small>
         </h1>
         <ol class="breadcrumb">
             <li><a href="<?php echo base_url();?>ccshifts/shifts/assignmonitor"><i class="fa fa-file-text-o"></i> Assignment</a></li>

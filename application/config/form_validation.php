@@ -421,6 +421,40 @@ $config = array(
             'label' => 'To Date',
             'rules' => 'trim|required|xss_clean|prep_for_form'
         )
+    ),
+    'frm_department_attendance' => array(
+        array(
+            'field' => 'date_from',
+            'label' => 'From Date',
+            'rules' => 'trim|required|xss_clean|prep_for_form'
+        ),
+        array(
+            'field' => 'date_to',
+            'label' => 'To Date',
+            'rules' => 'trim|required|xss_clean|prep_for_form'
+        ),
+        array(
+            'field' => 'multiSelect',
+            'label' => 'Select Shift',
+            'rules' => 'trim|required|xss_clean|prep_for_form'
+        )
+    ),
+    'frm_user_attendance' => array(
+        array(
+            'field' => 'udate_from',
+            'label' => 'From Date',
+            'rules' => 'trim|required|xss_clean|prep_for_form'
+        ),
+        array(
+            'field' => 'udate_to',
+            'label' => 'To Date',
+            'rules' => 'trim|required|xss_clean|prep_for_form'
+        ),
+        array(
+            'field' => 'umultiSelect',
+            'label' => 'Select Shift',
+            'rules' => 'trim|required|xss_clean|prep_for_form'
+        )
     )
 );
 ?>
