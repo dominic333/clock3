@@ -21,6 +21,7 @@ class Shifts extends MX_Controller
 	public function index()
 	{
 		$this->authentication->check_admin_access();
+		$this->authentication->checkDepartmentFeaturesAccess();
 		$compIdSess =$this->session->userdata('coid');
 		$this->data['company_departments']	=	$this->Shifts_model->departmentsCRUD($compIdSess,'read');
 		$this->data['view']						=	'ccshifts/department';
@@ -34,6 +35,7 @@ class Shifts extends MX_Controller
 	public function addDepartments()
 	{
 		$this->authentication->check_admin_access();
+		$this->authentication->checkDepartmentFeaturesAccess();
 		if ($this->form_validation->run('addDepartmentForm') === FALSE) 
 		{
 			redirect('ccshifts/shifts');
@@ -70,6 +72,7 @@ class Shifts extends MX_Controller
 	function editDepartment()
 	{	
 		$this->authentication->check_admin_access();
+		$this->authentication->checkDepartmentFeaturesAccess();
 		if ($this->form_validation->run('editDepartmentForm') === FALSE) 
 		{
 			redirect('ccshifts/shifts');
@@ -115,6 +118,7 @@ class Shifts extends MX_Controller
 	function deleteDepartments()
 	{
 		$this->authentication->check_admin_access();
+		$this->authentication->checkDepartmentFeaturesAccess();
 		if($this->input->post('dept_id')&&$this->input->post('company_id'))
 		{
 			if($this->Shifts_model->check_department_shift_exists()||$this->Shifts_model->check_department_shift_user_exists())

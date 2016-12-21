@@ -19,6 +19,7 @@ class Attendance extends MX_Controller
 	public function index()
 	{
 		$this->authentication->check_admin_access();
+		$this->data['datepickerSwitch']					=	1;
 		$this->data['attendance_table']	="<table id='myattendance' class='table table-bordered table-striped'>
 					                                <thead>
 					                                <tr>

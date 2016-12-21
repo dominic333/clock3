@@ -10,6 +10,7 @@ class Reports extends MX_Controller
 
 		$this->load->model('Reports_model');
 		$this->authentication->is_logged_in();
+		$this->authentication->checkReportsFeaturesAccess();
 		$this->get_common();
 	}
 	

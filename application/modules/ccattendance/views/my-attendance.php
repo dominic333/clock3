@@ -16,45 +16,11 @@
     <section class="content">
 
         <div class="row">
-            <div class="col-md-10">
+            <div class="col-md-9">
                 <div class="box box-danger">
 
                     <div class="box-header">
-							<form id="frm_attendance_search" name="frm_attendance_search" class="form-horizontal" role="form" 
-								action="<?php echo base_url();?>ccattendance/attendance" method="post">
-                        <input type="hidden" name="<?=$this->security->get_csrf_token_name()?>" value="<?=$this->security->get_csrf_hash()?>" />
-                        <div class="row">
-                            <div class="form-group">
-                                <div class="col-md-3">
 
-                                    <div class="input-group date" data-provide="datepicker"
-                                         id='date_from'>
-                                        <input id="date_from" name="date_from" data-date-format="dd-mm-yyyy" type="text" class="form-control" placeholder="From">
-                                        <div class="input-group-addon">
-                                            <span class="glyphicon glyphicon-th"></span>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-3">
-                                    <div class="input-group date" data-provide="datepicker"
-                                         id='date_to'>
-                                        <input id="date_to"  name="date_to" data-date-format="dd-mm-yyyy" type="text" class="form-control" placeholder="To">
-                                        <div class="input-group-addon">
-                                            <span class="glyphicon glyphicon-th"></span>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-3">
-                                    <button type="submit" name="Submit" value="Submit" class="btn btn-success"><span
-                                            class="fa fa-search"
-                                            aria-hidden="true"></span>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-							</form>
                     </div>
                     <!-- /.box-header -->
                   
@@ -72,9 +38,11 @@
             </div>
             <!-- /.col-md-8 -->
 
-            <div class="col-md-2">
+            <div class="col-md-3">
                 <!-- Calendar -->
-                <div class="box box-solid bg-green-gradient">
+                <div>
+                <?php /*
+                <div class="box box-solid ">
                     <div class="box-header">
                         <i class="fa fa-calendar"></i>
 
@@ -88,11 +56,37 @@
                         <!-- /. tools -->
                     </div>
                     <!-- /.box-header -->
-                    <div class="box-body no-padding">
+                    <div >
                         <!--The calendar -->
-                        <div id="calendar" style="width: 100%"></div>
+                        
                     </div>
+                   */ ?>
+							<div id="calendar" style="width: 100%"></div>
+                </div>
+                <div> 
+                	  <form id="frm_attendance_search" name="frm_attendance_search" class="form-horizontal" role="form" 
+								action="<?php echo base_url();?>ccattendance/attendance" method="post">
+                        <input type="hidden" name="<?=$this->security->get_csrf_token_name()?>" value="<?=$this->security->get_csrf_hash()?>" />
+                        <div class="row">
+                            <div class="">
 
+                                <div class="col-md-6 ">
+                                     <div id="dateRanges"></div>
+                                		<input id="altField" name="altField" type="hidden" class="form-control">
+                                		 <input id="date_from" name="date_from" data-date-format="dd-mm-yyyy" type="hidden" class="form-control" placeholder="From">
+                                		 <input id="date_to"  name="date_to" data-date-format="dd-mm-yyyy" type="hidden" class="form-control" placeholder="To">
+                                </div>
+											
+											
+                                <div class="col-md-3">
+                                    <button type="submit" id="submitThis" name="Submit" value="Submit" class="btn btn-success" disabled><span
+                                            class="fa fa-search"
+                                            aria-hidden="true"></span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+							</form>
                 </div>
                 <!-- /.box -->
 

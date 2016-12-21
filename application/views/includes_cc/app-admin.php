@@ -30,12 +30,11 @@
     <!-- Mynotepedia Skins. Choose a skin from the css/skins
          folder instead of downloading all of them to reduce the load. -->
     <link rel="stylesheet" href="<?php echo base_url();?>assets/cc/theme/css/skins/_all-skins.min.css">
+    
+    <link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" href="<?php echo base_url();?>assets/cc/plugins/datepicker/datepicker3.css"> 
+    <link rel="stylesheet" href="<?php echo base_url();?>assets/cc/plugins/daterangepicker/daterangepicker.css"> 
 
-    <!-- Date Picker -->
-    <link rel="stylesheet" href="<?php echo base_url();?>assets/cc/plugins/datepicker/datepicker3.css">
-
-    <!-- Daterange picker -->
-    <link rel="stylesheet" href="<?php echo base_url();?>assets/cc/plugins/daterangepicker/daterangepicker.css">
 
     <!-- Bootstrap time Picker -->
     <link rel="stylesheet" href="<?php echo base_url();?>assets/cc/plugins/timepicker/bootstrap-timepicker.min.css">

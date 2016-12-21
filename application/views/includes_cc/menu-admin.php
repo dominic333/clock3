@@ -45,7 +45,9 @@
                     </span>
                 </a>
                 <ul class="treeview-menu">
+                	  <?php $departmentsAcces= $this->authentication->checkDepartmentAccess(); if($departmentsAcces==1){ ?>
                     <li><a href="<?php echo base_url();?>ccshifts/shifts"><i class="fa fa-angle-double-right"></i> Add / Edit Department</a></li>
+                    <?php } ?>
                     <li><a href="<?php echo base_url();?>ccshifts/shifts/shifts"><i class="fa fa-angle-double-right"></i> Add / Edit Shift</a></li>
                     <li><a href="<?php echo base_url();?>ccshifts/shifts/users"><i class="fa fa-angle-double-right"></i> Add / Edit User</a></li>
                     <li><a href="<?php echo base_url();?>ccshifts/shifts/whitelistips"><i class="fa fa-angle-double-right"></i> Add White List IPs</a></li>
@@ -64,13 +66,13 @@
                     <i class="fa fa-bullhorn"></i> <span>Announcements</span>
                 </a>
             </li>
-
+				<?php $reportAcces= $this->authentication->checkReportsAccess(); if($reportAcces==1){ ?>
             <li class="treeview">
                 <a href="<?php echo base_url();?>ccreports/reports">
                     <i class="fa fa-leanpub"></i> <span>Reports</span>
                 </a>
             </li>
-
+				<?php } ?>
         </ul>
     </section>
     <!-- /.sidebar -->

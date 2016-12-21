@@ -1,5 +1,4 @@
-<script  src="<?php echo base_url();?>assets/common/jquery.validate.min.js"  ></script> 
-<script src="<?php echo base_url();?>assets/common/jquery-confirm.min.js" type="text/javascript"></script>
+
 <script type="text/javascript">
 		//Function to show latest announcement details on a modal popup (in dashboard)
 		//By Dominic; Dec 05,2016
