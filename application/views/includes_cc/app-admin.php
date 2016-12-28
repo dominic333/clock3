@@ -49,6 +49,10 @@
     <link rel="stylesheet" href="<?php echo base_url();?>assets/cc/plugins/select2/select2.min.css">
     
     <link href="<?php echo base_url();?>assets/commoncss/jquery-confirm.css" rel="stylesheet"/>
+    
+    <!-- Full Calendar -->
+    <link rel="stylesheet" href="<?php echo base_url();?>assets/commoncss/fullcalendar.min.css">
+    <link rel="stylesheet" href="<?php echo base_url();?>assets/commoncss/fullcalendar.print.css" media="print">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->

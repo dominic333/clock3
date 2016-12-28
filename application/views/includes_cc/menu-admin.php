@@ -66,6 +66,11 @@
                     <i class="fa fa-bullhorn"></i> <span>Announcements</span>
                 </a>
             </li>
+            <li>
+                <a href="<?php echo base_url();?>ccattendance/attendance/monthiview">
+                    <i class="fa fa-calendar"></i> <span>Calendar</span>
+                </a>
+            </li>
 				<?php $reportAcces= $this->authentication->checkReportsAccess(); if($reportAcces==1){ ?>
             <li class="treeview">
                 <a href="<?php echo base_url();?>ccreports/reports">
