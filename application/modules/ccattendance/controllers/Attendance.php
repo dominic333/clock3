@@ -934,28 +934,74 @@ class Attendance extends MX_Controller
 					}
 						
 				}
-				/*
-				$attendance_table	.= "<tr>
-                                                 <td class=\"botline\">$r_cnt</td>
-                                                 <td class=\"botline\">$log_date</td>
-                                                 
-                                                 <td class=\"botline\">$attendance_time</td>
-                                                 <td class=\"botline\">$log_time</td>
-                                                 <td class=\"botline\">$attendance_status</td>
-																 <td class=\"botline\">$attendance_end_time</td>
-																 <td class=\"botline\">$staff_logout_time</td>
-																 <td class=\"botline\">$attendance_out_status</td>
-                                                 <td class=\"botline\">$a_in_file</td>
-                                                 <td class=\"botline\">$a_out_file</td>
-																 <td class=\"botline\">$dispute_msg</td>
-                                                 </tr>";
-            */
+					/*
+						{
+                    title: 'Absent',
+                    start: new Date(y, m, 1),
+                    backgroundColor: "#f56954", //red
+                    borderColor: "#f56954" //red
+                },
+                {
+                    title: 'Holiday',
+                    start: new Date(y, m, d - 5),
+                    end: new Date(y, m, d - 2),
+                    backgroundColor: "#00c0ef", //Info (aqua)
+                    borderColor: "#00c0ef" //Info (aqua)
+                },
+                {
+                    title: 'Late by : 00:10:41',
+                    start: new Date(y, m, 2),
+                    backgroundColor: "#f39c12", //yellow
+                    borderColor: "#f39c12" //yellow
+                },
+                {
+                    title: 'On Time',
+                    start: new Date(y, m, d + 2, 19, 0),
+                    end: new Date(y, m, d + 1, 22, 30),
+                    allDay: false,
+                    backgroundColor: "#00a65a", //Success (green)
+                    borderColor: "#00a65a" //Success (green)
+                }
+                */
+
+				if($attendance_status=="NA")
+				{
+					$attendance_table[$dcnt]["backgroundColor"]="#00c0ef"; //Info (aqua)
+            	$attendance_table[$dcnt]["borderColor"]="#00c0ef"; 	 //Info (aqua)
+				}
+				else if($attendance_status=="Non Work Day")
+				{
+					$attendance_table[$dcnt]["backgroundColor"]="#00c0ef"; //Info (aqua)
+            	$attendance_table[$dcnt]["borderColor"]="#00c0ef"; 	//Info (aqua)
+				}
+				else if($attendance_status=="Absent")
+				{
+					$attendance_table[$dcnt]["backgroundColor"]="#f56954"; //Info (red)
+            	$attendance_table[$dcnt]["borderColor"]="#f56954"; 	//Info (red)
+				}
+				else if($attendance_status=="On Time")
+				{
+					$attendance_table[$dcnt]["backgroundColor"]="#00a65a"; //Info (green)
+            	$attendance_table[$dcnt]["borderColor"]="#00a65a"; 	//Info (green)
+				}
+				else if($attendance_status=="On Time")
+				{
+					$attendance_table[$dcnt]["backgroundColor"]="#00a65a"; //Info (green)
+            	$attendance_table[$dcnt]["borderColor"]="#00a65a"; 	//Info (green)
+				}
+				else
+				{
+					$attendance_table[$dcnt]["backgroundColor"]="#00a65a";
+            	$attendance_table[$dcnt]["borderColor"]="#00a65a";
+				}
+				
             $startFormat = date_create($log_date);
-				$formatDate= date_format ($startFormat, 'Y-m-d H:i:s');
-            $attendance_table[$dcnt]["start"]=$formatDate;
+				$formatDate= date_format ($startFormat, 'Y-m-d');
+            $attendance_table[$dcnt]["start"]=$log_date;
+            $attendance_table[$dcnt]["end"]=$log_date;
             $attendance_table[$dcnt]["title"]=$attendance_status;
-            $attendance_table[$dcnt]["backgroundColor"]="#00a65a";
-            $attendance_table[$dcnt]["borderColor"]="#00a65a";
+            
+            
             //$attendance_table[$dcnt]["logtime"]=$log_time;
             
             $r_cnt++;   
