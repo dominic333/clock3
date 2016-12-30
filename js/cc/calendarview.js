@@ -48,7 +48,48 @@
                 today: 'today',
                 month: 'month'
             },
-                	
+            /*
+            eventRender: function(event, element) {
+                 //$(element).tooltip({title: event.loc ,placement:'bottom' });  
+                 $(element).tooltip({title: event.loc,container: "body"});                   
+            },	 
+            */
+        eventMouseover: function (data, event, view) {
+
+            tooltip = '<div class="tooltiptopicevent" style="width:auto;height:auto;background:#feb811;position:absolute;z-index:10001;padding:10px 10px 10px 10px ;  line-height: 200%;">' 
+            				+ 'In: ' + ': ' + data.intime + '</br>' + 'Out: ' + ': ' + data.outtime + '</div>';
+
+
+            $("body").append(tooltip);
+            $(this).mouseover(function (e) {
+                $(this).css('z-index', 10000);
+                $('.tooltiptopicevent').fadeIn('500');
+                $('.tooltiptopicevent').fadeTo('10', 1.9);
+            }).mousemove(function (e) {
+                $('.tooltiptopicevent').css('top', e.pageY + 10);
+                $('.tooltiptopicevent').css('left', e.pageX + 20);
+            });
+
+
+        },
+        eventMouseout: function (data, event, view) {
+            $(this).css('z-index', 8);
+
+            $('.tooltiptopicevent').remove();
+
+        },
+        dayClick: function () {
+            tooltip.hide()
+        },
+        eventResizeStart: function () {
+            tooltip.hide()
+        },
+        eventDragStart: function () {
+            tooltip.hide()
+        },
+        viewDisplay: function () {
+            tooltip.hide()
+        },  	
             events: function(start, end, timezone, callback) {
             	
              //have we already cached this time?
@@ -103,10 +144,12 @@
 									*/
 		                   	events.push({
 		                   		
-		                    	   title:  res.title.substring(0,8),
+		                    	   title:  res.title,
 		                    	   loc: res.title,
 		                    	   start:res.start,
 		                    	   end:res.end,
+		                    	   intime:res.intime,
+		                    	   outtime:res.outtime,
 		                        //start: new Date(date[0],date[1] -1, date[2], hrs_from , time_from[1] ), // will be parsed //date[1] -1 is used becz march is 2 as default bt march is 3 in our database
 		                        //end:   new Date(date[0],date[1] -1, date[2] , hrs_to, time_to[1] ),
 		                        allDay: false,
@@ -119,40 +162,8 @@
 		             }
 		          });
 		        },
-            //Random default events
-            /*
-            events: [
-                {
-                    title: 'Absent',
-                    start: new Date(y, m, 1),
-                    backgroundColor: "#f56954", //red
-                    borderColor: "#f56954" //red
-                },
-                {
-                    title: 'Holiday',
-                    start: new Date(y, m, d - 5),
-                    end: new Date(y, m, d - 2),
-                    backgroundColor: "#00c0ef", //Info (aqua)
-                    borderColor: "#00c0ef" //Info (aqua)
-                },
-                {
-                    title: 'Late by : 00:10:41',
-                    start: new Date(y, m, 2),
-                    backgroundColor: "#f39c12", //yellow
-                    borderColor: "#f39c12" //yellow
-                },
-                {
-                    title: 'On Time',
-                    start: new Date(y, m, d + 2, 19, 0),
-                    end: new Date(y, m, d + 1, 22, 30),
-                    allDay: false,
-                    backgroundColor: "#00a65a", //Success (green)
-                    borderColor: "#00a65a" //Success (green)
-                }
-            ],
-            */
-            editable: true,
-            droppable: true, // this allows things to be dropped onto the calendar !!!
+            editable: false,
+            droppable: false, // this allows things to be dropped onto the calendar !!!
             drop: function (date, allDay) { // this function is called when something is dropped
 
                 // retrieve the dropped element's stored Event Object
