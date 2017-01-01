@@ -1,3 +1,4 @@
+</div>
 <!-- Footer -->
 <footer class="well-footer">
     <div class="row">

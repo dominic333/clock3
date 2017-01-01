@@ -70,26 +70,13 @@
     </script>
     <div id="loader" style="display:none;"></div>
     
-   
     <!--Loader-->
     <script>
-        var myVar;
-
-        function myFunction() {
-            myVar = setTimeout(showPage, 3000);
-        }
-
-        function showPage() {
-            document.getElementById("loader").style.display = "none";
-            document.getElementById("myDiv").style.display = "block";
-        }
-        
         function showLoader()
         {
             document.getElementById("loader").style.display = "block";
             document.getElementById("myDiv").style.display = "none";  
         }
-        
         function hideLoader()
         {
             document.getElementById("loader").style.display = "none";

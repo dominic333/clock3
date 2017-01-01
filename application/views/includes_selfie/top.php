@@ -45,6 +45,23 @@
     <link rel="stylesheet" href="<?php echo base_url();?>assets/commoncss/fullcalendar.min.css">
     <link rel="stylesheet" href="<?php echo base_url();?>assets/commoncss/fullcalendar.print.css" media="print">
 
+    <!-- Loader -->
+    <link rel="stylesheet" href="<?php echo base_url();?>assets/commoncss/loader/loader.css">
+    <div id="loader" style="display:none;"></div>
+    <!--Loader-->
+    <script>
+        function showLoader()
+        {
+            document.getElementById("loader").style.display = "block";
+            document.getElementById("myDiv").style.display = "none";
+        }
+        function hideLoader()
+        {
+            document.getElementById("loader").style.display = "none";
+            document.getElementById("myDiv").style.display = "block";
+        }
+    </script>
+
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -163,6 +180,6 @@
 </div>
 <!--=======================================End Of Modal Form========================================-->
 
-
+        <div style="display:block;" id="myDiv" class="animate-bottom">
         <!--  ================================Content Column========================================== -->
         <div class="col-md-8">
