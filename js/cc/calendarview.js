@@ -118,8 +118,14 @@
 		                //end: end.unix(),
 		                dateofMonth:dateofMonth,
 		                csrf_test_name : csrf_token
-		            },
+		            }, 
+                        beforeSend: function ( xhr )
+                        {
+                            //Add your image loader here
+                            showLoader();
+                        },
 		            success: function(result) {
+                        hideLoader();
 		            	 var events = [];
 		            	 if (!events.eventsCache)
                       events.eventsCache = {};
@@ -335,7 +341,13 @@
                         dateofMonth:dateofMonth,
                         csrf_test_name : csrf_token
                     },
+                    beforeSend: function ( xhr )
+                    {
+                        //Add your image loader here
+                        showLoader();
+                    },
                     success: function(result) {
+                        hideLoader();
                         var events = [];
                         if (!events.eventsCache)
                             events.eventsCache = {};
@@ -436,11 +448,11 @@
 		 beforeSend: function ( xhr ) 
 		 {
 	         //Add your image loader here
-	         $('#loading').show(); 
+             showLoader();
 	    },
 		 success: function(result)
-	    { 
-	    	$('#loading').hide();
+	    {
+            hideLoader();
             $.each(result,function(index,res) //here we're doing a foeach loop round each city with id as the key and city as the value
             {
                 var date = (res.start).split('-'); //To get date,month  and year separately

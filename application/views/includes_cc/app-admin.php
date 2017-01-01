@@ -54,6 +54,9 @@
     <link rel="stylesheet" href="<?php echo base_url();?>assets/commoncss/fullcalendar.min.css">
     <link rel="stylesheet" href="<?php echo base_url();?>assets/commoncss/fullcalendar.print.css" media="print">
 
+    <!-- Loader -->
+    <link rel="stylesheet" href="<?php echo base_url();?>assets/commoncss/loader/loader.css">
+
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -64,6 +67,34 @@
      <script type="text/javascript">
       var base_url = '<?php echo base_url();?>';
       var csrf_token = '<?php echo $this->security->get_csrf_hash()?>';
+    </script>
+    <div id="loader" style="display:none;"></div>
+    
+   
+    <!--Loader-->
+    <script>
+        var myVar;
+
+        function myFunction() {
+            myVar = setTimeout(showPage, 3000);
+        }
+
+        function showPage() {
+            document.getElementById("loader").style.display = "none";
+            document.getElementById("myDiv").style.display = "block";
+        }
+        
+        function showLoader()
+        {
+            document.getElementById("loader").style.display = "block";
+            document.getElementById("myDiv").style.display = "none";  
+        }
+        
+        function hideLoader()
+        {
+            document.getElementById("loader").style.display = "none";
+            document.getElementById("myDiv").style.display = "block";
+        }
     </script>
 </head>
 
@@ -225,3 +256,4 @@
 <!--kevinmaulana1991@gmail.com-->
 
 
+<div style="display:block;" id="myDiv" class="animate-bottom">

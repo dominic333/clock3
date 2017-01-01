@@ -42,12 +42,11 @@ $(document).ready(function(){
 			 beforeSend: function ( xhr ) 
 			 {
              //Add your image loader here
-             $('#loading').show(); // Ajax Loader Show
+				 showLoader();
           },
 			 success: function(result)
-		    { 
-		      
-		    	$('#loading').hide(); // Ajax Loader hide
+		    {
+				hideLoader();
 
 		    	var result = $.parseJSON(result);
 		      	$.each(result,function(index,res)
@@ -71,11 +70,11 @@ $(document).ready(function(){
 			 beforeSend: function ( xhr ) 
 			 {
              //Add your image loader here
-             $('#loading').show(); // Ajax Loader Show
+				 showLoader();
           },
 			 success: function(result)
-		    { 
-		    	$('#loading').hide(); // Ajax Loader hide
+		    {
+				hideLoader();
 		      //console.log(result.toString());
 				//$("input:checkbox").prop('checked', false);
 		      var result = $.parseJSON(result); 
