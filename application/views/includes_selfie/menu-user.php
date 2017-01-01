@@ -31,7 +31,7 @@
 
                 <li>
                     <a href="<?php echo base_url();?>selfiemarking/selfie">
-                        <i class="fa fa-picture-o fa-lg"></i> Selfie
+                        <i class="fa fa-picture-o fa-lg"></i> Selfie Attendance
                     </a>
                 </li>
 

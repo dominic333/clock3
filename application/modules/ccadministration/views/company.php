@@ -91,7 +91,7 @@
 
                                 <div class="row">
                                     <div class="col-md-12 text-center">
-                                        <button type="reset" class="btn btn-danger disabledApplied" href="javascript:void(0)" disabled >Cancel</button>
+                                        <button type="reset" class="btn btn-danger disabledApplied" href="javascript:void(0)" disabled >Redo</button>
                                         <button type="submit" class="btn btn-success disabledApplied" href="javascript:void(0)" disabled>Submit</button>
                                     </div>
                                 </div>
