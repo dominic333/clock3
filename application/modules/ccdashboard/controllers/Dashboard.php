@@ -9,10 +9,9 @@ class Dashboard extends MX_Controller
 	{
 		parent::__construct();
 		$this->load->library('encryption');
-		$this->authentication->is_logged_in();
-		/*		
-		$this->load->model('Products_model');		
-		*/
+		$this->authentication->is_logged_in();			
+		$this->load->model('Dashboard_model');
+
 		$this->get_common();
 	}
 	
@@ -21,6 +20,7 @@ class Dashboard extends MX_Controller
 		$this->authentication->check_admin_access();
 		$compIdSess =$this->session->userdata('coid');
 		//print_r($user_data);
+		$this->data['total_Users']	=	$this->Dashboard_model->getCompanySize($compIdSess);
 		$this->data['company_details']	=	modules::load('ccadministration/Administration')->getCompanyInfo($compIdSess);
 		$limit=4;
 		$this->data['listAnnouncements']	=	modules::load('ccannouncements/announcements')->getLatestAnnouncements($compIdSess,$limit);

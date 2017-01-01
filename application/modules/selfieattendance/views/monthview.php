@@ -1,21 +1,21 @@
-<!-- Content Wrapper. Contains page content -->
+    <div class="contentfirst">
 
-<div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-        <h1>
-            Calendar My Attendance
-            <small>Report</small>
-        </h1>
-        <ol class="breadcrumb">
-            <li><a href="my-attendance.php"><i class="fa fa-calendar"></i> My Attendance</a></li>
-        </ol>
-    </section>
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>
+                My Attendance
+                <small>Calendar View</small>
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="<?php echo base_url();?>selfiemyaccount/account"><i class="fa fa-calendar"></i> Account</a></li>
+                <li><a href="<?php echo base_url();?>selfieattendance/attendance"> My Attendance</a></li>
+            </ol>
+        </section>
 
-    <!-- Main content -->
-    <section class="content">
-        <div class="row">
-        <?php /* ?>
+        <!-- Main content -->
+		<section class="content">
+			<div class="row">
+				<?php /* ?>
             <div class="col-md-3">
                 <div class="box box-solid">
                     <div class="box-header with-border">
@@ -73,24 +73,27 @@
                 </div>
             </div>
             <?php */ ?>
-            <!-- /.col -->
-            <div>
+				<!-- /.col -->
+				<div>
 
-            </div>
-            <div class="col-md-12">
-                <div class="box box-primary">
-                    <div class="box-body no-padding">
-                        <!-- THE CALENDAR -->
-                        <div id="calendar"></div>
-                    </div>
-                    <!-- /.box-body -->
-                </div>
-                <!-- /. box -->
-            </div>
-            <!-- /.col -->
-        </div>
-        <!-- /.row -->
-    </section>
-    <!-- /.content -->
-</div>
-<!-- /.content-wrapper -->
+				</div>
+				<div class="col-md-12">
+					<div class="box box-primary">
+						<div class="box-body no-padding">
+							<!-- THE CALENDAR -->
+							<div id="calendar"></div>
+						</div>
+						<!-- /.box-body -->
+					</div>
+					<!-- /. box -->
+				</div>
+				<!-- /.col -->
+			</div>
+			<!-- /.row -->
+		</section>
+        <!-- /.content -->
+
+
+        </section>
+
+    </div>

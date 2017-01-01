@@ -36,6 +36,12 @@
 
 <script  src="<?php echo base_url();?>assets/common/jquery.validate.min.js"  ></script>
 <script src="<?php echo base_url();?>assets/common/jquery-confirm.min.js" type="text/javascript"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js"></script>
+<script src="<?php echo base_url();?>assets/common/moment.min.js"></script>
+<script src="<?php echo base_url();?>assets/common/fullcalendar.min.js"></script>
+
+
 <script>
 
     //Function to show latest announcement details on a modal popup (in dashboard)

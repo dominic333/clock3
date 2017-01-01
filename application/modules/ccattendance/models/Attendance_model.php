@@ -206,6 +206,16 @@ class Attendance_model extends CI_Model {
 		//return $result->result_array();
 		return $result->row_array();    	
 	}
+
+	//Function to fetch all users under a company
+	//Dominic, Jan 01,2016
+	function getCompanyUsers($compIdSess)
+	{
+		$this->db->where('company_id',$compIdSess);
+		$this->db->where('staff_status',1);
+		$result=$this->db->get('staff_info');
+		return $result->result();
+	}
 	
 	
 }

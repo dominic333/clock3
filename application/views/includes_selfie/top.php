@@ -41,6 +41,10 @@
     <!--Font Awesome-->
     <link href="<?php echo base_url();?>assets/snap/plugins/font-awesome-4.3.0/css/font-awesome.min.css" rel="stylesheet">
 
+    <!-- Full Calendar -->
+    <link rel="stylesheet" href="<?php echo base_url();?>assets/commoncss/fullcalendar.min.css">
+    <link rel="stylesheet" href="<?php echo base_url();?>assets/commoncss/fullcalendar.print.css" media="print">
+
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>

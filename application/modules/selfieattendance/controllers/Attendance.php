@@ -591,6 +591,22 @@ class Attendance extends MX_Controller
    	return $department_attendance;
    }
 
+	//Function to fetch user attendance in calendar view
+	//Dominic, Jan 01,2017
+	function monthiview()
+	{
+		$sfromDate = date('m/01/Y'); // hard-coded '01' for first day
+		$stoDate   = date('m/t/Y');
+		$fromDate  = $this->formatStorageDate($sfromDate); // hard-coded '01' for first day
+		$toDate    = $this->formatStorageDate($stoDate);
+		$staff 	  = $this->session->userdata('mid');
+		$this->data['attendance_table']	= '';
+		//$this->data['attendance_table']	= $this->attendanceCalendarData($fromDate,$toDate,$staff);
+		$this->data['view']					=	'selfieattendance/monthview';
+		$this->data['footer_includes']			=	'<script src="'.base_url().'js/cc/calendarview.js" type="text/javascript"></script>';
+		$this->load->view('master_selfie', $this->data);
+	}
+
 	function get_common()
 	{
 		/*

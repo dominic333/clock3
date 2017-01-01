@@ -1022,6 +1022,47 @@ class Attendance extends MX_Controller
 		}
 		return $attendance_table;   
    }
+
+	//Function to fetch staff attendance in calendar view
+	//Jan 01, 2017
+	function staffattendance()
+	{
+		$compIdSess =$this->session->userdata('coid');
+		$sfromDate = date('m/01/Y'); // hard-coded '01' for first day
+		$stoDate   = date('m/t/Y');
+		$fromDate  = $this->formatStorageDate($sfromDate); // hard-coded '01' for first day
+		$toDate    = $this->formatStorageDate($stoDate);
+		$staff 	  = $this->session->userdata('mid');
+		$this->data['attendance_table']	= '';
+		$this->data['myID']	= $this->session->userdata('mid');
+		$this->data['users']	  = $this->Attendance_model->getCompanyUsers($compIdSess);
+		//$this->data['attendance_table']	= $this->attendanceCalendarData($fromDate,$toDate,$staff);
+		$this->data['view']					=	'ccattendance/staffattendancecalendar';
+		$this->data['footer_includes']			=	'<script src="'.base_url().'js/cc/calendarview.js" type="text/javascript"></script>';
+		$this->load->view('master', $this->data);
+	}
+
+	//Fetch a staffs attendance to show in staff calendar
+	//Dominic; Jan 01,2016
+	function fetchStaffMonthlyAttendance()
+	{
+		//2016-11-01
+		$staff = $this->db->escape_str($this->input->post('user'));
+		$obtainedDate = $this->db->escape_str($this->input->post('dateofMonth'));
+		$split_date=explode('-',$obtainedDate);
+		$year  = $split_date[0];
+		$month = $split_date[1];
+
+		$sfromDate = $month.'/'.'01/'.$year; // hard-coded '01' for first day
+		$stoDate   = $month.'/'.'31/'.$year;
+		//$stoDate   = date('m/t/Y');
+		$fromDate  = $this->formatStorageDate($sfromDate); // hard-coded '01' for first day
+		$toDate    = $this->formatStorageDate($stoDate);
+
+		//$attendance	= '';
+		$attendance	= $this->attendanceCalendarData($fromDate,$toDate,$staff);
+		echo json_encode($attendance);
+	}
 	
 	function formatStorageDate($date)
 	{

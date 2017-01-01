@@ -4,7 +4,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            Calendar My Attendance
+            Staff Attendance Calendar View
             <small>Report</small>
         </h1>
         <ol class="breadcrumb">
@@ -77,11 +77,40 @@
             <div>
 
             </div>
+
+
+            <div class="row">
+
+                <div class="col-md-4">
+                    <!-- USERS LIST -->
+                    <div class="box box-default">
+                        <!-- /.box-header -->
+                            <div class="box-body">
+                                <div class="form-group">
+                                    <label>Select User</label>
+                                    <select name="users" id="users"  data-placeholder="-- Select A User* --"  class="form-control select2" style="width: 100%;" >
+                                        <?php foreach($users as $user){?>
+                                            <option value="<?php echo $user->staff_id;?>" <?php echo (isset($users) && ($myID==$user->staff_id)? 'selected="selected"' : set_select('users',$user->staff_id));?> >
+                                                <?php echo $user->staff_name;?>
+                                            </option>
+                                        <?php } ?>
+                                    </select>
+                                </div>
+                                <input type="hidden" name="user_id"  id="user_id" value=""/>
+                                <!-- /.form-group -->
+                            </div>
+                        <!-- /.box-body -->
+                    </div>
+                    <!--/.box -->
+                </div>
+                <!-- /.col-md-4 -->
+            </div>
+            <!--/row-->
             <div class="col-md-12">
                 <div class="box box-primary">
                     <div class="box-body no-padding">
                         <!-- THE CALENDAR -->
-                        <div id="calendar"></div>
+                        <div id="staffCalendar"></div>
                     </div>
                     <!-- /.box-body -->
                 </div>

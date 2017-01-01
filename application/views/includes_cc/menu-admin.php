@@ -17,13 +17,21 @@
                     <i class="fa fa-calendar"></i> <span>My Attendance</span>
                 </a>
             </li>
-
+            <li>
+                <a href="<?php echo base_url();?>ccattendance/attendance/monthiview">
+                    <i class="fa fa-calendar"></i> <span>My Attendance (Calendar View)</span>
+                </a>
+            </li>
             <li>
                 <a href="<?php echo base_url();?>ccattendance/attendance/whosaroundtoday">
                     <i class="fa fa-users"></i> <span>Who's Around Today</span>
                 </a>
             </li>
-
+            <li>
+                <a href="<?php echo base_url();?>ccattendance/attendance/staffattendance">
+                    <i class="fa fa-calendar"></i> <span>Staff Attendance</span>
+                </a>
+            </li>
             <li class="treeview">
                 <a href="#">
                     <i class="fa fa-lock"></i> <span>Administrative</span>
@@ -66,11 +74,7 @@
                     <i class="fa fa-bullhorn"></i> <span>Announcements</span>
                 </a>
             </li>
-            <li>
-                <a href="<?php echo base_url();?>ccattendance/attendance/monthiview">
-                    <i class="fa fa-calendar"></i> <span>Calendar</span>
-                </a>
-            </li>
+
 				<?php $reportAcces= $this->authentication->checkReportsAccess(); if($reportAcces==1){ ?>
             <li class="treeview">
                 <a href="<?php echo base_url();?>ccreports/reports">

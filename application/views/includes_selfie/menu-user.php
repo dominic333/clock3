@@ -23,7 +23,11 @@
                     <li><a href="<?php echo base_url();?>selfieattendance/attendance">My Attendance</a></li>
                     <li><a href="<?php echo base_url();?>selfieattendance/attendance/whosaroundtoday">Who's Around Today</a></li>
                 </ul>
-
+                <li>
+                    <a href="<?php echo base_url();?>selfieattendance/attendance/monthiview">
+                        <i class="fa fa-picture-o fa-lg"></i> Monthly Attendance
+                    </a>
+                </li>
 
                 <li>
                     <a href="<?php echo base_url();?>selfiemarking/selfie">
