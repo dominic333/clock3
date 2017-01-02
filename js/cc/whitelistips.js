@@ -164,11 +164,12 @@ $('#frm_edit_whitelisted_ip').validate(
 					   dataType: 'HTML',
 					   beforeSend: function ( xhr ) 
 					   {  
-			            $('#loading').show(); 
+			            showLoader();
 			         },
 					   success: function(result)
 					   { 
-					   	$('#loading').hide(); // Ajax Loader Show		
+					   
+					   	hideLoader(); 	
 					   	$('#row'+wId).remove();
 					   				   	
 					   }	

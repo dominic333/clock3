@@ -82,6 +82,12 @@
                 </a>
             </li>
 				<?php } ?>
+				
+				<li>
+                <a href="<?php echo base_url();?>selfiedashboard/dashboard">
+                    <i class="fa fa-home"></i> <span>Go to Selfie Dashboard</span>
+                </a>
+            </li>
         </ul>
     </section>
     <!-- /.sidebar -->

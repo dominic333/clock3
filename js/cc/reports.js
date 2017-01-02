@@ -146,11 +146,11 @@ $(document).ready(function(){
 					 dataType: 'HTML',
 					 beforeSend: function ( xhr ) {
 				         //Add your image loader here
-				         $('#contact-loader').show(); // Ajax Loader Show
+				         showLoader();
 				    },
 					 success: function(result)
 				    { 
-				    	$('#contact-loader').hide(); // Ajax Loader hide
+				    	hideLoader();
 				      var result= result.trim();
 				      window.location = result;
 				    }

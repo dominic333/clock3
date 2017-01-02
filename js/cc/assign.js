@@ -138,8 +138,14 @@ $(document).ready(function(){
 						type: "POST",
 						data: {users:allVals,shift:selShift,csrf_test_name : csrf_token},
 						url:  post_url,
+						beforeSend: function ( xhr ) 
+						 {
+					         //Add your image loader here
+				             showLoader();
+					    },
 						success: function(msg)
 						{
+							hideLoader();
 							if(msg='updated')
 							{alert('updated');}
 							else 
@@ -166,8 +172,14 @@ $(document).ready(function(){
 						type: "POST",
 						data: {users:allVals,shift:selShift,csrf_test_name : csrf_token},
 						url:  post_url,
+						beforeSend: function ( xhr ) 
+						 {
+					         //Add your image loader here
+				             showLoader();
+					    },
 						success: function(msg)
 						{
+							hideLoader();
 							if(msg='updated')
 							{alert('Removed');}
 							else
@@ -194,8 +206,14 @@ $(document).ready(function(){
 						type: "POST",
 						data: {users:allVals,shift:selShift,csrf_test_name : csrf_token},
 						url:  post_url,
+						beforeSend: function ( xhr ) 
+						 {
+					         //Add your image loader here
+				             showLoader();
+					    },
 						success: function(msg)
 						{
+							hideLoader();
 							if(msg='updated')
 							{alert('Assigned');}
 							else

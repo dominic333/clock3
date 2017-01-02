@@ -139,8 +139,11 @@ $(document).ready(function(){
 	    	formdata.append('image_fmt',image_fmt);
 	    	formdata.append('clktype',ctype);
 	    	var ajax = new XMLHttpRequest();
-	    	ajax.addEventListener("load", function(event) { uploadcomplete(event,furl);}, false);
+	    	ajax.addEventListener("load", function(event) { uploadcomplete(event,furl); hideLoader(); }, false);
+	    	//ajax.addEventListener("progress", showLoader);
 	    	ajax.open("POST", url);
+	    	//ajax.addEventListener("load", hideLoader);
+	    	showLoader(); 
 	    	ajax.send(formdata);
 	    }
 	    else

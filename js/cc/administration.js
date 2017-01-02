@@ -427,11 +427,11 @@ $(document).ready(function(){
 					 dataType: 'HTML',
 					 beforeSend: function ( xhr ) {
 		               //Add your image loader here
-		               $('#loading').show(); // Ajax Loader Show
+		               showLoader();
 		          },
 					 success: function(result)
-				    { 
-				    	$('#loading').hide(); // Ajax Loader hide
+				    {
+				    	hideLoader(); 
 				      var result= result.trim();
 				      if(result=="password"){
 				      	$.alert({

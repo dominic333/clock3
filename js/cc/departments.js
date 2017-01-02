@@ -94,11 +94,11 @@ $(document).ready(function(){
 		 beforeSend: function ( xhr ) 
 		 {
 	         //Add your image loader here
-	         $('#loading').show(); 
+	        showLoader();
 	    },
 		 success: function(result)
 	    { 
-	    	$('#loading').hide(); 
+	    	hideLoader(); 	
 	      var result= result.trim();
 	      if(result=="deleted")
 	      {

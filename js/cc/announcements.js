@@ -109,11 +109,11 @@ $(document).ready(function(){
 					   dataType: 'HTML',
 					   beforeSend: function ( xhr ) 
 					   {  
-			            $('#loading').show(); 
+			            showLoader();
 			         },
 					   success: function(result)
 					   { 
-					   	$('#loading').hide(); // Ajax Loader Show		
+					   	hideLoader(); 	
 					   	$('#row'+announcementId).remove();
 					   				   	
 					   }	

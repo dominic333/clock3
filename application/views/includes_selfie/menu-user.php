@@ -14,7 +14,13 @@
                         <i class="fa fa-home fa-lg"></i> Dashboard
                     </a>
                 </li>
-
+               <?php $isadmin=$this->session->userdata('isadmin'); if($isadmin==1) { ?>
+					<li>
+	                <a href="<?php echo base_url();?>ccdashboard/dashboard">
+	                    <i class="fa fa-home"></i> <span>Go to Admin Dashboard</span>
+	                </a>
+	            </li>
+					<?php } ?>
                 <li data-toggle="collapse" data-target="#products" class="collapsed">
                     <a href="#"><i class="fa fa-user fa-lg"></i> Account <span class="arrow"></span></a>
                 </li>
