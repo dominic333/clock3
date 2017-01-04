@@ -96,7 +96,7 @@
             <!-- mini logo for sidebar mini 50x50 pixels -->
             <img src="<?php echo base_url();?>assets/cc/images/ck.png" width="50" class="logo-mini">
             <!-- logo for regular state and mobile devices -->
-            <img src="<?php echo base_url();?>assets/cc/images/clockin-logo.png" width="135">
+            <img src="<?php echo base_url();?>assets/cc/images/Clock-In-Logo-01.png" width="135">
 
         </a>
         <!-- Header Navbar: style can be found in header.less -->

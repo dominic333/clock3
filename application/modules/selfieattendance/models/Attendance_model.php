@@ -206,5 +206,17 @@ class Attendance_model extends CI_Model {
 		//return $result->result_array();
 		return $result->row_array();    	
 	}
+	
+	//Function to request a leave
+	//Dominic, Jan 04,2016
+	function requestLeave($dateofMonth,$leaveType,$staff)
+	{
+		$data = array(		                         
+	          	 				'company_id' 	=> $compId,                            
+	          	 				'department_name' 	=>  $this->db->escape_str($this->input->post('department')),                            
+		  		 			);
+		$this->db->insert('departments', $data);
+	}
+
 }
 

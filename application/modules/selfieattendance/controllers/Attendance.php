@@ -606,6 +606,17 @@ class Attendance extends MX_Controller
 		$this->data['footer_includes']			=	'<script src="'.base_url().'js/cc/calendarview.js" type="text/javascript"></script>';
 		$this->load->view('master_selfie', $this->data);
 	}
+	
+	//Function to request a leave
+	//Dominic, Jan 04,2016
+	function requestLeave()
+	{
+		$staff 		 = $this->session->userdata('mid');
+		$dateofMonth = $this->formatStorageDate($this->input->post('dateofMonth'));
+	   $leaveType	 = $this->formatStorageDate($this->input->post('leaveType'));
+	   $attendance	 = $this->Attendance_model->requestLeave($dateofMonth,$leaveType,$staff);
+		echo json_encode($attendance);
+	}
 
 	function get_common()
 	{

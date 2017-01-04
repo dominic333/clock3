@@ -44,7 +44,7 @@
 
         <div class="row">
             <div class="col-sm-6 logo">
-                <img class="log" src="<?php echo base_url();?>assets/cc/images/clockin-logo.png" alt="">
+                <img class="log" src="<?php echo base_url();?>assets/cc/images/Clock-In-Logo-01.png" alt="">
                 <p>
                 <h3 class="size"><strong>Attendance & Payroll on the Cloud</strong></h3></p>
             </div>

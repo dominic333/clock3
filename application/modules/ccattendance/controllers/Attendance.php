@@ -1011,6 +1011,7 @@ class Attendance extends MX_Controller
             $attendance_table[$dcnt]["title"]=$attendance_status;
             $attendance_table[$dcnt]["outtime"]=$staff_logout_time;
             $attendance_table[$dcnt]["intime"]=$log_time;
+            $attendance_table[$dcnt]["clock"]='attendance';
             
             
             //$attendance_table[$dcnt]["logtime"]=$log_time;

@@ -37,6 +37,13 @@
         var date	=	dateofMonth;
         var events = [];
         var eventsCache = {};
+
+   	  var today = moment();
+		  var todayDate = today.format("YYYY-MM-DD");
+		  var tomorrow = today.add(1, 'days').format("YYYY-MM-DD");
+		  var haystack = [ "Medical Leave", "Casual Leave", "Annual Leave" ];
+		  //console.log(today);
+		 //console.log(tomorrow);
         //fetchCalenderAttendance(dateofMonth);
         $('#calendar').fullCalendar({
             header: {
@@ -79,16 +86,17 @@
 
         },
         dayClick: function () {
-            tooltip.hide()
+            //tooltip.hide()
         },
         eventResizeStart: function () {
-            tooltip.hide()
+            //tooltip.hide()
         },
-        eventDragStart: function () {
-            tooltip.hide()
+        eventDragStart: function (calEvent, jsEvent, view) {
+            //tooltip.hide()
+ 
         },
         viewDisplay: function () {
-            tooltip.hide()
+            //tooltip.hide()
         },  	
             events: function(start, end, timezone, callback) {
             	
@@ -157,32 +165,71 @@
 		          });
 		        },
             editable: false,
-            droppable: false, // this allows things to be dropped onto the calendar !!!
+            droppable: true, // this allows things to be dropped onto the calendar !!!
+            
             drop: function (date, allDay) { // this function is called when something is dropped
 
                 // retrieve the dropped element's stored Event Object
                 var originalEventObject = $(this).data('eventObject');
+                var leave					 =	$(this).attr("data-leave");
+                var leaveType				 =	$(this).attr("data-leavetype");
+                var droppedDate			 = date.format();
+					 //console.log("Dropped on " + date.format()); //2017-01-02
+					 if((leave=="leave") && (droppedDate > todayDate))
+					 {
+	             	 // we need to copy it, so that multiple events don't have a reference to the same object
+	                var copiedEventObject = $.extend({}, originalEventObject);
+	
+	                // assign it the date that was reported
+	                copiedEventObject.start = date;
+	                copiedEventObject.allDay = allDay;
+	                copiedEventObject.backgroundColor = $(this).css("background-color");
+	                copiedEventObject.borderColor = $(this).css("border-color");
+	
+	                // render the event on the calendar
+	                // the last `true` argument determines if the event "sticks" (http://arshaw.com/fullcalendar/docs/event_rendering/renderEvent/)
+	                $('#calendar').fullCalendar('renderEvent', copiedEventObject, true);
+	                
+						 requestLeave(droppedDate,leaveType);
+	                
+	                // is the "remove after drop" checkbox checked?
+	                if ($('#drop-remove').is(':checked')) {
+	                    // if so, remove the element from the "Draggable Events" list
+	                    $(this).remove();
+	                }					 					 
+					 }
+   
 
-                // we need to copy it, so that multiple events don't have a reference to the same object
-                var copiedEventObject = $.extend({}, originalEventObject);
+            },
+            /* This constrains it to today or later */
+            eventConstraint: {
+            		
+                start: tomorrow,
+                end: '2100-01-01' // hard coded goodness unfortunately
+            },
+            eventRender: function(event, element) {
+		        if (event.clock == 'attendance') {
+		              element.draggable = false;
+		              element.editable = false;
+		        }
+		        
+		     },
+	        eventClick: function(calEvent, jsEvent, view)
+	        {
+	        	  
+	        	  var needle   = calEvent.title;
+              var found = $.inArray(needle, haystack);
+					
+				  if(found != -1)
+				  {
+				    var r=confirm("Delete " + calEvent.title);
+              	 if (r===true)
+              	 {
+                  $('#calendar').fullCalendar('removeEvents', calEvent._id);
+              	 }
+				  }
 
-                // assign it the date that was reported
-                copiedEventObject.start = date;
-                copiedEventObject.allDay = allDay;
-                copiedEventObject.backgroundColor = $(this).css("background-color");
-                copiedEventObject.borderColor = $(this).css("border-color");
-
-                // render the event on the calendar
-                // the last `true` argument determines if the event "sticks" (http://arshaw.com/fullcalendar/docs/event_rendering/renderEvent/)
-                $('#calendar').fullCalendar('renderEvent', copiedEventObject, true);
-
-                // is the "remove after drop" checkbox checked?
-                if ($('#drop-remove').is(':checked')) {
-                    // if so, remove the element from the "Draggable Events" list
-                    $(this).remove();
-                }
-
-            }
+	        }
         });
 
         /* ADDING EVENTS */
@@ -432,11 +479,78 @@
 
     });
     
+    //Function to request a leave
+    function requestLeave(droppedDate,leaveType)
+    {
+		 var post_url = base_url+"selfieattendance/attendance/requestLeave";
+		 
+	 	 $.ajax({
+		 url: post_url,
+		 data:{dateofMonth:droppedDate,leaveType:leaveType,csrf_test_name:csrf_token},
+		 type: "POST",
+		 dataType: 'JSON',
+		 beforeSend: function ( xhr ) 
+		 {
+	         //Add your image loader here
+             showLoader();
+	    },
+		 success: function(result)
+	    {
+            hideLoader();
+	    }
+	   });//end of ajax     
+    }
+    
+    function deleteLeaveRequest()
+    {
+		 var post_url = base_url+"ccattendance/attendance/fetchStaffMonthlyAttendance";
+		 
+	 	 $.ajax({
+		 url: post_url,
+		 data:{dateofMonth:date,csrf_test_name:csrf_token,user:selectedStaff},
+		 type: "POST",
+		 dataType: 'JSON',
+		 beforeSend: function ( xhr ) 
+		 {
+	         //Add your image loader here
+             showLoader();
+	    },
+		 success: function(result)
+	    {
+            hideLoader();
+            $.each(result,function(index,res) //here we're doing a foeach loop round each city with id as the key and city as the value
+            {
+                var date = (res.start).split('-'); //To get date,month  and year separately
+                events.push({
+
+                    title:  res.title,
+                    loc: res.title,
+                    start:res.start,
+                    end:res.end,
+                    intime:res.intime,
+                    outtime:res.outtime,
+                    //start: new Date(date[0],date[1] -1, date[2], hrs_from , time_from[1] ), // will be parsed //date[1] -1 is used becz march is 2 as default bt march is 3 in our database
+                    //end:   new Date(date[0],date[1] -1, date[2] , hrs_to, time_to[1] ),
+                    allDay: false,
+                    //url: base_url+'admin/meetings/view/'+meeting.id,
+                    color: res.borderColor
+                });
+            });
+            $('#staffCalendar').fullCalendar('removeEvents');
+            $('#staffCalendar').fullCalendar('removeEventSource', events);
+            $('#staffCalendar').fullCalendar('addEventSource', events);
+	       //var event= result;
+	       //$('#staffCalendar').fullCalendar( 'renderEvent', events, true);
+	       //$('#staffCalendar').fullCalendar( 'updateEvent', events );
+	    }
+	   });//end of ajax     
+    }
+    
     
     function fetchCalenderAttendance(dateofMonth,selectedStaff)
     {
-         var events = [];
-         var eventsCache = {};
+       var events = [];
+       var eventsCache = {};
     	 var date	=	dateofMonth;
 		 var post_url = base_url+"ccattendance/attendance/fetchStaffMonthlyAttendance";
 		 

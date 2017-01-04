@@ -15,7 +15,7 @@
         <!-- Main content -->
 		<section class="content">
 			<div class="row">
-				<?php /* ?>
+				
             <div class="col-md-3">
                 <div class="box box-solid">
                     <div class="box-header with-border">
@@ -24,9 +24,10 @@
                     <div class="box-body">
                         <!-- the events -->
                         <div id="external-events">
-                            <div class="external-event bg-green">On Time</div>
-                            <div class="external-event bg-yellow">Late Clock In</div>
-                            <div class="external-event bg-aqua">Holiday</div>
+                            <div class="external-event bg-green" data-leavetype="medical" data-leave="leave">Medical Leave</div>
+                            <div class="external-event bg-yellow" data-leavetype="casual" data-leave="leave">Casual Leave</div>
+                            <div class="external-event bg-aqua" data-leavetype="annual"   data-leave="leave">Annual Leave</div>
+                            <?php /*
                             <div class="external-event bg-red">Absent</div>
                             <div class="external-event bg-gray">Did Not Clock Out</div>
                             <div class="external-event bg-purple">Early Clock Out</div>
@@ -36,11 +37,13 @@
                                     remove after drop
                                 </label>
                             </div>
+                           */ ?>
                         </div>
                     </div>
                     <!-- /.box-body -->
                 </div>
                 <!-- /. box -->
+                <?php /* ?>
                 <div class="box box-solid">
                     <div class="box-header with-border">
                         <h3 class="box-title">Create Attendance</h3>
@@ -71,13 +74,14 @@
                         <!-- /input-group -->
                     </div>
                 </div>
+                <?php */ ?>
             </div>
-            <?php */ ?>
+            
 				<!-- /.col -->
 				<div>
 
 				</div>
-				<div class="col-md-12">
+				<div class="col-md-9">
 					<div class="box box-primary">
 						<div class="box-body no-padding">
 							<!-- THE CALENDAR -->
