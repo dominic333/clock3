@@ -612,10 +612,37 @@ class Attendance extends MX_Controller
 	function requestLeave()
 	{
 		$staff 		 = $this->session->userdata('mid');
-		$dateofMonth = $this->formatStorageDate($this->input->post('dateofMonth'));
-	   $leaveType	 = $this->formatStorageDate($this->input->post('leaveType'));
+		$dateofMonth = $this->input->post('dateofMonth');
+	   $leaveType	 = $this->input->post('leaveType');
 	   $attendance	 = $this->Attendance_model->requestLeave($dateofMonth,$leaveType,$staff);
-		echo json_encode($attendance);
+	   $staff_id = $this->db->insert_id();	
+	   if($staff_id!='')
+	   {
+	   	$response='success';
+	   }
+	   else{
+	   	$response = 'failed';
+	   }
+		echo json_encode($response);
+	}
+	
+	//Function to remove a leave request placed
+	function removeRequestedLeave()
+	{
+	   $staff 		 = $this->session->userdata('mid');
+		$dateofMonth = $this->input->post('dateofMonth');
+	   $leaveType	 = $this->input->post('leaveType');
+		$this->Attendance_model->removeRequestedLeave($dateofMonth,$leaveType,$staff);
+
+	   if($this->db->affected_rows()==TRUE)
+	   {
+	   	$response='deleted';
+	   }
+	   else
+	   {
+	   	$response = 'failed';
+	   }
+		echo json_encode($response);
 	}
 
 	function get_common()

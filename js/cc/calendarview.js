@@ -141,7 +141,7 @@
             			//store your data
             			eventsCache[start.toString + "-" + end.toString] = result;
             
-		                $.each(result,function(index,res) //here we're doing a foeach loop round each city with id as the key and city as the value
+		                $.each(result.attendance,function(index,res) 
 		                   {
 		                   	var date = (res.start).split('-'); //To get date,month  and year separately
 		                   	events.push({
@@ -152,9 +152,24 @@
 		                    	   end:res.end,
 		                    	   intime:res.intime,
 		                    	   outtime:res.outtime,
-		                        //start: new Date(date[0],date[1] -1, date[2], hrs_from , time_from[1] ), // will be parsed //date[1] -1 is used becz march is 2 as default bt march is 3 in our database
-		                        //end:   new Date(date[0],date[1] -1, date[2] , hrs_to, time_to[1] ),
-		                        allDay: false,
+		                        allDay: true,
+		                        //url: base_url+'admin/meetings/view/'+meeting.id,
+		                        color: res.borderColor					                    
+		                        });
+		                   });
+		                   
+		                 $.each(result.leaves,function(index,res) 
+		                   {
+		                   	var date = (res.start).split('-'); //To get date,month  and year separately
+		                   	events.push({
+		                   		
+		                    	   title:  res.title,
+		                    	   loc: res.title,
+		                    	   start:res.start,
+		                    	   end:res.end,
+		                    	   intime:res.intime,
+		                    	   outtime:res.outtime,
+		                        allDay: true,
 		                        //url: base_url+'admin/meetings/view/'+meeting.id,
 		                        color: res.borderColor					                    
 		                        });
@@ -219,13 +234,40 @@
 	        	  
 	        	  var needle   = calEvent.title;
               var found = $.inArray(needle, haystack);
-					
+				  
+				  var dt = calEvent.start;
+      		  var droppedDate= (dt.format()); 
 				  if(found != -1)
 				  {
 				    var r=confirm("Delete " + calEvent.title);
               	 if (r===true)
               	 {
-                  $('#calendar').fullCalendar('removeEvents', calEvent._id);
+              	 	 var post_url = base_url+"selfieattendance/attendance/removeRequestedLeave";
+		 
+					 	 $.ajax({
+						 url: post_url,
+						 data:{dateofMonth:droppedDate,leaveType:needle,csrf_test_name:csrf_token},
+						 type: "POST",
+						 dataType: 'JSON',
+						 beforeSend: function ( xhr ) 
+						 {
+					         //Add your image loader here
+				            // showLoader();
+					    },
+						 success: function(result)
+					    {
+				            //hideLoader();
+				            if(result=='deleted')
+				            {
+				            	$('#calendar').fullCalendar('removeEvents', calEvent._id);
+								}
+								else
+								{
+									alert('Unable to discard leave request. Try again');
+								}
+					    }
+					   });//end of ajax 
+                  
               	 }
 				  }
 
@@ -492,56 +534,19 @@
 		 beforeSend: function ( xhr ) 
 		 {
 	         //Add your image loader here
-             showLoader();
+            // showLoader();
 	    },
 		 success: function(result)
 	    {
-            hideLoader();
-	    }
-	   });//end of ajax     
-    }
-    
-    function deleteLeaveRequest()
-    {
-		 var post_url = base_url+"ccattendance/attendance/fetchStaffMonthlyAttendance";
-		 
-	 	 $.ajax({
-		 url: post_url,
-		 data:{dateofMonth:date,csrf_test_name:csrf_token,user:selectedStaff},
-		 type: "POST",
-		 dataType: 'JSON',
-		 beforeSend: function ( xhr ) 
-		 {
-	         //Add your image loader here
-             showLoader();
-	    },
-		 success: function(result)
-	    {
-            hideLoader();
-            $.each(result,function(index,res) //here we're doing a foeach loop round each city with id as the key and city as the value
+            //hideLoader();
+            if(result=='success')
             {
-                var date = (res.start).split('-'); //To get date,month  and year separately
-                events.push({
-
-                    title:  res.title,
-                    loc: res.title,
-                    start:res.start,
-                    end:res.end,
-                    intime:res.intime,
-                    outtime:res.outtime,
-                    //start: new Date(date[0],date[1] -1, date[2], hrs_from , time_from[1] ), // will be parsed //date[1] -1 is used becz march is 2 as default bt march is 3 in our database
-                    //end:   new Date(date[0],date[1] -1, date[2] , hrs_to, time_to[1] ),
-                    allDay: false,
-                    //url: base_url+'admin/meetings/view/'+meeting.id,
-                    color: res.borderColor
-                });
-            });
-            $('#staffCalendar').fullCalendar('removeEvents');
-            $('#staffCalendar').fullCalendar('removeEventSource', events);
-            $('#staffCalendar').fullCalendar('addEventSource', events);
-	       //var event= result;
-	       //$('#staffCalendar').fullCalendar( 'renderEvent', events, true);
-	       //$('#staffCalendar').fullCalendar( 'updateEvent', events );
+            	alert('Leave Request Placed');
+				}
+				else
+				{
+					alert('Unable to place leave request. Try again');
+				}
 	    }
 	   });//end of ajax     
     }

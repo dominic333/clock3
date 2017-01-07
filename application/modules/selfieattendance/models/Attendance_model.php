@@ -212,10 +212,33 @@ class Attendance_model extends CI_Model {
 	function requestLeave($dateofMonth,$leaveType,$staff)
 	{
 		$data = array(		                         
-	          	 				'company_id' 	=> $compId,                            
-	          	 				'department_name' 	=>  $this->db->escape_str($this->input->post('department')),                            
+	          	 				'staff_id' 		=>  $staff,                            
+	          	 				'leave_date' 	=>  $dateofMonth,                            
+	          	 				'leaveType' 	=>  $leaveType,                            
 		  		 			);
-		$this->db->insert('departments', $data);
+		$this->db->insert('staff_attendance_leaves', $data);
+	}
+	
+	//Function to remove a leave request
+	function removeRequestedLeave($dateofMonth,$leaveType,$staff)
+	{
+		if($leaveType=='Annual Leave')
+		{
+			$leave='annual';
+		}
+		else if($leaveType=='Casual Leave')
+		{
+			$leave='casual';
+		}
+		else if($leaveType=='Medical Leave')
+		{
+			$leave='medical';
+		}
+		else
+		{
+			$leave='';
+		}
+		$this->db->delete('staff_attendance_leaves', array('staff_id' => $staff,'leave_date' 	=>  $dateofMonth,'leaveType' 	=>  $leave));
 	}
 
 }

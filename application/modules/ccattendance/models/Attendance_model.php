@@ -208,13 +208,54 @@ class Attendance_model extends CI_Model {
 	}
 
 	//Function to fetch all users under a company
-	//Dominic, Jan 01,2016
+	//Dominic, Jan 01,2017
 	function getCompanyUsers($compIdSess)
 	{
 		$this->db->where('company_id',$compIdSess);
 		$this->db->where('staff_status',1);
 		$result=$this->db->get('staff_info');
 		return $result->result();
+	}
+	
+	//Function to fetch leaves taken by a user
+	//Dominic, Jan 05,2017
+	function leaveCalendarData($fromDate,$toDate,$staff)
+	{
+		//SELECT * FROM staff_attendance_leaves WHERE leave_date BETWEEN '2017-01-01' AND '2017-01-31' AND status IN(0,1) AND staff_id=370
+		
+		$this->db->where_in('status', array(0,1));
+		$this->db->where('staff_id',$staff);
+		$this->db->where('leave_date >=', $fromDate);
+		$this->db->where('leave_date <=', $toDate);
+		$result=$this->db->get('staff_attendance_leaves');
+		return $result->result();
+	}
+	
+	//Function to get Attendance Details for the selected day for the company
+	//Dominic, Jan 07,2017
+	function company_users_attendance_details()
+	{
+		$staff_id	= $this->session->userdata('mid');
+   	$tz 		= $this->getShiftTZviaStaffid($staff_id);
+   	if($tz!='') 
+   	date_default_timezone_set($tz);
+		$today = date("Y-m-d", strtotime("today"));
+		//$today = '2017-01-04';
+		
+		$this->db->select("  SUM(IF(AL.log_time>AL.base_log_time AND AL.clock_type='in' AND AL.base_log_time != '00:00:00' ,1,0)) as late_checkins,
+									SUM(IF(AL.log_time<AL.base_log_time AND AL.clock_type='Out' AND AL.base_log_time != '00:00:00' ,1,0)) as early_checkouts,
+									SUM(IF(AL.log_time <= AL.base_log_time AND AL.clock_type='in'AND AL.base_log_time != '00:00:00'  ,1,0)) on_checkins,
+									SUM(IF(AL.clock_type='ab' ,1,0)) as absentees",false);
+									
+		$this->db->from('staff_info as SI ');
+		$this->db->join('attendance_log as AL','AL.staff_id = SI.staff_id','LEFT');
+		$this->db->where('SI.company_id',$this->session->userdata('coid'));
+		$this->db->where('SI.staff_status',1);
+		$this->db->where('AL.log_date',$today);
+		$result=$this->db->get();
+		//echo $this->db->last_query();
+		return $result->row();
+		
 	}
 	
 	

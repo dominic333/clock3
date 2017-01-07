@@ -38,20 +38,20 @@
                 <!-- /.info-box -->
             </div>
             <!-- /.col -->
-            <?php /*
+
+            
             <div class="col-md-3 col-sm-6 col-xs-12">
                 <div class="info-box bg-red">
                     <span class="info-box-icon"><i class="fa fa-calendar"></i></span>
 
                     <div class="info-box-content">
                         <span class="info-box-text">Absents</span>
-                        <span class="info-box-number">1</span>
+                        <span class="info-box-number"><?php echo (isset($usersdetails['absent_checkin_users'])) ? $usersdetails['absent_checkin_users'] :'0'; ?> </span>
 
                         <div class="progress">
-                            <div class="progress-bar" style="width: 10%"></div>
+                            <div class="progress-bar" style="width: 100%"></div>
                         </div>
                   <span class="progress-description">
-                    70% Increase in 30 Days
                   </span>
                     </div>
                     <!-- /.info-box-content -->
@@ -66,13 +66,12 @@
 
                     <div class="info-box-content">
                         <span class="info-box-text">Late Clock in</span>
-                        <span class="info-box-number">3</span>
+                        <span class="info-box-number"><?php echo (isset($usersdetails['late_checkin_users'])) ? $usersdetails['late_checkin_users'] :'0'; ?></span>
 
                         <div class="progress">
-                            <div class="progress-bar" style="width: 30%"></div>
+                            <div class="progress-bar" style="width: 100%"></div>
                         </div>
 					  <span class="progress-description">
-						70% Increase in 30 Days
 					  </span>
                     </div>
                     <!-- /.info-box-content -->
@@ -86,14 +85,13 @@
                     <span class="info-box-icon"><i class="fa fa-circle-o"></i></span>
 
                     <div class="info-box-content">
-                        <span class="info-box-text">Early Clock in</span>
-                        <span class="info-box-number">7</span>
+                        <span class="info-box-text">Early Clock Out</span>
+                        <span class="info-box-number"><?php echo (isset($usersdetails['early_checkout_users'])) ? $usersdetails['early_checkout_users'] :'0'; ?></span>
 
                         <div class="progress">
-                            <div class="progress-bar" style="width: 70%"></div>
+                            <div class="progress-bar" style="width: 100%"></div>
                         </div>
                   <span class="progress-description">
-                    70% Increase in 30 Days
                   </span>
                     </div>
                     <!-- /.info-box-content -->
@@ -101,10 +99,10 @@
                 <!-- /.info-box -->
             </div>
             <!-- /.col -->
-            */ ?>
 
         </div>
-        <!-- /.row -->
+        <!-- /.row -->    
+        
 
         <!--========================================================================================================-->
 

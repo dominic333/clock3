@@ -21,6 +21,7 @@ class Dashboard extends MX_Controller
 		$compIdSess =$this->session->userdata('coid');
 		//print_r($user_data);
 		$this->data['total_Users']	=	$this->Dashboard_model->getCompanySize($compIdSess);
+		$this->data['usersdetails']	=	modules::load('ccattendance/Attendance')->bridge_company_users_attendance_details();
 		$this->data['company_details']	=	modules::load('ccadministration/Administration')->getCompanyInfo($compIdSess);
 		$limit=4;
 		$this->data['listAnnouncements']	=	modules::load('ccannouncements/announcements')->getLatestAnnouncements($compIdSess,$limit);

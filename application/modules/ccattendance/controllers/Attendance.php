@@ -608,7 +608,8 @@ class Attendance extends MX_Controller
 		$toDate    = $this->formatStorageDate($stoDate);
 		
 		//$attendance	= '';
-		$attendance	= $this->attendanceCalendarData($fromDate,$toDate,$staff);
+		$attendance['attendance']	= $this->attendanceCalendarData($fromDate,$toDate,$staff);
+		$attendance['leaves']	   = $this->leaveCalendarData($fromDate,$toDate,$staff);
 		echo json_encode($attendance);
 		
 	}
@@ -626,6 +627,67 @@ class Attendance extends MX_Controller
    	$this->data['view']					=	'ccattendance/monthview';
    	$this->data['footer_includes']			=	'<script src="'.base_url().'js/cc/calendarview.js" type="text/javascript"></script>';
 		$this->load->view('master', $this->data);	
+   }
+   
+   //Function to fetch leaves taken by a staff
+   //Dominic; Jan 05,2016
+   function leaveCalendarData($fromDate,$toDate,$staff)
+   {
+   	$user_leaves	=	array();
+		$leaves			=	$this->Attendance_model->leaveCalendarData($fromDate,$toDate,$staff);
+		$dcnt = 0;
+		foreach($leaves as $row)
+		{			
+			//$startFormat = date_create($row->leave_date);
+			//$formatDate= date_format ($startFormat, 'Y-m-d');leaveType
+			
+			if($row->status==0)
+			{
+				$lStatus ='Pending';
+			}
+			else if($row->status==1)
+			{
+				$lStatus ='Approved';
+			}
+			else if($row->status==2)
+			{
+				$lStatus ='Rejected';
+			}
+			else
+			{
+				$lStatus ='NA';
+			}
+			
+			
+			if($row->leaveType=='annual')
+			{
+				$leave='Annual Leave';
+			}
+			else if($row->leaveType=='casual')
+			{
+				$leave='Casual Leave';
+			}
+			else if($row->leaveType=='medical')
+			{
+				$leave='Medical Leave';
+			}
+			else
+			{
+				$leave='';
+			}
+			
+         $user_leaves[$dcnt]["start"]				=	$row->leave_date;
+         $user_leaves[$dcnt]["end"]					=	$row->leave_date;
+         $user_leaves[$dcnt]["title"]				=	$leave;
+         $user_leaves[$dcnt]["outtime"]			=	'';
+         $user_leaves[$dcnt]["intime"]				=	$lStatus;
+         $user_leaves[$dcnt]["clock"]				=	'leave';
+         $user_leaves[$dcnt]["backgroundColor"]	=	"#f56954"; //Info (red)
+         $user_leaves[$dcnt]["borderColor"]		=	"#f56954"; 	//Info (red)
+            
+			$dcnt++;				
+		}
+		return $user_leaves;
    }
    
    //Function to fetch attendance data for calendar view
@@ -1077,6 +1139,27 @@ class Attendance extends MX_Controller
 	function bridgefindWhoAllAround($staff,$sel_shift,$compIdSess)
 	{
 		$response = $this->findWhoAllAround($staff,$sel_shift,$compIdSess);
+		return $response;
+	}
+	
+	//Function to show attendance stats for the day
+	//Dominic; Jan 07,2017 
+	function company_users_attendance_details()
+	{
+		$row = $this->Attendance_model->company_users_attendance_details();	
+		$data['late_checkin_users']	=	$row->late_checkins;
+		$data['early_checkout_users']	=	$row->early_checkouts;
+		$data['ontime_checkin_users']	=	$row->on_checkins;
+		$data['absent_checkin_users']	=	$row->absentees;
+		//print_r($row);
+		return $data;
+	}
+	
+	//Bridge to fetch attendance stats for the day
+	//Dominic; Jan 07,2017 
+	function bridge_company_users_attendance_details()
+	{
+		$response = $this->company_users_attendance_details();
 		return $response;
 	}
 
