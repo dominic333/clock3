@@ -393,6 +393,7 @@ class Shifts extends MX_Controller
 		public function whitelistips()
 		{
 			$this->authentication->check_admin_access();
+			$this->authentication->checkWhiteListIPFeaturesAccess();
 			$compIdSess =$this->session->userdata('coid');
 		
 			$this->data['whitelistedIps']				=  $this->Shifts_model->getWhiteListedIPs($compIdSess);
@@ -406,7 +407,8 @@ class Shifts extends MX_Controller
 		//By Dominic, Dec 13,2016
 		function add_department_ips()
 		{
-			$this->authentication->check_admin_access();			
+			$this->authentication->check_admin_access();	
+			$this->authentication->checkWhiteListIPFeaturesAccess();		
 			if ($this->form_validation->run('frm_add_department_ip') === FALSE) 
 			{
 				redirect('ccshifts/shifts/whitelistips');
@@ -443,6 +445,7 @@ class Shifts extends MX_Controller
 		function modify_department_ips()
 		{
 			$this->authentication->check_admin_access();
+			$this->authentication->checkWhiteListIPFeaturesAccess();
 			if ($this->form_validation->run('frm_edit_whitelisted_ip') === FALSE) 
 			{
 				redirect('ccshifts/shifts/whitelistips');
@@ -480,6 +483,7 @@ class Shifts extends MX_Controller
 		function deleteWhiteListedIP()
 		{
 			$this->authentication->check_admin_access();
+			$this->authentication->checkWhiteListIPFeaturesAccess();
 			$id=$this->db->escape_str($this->input->post('id'));
 			$ip=$this->db->escape_str($this->input->post('ip'));
 			$this->Shifts_model->delete_department_ip($id,$ip);
@@ -584,6 +588,86 @@ class Shifts extends MX_Controller
 
 			redirect('ccshifts/shifts/shifts');
 		}
+	}
+	
+	//Function to check shift name exists or not
+	//Dominic, Jan 11,2017
+	function check_shift_exists()
+	{
+		 $shiftName	=	$this->db->escape_str($this->input->post('shiftName'));
+		 $shiftId	=	$this->db->escape_str($this->input->post('shiftId'));
+		 $compId		=	$this->db->escape_str($this->input->post('compId'));
+		 
+		 $result=$this->Shifts_model->check_shift_exists($shiftName,$shiftId,$compId);
+		 if ( $result==TRUE ) {
+           // echo json_encode(FALSE);
+          echo 'false';
+       } 
+       else {
+            //echo json_encode(TRUE);
+          echo 'true';
+       }
+	}
+	
+	//Function to check login name exists or not
+	//Dominic, Jan 12,2017
+	function check_login_exists()
+	{
+		 $loginName	=	$this->db->escape_str($this->input->post('loginName'));
+		 $compId		=	$this->session->userdata('coid');
+		 
+		 $result=$this->Shifts_model->check_login_exists($loginName,$compId);
+		 if ( $result==TRUE ) {
+           // echo json_encode(FALSE);
+          echo 'false';
+       } 
+       else {
+            //echo json_encode(TRUE);
+          echo 'true';
+       }
+	}
+	
+	//Function to check added education qualification alreday exist or not (jQuery)
+   //Dominic, Jan 12,2017
+   function check_department_ip_exist()
+   {
+   	 $deptIP	=	$this->db->escape_str($this->input->post('department_ip'));
+   	 $compId		=	$this->session->userdata('coid');
+       $result=$this->Shifts_model->check_department_ip_exist($deptIP,$compId);
+		 if ( $result==TRUE ) 
+		  {
+            echo 'false';
+        } 
+       else 
+        {
+            echo 'true';
+        }   
+   }
+	
+	//Function to edit a shift name
+	//Dominic, Jan 11,2017
+	function editShiftName()
+	{
+		if ($this->form_validation->run('formEditShiftName') === FALSE)
+		{
+			redirect('ccshifts/shifts/shifts');
+		}
+		else
+		{
+			$compIdSess =$this->session->userdata('coid');
+			$this->Shifts_model->shiftsCRUD('Updated_Shift_Name','' );
+			$shift_id = $this->input->post('shift_id');
+			// save to log table
+			$operation = 'Updated Shift Name for Shift with ID '.$shift_id.' for company '.$compIdSess;
+			$this->site_settings->adminlog($operation);
+
+			$nType = 3; //announcements updates
+			$nMsg  = 'Shift Name Changed to '.$this->input->post('shift_name');
+			$this->site_settings->addNotification($nType,$nMsg,'');
+
+			redirect('ccshifts/shifts/shifts');
+		}
+	
 	}
 	
 	//Function to fetch shifts of a company
@@ -699,12 +783,18 @@ class Shifts extends MX_Controller
       $build_array   = $this->Shifts_model->getCompanyMembers($compIdSess);
       return $build_array;
 	}
+	
+	
 
 
 	function get_common()
 	{
-		$this->data['mynotifications']			=	$this->site_settings->fetchMyNotifications();
 		$this->site_settings->get_site_settings();
+		$this->data['mynotifications']			=	$this->site_settings->fetchMyNotifications();
+		$this->data['companyPlanDetails']		=	$this->site_settings->companyPlanDetails();
+		$this->data['total_Users']					=	$this->site_settings->getCompanySize();
+		$this->data['total_Depts']					=	$this->site_settings->getCompanyDepartmentSize();
+		$this->data['total_Shifts']				=	$this->site_settings->getCompanyDepartmentShiftSize();
 		/*
 		$this->data['profile']			=	$this->site_settings->personal_details();	
 		$this->data['menus_all']		= 	modules::load('menus')->get_menus();

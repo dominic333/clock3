@@ -35,7 +35,7 @@ $(document).ready(function(){
 $('#frm_add_department_ip').validate(
  {
   rules: {
-  	/*
+  	  /*
      department: 
      {
 	     required: true,
@@ -43,32 +43,27 @@ $('#frm_add_department_ip').validate(
 	  */
 	  department_ip:
 	  {
-	  	/*
+		  required: true,
+	  	  validIP: true,
 	  	  remote: 
     	  {
-				url: base_url+"admin/departments/check_department_ip_exist",
+				url: base_url+"ccshifts/shifts/check_department_ip_exist",
 				type: "post",
 				data: 
 				{
-					 department_ip: function(){ return $("#department_ip").val(); },
-					 department: function(){ return $("#department").val(); },
+					 department_ip: function(){ return $.trim($("#frm_add_department_ip #department_ip").val()); },
 					 csrf_test_name : csrf_token
 				}
-		  },
-		  */
-		  required: true,
-	  	  validIP: true
+		  }
 	  }     
    },  
-   /*   
    messages: 
    {
 		department_ip: 
 		 {
 				remote: 'IP address already added'
 		 }
-   },  
-   */         
+   },         
 	highlight: function(element) {
 		  $(element).closest('.control-group').removeClass('success').addClass('error');
 	 },
@@ -103,32 +98,27 @@ $('#frm_edit_whitelisted_ip').validate(
 	  */
 	  department_ip:
 	  {
-	  	/*
+		  required: true,
+	  	  validIP: true,
 	  	  remote: 
     	  {
-				url: base_url+"admin/departments/check_department_ip_exist",
+				url: base_url+"ccshifts/shifts/check_department_ip_exist",
 				type: "post",
 				data: 
 				{
-					 department_ip: function(){ return $("#department_ip").val(); },
-					 department: function(){ return $("#department").val(); },
+					 department_ip: function(){ return $.trim($("#frm_edit_whitelisted_ip #department_ip").val()); },
 					 csrf_test_name : csrf_token
 				}
-		  },
-		  */
-		  required: true,
-	  	  validIP: true
+		  }
 	  }     
    },  
-   /*   
    messages: 
    {
 		department_ip: 
 		 {
 				remote: 'IP address already added'
 		 }
-   },  
-   */         
+   },          
 	highlight: function(element) {
 		  $(element).closest('.control-group').removeClass('success').addClass('error');
 	 },

@@ -42,7 +42,8 @@
 		  var todayDate = today.format("YYYY-MM-DD");
 		  var tomorrow = today.add(1, 'days').format("YYYY-MM-DD");
 		  var haystack = [ "Medical Leave", "Casual Leave", "Annual Leave" ];
-		  //console.log(today);
+		  
+		 //console.log(today);
 		 //console.log(tomorrow);
         //fetchCalenderAttendance(dateofMonth);
         $('#calendar').fullCalendar({
@@ -117,7 +118,7 @@
      	       var post_url = base_url+"ccattendance/attendance/fetchMonthlyAttendance";
 		            $.ajax({
 		            url: post_url,
-		            type: "POST",
+		            type: "GET",
 		            dataType: 'json',
 		            cache: true,
 		            data: {
@@ -135,11 +136,11 @@
 		            success: function(result) {
                         hideLoader();
 		            	 var events = [];
-		            	 if (!events.eventsCache)
-                      events.eventsCache = {};
+		            	//if (!events.eventsCache)
+                      //events.eventsCache = {};
 
             			//store your data
-            			eventsCache[start.toString + "-" + end.toString] = result;
+            			//eventsCache[start.toString + "-" + end.toString] = result;
             
 		                $.each(result.attendance,function(index,res) 
 		                   {
@@ -174,7 +175,6 @@
 		                        color: res.borderColor					                    
 		                        });
 		                   });
-		                
 		                callback(events);
 		             }
 		          });

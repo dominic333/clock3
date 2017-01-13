@@ -596,7 +596,8 @@ class Attendance extends MX_Controller
    {
    	$staff 	  = $this->session->userdata('mid');
    	//2016-11-01
-		$obtainedDate = $this->db->escape_str($this->input->post('dateofMonth'));
+   	//$this->input->get('your_field');
+		$obtainedDate = $this->db->escape_str($this->input->get('dateofMonth'));
 		$split_date=explode('-',$obtainedDate);
 		$year  = $split_date[0];
 		$month = $split_date[1];
@@ -1125,6 +1126,63 @@ class Attendance extends MX_Controller
 		//$attendance	= '';
 		$attendance	= $this->attendanceCalendarData($fromDate,$toDate,$staff);
 		echo json_encode($attendance);
+	}
+	
+	//Function to view leave request (and approve or reject it)
+	//Dominic, Jan 13,2017
+	function leaveManagement()
+	{
+		$this->authentication->check_admin_access();
+		$this->authentication->checkLeaveManagementFeatureAccess();
+		$compIdSess =$this->session->userdata('coid');
+		$this->data['allLeaves']	=	$this->Attendance_model->fetchLeaverequests($compIdSess);
+		$this->data['view']						=	'ccattendance/leaverequestslists';
+		$this->data['footer_includes']		=	'<script src="'.base_url().'js/cc/my-attendance.js" type="text/javascript"></script>';
+		$this->load->view('master', $this->data);	
+	}
+	
+	//Function to approve a leave request
+	//Dominic, Jan 13,2017
+	function aproveLeaveApplication()
+	{
+		$this->authentication->check_admin_access();
+		$this->authentication->checkLeaveManagementFeatureAccess();
+		if($this->input->post('id')&&$this->input->post('staffid'))
+		{
+			$staffid	=	$this->db->escape_str($this->input->post('staffid'));
+			$leaveId	=	$this->db->escape_str($this->input->post('id'));
+			$compIdSess =$this->session->userdata('coid');
+			
+			$this->Attendance_model->aproveLeaveApplication($staffid,$leaveId);
+			
+			// save to log table	
+			$operation = 'Leave request '.$leaveId.' approved under company '.$compIdSess;
+			$this->site_settings->adminlog($operation);
+				
+			echo 'approved';
+		}
+	}
+	
+	//Function to reject a leave request
+	//Dominic, Jan 13,2017
+	function rejectLeaveApplication()
+	{
+		$this->authentication->check_admin_access();
+		$this->authentication->checkLeaveManagementFeatureAccess();
+		if($this->input->post('id')&&$this->input->post('staffid'))
+		{
+			$staffid	=	$this->db->escape_str($this->input->post('staffid'));
+			$leaveId	=	$this->db->escape_str($this->input->post('id'));
+			$compIdSess =$this->session->userdata('coid');
+			
+			$this->Attendance_model->rejectLeaveApplication($staffid,$leaveId);
+			
+			// save to log table	
+			$operation = 'Leave request '.$leaveId.' rejected under company '.$compIdSess;
+			$this->site_settings->adminlog($operation);
+				
+			echo 'rejected';
+		}
 	}
 	
 	function formatStorageDate($date)

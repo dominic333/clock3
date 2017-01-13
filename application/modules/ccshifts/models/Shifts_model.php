@@ -598,6 +598,13 @@ class Shifts_model extends CI_Model {
 				$this->db->where('shift_id',$this->input->post('shift_id'));
 				$this->db->update('department_shifts', $data);
 				break;
+				
+			case 'Updated_Shift_Name':
+				$data['shift_name'] = $this->db->escape_str($this->input->post('shift_name'));
+				$this->db->where('comp_id',$this->input->post('comp_id'));
+				$this->db->where('shift_id',$this->input->post('shift_id'));
+				$this->db->update('department_shifts', $data);
+				break;
 
 			default		:break;
 		}
@@ -714,6 +721,62 @@ class Shifts_model extends CI_Model {
 			$this->db->insert('monitor_info', $data);
 		}
 	}
+	
+	//Function to check shift name already exists or not
+	//Dominic, Jan 11,2017
+	function check_shift_exists($shiftName,$shiftId,$compId)
+	{
+	  $this->db->where('shift_name', $shiftName);
+	  $this->db->where('shift_id', $shiftId);
+	  $this->db->where('comp_id', $compId);
+     $query = $this->db->get('department_shifts');
+	   
+     if( $query->num_rows() > 0 )
+     { 
+       return TRUE; 
+     } 
+     else 
+     { 
+       return FALSE; 
+     }  
+	}
+	
+	//Function to check login name already exists or not
+	//Dominic, Jan 12,2017
+	function check_login_exists($loginName,$compId)
+	{
+	  $this->db->where('login_name', $loginName);
+	  $this->db->where('company_id', $compId);
+     $query = $this->db->get('staff_info');
+	   
+     if( $query->num_rows() > 0 )
+     { 
+       return TRUE; 
+     } 
+     else 
+     { 
+       return FALSE; 
+     }  
+	}
+	
+   //Function to check added department ip exist or not (jQuery)
+	//Dominic, Jan 12,2017
+	function check_department_ip_exist($deptIP,$compId)
+   {
+	 	$this->db->where('company_id', $compId);
+	 	$this->db->where('ip_address', $deptIP);
+    	$query = $this->db->get('department_ip');
+	   
+    	if( $query->num_rows() > 0 )
+     	{ 
+       	return TRUE; 
+     	} 
+    	else 
+     	{ 
+       	return FALSE; 
+     	}   
+   }
+
 	
 
 	

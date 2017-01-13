@@ -101,8 +101,7 @@ $(document).ready(function(){
 	    	hideLoader(); 	
 	      var result= result.trim();
 	      if(result=="deleted")
-	      {
-	      	$('#loading').hide(); // Ajax Loader Show		
+	      {	
 				$('#row'+dept_id).remove();
 	      }
 	      else if(result=="exists")

@@ -26,10 +26,21 @@
 
                     <div class="info-box-content">
                         <span class="info-box-text">Total Users</span>
-                        <span class="info-box-number"><?php echo (isset($total_Users)) ? $total_Users :set_value('NA'); ?></span>
-
+                        <span class="info-box-number">
+                        <?php echo (isset($total_Users)) ? $total_Users :set_value('NA'); ?>/<?php echo (isset($companyPlanDetails->userLimit)) ? $companyPlanDetails->userLimit :set_value('NA'); ?>
+                        </span>
+								<?php 
+									if(isset($total_Users) && isset($companyPlanDetails->userLimit) ) 
+									{
+										$userPercentage = round((($total_Users/$companyPlanDetails->userLimit)*100));
+									}
+									else 
+									{
+										$userPercentage = 100;
+									}
+								?>
                         <div class="progress">
-                            <div class="progress-bar" style="width: 100%"></div>
+                            <div class="progress-bar" style="width: <?php echo $userPercentage; ?>%"></div>
                         </div>
                         <span class="progress-description"></span>
                     </div>
@@ -47,9 +58,18 @@
                     <div class="info-box-content">
                         <span class="info-box-text">Absents</span>
                         <span class="info-box-number"><?php echo (isset($usersdetails['absent_checkin_users'])) ? $usersdetails['absent_checkin_users'] :'0'; ?> </span>
-
+								<?php 
+									if(isset($total_Users) && isset($usersdetails['absent_checkin_users']) ) 
+									{
+										$absentPercentage = round((($usersdetails['absent_checkin_users']/$total_Users)*100));
+									}
+									else 
+									{
+										$absentPercentage = 0;
+									}
+								?>
                         <div class="progress">
-                            <div class="progress-bar" style="width: 100%"></div>
+                            <div class="progress-bar" style="width: <?php echo $absentPercentage; ?>%"></div>
                         </div>
                   <span class="progress-description">
                   </span>
@@ -67,9 +87,18 @@
                     <div class="info-box-content">
                         <span class="info-box-text">Late Clock in</span>
                         <span class="info-box-number"><?php echo (isset($usersdetails['late_checkin_users'])) ? $usersdetails['late_checkin_users'] :'0'; ?></span>
-
+								<?php 
+									if(isset($total_Users) && isset($usersdetails['late_checkin_users']) ) 
+									{
+										$lateClockPercentage = round((($usersdetails['late_checkin_users']/$total_Users)*100));
+									}
+									else 
+									{
+										$lateClockPercentage = 0;
+									}
+								?>
                         <div class="progress">
-                            <div class="progress-bar" style="width: 100%"></div>
+                            <div class="progress-bar" style="width: <?php echo $lateClockPercentage; ?>%"></div>
                         </div>
 					  <span class="progress-description">
 					  </span>
@@ -87,9 +116,18 @@
                     <div class="info-box-content">
                         <span class="info-box-text">Early Clock Out</span>
                         <span class="info-box-number"><?php echo (isset($usersdetails['early_checkout_users'])) ? $usersdetails['early_checkout_users'] :'0'; ?></span>
-
+								<?php 
+									if(isset($total_Users) && isset($usersdetails['early_checkout_users']) ) 
+									{
+										$earlyOutPercentage = round((($usersdetails['early_checkout_users']/$total_Users)*100));
+									}
+									else 
+									{
+										$earlyOutPercentage = 0;
+									}
+								?>
                         <div class="progress">
-                            <div class="progress-bar" style="width: 100%"></div>
+                            <div class="progress-bar" style="width: <?php echo $earlyOutPercentage; ?>%"></div>
                         </div>
                   <span class="progress-description">
                   </span>

@@ -214,6 +214,145 @@ class Authentication
 	      redirect('/home/logout');
      	 }
      }
+     
+     //Function to check if whitelistip feature available or not
+     //Dominic, Jan 12, 2017
+     function checkWhiteListIPAccess()
+     {
+		
+		 $whiteIPAcces=0;
+     	 $compIdSess= $this->CI->session->userdata('coid');
+     	 $result_settings	=	$this->CI->db->query("SELECT plans.ipWhiteListing  
+			FROM company_plans
+			LEFT JOIN plans ON plans.id=company_plans.planId
+			WHERE company_plans.company_id=".$compIdSess."
+     	 ");
+     	 if($result_settings->num_rows() > 0)
+     	 {
+     	 	 $rows	=	$result_settings->result();
+			 foreach($rows as $row)
+			 {
+				$whiteIPAcces 	= $row->ipWhiteListing;
+			 }
+     	 }
+		 return $whiteIPAcces;
+     }
+     
+     //Function to check if whitelistip CRUD feature available or not
+     //Dominic, Jan 12, 2017
+     function checkWhiteListIPFeaturesAccess()
+     {
+		 $whiteIPAcces=0;
+     	 $compIdSess= $this->CI->session->userdata('coid');
+     	 $result_settings	=	$this->CI->db->query("SELECT plans.ipWhiteListing  
+			FROM company_plans
+			LEFT JOIN plans ON plans.id=company_plans.planId
+			WHERE company_plans.company_id=".$compIdSess."
+     	 ");
+     	 if($result_settings->num_rows() > 0)
+     	 {
+     		 $rows	=	$result_settings->result();
+			 foreach($rows as $row)
+			 {
+				$whiteIPAcces 	= $row->ipWhiteListing;
+				if($whiteIPAcces==1)
+				{
+					return TRUE;
+				}
+				else
+				{
+					$this->CI->session->set_flashdata('feedback','Please login!');
+	       		redirect('/home/logout');
+				}
+			 } 
+     	 }
+     	 else
+     	 {
+     	 	$this->CI->session->set_flashdata('feedback','Please login!');
+	      redirect('/home/logout');
+     	 }
+     }
+     
+     //Function to check leave management feature access
+     //Dominic, Jan 13, 2017
+     function checkLeaveManagementFeatureAccess()
+     {
+     	 $leaveManagement=0;
+     	 $compIdSess= $this->CI->session->userdata('coid');
+     	 $result_settings	=	$this->CI->db->query("SELECT plans.leaveManagement  
+			FROM company_plans
+			LEFT JOIN plans ON plans.id=company_plans.planId
+			WHERE company_plans.company_id=".$compIdSess."
+     	 ");
+     	 if($result_settings->num_rows() > 0)
+     	 {
+     		 $rows	=	$result_settings->result();
+			 foreach($rows as $row)
+			 {
+				$leaveManagement 	= $row->leaveManagement;
+				if($leaveManagement==1)
+				{
+					return TRUE;
+				}
+				else
+				{
+					$this->CI->session->set_flashdata('feedback','Please login!');
+	       		redirect('/home/logout');
+				}
+			 } 
+     	 }
+     	 else
+     	 {
+     	 	$this->CI->session->set_flashdata('feedback','Please login!');
+	      redirect('/home/logout');
+     	 }
+     }
+     
+     //Function to check leave management access
+     //Dominic, Jan 13, 2017
+     function checkLeaveManagementAccess()
+     {
+		
+		 $leaveManagement=0;
+     	 $compIdSess= $this->CI->session->userdata('coid');
+     	 $result_settings	=	$this->CI->db->query("SELECT plans.leaveManagement  
+			FROM company_plans
+			LEFT JOIN plans ON plans.id=company_plans.planId
+			WHERE company_plans.company_id=".$compIdSess."
+     	 ");
+     	 if($result_settings->num_rows() > 0)
+     	 {
+     	 	 $rows	=	$result_settings->result();
+			 foreach($rows as $row)
+			 {
+				$leaveManagement 	= $row->leaveManagement;
+			 }
+     	 }
+		 return $leaveManagement;
+     }
+     
+     //Function to fetch report download limit
+     //Dominic, Jan 13, 2017
+     function reportMonthLimit()
+     {
+		
+		 $reportMonthLimit=3;
+     	 $compIdSess= $this->CI->session->userdata('coid');
+     	 $result_settings	=	$this->CI->db->query("SELECT plans.reportMonthLimit  
+			FROM company_plans
+			LEFT JOIN plans ON plans.id=company_plans.planId
+			WHERE company_plans.company_id=".$compIdSess."
+     	 ");
+     	 if($result_settings->num_rows() > 0)
+     	 {
+     	 	 $rows	=	$result_settings->result();
+			 foreach($rows as $row)
+			 {
+				$reportMonthLimit 	= $row->reportMonthLimit;
+			 }
+     	 }
+		 return $reportMonthLimit;
+     }
 	
      function logout()
      {

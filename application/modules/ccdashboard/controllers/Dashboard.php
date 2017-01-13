@@ -19,8 +19,8 @@ class Dashboard extends MX_Controller
 	{
 		$this->authentication->check_admin_access();
 		$compIdSess =$this->session->userdata('coid');
-		//print_r($user_data);
-		$this->data['total_Users']	=	$this->Dashboard_model->getCompanySize($compIdSess);
+		//print_r($user_data);		
+		
 		$this->data['usersdetails']	=	modules::load('ccattendance/Attendance')->bridge_company_users_attendance_details();
 		$this->data['company_details']	=	modules::load('ccadministration/Administration')->getCompanyInfo($compIdSess);
 		$limit=4;
@@ -36,8 +36,10 @@ class Dashboard extends MX_Controller
 	{
 		$this->data['footer_includes']			=	'<script src="'.base_url().'js/cc/announcements.js" type="text/javascript"></script>';	
 		$this->data['mynotifications']			=	$this->site_settings->fetchMyNotifications();	
+		$this->data['companyPlanDetails']		=	$this->site_settings->companyPlanDetails();
+		$this->data['total_Users']					=	$this->site_settings->getCompanySize();
 		/*
-		$this->site_settings->get_site_settings();
+		
 		
 		$this->data['menus_all']		= 	modules::load('menus')->get_menus();
 		$this->data['myprivileges']	=	$this->site_settings->myprivileges();

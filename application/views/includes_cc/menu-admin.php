@@ -58,7 +58,12 @@
                     <?php } ?>
                     <li><a href="<?php echo base_url();?>ccshifts/shifts/shifts"><i class="fa fa-angle-double-right"></i> Add / Edit Shift</a></li>
                     <li><a href="<?php echo base_url();?>ccshifts/shifts/users"><i class="fa fa-angle-double-right"></i> Add / Edit User</a></li>
+                    <?php $whiteIPAcces= $this->authentication->checkWhiteListIPAccess(); if($whiteIPAcces==1){ ?>
                     <li><a href="<?php echo base_url();?>ccshifts/shifts/whitelistips"><i class="fa fa-angle-double-right"></i> Add White List IPs</a></li>
+                    <?php } ?>
+                    <?php $leaveManagement= $this->authentication->checkLeaveManagementAccess(); if($leaveManagement==1){ ?>
+                    <li><a href="<?php echo base_url();?>ccattendance/attendance/leaveManagement"><i class="fa fa-angle-double-right"></i> Leave Management</a></li>
+                    <?php } ?>
                 </ul>
             </li>
 

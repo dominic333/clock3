@@ -12,11 +12,6 @@ $(document).ready(function(){
          "autoWidth": false
      });
         
-     $('#date_to').datepicker();
-     $('#date_from').datepicker();
-
-     $('#udate_to').datepicker();
-     $('#udate_from').datepicker();
         
 	   $(".select2").select2();
 	     

@@ -358,6 +358,23 @@ $config = array(
             'rules' => 'trim|required|xss_clean|prep_for_form'
         )
     ),
+    'formEditShiftName' => array(
+        array(
+            'field' => 'shift_id',
+            'label' => 'Shift Id',
+            'rules' => 'trim|required|xss_clean|prep_for_form'
+        ),
+        array(
+            'field' => 'comp_id',
+            'label' => 'Company ID',
+            'rules' => 'trim|required|xss_clean|prep_for_form'
+        ),
+        array(
+            'field' => 'shift_name',
+            'label' => 'Shift Name',
+            'rules' => 'trim|required|xss_clean|prep_for_form'
+        )
+    ),
     'frm_attendance_search' => array(
         array(
             'field' => 'date_from',

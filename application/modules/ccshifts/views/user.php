@@ -18,8 +18,15 @@
 
         <div class="row">
             <div class="col-md-12">
+            <?php if(isset($total_Users) && isset($companyPlanDetails->userLimit) ) {
+            		if($total_Users<$companyPlanDetails->userLimit)
+            		{
+             ?>
                 <button class="btn btn-primary pull-right" data-toggle="modal" data-target="#myModalHorizontal">Add New
-                    User <span class="fa fa-plus-circle"></span></button>
+                    User <span class="fa fa-plus-circle"></span>
+                </button>
+            <?php }} ?>
+                <label class="pull-right" style="padding-right:10px; padding-top:5px;"><?php echo (isset($total_Users)) ? $total_Users :set_value('NA'); ?>/<?php echo (isset($companyPlanDetails->userLimit)) ? $companyPlanDetails->userLimit :set_value('NA'); ?></label>
             </div>
             <?php if($companyType==3){ ?>
             <div class="col-md-12">
@@ -92,10 +99,20 @@
                         <!-- /.widget-user -->
 
                         <div class="box-footer text-center">
-                            <a href="javascript:void(0)" class="btn btn-success fa fa-briefcase change_user_shiftType" data-toggle="tooltip" data-placement="bottom" title="Change Shift Type" data-staff_id="<?php echo $member->staff_id; ?>" data-staff_name="<?php echo $member->staff_name; ?>" data-login_name="<?php echo $member->login_name; ?>"   data-staff_photo="<?php echo $staff_photo; ?>" data-staff_type="<?php echo $member->staff_type; ?>" ></a>
+                        	 <?php if(isset($companyPlanDetails->flexiibleClockin) ) {
+						            		if($companyPlanDetails->flexiibleClockin==1)
+						            		{
+						          ?>
+                            <a href="javascript:void(0)" class="btn btn-success fa fa-briefcase change_user_shiftType" data-toggle="tooltip" data-placement="bottom" title="Flexible Clock in / out Hours" data-staff_id="<?php echo $member->staff_id; ?>" data-staff_name="<?php echo $member->staff_name; ?>" data-login_name="<?php echo $member->login_name; ?>"   data-staff_photo="<?php echo $staff_photo; ?>" data-staff_type="<?php echo $member->staff_type; ?>" ></a>
+									 <?php } } ?>                           
                             <a href="javascript:void(0)" class="btn btn-success fa fa-edit edit_user_link" data-toggle="tooltip" data-placement="bottom" title="Edit User?" data-staff_id="<?php echo $member->staff_id; ?>" data-staff_name="<?php echo $member->staff_name; ?>" data-login_name="<?php echo $member->login_name; ?>"  data-email="<?php echo $member->email; ?>" data-contact_number="<?php echo $member->contact_number; ?>" data-staff_photo="<?php echo $staff_photo; ?>" ></a>
                             <a href="javascript:void(0)" class="btn btn-success fa fa-tag forgot_user_link" data-toggle="tooltip" data-placement="bottom" title="Change Password?" data-staff_id="<?php echo $member->staff_id; ?>" data-staff_name="<?php echo $member->staff_name; ?>" data-login_name="<?php echo $member->login_name; ?>"  data-email="<?php echo $member->email; ?>"  ></a>
+									 <?php if(isset($companyPlanDetails->remoteClockin) ) {
+						            		if($companyPlanDetails->remoteClockin==1)
+						            		{
+						          ?>                            
                             <a href="javascript:void(0)" class="btn btn-success fa fa-map-marker rremote_login_link" data-toggle="tooltip" data-placement="bottom" title="Work Remotely?" data-staff_id="<?php echo $member->staff_id; ?>" data-staff_name="<?php echo $member->staff_name; ?>" data-remotelogin="<?php echo $member->work_from_home; ?>" data-staff_photo="<?php echo $staff_photo; ?>" ></a>
+									 <?php } } ?>                            
                             <a href="javascript:void(0)" class="btn btn-success fa fa-shield mmonitor_attendance_link" data-toggle="tooltip" data-placement="bottom" title="Monitor Attendance?" data-staff_id="<?php echo $member->staff_id; ?>" data-staff_name="<?php echo $member->staff_name; ?>" data-monitor="<?php echo $member->monitor; ?>" ></a>
                             <a href="javascript:void(0)" class="btn btn-danger fa fa-trash delete_user_link"	data-toggle="tooltip" data-placement="bottom" title="Delete User?" data-staff_id="<?php echo $member->staff_id; ?>" data-staff_name="<?php echo $member->staff_name; ?>"  data-staff_photo="<?php echo $staff_photo; ?>"></a>
                         </div>
@@ -205,7 +222,12 @@
                         <div class="col-sm-9">
                             <select id="remotelogin" name="remotelogin" class="form-control selectdept" style="width: 100%;">
                                 <option value="" selected="selected">-- Remote Login --</option>
+                                <?php if(isset($companyPlanDetails->remoteClockin) ) {
+						            		if($companyPlanDetails->remoteClockin==1)
+						            		{
+						              ?>
                                 <option value="1">Enabled</option>
+                                <?php }} ?>
                                 <option value="0">Disabled</option>
                             </select>
                         </div>
@@ -445,7 +467,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Remote Login</h4>
+        <h4 class="modal-title" id="myModalLabel">Flexible Clock in / out Hours</h4>
       </div>
       <div class="modal-body">
          <form  role="form" id="user_shiftchange_frm" name="user_shiftchange_frm" action="<?php echo base_url();?>ccshifts/shifts/change_user_shift_type" method="post" >
@@ -466,9 +488,9 @@
 	         
 	         <div class="form-group">	            
                <select  name="ststaffType"  id="ststaffType" class="selectpicker form-control">
-                  <option value="">-- Change Staff Type? --</option>
-                  <option value="1" >Normal Shift user</option>
-                	<option value="2" >Flexible Shift User</option>                         
+                  <option value="">-- Flexible Clock in / out? --</option>
+                  <option value="1" >Normal Clock In/Out</option>
+                	<option value="2" >Flexible Clock In/Out</option>                         
                </select>
 	         </div>  	         
 	         

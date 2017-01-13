@@ -164,6 +164,82 @@
     <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
+<?php $reportMonthLimit= $this->authentication->reportMonthLimit(); if($reportMonthLimit==12){ ?>
+
+<script type="text/javascript">
+$(document).ready(function(){
+	
+	  //$('#date_to').datepicker({minDate:15,maxDate: 0});
+     //$('#date_from').datepicker({maxDate: 0});
+
+     //$('#udate_to').datepicker({maxDate: 0});
+     //$('#udate_from').datepicker({maxDate: 0});
+     
+
+     $( "#date_to" ).datepicker({ 
+         changeYear: true,
+         minDate: '-12M',
+         maxDate: '+0D',
+     });
+     
+     $( "#date_from" ).datepicker({ 
+         changeYear: true,
+         minDate: '-12M',
+         maxDate: '+0D',
+     });
+     
+     $( "#udate_to" ).datepicker({ 
+         changeYear: true,
+         minDate: '-12M',
+         maxDate: '+0D',
+     });
+     
+     $( "#udate_from" ).datepicker({ 
+         changeYear: true,
+         minDate: '-12M',
+         maxDate: '+0D',
+     });
+});
+</script>
+
+<?php } else { ?>
+
+<script type="text/javascript">
+$(document).ready(function(){
+	
+	  //$('#date_to').datepicker({minDate:15,maxDate: 0});
+     //$('#date_from').datepicker({maxDate: 0});
+
+     //$('#udate_to').datepicker({maxDate: 0});
+     //$('#udate_from').datepicker({maxDate: 0});
+     
+
+     $( "#date_to" ).datepicker({ 
+         changeYear: true,
+         minDate: '-3M',
+         maxDate: '+0D',
+     });
+     
+     $( "#date_from" ).datepicker({ 
+         changeYear: true,
+         minDate: '-3M',
+         maxDate: '+0D',
+     });
+     
+     $( "#udate_to" ).datepicker({ 
+         changeYear: true,
+         minDate: '-3M',
+         maxDate: '+0D',
+     });
+     
+     $( "#udate_from" ).datepicker({ 
+         changeYear: true,
+         minDate: '-3M',
+         maxDate: '+0D',
+     });
+});
+</script>
 
 
+<?php } ?>
 

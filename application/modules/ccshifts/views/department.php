@@ -6,7 +6,7 @@
     <section class="content-header">
         <h1>
             Add / Edit Department
-            <small>Lorem Ipsum...</small>
+            <small>Department List</small>
         </h1>
         <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-cogs"></i> Setup Attendance</a></li>
@@ -22,9 +22,18 @@
                 <div class="box box-danger">
                     <div class="box-header">
                         <h3 class="box-title">Manage Departments</h3>
+                        <?php if(isset($total_Depts) && isset($companyPlanDetails->userLimit) ) {
+				            		if($total_Depts<$companyPlanDetails->deptLimit)
+				            		{
+				             ?>
                         <a href="#" class="btn btn-primary btn-sm pull-right" data-toggle="modal" data-target="#addDepartmentModal">Add Department <span
                                 class="fa fa-plus-circle"
-                                aria-hidden="true"></span></a>
+                                aria-hidden="true"></span>
+                        </a>
+                        <?php }} ?>
+                        <label class="pull-right" style="padding-right:10px; padding-top:5px;">
+                        <?php echo (isset($total_Depts)) ? $total_Depts :set_value('NA'); ?>/<?php echo (isset($companyPlanDetails->deptLimit)) ? $companyPlanDetails->deptLimit :set_value('NA'); ?>
+                        </label>
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">

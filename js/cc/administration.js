@@ -256,14 +256,22 @@ $(document).ready(function(){
 			var staff_photo 		= $(this).data('staff_photo');
 			var contact_number 	= $(this).data('contact_number');
 			var email 				= $(this).data('email');
+			//console.log(staff_name);
 			if(staff_id!=''){
-				document.getElementById("staff_id").value=staff_id;
-				document.getElementById("staff_name").value=staff_name;
-				document.getElementById("login_name").value=login_name;
-				document.getElementById("staff_photo_src").setAttribute("src", staff_photo);
-				document.getElementById("contact_number").value=contact_number;
-				document.getElementById("email").value=email;
+				//document.getElementById("staff_id").value=staff_id;
+				//document.getElementById("staff_name").value=staff_name;
+				//document.getElementById("login_name").value=login_name;
+				//document.getElementById("staff_photo_src").setAttribute("src", staff_photo);
+				//document.getElementById("contact_number").value=contact_number;
+				//document.getElementById("email").value=email;
+				$('#edit_user_frm #staff_id').val(staff_id);
+				$('#edit_user_frm #staff_name').val(staff_name);
+				$('#edit_user_frm #login_name').val(login_name);
+				$('#edit_user_frm #contact_number').val(contact_number);
+				$('#edit_user_frm #email').val(email);
+				$('#edit_user_frm #staff_photo_src').attr("src",staff_photo);
 				$('#edit_user_modal').modal('show');
+				
 				
 			}else{
 				$.alert({
@@ -502,14 +510,28 @@ $(document).ready(function(){
 					lettersonly:true
 				},
 				login_name: {
-					required: true
+					required: true,
+					lettersonly:true,
+					minlength:4,
+					remote: 
+			    	  {
+							url: base_url+"ccshifts/shifts/check_login_exists",
+							type: "post",
+							data: 
+							{
+								loginName : function(){ return $.trim($("#frm_add_users #login_name").val()); },
+								csrf_test_name : csrf_token
+							}
+					  }
 				},
 				password:{
-					required: true
+					required: true,
+					minlength:6
 				},
 				cpassword:{
 					equalTo: "#password",
-					required: true
+					required: true,
+					minlength:6
 				},
 				email:{
 					required: true,
@@ -533,6 +555,13 @@ $(document).ready(function(){
 					required: true
 				}
 			},
+			messages: 
+		   {
+				login_name: 
+				 {
+						remote: 'Login name already assigned.'
+				 }
+		   },
 			highlight: function(element) {
 				$(element).closest('.control-group').removeClass('success').addClass('error');
 			},

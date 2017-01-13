@@ -258,6 +258,51 @@ class Attendance_model extends CI_Model {
 		
 	}
 	
+	//Function to fetch leave requests
+	//Dominic, Jan 13,2017
+	function fetchLeaverequests($compIdSess)
+	{
+		//SELECT staff_attendance_leaves.id,staff_attendance_leaves.staff_id,staff_attendance_leaves.leave_date,staff_attendance_leaves.status,staff_attendance_leaves.leaveType,staff_info.staff_name 
+		//FROM staff_attendance_leaves
+		//LEFT JOIN staff_info ON staff_info.staff_id=staff_attendance_leaves.staff_id
+		//WHERE staff_attendance_leaves.status IN (0,1) AND staff_info.company_id=84
+		//ORDER BY staff_attendance_leaves.leave_date ASC
+		
+		$this->db->select("staff_attendance_leaves.id,staff_attendance_leaves.staff_id,staff_attendance_leaves.leave_date,staff_attendance_leaves.status,staff_attendance_leaves.leaveType,staff_info.staff_name",false);									
+		$this->db->from('staff_attendance_leaves');
+		$this->db->join('staff_info','staff_info.staff_id=staff_attendance_leaves.staff_id','LEFT');
+		$this->db->where('staff_info.company_id',$compIdSess);
+		$this->db->where_in('staff_attendance_leaves.status', array(0,1));
+		$this->db->order_by('staff_attendance_leaves.leave_date','ASC');
+		$result=$this->db->get();
+		//echo $this->db->last_query();
+		return $result->result();
+	}
+	
+	//Function to approve a leave request
+	//Dominic, Jan 13,2017
+	function aproveLeaveApplication($staffid,$leaveId)
+	{
+	  $data = array(		
+							'status' 	=> 1                          
+  		 				);
+	  $this->db->where('staff_id',$staffid);
+	  $this->db->where('id',$leaveId);
+	  $this->db->update('staff_attendance_leaves', $data);
+	}
+	
+	//Function to reject a leave request
+	//Dominic, Jan 13,2017
+	function rejectLeaveApplication($staffid,$leaveId)
+	{
+		$data = array(		
+							'status' 	=> 2                         
+  		 				);
+	   $this->db->where('staff_id',$staffid);
+	   $this->db->where('id',$leaveId);
+	   $this->db->update('staff_attendance_leaves', $data);
+	}
+	
 	
 }
 

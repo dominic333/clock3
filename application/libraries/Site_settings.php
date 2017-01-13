@@ -63,8 +63,10 @@ class Site_settings
 	//Dominic, December 10,2016
 	public function fetchMyNotifications()
 	{
+		$nDateTime 		=  date('Y-m-d H:i:s');
 	  	$this->obj->db->select('N.*, SI.staff_name');
 		$this->obj->db->where('N.userID',$this->obj->session->userdata('mid'));     	
+		$this->obj->db->where('N.nDateTime',$nDateTime);     	
 	  	$this->obj->db->from('notifications AS N');			  		
 		$this->obj->db->join('staff_info AS SI', 'N.actionBy = SI.staff_id','LEFT');		
 		$this->obj->db->order_by('N.nDateTime','DESC');	
@@ -86,6 +88,57 @@ class Site_settings
 		$result_company=$this->obj->db->get();
 		//echo $this->db->last_query();
 		return $result_company->result();
+	}
+	
+	//Function to get company plan info
+	//Dominic, Jan 10,2016
+	function companyPlanDetails()
+	{
+		//SELECT company_plans.company_id,plans.* FROM company_plans LEFT JOIN plans ON company_plans.planId=plans.id WHERE company_plans.company_id=84
+		
+		$this->obj->db->select('company_plans.company_id,plans.*');
+		$this->obj->db->where('company_plans.company_id',$this->obj->session->userdata('coid'));     	
+	  	$this->obj->db->from('company_plans');		
+		$this->obj->db->join('plans', 'company_plans.planId=plans.id','LEFT');		
+		$result_users = $this->obj->db->get();	
+		return $result_users->row();
+	}
+	
+	//Function to get company strength
+	//Dominic, Jan 10,2016
+	function getCompanySize()
+	{
+		$this->obj->db->select('COUNT(staff_id) AS totalUsers');
+		$this->obj->db->from('staff_info');
+		$this->obj->db->where('company_id',$this->obj->session->userdata('coid'));
+		$result=$this->obj->db->get();
+		return $result->row()->totalUsers;
+	}
+	
+	//Function to get total department count of a company
+	//Dominic, Jan 10,2016
+	function getCompanyDepartmentSize()
+	{
+		//SELECT COUNT(dept_id) AS total FROM departments WHERE company_id=84
+		$this->obj->db->select('COUNT(dept_id) AS totalDept');
+		$this->obj->db->from('departments');
+		$this->obj->db->where('company_id',$this->obj->session->userdata('coid'));
+		$result=$this->obj->db->get();
+		return $result->row()->totalDept;
+	}
+	
+	
+	//Function to get total department count of a company
+	//Dominic, Jan 10,2016
+	function getCompanyDepartmentShiftSize()
+	{
+		//SELECT COUNT(shift_id) AS totalShifts FROM department_shifts WHERE comp_id=84 AND shift_status=1
+		$this->obj->db->select('COUNT(shift_id) AS totalShifts');
+		$this->obj->db->from('department_shifts');
+		$this->obj->db->where('comp_id',$this->obj->session->userdata('coid'));
+		$this->obj->db->where('shift_status',1);
+		$result=$this->obj->db->get();
+		return $result->row()->totalShifts;
 	}
      
   

@@ -21,10 +21,19 @@
                 <div class="box box-danger">
                     <div class="box-header">
                         <h3 class="box-title">Manage Shifts</h3>
+                        <?php if(isset($total_Shifts) && isset($companyPlanDetails->shiftLimit) ) {
+				            		if($total_Shifts<$companyPlanDetails->shiftLimit)
+				            		{
+				             ?>
                         <a href="#" class="btn btn-primary btn-sm pull-right" id="addNewShiftBtn" name="addNewShiftBtn"
                            >Add Shift <span
                                 class="fa fa-plus-circle"
-                                aria-hidden="true"></span></a>
+                                aria-hidden="true"></span>
+                        </a>
+                        <?php }} ?>
+                        <label class="pull-right" style="padding-right:10px; padding-top:5px;">
+                        <?php echo (isset($total_Shifts)) ? $total_Shifts :set_value('NA'); ?>/<?php echo (isset($companyPlanDetails->shiftLimit)) ? $companyPlanDetails->shiftLimit :set_value('NA'); ?>
+                        </label>
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
@@ -83,6 +92,15 @@
                                            data-shift_name="<?php echo $row->shift_name; ?>"
                                            data-notify_time="<?php echo $row->notify_time; ?>"
                                            data-toggle="tooltip" data-placement="bottom" title="Update Notification time"><span class="fa fa-clock-o"></span>
+                                        </a>
+                                        <a class="btn btn-primary btn-sm editThisShiftName" href="#" 
+                                        data-shift_id="<?php echo $row->shift_id; ?>"
+                                        data-shift_name="<?php echo $row->shift_name; ?>"
+                                        data-comp_id="<?php echo $row->comp_id; ?>"
+                                        data-toggle="tooltip" data-placement="bottom" title="Edit Shift Name">
+                                        <span class="fa fa-pencil"></span>
+                                        </a>
+
                                     </td>
                                 </tr>
                                 <?php $i++; } ?>
@@ -862,3 +880,52 @@
     </div>
 </div>
 <!--=======================================End Of Edit announcement Modal Form========================================-->
+
+<!--=======================================Edit shift name Modal Form========================================-->
+<div class="modal fade" id="editThisShiftName" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <button type="button" class="close"
+                        data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">
+                   Edit Shift Name
+                </h4>
+            </div>
+
+            <!-- Modal Body -->
+            <div class="modal-body">
+
+                <form id="formEditShiftName" name="formEditShiftName" class="form-horizontal" role="form" action="<?php echo base_url();?>ccshifts/shifts/editShiftName" method="post">
+                    <input type="hidden" name="<?=$this->security->get_csrf_token_name()?>" value="<?=$this->security->get_csrf_hash()?>" />
+                    <input type="hidden" name="shift_id" id="shift_id" />
+                    <input type="hidden" name="comp_id" id="comp_id" />
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Shift Name</label>
+                        <div class="col-sm-6">
+                            <input type="text" name="shift_name" id="shift_name" class="form-control" placeholder="Shift Name" required/>
+                        </div>
+                    </div>
+            </div>
+
+            <!-- Modal Footer -->
+            <div class="modal-footer">
+                <button type="reset" class="btn btn-danger"
+                        data-dismiss="modal">
+                    Cancel
+                </button>
+                <button type="submit" class="btn btn-success">
+                    Update Shift Name
+                </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!--=======================================End Of Edit shift name Modal Form========================================-->

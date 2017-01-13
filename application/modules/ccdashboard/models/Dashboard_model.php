@@ -8,7 +8,7 @@ class Dashboard_model extends CI_Model {
 	}
 
 	//Function to find the size of the company
-	//Dominic; Jan 01,2017
+	//Dominic; Jan 01,2017 (not in use; check site settings)
 	function getCompanySize($compIdSess)
 	{
 		$this->db->select('COUNT(staff_id) AS totalUsers');

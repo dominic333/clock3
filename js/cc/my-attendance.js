@@ -34,9 +34,81 @@
 				}
 		    }
 		});
- });
 
- $(function () {
-     $('#date_from').datepicker({dateFormat: 'dd/mm/yy'});
+	  $('#date_from').datepicker({dateFormat: 'dd/mm/yy'});
      $('#date_to').datepicker({dateFormat: 'dd/mm/yy'});
- })
+     
+     $("#leaveApplicationList").DataTable();
+     
+     
+   //Function to approve leave
+	//By Dominic;  Jan 13,2017
+	$(document).on('click','.approve_leave_link',function (e) 
+	{
+		 e.preventDefault();
+		 var id			=	$.trim($(this).data('id'));
+		 var staffid	=	$.trim($(this).data('staffid'));
+		 var post_url = base_url+"ccattendance/attendance/aproveLeaveApplication";
+		 
+	 	 $.ajax({
+		 url: post_url,
+		 data:{	id:id,staffid:staffid,csrf_test_name:csrf_token	},
+		 type: "POST",
+		 dataType: 'HTML',
+		 beforeSend: function ( xhr ) 
+		 {
+	        showLoader();
+	    },
+		 success: function(result)
+	    { 	
+	      var result= result.trim();
+	      if(result=="approved")
+	      {	
+				window.location.reload();
+	      }
+	      else
+	      {
+	      	alert ('Something went wrong. Please Try Again');
+	      	window.location.reload();
+	      }
+	    }
+	  });//end of ajax 
+	 });
+	  
+   //Function to reject leave
+	//By Dominic;  Jan 13,2017
+	$(document).on('click','.reject_leave_link',function (e) 
+	{
+		 e.preventDefault();
+		 var id			=	$.trim($(this).data('id'));
+		 var staffid	=	$.trim($(this).data('staffid'));
+		 
+		 var post_url = base_url+"ccattendance/attendance/rejectLeaveApplication";
+		 
+	 	 $.ajax({
+		 url: post_url,
+		 data:{	id:id,staffid:staffid,csrf_test_name:csrf_token	},
+		 type: "POST",
+		 dataType: 'HTML',
+		 beforeSend: function ( xhr ) 
+		 {
+	        showLoader();
+	    },
+		 success: function(result)
+	    { 
+	    	hideLoader(); 	
+	      var result= result.trim();
+	      if(result=="rejected")
+	      {	
+				$('#row'+id).remove();
+	      }
+	      else
+	      {
+				window.location.reload();
+	      }
+	    }
+	  });//end of ajax 	  
+	 });
+	  
+	  
+ });

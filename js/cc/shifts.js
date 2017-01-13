@@ -224,10 +224,10 @@ $(document).ready(function(){
     {
         e.preventDefault();
         $('#formUpdateNotificationTime')[0].reset();
-        var shift_name		=		$(this).attr("data-shift_name");
-        var comp_id	        =		$(this).attr("data-comp_id");
-        var shift_id	    =		$(this).attr("data-shift_id");
-        var notify_time	    =		$(this).attr("data-notify_time");
+        var shift_name		=		$.trim($(this).attr("data-shift_name"));
+        var comp_id	      =		$.trim($(this).attr("data-comp_id"));
+        var shift_id	      =		$.trim($(this).attr("data-shift_id"));
+        var notify_time	   =		$.trim($(this).attr("data-notify_time"));
 
 
         $('#formUpdateNotificationTime #shift_name').val(shift_name);
@@ -265,6 +265,70 @@ $(document).ready(function(){
                     .closest('.control-group').removeClass('error').addClass('success');
             }
         });
+        
+    //Function to open edit shift name modal popup
+    //By Dominic; Jan 11,2017
+    $(document).on('click','.editThisShiftName',function (e)
+    {
+        e.preventDefault();
+        $('.error').remove();
+        $('#formEditShiftName')[0].reset();
+        var shift_name		=		$.trim($(this).attr("data-shift_name"));
+        var comp_id	      =		$.trim($(this).attr("data-comp_id"));
+        var shift_id	      =		$.trim($(this).attr("data-shift_id"));
+
+
+        $('#formEditShiftName #shift_name').val(shift_name);
+        $('#formEditShiftName #comp_id').val(comp_id);
+        $('#formEditShiftName #shift_id').val(shift_id);
+
+        $('#editThisShiftName').modal('show');
+    });
+    
+    //Function to validate edit shift name form
+    //By Dominic; Jan 11,2017
+    $('#formEditShiftName').validate(
+    {
+         rules: {
+             shift_name: {
+                 required: true,
+                 remote: 
+			    	  {
+							url: base_url+"ccshifts/shifts/check_shift_exists",
+							type: "post",
+							data: 
+							{
+								shiftName : function(){ return $.trim($("#formEditShiftName #shift_name").val()); },
+								shiftId   : function()  { return $.trim($("#formEditShiftName #shift_id").val()); },
+								compId    : function()   { return $.trim($("#formEditShiftName #comp_id").val()); },
+								csrf_test_name : csrf_token
+							}
+					  }
+             },
+             shift_id:{
+                 required: true
+             },
+             comp_id:{
+                 required: true
+             }
+         },
+         messages: 
+		   {
+				shift_name: 
+				 {
+						remote: 'Shift name already exist.'
+				 }
+		   },
+         highlight: function(element) {
+             $(element).closest('.control-group').removeClass('success').addClass('error');
+         },
+         success: function(element) {
+             element
+                 .text('').addClass('valid')
+                 .closest('.control-group').removeClass('error').addClass('success');
+         }
+    });
+
     
 });
 
