@@ -19,8 +19,12 @@ class Attendance extends MX_Controller
 	public function index()
 	{
 		$this->authentication->check_admin_access();
-		$this->data['datepickerSwitch']					=	1;
-		$this->data['attendance_table']	="<table id='myattendance' class='table table-bordered table-striped'>
+		$this->data['datepickerSwitch']	=	1;
+		
+		$reportDownload		= $this->authentication->reportType(); 
+		if($reportDownload==DETAILED_REPORT)
+		{
+			$this->data['attendance_table']	="<table id='myattendance' class='table table-bordered table-striped'>
 					                                <thead>
 					                                <tr>
 					                                    <th width='10px'>No</th>
@@ -39,12 +43,31 @@ class Attendance extends MX_Controller
 					                                    <th>Notes</th>
 					                                </tr>
 					                                </thead>
+					                                <tbody>";		
+		}
+		else 
+		{
+			$this->data['attendance_table']	="<table id='myattendance' class='table table-bordered table-striped'>
+					                                <thead>
+					                                <tr>
+					                                    <th width='10px'>No</th>
+					                                    <th>Date</th>
+																	<th>Scheduled Clock in Time</th>
+					                                    <th>Clock in Time</th>
+																	<th>Scheduled Clock Out Time</th>
+					                                    <th>Clock out Time</th>
+					                                </tr>
+					                                </thead>
 					                                <tbody>";
+		}		
+		
 
 														  
 		 if ($this->form_validation->run('frm_attendance_search') === FALSE) 
 		 {
-			$this->data['attendance_table']	.= "<tr>
+		 	if($reportDownload==DETAILED_REPORT)
+		 	{
+		 		$this->data['attendance_table']	.= "<tr>
                                                  <td class=\"botline\"></td>
                                                  <td class=\"botline\"></td>
                                                  <td class=\"botline\"></td>
@@ -56,9 +79,20 @@ class Attendance extends MX_Controller
 																 <td class=\"botline\"></td>
                                                  <td class=\"botline\"></td>
                                                  <td class=\"botline\"></td>
-																 
-                                                </tr>";		                                
-					                                
+                                                </tr>";
+		 	}
+		 	else
+		 	{
+		 		$this->data['attendance_table']	.= "<tr>
+                                                 <td class=\"botline\"></td>
+                                                 <td class=\"botline\"></td>
+                                                 <td class=\"botline\">Please Select The From Date And To Date</td>
+																 <td class=\"botline\"></td>
+																 <td class=\"botline\"></td>
+																 <td class=\"botline\"></td>
+                                                </tr>";
+		 	}
+	                                
 			$this->data['attendance_table']	.= "		</tbody>
    													 		</table>";
    													 
@@ -70,15 +104,226 @@ class Attendance extends MX_Controller
 			$f_from_date = $this->formatStorageDate($this->input->post('date_from'));
 			$f_to_date 	 = $this->formatStorageDate($this->input->post('date_to'));
 			$staff 		 = $this->session->userdata('mid');
-			$this->data['attendance_table']	.= $this->myAttendanceTablulaData($f_from_date,$f_to_date,$staff);
-
+			
+			if($reportDownload==DETAILED_REPORT)
+		 	{
+				$this->data['attendance_table']	.= $this->myAttendanceTablulaData($f_from_date,$f_to_date,$staff);
+			}
+			else
+			{
+				$this->data['attendance_table']	.= $this->myBasicAttendanceTablulaData($f_from_date,$f_to_date,$staff);
+			}
+			
 			$this->data['view']					=	'ccattendance/my-attendance';
 			$this->load->view('master', $this->data);	
 
 		}
 	}
 	
-	//Function to compute attendance for my attendance view
+	//Function to compute basic attendance for my attendance view
+	//Dominic; Jan 14,2017
+	function myBasicAttendanceTablulaData($f_from_date,$f_to_date,$staff)
+	{			
+		$attendance_table='';
+		$file_path 	 =  "../../selfies/aLog/";
+		//$file_path 	 	=  "/home/clockin/www/selfies/aLog/";
+		$r_cnt 		 = 1;	
+		// Store date to process due to BETWEEN difficiency
+		$q_date = array();
+		$p_date =  $f_from_date;
+		while ($p_date <= $f_to_date)
+		{
+			//echo "Array ".$p_date." ";
+			array_push($q_date, $p_date);	
+			$p_date = date("Y-m-d", strtotime($p_date . ' + 1 day'));
+		}
+						
+		for($dcnt=0; $dcnt < count($q_date); $dcnt++)
+		{
+			$in_invfilter 	= 	"non";
+			$dispute_msg	=	"";  					
+			
+			if ($in_invfilter == "non")
+			{
+				$staff_attendance_info_result = $this->Attendance_model->getStaffAllClockInfobyDate($staff, $q_date[$dcnt]);																									
+				// Get Day - Monday, Tuesday etc.
+				$log_date = $q_date[$dcnt];
+            $timestamp = strtotime($log_date);
+            $check_day = date("l", $timestamp);
+               
+            // Check if Staff is suppose to be working on DAY.
+				// 0 = non work, 1 = Grave yard, 2 = Non Grave Yard
+            $p_check_workday_type = $this->Attendance_model->getStaffShiftTypeviaDay($staff, $check_day);
+               	                  
+            if(isset($p_check_workday_type["shifttype"]))
+            {
+               $check_workday_type 	 = $p_check_workday_type["shifttype"];
+            }
+            else
+            {
+               $check_workday_type 	 = 0;
+            }	
+               
+            if(isset($p_check_workday_type["basestart"]))
+            {
+               $base_start_time 		 = $p_check_workday_type["basestart"];
+            }
+            else
+            {
+               $base_start_time	 	 = '';
+            }
+               
+            if(isset($p_check_workday_type["baseend"]))
+            {
+               $base_end_time 		 = $p_check_workday_type["baseend"];
+            }
+            else
+            {
+               $base_end_time	 	 	= '';
+            }
+               
+            if(isset($p_check_workday_type["baseend"]))
+            {
+               $in_shift = $p_check_workday_type["shiftid"];
+            }
+            else
+            {
+               $in_shift = '';
+            }
+
+				$shift_info = $this->Attendance_model->getShiftDetails_v2($in_shift, $check_day);
+
+				if ($check_workday_type == 0)
+				{
+					// 0 = Non working day
+					$ab_log_date = $q_date[$dcnt];
+					$log_date = $q_date[$dcnt];								
+					$staffname = $this->Attendance_model->getStaffName($staff);
+						
+					$attendance_status = "<span class='label label-default'>Non Work Day</span>";
+					$log_time = "Non";
+               $attendance_time = $base_start_time;
+               $attendance_end_time = $base_end_time;
+               $staff_logout_time = "Non";								
+				}
+				elseif ($check_workday_type == 1)
+				{
+					// 1 = Grave Yard Work Day - Need Add 1 Day
+						
+					$p_log_date = $log_date;
+					$out_log_date = date('Y-m-d', strtotime($p_log_date . ' + 1 day'));
+					$staff_work_day_info = $this->Attendance_model->getStaffClockInfobyDate($staff, $log_date, "in");
+					$staffname = $this->Attendance_model->getStaffName($staff);
+					// Check in clock in.
+					if (count($staff_work_day_info)==0||$staff_work_day_info["log_time"] == "")
+					{
+						$staff_work_day_infoz = $this->Attendance_model->getStaffClockInfobyDate($staff, $log_date, "ab");							
+
+						// Process for show in table
+                  $staffname = $this->Attendance_model->getStaffName($staff);
+                  $log_time = "NA";
+                  $attendance_time = $base_start_time;
+                  $attendance_end_time = $base_end_time;
+                  $staff_logout_time = "NA";
+					}
+					else
+					{
+						// Get shift details
+						$p_shift_info = $this->Attendance_model->getShiftDetails($in_shift, $check_day);
+						$shift_info 	= $p_shift_info->row_array();
+						$log_time = $staff_work_day_info["log_time"];
+						$attendance_time = $staff_work_day_info["base_log_time"];
+ 
+						// Compute Clock out
+						$staff_work_day_out_info = $this->Attendance_model->getStaffClockInfobyDate($staff, $out_log_date, "out");
+						if (count($staff_work_day_out_info)>0&&$staff_work_day_out_info["log_time"] != "")
+						{									 	
+							$staff_logout_time = $staff_work_day_out_info["log_time"];
+							$attendance_end_time = $staff_work_day_out_info["base_log_time"];	
+						}
+						else
+						{
+							$staff_logout_time = "NA";
+                     $attendance_end_time = $shift_info["pday_endtime"]; 
+						}
+							 
+					}
+				}
+				elseif ($check_workday_type == 2)
+				{
+					// 2 = Non Grave Yard Work Day
+					$staff_work_day_info = $this->Attendance_model->getStaffClockInfobyDate($staff, $log_date, "in");
+						
+					// Check in clock in.
+					if (count($staff_work_day_info)==0||$staff_work_day_info["log_time"] == "")
+					{
+
+						$staff_work_day_infozz = $this->Attendance_model->getStaffClockInfobyDate($staff, $log_date, "ab");							
+						
+						// Process for show in table
+						$staffname = $this->Attendance_model->getStaffName($staff);
+						$log_time = "NA";
+                  $attendance_time = $base_start_time; 
+          			$attendance_end_time = $base_end_time;
+						$staff_logout_time = "NA";
+
+					}
+					else
+					{
+						// Get shift details
+						$p_shift_info = $this->Attendance_model->getShiftDetails($in_shift, $check_day);
+						$shift_info   = $p_shift_info->row_array();
+						$staffname 	  = $this->Attendance_model->getStaffName($staff);
+							
+						// Process for show in table
+						$staffname 	  = $this->Attendance_model->getStaffName($staff);
+						$log_time = $staff_work_day_info["log_time"];
+						$attendance_time = $staff_work_day_info["base_log_time"];
+
+							
+						// --------- Compute Clock out ---------------
+						$staff_work_day_out_info = $this->Attendance_model->getStaffClockInfobyDate($staff, $log_date, "out");
+						if (count($staff_work_day_out_info)>0&&$staff_work_day_out_info["log_time"] != "")
+						{
+							$staff_logout_time = $staff_work_day_out_info["log_time"];
+							$attendance_time = $staff_work_day_info["base_log_time"];
+							$attendance_end_time = $staff_work_day_out_info["base_log_time"]; 
+								
+						}
+						else
+						{
+							// Process for show in table
+                     $out_file_name = "NA";
+                     $a_out_file = "";
+                     $staff_logout_time = "NA";
+                     $attendance_time = $base_start_time;
+                     $attendance_end_time = $shift_info["pday_endtime"]; 		
+							$attendance_out_status = "<span class='label label-default'>Did Not Clock Out.</span>";
+						}
+					}
+						
+				}
+				
+				$attendance_table	.= "<tr>
+                                     <td class=\"botline\">$r_cnt</td>
+                                     <td class=\"botline\">$log_date</td>
+                                     <td class=\"botline\">$attendance_time</td>
+                                     <td class=\"botline\">$log_time</td>
+												 <td class=\"botline\">$attendance_end_time</td>
+												 <td class=\"botline\">$staff_logout_time</td>
+                                  </tr>";
+             $r_cnt++;   
+             $dispute_msg=""; 
+		  }
+		}
+		$attendance_table	.= "</tbody>
+															</table>";
+		return $attendance_table;
+	}		
+	
+	
+	
+	//Function to compute detailed attendance for my attendance view
 	//Dominic; Dec 14,2016
 	function myAttendanceTablulaData($f_from_date,$f_to_date,$staff)
 	{			
@@ -594,6 +839,7 @@ class Attendance extends MX_Controller
    //Dominic; Dec 28,2016
    function fetchMonthlyAttendance()
    {
+   	
    	$staff 	  = $this->session->userdata('mid');
    	//2016-11-01
    	//$this->input->get('your_field');
@@ -618,6 +864,8 @@ class Attendance extends MX_Controller
    //Dominic; Dec 27,2016 
    function monthiview()
    {
+   	$this->authentication->check_admin_access();
+		$this->authentication->checkCalendarViewFeaturesAccess();
    	$sfromDate = date('m/01/Y'); // hard-coded '01' for first day
 		$stoDate   = date('m/t/Y');
    	$fromDate  = $this->formatStorageDate($sfromDate); // hard-coded '01' for first day
@@ -1091,6 +1339,8 @@ class Attendance extends MX_Controller
 	//Jan 01, 2017
 	function staffattendance()
 	{
+		$this->authentication->check_admin_access();
+		$this->authentication->checkCalendarViewFeaturesAccess();
 		$compIdSess =$this->session->userdata('coid');
 		$sfromDate = date('m/01/Y'); // hard-coded '01' for first day
 		$stoDate   = date('m/t/Y');

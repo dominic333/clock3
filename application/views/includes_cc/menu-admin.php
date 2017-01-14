@@ -17,21 +17,25 @@
                     <i class="fa fa-calendar"></i> <span>My Attendance</span>
                 </a>
             </li>
+            <?php $calendarView= $this->authentication->checkCalendarViewAccess(); if($calendarView==1){ ?>
             <li>
                 <a href="<?php echo base_url();?>ccattendance/attendance/monthiview">
                     <i class="fa fa-calendar"></i> <span>My Attendance (Calendar View)</span>
                 </a>
             </li>
+            <?php } ?>
             <li>
                 <a href="<?php echo base_url();?>ccattendance/attendance/whosaroundtoday">
                     <i class="fa fa-users"></i> <span>Who's Around Today</span>
                 </a>
             </li>
+            <?php $calendarView= $this->authentication->checkCalendarViewAccess(); if($calendarView==1){ ?>
             <li>
                 <a href="<?php echo base_url();?>ccattendance/attendance/staffattendance">
                     <i class="fa fa-calendar"></i> <span>Staff Attendance</span>
                 </a>
             </li>
+            <?php } ?>
             <li class="treeview">
                 <a href="#">
                     <i class="fa fa-lock"></i> <span>Administrative</span>

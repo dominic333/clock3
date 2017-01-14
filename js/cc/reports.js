@@ -127,7 +127,7 @@ $(document).ready(function(){
 		//Dominic; Dec 20,2016
 		$(document).on('click','#download_user_attendance_link',function (e) {
 			e.preventDefault();
-			var post_url = base_url+"ccreports/reports/download_user_attendance";
+			var post_url = base_url+"ccreports/reports/downloadAttendance";
 			var date_from=$('#udate_from').val();
 			var date_to=$('#udate_to').val();
 			var count = $('#umultiSelect').find('option:selected').length;

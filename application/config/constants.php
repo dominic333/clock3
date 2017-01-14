@@ -96,3 +96,22 @@ defined('EMAIL_MAILTYPE')        OR define('EMAIL_MAILTYPE', 'html');
 defined('EMAIL_CHARSET')         OR define('EMAIL_CHARSET', 'utf-8'); 
 defined('EMAIL_CRLF')            OR define('EMAIL_CRLF', "\r\n"); 
 defined('EMAIL_NEWLINE')         OR define('EMAIL_NEWLINE', "\r\n"); 
+
+// User defined constants for plans
+defined('FREE_USERLIMIT')       OR define('FREE_USERLIMIT', 50); 
+defined('PAID_USERLIMIT')       OR define('PAID_USERLIMIT', 3000); 
+
+defined('FREE_DEPTLIMIT')       OR define('FREE_DEPTLIMIT', 1); 
+defined('PAID_DEPTLIMIT')       OR define('PAID_DEPTLIMIT', 15); 
+
+defined('FREE_SHIFTLIMIT')      OR define('FREE_SHIFTLIMIT', 1); 
+defined('PAID_SHIFTLIMIT')      OR define('PAID_SHIFTLIMIT', 15);
+
+defined('FREE_WATCHERLIMIT')    OR define('FREE_WATCHERLIMIT', 1); 
+defined('PAID_WATCHERLIMIT')    OR define('PAID_WATCHERLIMIT', 10);
+
+defined('FREE_REPORTMONTHLIMIT')    OR define('FREE_REPORTMONTHLIMIT', 3); 
+defined('PAID_REPORTMONTHLIMIT')    OR define('PAID_REPORTMONTHLIMIT', 12);
+
+defined('BASIC_REPORT')    	OR define('BASIC_REPORT', 1); 
+defined('DETAILED_REPORT')    OR define('DETAILED_REPORT', 2);

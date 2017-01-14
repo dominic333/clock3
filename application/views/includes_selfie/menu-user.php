@@ -26,15 +26,18 @@
                 </li>
                 <ul class="sub-menu collapse" id="products">
                     <li><a href="<?php echo base_url();?>selfiemyaccount/account">View Profile</a></li>
+                    <!--
                     <li><a href="<?php echo base_url();?>selfieattendance/attendance">My Attendance</a></li>
+                    -->
                     <li><a href="<?php echo base_url();?>selfieattendance/attendance/whosaroundtoday">Who's Around Today</a></li>
                 </ul>
+                <?php $calendarView= $this->authentication->checkCalendarViewAccess(); if($calendarView==1){ ?>
                 <li>
                     <a href="<?php echo base_url();?>selfieattendance/attendance/monthiview">
                         <i class="fa fa-picture-o fa-lg"></i> Monthly Attendance
                     </a>
                 </li>
-
+					 <?php } ?>
                 <li>
                     <a href="<?php echo base_url();?>selfiemarking/selfie">
                         <i class="fa fa-picture-o fa-lg"></i> Selfie Attendance

@@ -49,7 +49,7 @@
 
                                 <div class="col-md-3">
                                     <select class="form-control select2" style="width: 100%;" id="multiSelect" name="multiSelect" >
-                                       <option value=""> >-- Select a shift --</option>
+                                       <option value="">-- Select a shift --</option>
 							                  <?php foreach($company_shifts as $shift){?>
 							                  <option value="<?php echo $shift->shift_id;?>" <?php echo (isset($multiSelect) && ($multiSelect==$shift->shift_id)? 'selected="selected"' : set_select('multiSelect',$shift->shift_id));?> >
 							                  <?php echo $shift->shift_name;?>
@@ -120,7 +120,7 @@
 
                                 <div class="col-md-3">
                                     <select class="form-control select2" style="width: 100%;" id="umultiSelect" name="umultiSelect" >
-                                       <option value="all" <?php echo (isset($umultiSelect) && ($umultiSelect=='all')? 'selected="selected"' : set_select('umultiSelect','all'));?> >-- Select All --</option>
+                                       <option value="all" <?php echo (isset($umultiSelect) && ($umultiSelect=='all')? 'selected="selected"' : set_select('umultiSelect','all'));?> -- Select All --</option>
 							                  <?php foreach($company_members as $member){ ?>
 							                  <option value="<?php echo $member->staff_id;?>" <?php echo (isset($umultiSelect) && ($umultiSelect==$member->staff_id)? 'selected="selected"' : set_select('umultiSelect',$member->staff_id));?> >
 							                  <?php echo $member->staff_name;?>
@@ -130,7 +130,7 @@
                                 </div>
 											<input type="hidden" name="<?=$this->security->get_csrf_token_name()?>" value="<?=$this->security->get_csrf_hash()?>" />
                                 <div class="col-md-3">
-                                    <button type="submit" name="uSubmit" id="uSubmit" class="btn btn-success"><span
+                                    <button type="submit" name="Submit" id="Submit" class="btn btn-success"><span
                                             class="fa fa-search"
                                             aria-hidden="true"></span>
                                     </button>
@@ -164,82 +164,74 @@
     <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
-<?php $reportMonthLimit= $this->authentication->reportMonthLimit(); if($reportMonthLimit==12){ ?>
 
-<script type="text/javascript">
-$(document).ready(function(){
-	
-	  //$('#date_to').datepicker({minDate:15,maxDate: 0});
-     //$('#date_from').datepicker({maxDate: 0});
-
-     //$('#udate_to').datepicker({maxDate: 0});
-     //$('#udate_from').datepicker({maxDate: 0});
-     
-
-     $( "#date_to" ).datepicker({ 
-         changeYear: true,
-         minDate: '-12M',
-         maxDate: '+0D',
-     });
-     
-     $( "#date_from" ).datepicker({ 
-         changeYear: true,
-         minDate: '-12M',
-         maxDate: '+0D',
-     });
-     
-     $( "#udate_to" ).datepicker({ 
-         changeYear: true,
-         minDate: '-12M',
-         maxDate: '+0D',
-     });
-     
-     $( "#udate_from" ).datepicker({ 
-         changeYear: true,
-         minDate: '-12M',
-         maxDate: '+0D',
-     });
-});
-</script>
-
-<?php } else { ?>
-
-<script type="text/javascript">
-$(document).ready(function(){
-	
-	  //$('#date_to').datepicker({minDate:15,maxDate: 0});
-     //$('#date_from').datepicker({maxDate: 0});
-
-     //$('#udate_to').datepicker({maxDate: 0});
-     //$('#udate_from').datepicker({maxDate: 0});
-     
-
-     $( "#date_to" ).datepicker({ 
-         changeYear: true,
-         minDate: '-3M',
-         maxDate: '+0D',
-     });
-     
-     $( "#date_from" ).datepicker({ 
-         changeYear: true,
-         minDate: '-3M',
-         maxDate: '+0D',
-     });
-     
-     $( "#udate_to" ).datepicker({ 
-         changeYear: true,
-         minDate: '-3M',
-         maxDate: '+0D',
-     });
-     
-     $( "#udate_from" ).datepicker({ 
-         changeYear: true,
-         minDate: '-3M',
-         maxDate: '+0D',
-     });
-});
-</script>
-
-
-<?php } ?>
-
+      <?php 
+		$reportMonthLimit		= $this->authentication->reportMonthLimit(); 
+		
+		if($reportMonthLimit==PAID_REPORTMONTHLIMIT)
+		{
+		?>
+		<script type="text/javascript">
+			$(document).ready(function(){
+			     
+			     $("#date_to").datepicker({ 
+			         changeYear: true,
+			         minDate: '-12M',
+			         maxDate: '+0D',
+			     });
+			     
+			     $("#date_from").datepicker({ 
+			         changeYear: true,
+			         minDate: '-12M',
+			         maxDate: '+0D',
+			     });
+			     
+			     $("#udate_to").datepicker({ 
+			         changeYear: true,
+			         minDate: '-12M',
+			         maxDate: '+0D',
+			     });
+			     
+			     $("#udate_from").datepicker({ 
+			         changeYear: true,
+			         minDate: '-12M',
+			         maxDate: '+0D',
+			     });
+			});
+		</script>
+		<?php
+		}
+		else
+		{
+		?>
+		<script type="text/javascript">
+			$(document).ready(function(){
+			     
+			     $("#date_to").datepicker({ 
+			         changeYear: true,
+			         minDate: '-3M',
+			         maxDate: '+0D',
+			     });
+			     
+			     $("#date_from").datepicker({ 
+			         changeYear: true,
+			         minDate: '-3M',
+			         maxDate: '+0D',
+			     });
+			     
+			     $("#udate_to").datepicker({ 
+			         changeYear: true,
+			         minDate: '-3M',
+			         maxDate: '+0D',
+			     });
+			     
+			     $("#udate_from").datepicker({ 
+			         changeYear: true,
+			         minDate: '-3M',
+			         maxDate: '+0D',
+			     });
+			});
+		</script>
+		<?php 
+		}
+		?>

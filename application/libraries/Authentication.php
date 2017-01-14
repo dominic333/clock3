@@ -336,7 +336,7 @@ class Authentication
      function reportMonthLimit()
      {
 		
-		 $reportMonthLimit=3;
+		 $reportMonthLimit=FREE_REPORTMONTHLIMIT;
      	 $compIdSess= $this->CI->session->userdata('coid');
      	 $result_settings	=	$this->CI->db->query("SELECT plans.reportMonthLimit  
 			FROM company_plans
@@ -353,6 +353,89 @@ class Authentication
      	 }
 		 return $reportMonthLimit;
      }
+     
+     //Function to fetch report download limit
+     //Dominic, Jan 13, 2017
+     function reportType()
+     {
+		
+		 $reportDownload=BASIC_REPORT;
+     	 $compIdSess= $this->CI->session->userdata('coid');
+     	 $result_settings	=	$this->CI->db->query("SELECT plans.reportDownload  
+			FROM company_plans
+			LEFT JOIN plans ON plans.id=company_plans.planId
+			WHERE company_plans.company_id=".$compIdSess."
+     	 ");
+     	 if($result_settings->num_rows() > 0)
+     	 {
+     	 	 $rows	=	$result_settings->result();
+			 foreach($rows as $row)
+			 {
+				$reportDownload 	= $row->reportDownload;
+			 }
+     	 }
+		 return $reportDownload;
+     }
+     
+     //Function to check if calendar view available or not
+     //Dominic, Jan 14, 2017
+     function checkCalendarViewAccess()
+     {
+		
+		 $calendarView=0;
+     	 $compIdSess= $this->CI->session->userdata('coid');
+     	 $result_settings	=	$this->CI->db->query("SELECT plans.calendarView  
+			FROM company_plans
+			LEFT JOIN plans ON plans.id=company_plans.planId
+			WHERE company_plans.company_id=".$compIdSess."
+     	 ");
+     	 if($result_settings->num_rows() > 0)
+     	 {
+     	 	 $rows	=	$result_settings->result();
+			 foreach($rows as $row)
+			 {
+				$calendarView 	= $row->calendarView;
+			 }
+     	 }
+		 return $calendarView;
+     }
+     
+     //Function to check if calendar view feature available or not
+     //Dominic, Jan 12, 2017
+     function checkCalendarViewFeaturesAccess()
+     {
+		 $calendarView=0;
+     	 $compIdSess= $this->CI->session->userdata('coid');
+     	 $result_settings	=	$this->CI->db->query("SELECT plans.calendarView  
+			FROM company_plans
+			LEFT JOIN plans ON plans.id=company_plans.planId
+			WHERE company_plans.company_id=".$compIdSess."
+     	 ");
+     	 if($result_settings->num_rows() > 0)
+     	 {
+     		 $rows	=	$result_settings->result();
+			 foreach($rows as $row)
+			 {
+				$calendarView 	= $row->calendarView;
+				if($calendarView==1)
+				{
+					return TRUE;
+				}
+				else
+				{
+					$this->CI->session->set_flashdata('feedback','Please login!');
+	       		redirect('/home/logout');
+				}
+			 } 
+     	 }
+     	 else
+     	 {
+     	 	$this->CI->session->set_flashdata('feedback','Please login!');
+	      redirect('/home/logout');
+     	 }
+     }
+     
+     
 	
      function logout()
      {

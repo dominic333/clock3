@@ -71,8 +71,6 @@
                             <div class="">
 
                                 <div class="col-md-6 ">
-                                     <div id="dateRanges"></div>
-                                		<input id="altField" name="altField" type="hidden" class="form-control">
                                 		 <input id="date_from" name="date_from" data-date-format="dd-mm-yyyy" type="hidden" class="form-control" placeholder="From">
                                 		 <input id="date_to"  name="date_to" data-date-format="dd-mm-yyyy" type="hidden" class="form-control" placeholder="To">
                                 </div>
@@ -101,3 +99,4 @@
     <!-- /.content -->
 </div>
 <!-- /.content-wrapper --><!-- /.content-wrapper -->
+

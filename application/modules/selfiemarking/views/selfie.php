@@ -85,14 +85,16 @@
                         <div class="box-footer">
 
                             <div class="row">
-                                <div class="col-md-12 col-sm-12 col-xs-12 text-center">
-                                    <p><h4>9 September, 2016 - Monday - 00:00:00 AM</h4></p>
-                                </div>
-
                                 <div class="col-md-4 col-sm-4 col-xs-4 text-center">
                                  <a class="btn btn-danger pull-left" id="take_selfie_subt" data-staff_id="<?php echo $this->session->userdata('mid');?>" href="#">
 					                     Mark Attendance
 					                  </a>
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                            	  <div class="col-md-12 col-sm-12 col-xs-12 text-center">
+												<span id="clock-large"></span><span id="date-large"></span>
                                 </div>
                             </div>
 

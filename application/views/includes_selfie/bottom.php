@@ -41,6 +41,8 @@
 <script src="<?php echo base_url();?>assets/common/moment.min.js"></script>
 <script src="<?php echo base_url();?>assets/common/fullcalendar.min.js"></script>
 
+<!-- digital clock -->
+<script src="<?php echo base_url();?>js/plugins/digitalClock.js"></script>
 
 <script>
 
