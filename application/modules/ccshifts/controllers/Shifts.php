@@ -191,7 +191,7 @@ class Shifts extends MX_Controller
 			      if($staff_id!='')
 			      {
 			      	$this->Shifts_model->add_user_shifts($staff_id);
-			     		//$this->send_user_welcomemail($staff_id);
+			     		$this->send_user_welcomemail($staff_id);
 				   	
 				   	$operation = 'New User Added with staff ID '.$staff_id;
 						$this->site_settings->adminlog($operation);
@@ -214,6 +214,56 @@ class Shifts extends MX_Controller
 			}			
 		}	
 	}
+	
+	//Function to send Welcome mail
+	//@Author Farveen
+	function send_user_welcomemail($staff_id)
+	{
+		
+		$config = array(
+		    'protocol' => 'smtp',
+		    'smtp_host' => 'http://smtp.sendgrid.net/',
+		    'smtp_port' => 587,
+		    'smtp_user' => 'flexiesolutions',
+		    'smtp_pass' => 'ctm342h',
+		    'mailtype'  => 'html',
+       	 'charset'   => 'utf-8',
+       	 'crlf' => "\r\n",
+  					 'newline' => "\r\n"
+      );
+		////$config['protocol']= "sendmail";
+      $this->load->library('email', $config);
+      $this->email->set_mailtype("html");
+      
+      $password=$this->input->post('password');
+      $email_to=$this->input->post('email');
+      //$email_to ='dominic@cliffsupport.com';
+      $subject="clock-in.me : Your account is now active";
+		$this->site_settings->get_site_settings();
+      //$from = $this->config->item('smtp_server');
+      $from = "ask@clock-in.me";
+ 	      
+ 	   $user_details						=	$this->Shifts_model->get_selected_user_details($staff_id);
+ 	   $this->data['name']				=	$user_details->staff_name;
+ 	   $this->data['login']				=	$user_details->login_name;
+ 	   $this->data['email']				=	$user_details->email;
+ 	   $this->data['password']			=	$password;
+ 	   $this->data['company_login']	=	$user_details->company_login;
+ 	   $this->data['company_name']	=	$user_details->company_name;
+ 	      
+ 	   //$bcc_list = array('ask@clock-in.me', 'sean@flexiesolutions.com', 'albert.goh@flexiesolutions.com');
+ 	   $bcc_list = array('dominiccliff88@gmail.com');
+ 	      
+	   $template = $this->load->view('email_templates/welcome_template',$this->data,TRUE); 
+		$this->email->from($from, 'Clock-in.me Customer Care');			
+  		$this->email->to($email_to);
+  		//$this->email->cc($cc_list);
+  		$this->email->bcc($bcc_list);
+		$this->email->message($template);	
+		$this->email->subject($subject);		
+  	 	$this->email->send();
+	}	
+	
 	
 	//function to modify remote login feature
 	//By Dominic, Dec 12,2016
@@ -506,6 +556,7 @@ class Shifts extends MX_Controller
 		$this->authentication->check_admin_access();
 		$compIdSess 					=	 $this->session->userdata('coid');
 		$this->data['shifts'] 			= 	 $this->Shifts_model->get_all_shifts($compIdSess);
+		$this->data['company_departments']	=	$this->Shifts_model->departmentsCRUD($compIdSess,'read');
 		$this->data['timezone_lists'] 	= 	 $this->Shifts_model->get_all_timezones();
 		$this->data['view']				=	'ccshifts/shift';
 		$this->data['footer_includes']	=	'<script src="'.base_url().'js/cc/shifts.js" type="text/javascript"></script>';
@@ -600,11 +651,27 @@ class Shifts extends MX_Controller
 		 
 		 $result=$this->Shifts_model->check_shift_exists($shiftName,$shiftId,$compId);
 		 if ( $result==TRUE ) {
-           // echo json_encode(FALSE);
           echo 'false';
        } 
        else {
-            //echo json_encode(TRUE);
+          echo 'true';
+       }
+	}
+	
+	//Function to check newly added shift exists or not
+	//Dominic, Jan 14,2017
+	function check_this_shift_exists()
+	{
+		 $shiftName	=	$this->db->escape_str($this->input->post('shiftName'));
+		 $compId		=	$this->session->userdata('coid');
+		 
+		 $result=$this->Shifts_model->check_this_shift_exists($shiftName,$compId);
+		 if ( $result==TRUE ) 
+		 {
+          echo 'false';
+       } 
+       else 
+       {
           echo 'true';
        }
 	}

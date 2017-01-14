@@ -83,7 +83,6 @@
                         <!-- /.box-body -->
 
                         <div class="box-footer">
-
                             <div class="row">
                                 <div class="col-md-4 col-sm-4 col-xs-4 text-center">
                                  <a class="btn btn-danger pull-left" id="take_selfie_subt" data-staff_id="<?php echo $this->session->userdata('mid');?>" href="#">

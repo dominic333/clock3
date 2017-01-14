@@ -154,6 +154,17 @@
                             <input type="text" name="shift_name" id="shift_name" class="form-control" placeholder="Shift Name" required/>
                         </div>
                     </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Department</label>
+                        <div class="col-sm-6">
+                            <select name="department" id="department" data-placeholder="-- Select A Department* --"  class="selectpicker form-control">
+			                        <option value="">-- Select A Department* --</option>
+			                        <?php foreach($company_departments as $row){?>
+			                        <option value="<?php echo $row->dept_id;?>" <?php echo (isset($department) && ($department==$row->dept_id)? 'selected="selected"' : set_select('department',$row->dept_id));?> ><?php echo $row->department_name;?></option>
+			                        <?php } ?> 
+			                   </select>
+                        </div>
+                    </div>
                     <?php //$timezone_lista=timezone_lists(); var_dump($timezone_lista); ?>
                     <div class="form-group">
                         <label class="col-sm-2 control-label">Timezones</label>

@@ -170,6 +170,7 @@ $(document).ready(function(){
 
     //Function to validate add shift form
     //By Dominic; Dec 13,2016
+    /*
     $('#frm_add_shifts').validate(
     {
         rules: {
@@ -189,6 +190,7 @@ $(document).ready(function(){
                 .closest('.control-group').removeClass('error').addClass('success');
         }
     });
+    */
 
     //Function to validate add shift form
     //By Dominic; Dec 13,2016
@@ -196,6 +198,19 @@ $(document).ready(function(){
     {
         rules: {
             shift_name: {
+                required: true,
+                remote: 
+			    	  {
+							url: base_url+"ccshifts/shifts/check_this_shift_exists",
+							type: "post",
+							data: 
+							{
+								shiftName : function(){ return $.trim($("#frm_add_shifts #shift_name").val()); },
+								csrf_test_name : csrf_token
+							}
+					  }
+            },
+            department: {
                 required: true
             },
             timezone: {
@@ -208,6 +223,13 @@ $(document).ready(function(){
                 required: true
             }
         },
+        messages: 
+		   {
+				shift_name: 
+				 {
+						remote: 'Shift name already exist.'
+				 }
+		   },
         highlight: function(element) {
             $(element).closest('.control-group').removeClass('success').addClass('error');
         },

@@ -5,7 +5,22 @@ class Shifts_model extends CI_Model {
 	function __construct()
 	{
 		parent::__construct();
-	}
+	}		
+	
+	
+	  //Function to get selected client details
+	  //@Author Farveen
+	  function get_selected_user_details($selected_client)
+	  {
+	  	  $this->db->select('SI.*,CI.company_login,CI.company_name,CP.max_users');
+	  	  $this->db->join('company_plans as CP','CP.company_id=SI.company_id','left');
+	  	  $this->db->join('company_info as CI','CI.id=SI.company_id','left');
+	  	  $this->db->where('SI.staff_id',$selected_client);
+	  	  $result_personal= $this->db->get('staff_info as SI');
+	     //echo $this->db->last_query();
+	     return $result_personal->row();
+	  }	
+	
 	
 	//Function for departments CRUD
 	//Dominic, Dec 07,2016
@@ -464,7 +479,7 @@ class Shifts_model extends CI_Model {
 					'comp_id' 				=> $this->session->userdata('coid'),
 					'shift_name' 			=> $this->db->escape_str($this->input->post('shift_name')),
 					'time_zone' 			=> $this->db->escape_str($this->input->post('timezone')),
-
+					'dept_id' 			   => $this->db->escape_str($this->input->post('department')),
 					'monday' 				=> $this->checkifGraveYard($this->input->post('starttime_mon'),$this->input->post('endtime_mon'),$mon_off),
 					'tuesday' 				=> $this->checkifGraveYard($this->input->post('starttime_tues'),$this->input->post('endtime_tues'),$tues_off),
 					'wednesday' 			=> $this->checkifGraveYard($this->input->post('starttime_wed'),$this->input->post('endtime_wed'),$wed_off),
@@ -728,6 +743,24 @@ class Shifts_model extends CI_Model {
 	{
 	  $this->db->where('shift_name', $shiftName);
 	  $this->db->where('shift_id', $shiftId);
+	  $this->db->where('comp_id', $compId);
+     $query = $this->db->get('department_shifts');
+	   
+     if( $query->num_rows() > 0 )
+     { 
+       return TRUE; 
+     } 
+     else 
+     { 
+       return FALSE; 
+     }  
+	}
+	
+	//Function to check shift name already exists or not
+	//Dominic, Jan 14,2017
+	function check_this_shift_exists($shiftName,$compId)
+	{
+	  $this->db->where('shift_name', $shiftName);
 	  $this->db->where('comp_id', $compId);
      $query = $this->db->get('department_shifts');
 	   
