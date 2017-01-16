@@ -15,6 +15,7 @@ class Selfie extends MX_Controller
 	
 	public function index()
 	{
+		
 		$staff_id 	= $this->session->userdata('mid');
 		$shiftid 	= $this->Selfie_model->getStaffShiftid($staff_id);
 		$coid 		= $this->Selfie_model->getStaffCoid($staff_id);
@@ -50,7 +51,32 @@ class Selfie extends MX_Controller
 		
 	}	
 
-	function save_selfie(){
+	function save_selfie()
+	{
+		//flexible shift determining
+		$companyPlanDetails					=	$this->site_settings->companyPlanDetails();
+		if(isset($companyPlanDetails->flexiibleClockin) ) 
+		{
+			$flexiibleClockin =$companyPlanDetails->flexiibleClockin;
+		}
+		else 
+		{
+			$flexiibleClockin=0;
+		}
+		
+		$userShiftType= $this->Selfie_model->fetchUserShiftType();
+		
+		if($userShiftType==2 && $flexiibleClockin==1)
+		{
+			$flexiUser=1;
+			
+		}
+		else 
+		{
+			$flexiUser=0;
+		}
+      
+						            			
 		$image_fmt 	= $this->input->post('image_fmt');
 		$staffid 	= $this->input->post('staffid');
 		$geolocation= $this->input->post('geolocation');
@@ -108,42 +134,57 @@ class Selfie extends MX_Controller
 		{
 			//echo $img;
 			echo "Failed";
-		}else{
-			
+		}
+		else
+		{			
 			$p_check_workday_type = $this->Selfie_model->getStaffShiftTypeviaDay($staffid, $in_day);
 			$check_workday_type = $p_check_workday_type["shifttype"];
 			$base_start_time = $p_check_workday_type["basestart"];
 			$base_end_time = $p_check_workday_type["baseend"];
-			if ($clock_type == "brkin"){
+			if ($clock_type == "brkin")
+			{
 				$clock_msg = "IN as Returning from Break ";
        		$this->Selfie_model->updateStaffBreakState($staffid, "0");	
-			}elseif ($clock_type == "brkOut"){
+			}
+			elseif ($clock_type == "brkOut")
+			{
 				$clock_msg = "OUT for Having a Break ";
         		$this->Selfie_model->updateStaffBreakState($staffid, "1");
-			}else{
+			}
+			else
+			{
 				$clock_msg = $clock_type;
 			}
 			
-			if ($clock_type == "in"){
+			if ($clock_type == "in")
+			{
 				$base_time = $base_start_time;
-			}else{
+			}
+			else
+			{
 				$base_time = $base_end_time;
 			}
 			
 			//to check is mobile or not
 			$mobile=0;
-			if($this->check_mobile()){
+			if($this->check_mobile())
+			{
 				$mobile=1;
-			}else{
+			}
+			else
+			{
 				$mobile=0;
 			}
 			
 			$chkabid = $this->Selfie_model->checkAttendanceAbsent($staffid, $datein);
 			
-			if ($chkabid != ""){
-				$this->Selfie_model->updateStaffAttendanceState($chkabid, "in", $p_in_file,$geolocation,$mobile);
-			}else{
-				$this->Selfie_model->logStaffAttendance($staffid, $clock_type, $p_in_file, $tzone, $base_time, $check_workday_type,$geolocation,$mobile);
+			if ($chkabid != "")
+			{
+				$this->Selfie_model->updateStaffAttendanceState($chkabid, "in", $p_in_file,$geolocation,$mobile,$flexiUser);
+			}
+			else
+			{
+				$this->Selfie_model->logStaffAttendance($staffid, $clock_type, $p_in_file, $tzone, $base_time, $check_workday_type,$geolocation,$mobile,$flexiUser);
 			}
 			
 			// save to log table	
@@ -193,13 +234,6 @@ class Selfie extends MX_Controller
 	{
 		$this->data['listAnnouncements']	=	$this->site_settings->fetchLatestAnnouncementsforUser();
 		
-		/*
-		$this->site_settings->get_site_settings();
-		$this->data['profile']			=	$this->site_settings->personal_details();	
-		$this->data['menus_all']		= 	modules::load('menus')->get_menus();
-		$this->data['myprivileges']	=	$this->site_settings->myprivileges();
-			
-		*/
 	}
 }
 

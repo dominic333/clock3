@@ -13,7 +13,7 @@
      //The Calender
      //$("#calendar").datepicker();
      //$(element_or_selector).multiDatesPicker(options_to_initialize_datepicker_and_multidatepicker);
-     /*
+     
      $('#calendar').multiDatesPicker({
 			maxPicks: 2,
 			altField: '#altField',
@@ -36,7 +36,7 @@
 				}
 		    }
 		});
-		*/
+		
 
 	  $('#date_from').datepicker({dateFormat: 'dd/mm/yy'});
      $('#date_to').datepicker({dateFormat: 'dd/mm/yy'});

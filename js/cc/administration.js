@@ -411,7 +411,7 @@ $(document).ready(function(){
 			     required: true
 			  }, 
 		     confrim_password: {
-		      equalTo: "#password",
+		      equalTo: "#forgot_user_frm #password",
 		      required: true
 		     }, 
 		    
@@ -529,7 +529,7 @@ $(document).ready(function(){
 					minlength:6
 				},
 				cpassword:{
-					equalTo: "#password",
+					equalTo: "#frm_add_users #password",
 					required: true,
 					minlength:6
 				},

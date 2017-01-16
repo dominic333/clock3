@@ -120,7 +120,7 @@
 
                                 <div class="col-md-3">
                                     <select class="form-control select2" style="width: 100%;" id="umultiSelect" name="umultiSelect" >
-                                       <option value="all" <?php echo (isset($umultiSelect) && ($umultiSelect=='all')? 'selected="selected"' : set_select('umultiSelect','all'));?> -- Select All --</option>
+                                       <option value="all" <?php echo (isset($umultiSelect) && ($umultiSelect=='all')? 'selected="selected"' : set_select('umultiSelect','all'));?>> -- Select All --</option>
 							                  <?php foreach($company_members as $member){ ?>
 							                  <option value="<?php echo $member->staff_id;?>" <?php echo (isset($umultiSelect) && ($umultiSelect==$member->staff_id)? 'selected="selected"' : set_select('umultiSelect',$member->staff_id));?> >
 							                  <?php echo $member->staff_name;?>

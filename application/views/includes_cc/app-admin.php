@@ -92,7 +92,7 @@
     <!--  HEADER  -->
     <header class="main-header">
         <!-- Logo -->
-        <a href="index.php" class="logo">
+        <a href="<?php echo base_url();?>" class="logo">
             <!-- mini logo for sidebar mini 50x50 pixels -->
             <img src="<?php echo base_url();?>assets/cc/images/ck.png" width="50" class="logo-mini">
             <!-- logo for regular state and mobile devices -->

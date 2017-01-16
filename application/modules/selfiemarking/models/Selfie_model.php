@@ -148,25 +148,50 @@ class Selfie_model extends CI_Model {
  	}
  	
 
-	function updateStaffAttendanceState($id, $state, $att_file,$geolocation,$mobile)
+	function updateStaffAttendanceState($id, $state, $att_file,$geolocation,$mobile,$flexiUser)
 	{
 		//$data_q = "UPDATE attendance_log SET clock_type='$state', attendance_file='$att_file', log_time='$logtime' WHERE id='$id'";
 		$logtime = date("H:i:s",time());
+		
+		if($flexiUser==1)
+		{
+			$data['log_time']   			= $logtime;
+			$data['base_log_time']   	= $logtime;
+		}
+		else
+		{
+			$data['log_time']   			= $logtime;
+		}
       $data['clock_type']   		= $state;	
       $data['geolocation']   		= $geolocation;	
       $data['mobile']   			= $mobile;	
-      $data['attendance_file']   = $att_file;	
-      $data['log_time']   			= $logtime;	
+      $data['attendance_file']   = $att_file;		
       $this->db->where('id',$id);   	
 		$this->db->update('attendance_log',$data);
 	}
 	
-	function logStaffAttendance($staffid, $clocktype, $jpgpath, $tzone, $base_time, $shift_type,$geolocation,$mobile)
+	function logStaffAttendance($staffid, $clocktype, $jpgpath, $tzone, $base_time, $shift_type,$geolocation,$mobile,$flexiUser)
 	{
 		$logdate = date("Y-m-d",time());
 		$logtime = date("H:i:s",time());        
 	
-		$data = array(		
+		if($flexiUser==1)
+		{
+			$data = array(		
+								'staff_id' 			=> $staffid,                           
+          	 				'clock_type' 		=> $clocktype,   
+          	 				'attendance_file' => $jpgpath,                         
+          	 				'log_date' 			=> $logdate,                         
+          	 				'log_time' 			=> $logtime,                         
+          	 				'base_log_time' 	=> $logtime,                         
+          	 				'shift_type' 		=> $shift_type,                         
+          	 				'geolocation' 		=> $geolocation,                         
+          	 				'mobile' 			=> $mobile,                         
+	  		 				);
+		}
+		else
+		{
+			$data = array(		
 								'staff_id' 			=> $staffid,                           
           	 				'clock_type' 		=> $clocktype,   
           	 				'attendance_file' => $jpgpath,                         
@@ -177,6 +202,7 @@ class Selfie_model extends CI_Model {
           	 				'geolocation' 		=> $geolocation,                         
           	 				'mobile' 			=> $mobile,                         
 	  		 				);
+		}
 		$this->db->insert('attendance_log', $data);
 
 	}
@@ -207,8 +233,26 @@ class Selfie_model extends CI_Model {
 	 	}else{
 	 		return '';
 	 	}
-               
-
+	}
+	
+	//Function to obtain a user's shift type
+	//Dominic, Jan 16,2017
+	function fetchUserShiftType()
+	{
+		//SELECT staff_type FROM staff_info WHERE staff_id=1 AND staff_status=1
+		$staff_id 	= $this->session->userdata('mid');
+		$this->db->select('staff_type');
+		$this->db->where('staff_id',$staff_id);
+		$this->db->where('staff_status',1);
+		$results=$this->db->get('staff_info');
+		if($results->num_rows()>0)
+		{
+	 		return $results->row()->staff_type;
+	 	}
+	 	else
+	 	{
+	 		return 0;
+	 	}
 	}
 	
 }

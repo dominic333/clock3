@@ -595,7 +595,7 @@ class Attendance extends MX_Controller
 	//Dominic, Jan 01,2017
 	function monthiview()
 	{
-		$this->authentication->check_admin_access();
+		//$this->authentication->check_admin_access();
 		$this->authentication->checkCalendarViewFeaturesAccess();
 		$sfromDate = date('m/01/Y'); // hard-coded '01' for first day
 		$stoDate   = date('m/t/Y');

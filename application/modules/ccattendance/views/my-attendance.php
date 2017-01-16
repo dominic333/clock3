@@ -70,11 +70,14 @@
                         <div class="row">
                             <div class="">
 
-                                <div class="col-md-6 ">
+                                <div>
+                                     <input id="altField" name="altField" type="hidden">
                                 		 <input id="date_from" name="date_from" data-date-format="dd-mm-yyyy" type="hidden" class="form-control" placeholder="From">
                                 		 <input id="date_to"  name="date_to" data-date-format="dd-mm-yyyy" type="hidden" class="form-control" placeholder="To">
                                 </div>
-											
+										 <div id="dateRanges" >
+										   
+										 </div>
 											
                                 <div class="col-md-3">
                                     <button type="submit" id="submitThis" name="Submit" value="Submit" class="btn btn-success" disabled><span

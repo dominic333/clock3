@@ -10,6 +10,11 @@
 
             <ul id="menu-content" class="menu-content collapse out">
                 <li>
+                		<div class="text-center">
+								<span id="clock-large"></span><span id="date-large"></span>
+                     </div>
+                </li>
+                <li>
                     <a href="<?php echo base_url();?>selfiedashboard/dashboard">
                         <i class="fa fa-home fa-lg"></i> Dashboard
                     </a>
