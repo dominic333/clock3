@@ -1,9 +1,9 @@
 </div>
 <footer class="main-footer">
     <div class="pull-right hidden-xs">
-        <b>Version</b> 2.0.0
+        <b>Version</b> <?php echo website_version();?>
     </div>
-    <strong>Copyright &copy; 2016 <a href="#">Clock-in.me</a>.</strong> All rights
+    <strong>Copyright &copy; <?php echo copyright_year();?> <a href="#"><?php echo site_name();?></a>.</strong> All rights
     reserved.
 </footer>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js"></script>

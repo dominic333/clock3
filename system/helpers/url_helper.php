@@ -281,6 +281,27 @@ if ( ! function_exists('site_name'))
 		//return $name;
 	}
 }
+
+
+//Copyright year
+//By Dominic
+if ( ! function_exists('copyright_year'))
+{
+	function copyright_year()
+	{
+		$CI =& get_instance();
+		return $CI->config->item('copyright_year');
+	}
+}
+
+if ( ! function_exists('website_version'))
+{
+	function website_version()
+	{
+		$CI =& get_instance();
+		return $CI->config->item('website_version');
+	}
+}
 // ------------------------------------------------------------------------
 /**
  * Url Suffix

@@ -94,10 +94,10 @@
     <p><span class="bawah">TROUBLE LOGING IN ?</span> Please contact your HR or Payroll Manager first. For support
         escalation, you can email
         <a class="email" href="mailto:support@clock-in.me">support@clock-in.me</a></p>
-    <p>Realtime attendance tracking by <span class="bawah">Clock-in.me</span> | Powered by
+    <p>Realtime attendance tracking by <span class="bawah"><?php echo site_name();?></span> | Powered by
         <span class="bawah">Google Cloud</span> and <span class="bawah">Webhosting.net.ph</span> | Proudly made in
         Melbourne, Australia |
-        © 2016 Clock-in.me or its affiliates. All rights reserved</p>
+        © <?php echo copyright_year();?> <?php echo site_name();?> or its affiliates. All rights reserved</p>
 </footer>
 
 
