@@ -435,6 +435,28 @@ class Authentication
      	 }
      }
      
+     //Function to get watcher limit for a company
+     //Dominic, Jan 18,2017
+     function getWatcherLimit()
+     {
+     	 $watcherLimit=0;
+     	 $compIdSess= $this->CI->session->userdata('coid');
+     	 $result_settings	=	$this->CI->db->query("SELECT plans.watcherLimit  
+			FROM company_plans
+			LEFT JOIN plans ON plans.id=company_plans.planId
+			WHERE company_plans.company_id=".$compIdSess."
+     	 ");
+     	 if($result_settings->num_rows() > 0)
+     	 {
+     	 	 $rows	=	$result_settings->result();
+			 foreach($rows as $row)
+			 {
+				$watcherLimit 	= $row->watcherLimit;
+			 }
+     	 }
+		 return $watcherLimit;
+     }
+     
      
 	
      function logout()

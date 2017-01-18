@@ -842,6 +842,23 @@ class Shifts extends MX_Controller
 		}
 	}
 	
+	//Function to check if an attendance watcher can be assigned or not
+	//Dominic, Jan 18,2016
+	function checkWatcherAssignableOrNot()
+	{
+		$totalAssignedWathcers  = $this->site_settings->totalAssignedWathcers();
+		$watcherLimit				= $this->authentication->getWatcherLimit();
+		
+		if($totalAssignedWathcers >= $watcherLimit)
+		{
+			echo 'limitexceeded';
+		}
+		//$compIdSess =$this->session->userdata('coid');
+		//$watcher	=	$this->db->escape_str($this->input->post('watcher'));
+		//$shift	=	$this->db->escape_str($this->input->post('shift'));
+		//$this->Shifts_model->removeMonitorUserShifts($users,$shift);
+	}
+	
 	//Bridge to fetch company members
 	function getAllCompanyMembers($compIdSess)
 	{

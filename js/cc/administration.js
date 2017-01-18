@@ -102,13 +102,18 @@ $(document).ready(function(){
   
   		//To filter based on shift class
   		/*
-  		$('#shifts').on('change', function() {
-  			var selected= this.value;
-  			var selClass='s'+selected;
-  			console.log(selClass);
-  			$('#listUserGrid :not(.selClass)').addClass('hide');
+  		$('#allshiftsusers').on('change', function() {
+  			 var selected= this.value;  					    
+		    if (selected) {
+			  var selClass = 's' + selected;
+			  $('#listUserGrid span').show();
+			  $('#listUserGrid :not(.'+selClass+')').hide();
+			} else {
+			  $('#listUserGrid span').show();
+			}
 		});
 		*/
+		
  
   
 	  //On Delete Button Click (users)

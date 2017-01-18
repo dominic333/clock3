@@ -649,13 +649,7 @@ class Attendance extends MX_Controller
 
 	function get_common()
 	{
-		/*
 		$this->site_settings->get_site_settings();
-		$this->data['profile']			=	$this->site_settings->personal_details();	
-		$this->data['menus_all']		= 	modules::load('menus')->get_menus();
-		$this->data['myprivileges']	=	$this->site_settings->myprivileges();
-		
-		*/
 		$this->data['listAnnouncements']	=	$this->site_settings->fetchLatestAnnouncementsforUser();
 		$this->data['footer_includes']			=	'<script src="'.base_url().'js/snap/my-attendance.js" type="text/javascript"></script>';	
 	}

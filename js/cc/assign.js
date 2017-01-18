@@ -223,4 +223,39 @@ $(document).ready(function(){
 				}
 			}
 		});
+		
+	 $('.monitorUsersClass').click(function() {
+       if(this.checked)
+       {
+       	var selShift= $('#shifts').val();
+       	var selMid= $(this).attr('id')
+       	var selMVal= $('#'+selMid).val();
+       	if(selShift && selMVal)
+       	{
+       		var post_url = base_url+"ccshifts/shifts/checkWatcherAssignableOrNot";
+				$.ajax({
+					type: "POST",
+					data: {watcher:selMVal,shift:selShift,csrf_test_name : csrf_token},
+					url:  post_url,
+					beforeSend: function ( xhr ) 
+					 {
+				         //Add your image loader here
+			            //showLoader();
+				    },
+					success: function(msg)
+					{
+						//hideLoader();
+						if(msg='limitexceeded')
+						{
+							$('#'+selMid).prop('checked', false); // Unchecks it
+							alert('Watcher Limit Exceeded.');
+						}
+						else
+						{alert('Unable to process the request.');}
+					}
+				});
+       	}
+
+      }
+      });
 });

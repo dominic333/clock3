@@ -140,6 +140,31 @@ class Site_settings
 		$result=$this->obj->db->get();
 		return $result->row()->totalShifts;
 	}
+	
+	//Function to fetch total assigned watchers
+	//Dominic, Jan 18, 2017
+	function totalAssignedWathcers()
+	{
+		//SELECT COUNT(DISTINCT monitor_info.staff_id) AS totalAssignedWatchers 
+		//FROM monitor_info 
+		//WHERE monitor_info.shift_id IN( SELECT department_shifts.shift_id from department_shifts WHERE department_shifts.comp_id=84)
+		
+		 $totalAssignedWatchers=0;
+     	 $compId	= $this->obj->session->userdata('coid');
+     	 $result_settings	=	$this->obj->db->query("SELECT COUNT(DISTINCT monitor_info.staff_id) AS totalAssignedWatchers  
+			FROM monitor_info
+			WHERE monitor_info.shift_id IN( SELECT department_shifts.shift_id from department_shifts WHERE department_shifts.comp_id=".$compId.")
+     	 ");
+     	 if($result_settings->num_rows() > 0)
+     	 {
+     	 	 $rows	=	$result_settings->result();
+			 foreach($rows as $row)
+			 {
+				$totalAssignedWatchers 	= $row->totalAssignedWatchers;
+			 }
+     	 }
+		 return $totalAssignedWatchers;
+	}
      
   
 	//Function to check mobile or table or computer

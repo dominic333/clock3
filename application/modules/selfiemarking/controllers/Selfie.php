@@ -233,7 +233,7 @@ class Selfie extends MX_Controller
 	function get_common()
 	{
 		$this->data['listAnnouncements']	=	$this->site_settings->fetchLatestAnnouncementsforUser();
-		
+		$this->site_settings->get_site_settings();
 	}
 }
 

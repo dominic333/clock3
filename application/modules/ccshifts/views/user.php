@@ -41,7 +41,7 @@
 				</div>
 				<?php } else{ ?>
 				<div class="col-md-12">
-               <select name="shifts" id="shifts" data-placeholder="-- Select A Shift* --"  class="" >
+               <select name="allshiftsusers" id="allshiftsusers" data-placeholder="-- Select A Shift* --"  class="" >
 	                  <option value="">-- All Shifts --</option>
 	                  <?php foreach($company_shifts as $shift){?>
 	                  <option value="<?php echo $shift->shift_id;?>">
@@ -68,7 +68,7 @@
 					}
 					
 				?>
-            <div class="col-md-4 <?php echo 'd'.$member->dept_id; ?> <?php echo 's'.$member->shift_id; ?>">
+            <span class="col-md-4 <?php echo 'd'.$member->dept_id; ?> <?php echo 's'.$member->shift_id; ?>">
                 <!-- USERS LIST -->
                 <div class="box box-danger">
                     <div class="box-header with-border">
@@ -121,7 +121,7 @@
                     <!-- /.box-body -->
                 </div>
                 <!--/.box -->
-            </div>
+            </span>
             <?php } ?>
             
         </div>
