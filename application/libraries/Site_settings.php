@@ -147,8 +147,7 @@ class Site_settings
 	{
 		//SELECT COUNT(DISTINCT monitor_info.staff_id) AS totalAssignedWatchers 
 		//FROM monitor_info 
-		//WHERE monitor_info.shift_id IN( SELECT department_shifts.shift_id from department_shifts WHERE department_shifts.comp_id=84)
-		
+		//WHERE monitor_info.shift_id IN( SELECT department_shifts.shift_id from department_shifts WHERE department_shifts.comp_id=84)	
 		 $totalAssignedWatchers=0;
      	 $compId	= $this->obj->session->userdata('coid');
      	 $result_settings	=	$this->obj->db->query("SELECT COUNT(DISTINCT monitor_info.staff_id) AS totalAssignedWatchers  
@@ -163,7 +162,28 @@ class Site_settings
 				$totalAssignedWatchers 	= $row->totalAssignedWatchers;
 			 }
      	 }
+     	 //echo $this->obj->db->last_query();
 		 return $totalAssignedWatchers;
+	}
+	
+	//Function to count total active departments
+	//Dominic, Jan 18, 2017
+	function totalActiveDepartments()
+	{	
+		 $activeDept=0;
+     	 $compId	= $this->obj->session->userdata('coid');
+     	 $result_settings	=	$this->obj->db->query("SELECT COUNT(shift_id) AS activeDept FROM department_shifts WHERE shift_status=1 AND comp_id=".$compId."
+     	 ");
+     	 if($result_settings->num_rows() > 0)
+     	 {
+     	 	 $rows	=	$result_settings->result();
+			 foreach($rows as $row)
+			 {
+				$activeDept 	= $row->activeDept;
+			 }
+     	 }
+     	 //echo $this->obj->db->last_query();
+		 return $activeDept;
 	}
      
   

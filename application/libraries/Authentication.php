@@ -454,6 +454,7 @@ class Authentication
 				$watcherLimit 	= $row->watcherLimit;
 			 }
      	 }
+     	 //echo $this->CI->db->last_query();
 		 return $watcherLimit;
      }
      

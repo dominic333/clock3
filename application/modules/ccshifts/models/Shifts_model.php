@@ -375,7 +375,7 @@ class Shifts_model extends CI_Model {
 		$this->db->where('id', $id);
   		$this->db->where('ip_address',$ip);
   		$this->db->where('company_id',$this->session->userdata('coid'));
-	    $this->db->delete('department_ip');
+	   $this->db->delete('department_ip');
 	}
 	
 	//Function to fetch all shifts for a company
@@ -808,6 +808,25 @@ class Shifts_model extends CI_Model {
      	{ 
        	return FALSE; 
      	}   
+   }
+   
+   //Function to check if a user is already assigned to a shift or not
+   //Dominic, Jan 19, 2016
+   function checkWatcherAssignableOrNot($watcher,$shift,$compIdSess)
+   {
+   	//SELECT id FROM monitor_info WHERE staff_id=210 AND shift_id=210
+   	$this->db->select('id');
+		$this->db->where('staff_id',$watcher);
+		$this->db->where('shift_id',$shift);
+		$results=$this->db->get('monitor_info');
+		if($results->num_rows() > 0)
+		{
+	      return FALSE;
+	   } 
+	   else 
+	   {
+	      return TRUE;
+	   }
    }
 
 	

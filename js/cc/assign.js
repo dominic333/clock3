@@ -181,9 +181,9 @@ $(document).ready(function(){
 						{
 							hideLoader();
 							if(msg='updated')
-							{alert('Removed');}
+							{alert('Removed'); window.location.reload(); }
 							else
-							{alert('Unable to process the request.');}
+							{alert('Unable to process the request.'); window.location.reload(); }
 						}
 					});
 				}
@@ -244,14 +244,28 @@ $(document).ready(function(){
 				    },
 					success: function(msg)
 					{
+						console.log(msg);
 						//hideLoader();
-						if(msg='limitexceeded')
+						
+						if(msg=='limitExceeded')
 						{
 							$('#'+selMid).prop('checked', false); // Unchecks it
 							alert('Watcher Limit Exceeded.');
 						}
+						else if(msg=='alreadyAssigned')
+						{
+							alert('This user is already assigned.');
+						}
+						else if(msg=='assignable')
+						{
+						 console.log('');
+						}
 						else
-						{alert('Unable to process the request.');}
+						{
+							$('#'+selMid).prop('checked', false); // Unchecks it
+							alert('Unable to process the request.');
+						}
+						
 					}
 				});
        	}
