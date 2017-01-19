@@ -225,8 +225,13 @@ $(document).ready(function(){
 		});
 		
 	 $('.monitorUsersClass').click(function() {
+	 	
+	 	 //$('#attendance_monitoring_staff input[type="checkbox"]').click(function(){
+			    
+		//	});
        if(this.checked)
        {
+       	var countchecked = $('#attendance_monitoring_staff input[type="checkbox"]').filter(":checked").length;
        	var selShift= $('#shifts').val();
        	var selMid= $(this).attr('id')
        	var selMVal= $('#'+selMid).val();
@@ -235,7 +240,7 @@ $(document).ready(function(){
        		var post_url = base_url+"ccshifts/shifts/checkWatcherAssignableOrNot";
 				$.ajax({
 					type: "POST",
-					data: {watcher:selMVal,shift:selShift,csrf_test_name : csrf_token},
+					data: {watcher:selMVal,shift:selShift,selectedWatchers:countchecked,csrf_test_name : csrf_token},
 					url:  post_url,
 					beforeSend: function ( xhr ) 
 					 {
@@ -244,7 +249,7 @@ $(document).ready(function(){
 				    },
 					success: function(msg)
 					{
-						console.log(msg);
+						//console.log(msg);
 						//hideLoader();
 						
 						if(msg=='limitExceeded')
@@ -256,9 +261,13 @@ $(document).ready(function(){
 						{
 							alert('This user is already assigned.');
 						}
+						else if(msg=='overSelected')
+						{
+						   alert('You have selected more than the limit. Please try again.');
+						}
 						else if(msg=='assignable')
 						{
-						 console.log('');
+						 
 						}
 						else
 						{

@@ -53,9 +53,9 @@ class Attendance extends MX_Controller
 					                                    <th width='10px'>No</th>
 					                                    <th>Date</th>
 																	<th>Scheduled Clock in Time</th>
-					                                    <th>Clock in Time</th>
+					                                    <th>Clock in Status</th>
 																	<th>Scheduled Clock Out Time</th>
-					                                    <th>Clock out Time</th>
+					                                    <th>Clock out Status</th>
 					                                </tr>
 					                                </thead>
 					                                <tbody>";
@@ -202,9 +202,12 @@ class Attendance extends MX_Controller
 						
 					$attendance_status = "<span class='label label-default'>Non Work Day</span>";
 					$log_time = "Non";
+               $a_in_file = "Non";
+               $a_out_file = "Non";
                $attendance_time = $base_start_time;
                $attendance_end_time = $base_end_time;
-               $staff_logout_time = "Non";								
+               $staff_logout_time = "Non";
+               $attendance_out_status = "<span class='label label-default'>Non Work Day</span>";								
 				}
 				elseif ($check_workday_type == 1)
 				{
@@ -217,34 +220,81 @@ class Attendance extends MX_Controller
 					// Check in clock in.
 					if (count($staff_work_day_info)==0||$staff_work_day_info["log_time"] == "")
 					{
-						$staff_work_day_infoz = $this->Attendance_model->getStaffClockInfobyDate($staff, $log_date, "ab");							
-
+						$staff_work_day_infoz = $this->Attendance_model->getStaffClockInfobyDate($staff, $log_date, "ab");
+						$dispute_msg = $staff_work_day_infoz["notes"];								
+						
+						$attendance_status = "<span class='label label-danger'>Absent</span>"; //compute difference
 						// Process for show in table
+                  //$staffname = $adminfunc->getStaffName($srow["staff_id"]);
                   $staffname = $this->Attendance_model->getStaffName($staff);
                   $log_time = "NA";
+                  $a_in_file = "NA";
+                  $a_out_file = "NA";
                   $attendance_time = $base_start_time;
                   $attendance_end_time = $base_end_time;
                   $staff_logout_time = "NA";
+                  $attendance_out_status = "<span class='label label-danger'>Absent</span>";
 					}
 					else
 					{
 						// Get shift details
 						$p_shift_info = $this->Attendance_model->getShiftDetails($in_shift, $check_day);
 						$shift_info 	= $p_shift_info->row_array();
+															 
+						// Compute Clock in
+						$d_attendance_in_time = strtotime($staff_work_day_info["base_log_time"]);
+						$d_staff_time_in = strtotime($staff_work_day_info["log_time"]);
+						$p_in_undertime = $d_staff_time_in - $d_attendance_in_time;
+						//$p_in_undertime = $d_attendance_in_time - $d_staff_in_out;
+						$in_undertime = gmdate('H:i:s', $p_in_undertime);
+						$in_file_name = $staff_work_day_info["attendance_file"];
+						$a_in_file = "<a href=\"$file_path$in_file_name\" target=\"_blank\">$staffname</a>";
+							 
+						if ($p_in_undertime > 0)
+						{
+							$attendance_status = "<span class='label label-warning'>Late by : ".$in_undertime."</span>";
+						}
+						else
+						{
+							$attendance_status = "<span class='label label-success'>On Time</span>";
+						}
 						$log_time = $staff_work_day_info["log_time"];
 						$attendance_time = $staff_work_day_info["base_log_time"];
+						$dispute_msg = $staff_work_day_info["notes"];
  
 						// Compute Clock out
 						$staff_work_day_out_info = $this->Attendance_model->getStaffClockInfobyDate($staff, $out_log_date, "out");
 						if (count($staff_work_day_out_info)>0&&$staff_work_day_out_info["log_time"] != "")
 						{									 	
+							$d_attendance_out_time = strtotime($staff_work_day_out_info["base_log_time"]);
 							$staff_logout_time = $staff_work_day_out_info["log_time"];
-							$attendance_end_time = $staff_work_day_out_info["base_log_time"];	
+							$d_staff_time_out = strtotime($staff_work_day_out_info["log_time"]);
+							$p_out_undertime = $d_attendance_out_time - $d_staff_time_out;
+							$out_undertime = gmdate('H:i:s', $p_out_undertime);
+							 	
+							if ($p_out_undertime > 0)
+							{
+							 	$attendance_out_status = "<span class='label label-primary'>Early check out by : ".$out_undertime."</span>";
+							}
+							else
+							{
+							 	$attendance_out_status = "<span class='label label-success'>Ok.</span>";
+							}
+							 	
+							// Process for show in table
+							$file_name = $staff_work_day_out_info["attendance_file"];
+							$a_out_file = "<a href=\"$file_path$file_name \" target=\"_blank\">$staffname </a>";
+							// Compute
+							$attendance_end_time = $staff_work_day_out_info["base_log_time"];
+							$dispute_msg = $staff_work_day_info["notes"];
+							 	
 						}
 						else
 						{
+							$a_out_file = "";
 							$staff_logout_time = "NA";
-                     $attendance_end_time = $shift_info["pday_endtime"]; 
+                     $attendance_end_time = $shift_info["pday_endtime"];
+                     $attendance_out_status = "<span class='label label-default'>Did Not Clock Out.</span>";
 						}
 							 
 					}
@@ -258,15 +308,19 @@ class Attendance extends MX_Controller
 					if (count($staff_work_day_info)==0||$staff_work_day_info["log_time"] == "")
 					{
 
-						$staff_work_day_infozz = $this->Attendance_model->getStaffClockInfobyDate($staff, $log_date, "ab");							
+						$staff_work_day_infozz = $this->Attendance_model->getStaffClockInfobyDate($staff, $log_date, "ab");
+						$dispute_msg = $staff_work_day_infozz["notes"];									
 						
+						$attendance_status = "<span class='label label-danger'>Absent</span>";
 						// Process for show in table
 						$staffname = $this->Attendance_model->getStaffName($staff);
 						$log_time = "NA";
+                  $a_in_file = "NA";
+                  $a_out_file = "NA";
                   $attendance_time = $base_start_time; 
           			$attendance_end_time = $base_end_time;
 						$staff_logout_time = "NA";
-
+						$attendance_out_status = "<span class='label label-danger'>Absent</span>";
 					}
 					else
 					{
@@ -274,20 +328,54 @@ class Attendance extends MX_Controller
 						$p_shift_info = $this->Attendance_model->getShiftDetails($in_shift, $check_day);
 						$shift_info   = $p_shift_info->row_array();
 						$staffname 	  = $this->Attendance_model->getStaffName($staff);
+						// ---------- Compute Clock in ------------
+						$d_attendance_in_time = strtotime($staff_work_day_info["base_log_time"]);
+						$d_staff_time_in = strtotime($staff_work_day_info["log_time"]);
+						$p_in_undertime = $d_staff_time_in - $d_attendance_in_time;
+						$in_undertime = gmdate('H:i:s', $p_in_undertime);
+						$in_file_name = $staff_work_day_info["attendance_file"];
+						$a_in_file = "<a href=\"$file_path$in_file_name\" target=\"_blank\">$staffname</a>";
+						if($p_in_undertime > 0)
+						{
+							$attendance_status = "<span class='label label-warning'>Late by : ".$in_undertime."</span>";
+						}
+						else
+						{
+							$attendance_status = "<span class='label label-success'>On Time</span>";
+						}
 							
 						// Process for show in table
 						$staffname 	  = $this->Attendance_model->getStaffName($staff);
 						$log_time = $staff_work_day_info["log_time"];
+						$attendance_time = $shift_info["pday_starttime"]; // Compute
 						$attendance_time = $staff_work_day_info["base_log_time"];
-
+						$dispute_msg = $staff_work_day_info["notes"];
 							
 						// --------- Compute Clock out ---------------
 						$staff_work_day_out_info = $this->Attendance_model->getStaffClockInfobyDate($staff, $log_date, "out");
 						if (count($staff_work_day_out_info)>0&&$staff_work_day_out_info["log_time"] != "")
 						{
+							$d_attendance_out_time = strtotime($staff_work_day_out_info["base_log_time"]);
 							$staff_logout_time = $staff_work_day_out_info["log_time"];
+							$d_staff_time_out = strtotime($staff_work_day_out_info["log_time"]);
+							$p_out_undertime = $d_attendance_out_time - $d_staff_time_out;
+							$out_undertime = gmdate('H:i:s', $p_out_undertime);
+								
+							if ($p_out_undertime > 0)
+							{
+								$attendance_out_status = "<span class='label label-primary'>Early check out by : ".$out_undertime."</span>";
+							}
+							else
+							{
+								$attendance_out_status = "<span class='label label-success'>Ok</span>";
+							}
+								
+							// Process for show in table
+							$out_file_name = $staff_work_day_out_info["attendance_file"];
+							$a_out_file = "<a href=\"$file_path$out_file_name \" target=\"_blank\">$staffname </a>";
 							$attendance_time = $staff_work_day_info["base_log_time"];
 							$attendance_end_time = $staff_work_day_out_info["base_log_time"]; 
+							$dispute_msg = $staff_work_day_info["notes"];
 								
 						}
 						else
@@ -308,9 +396,9 @@ class Attendance extends MX_Controller
                                      <td class=\"botline\">$r_cnt</td>
                                      <td class=\"botline\">$log_date</td>
                                      <td class=\"botline\">$attendance_time</td>
-                                     <td class=\"botline\">$log_time</td>
+                                     <td class=\"botline\">$attendance_status</td>
 												 <td class=\"botline\">$attendance_end_time</td>
-												 <td class=\"botline\">$staff_logout_time</td>
+												 <td class=\"botline\">$attendance_out_status</td>
                                   </tr>";
              $r_cnt++;   
              $dispute_msg=""; 
@@ -410,7 +498,7 @@ class Attendance extends MX_Controller
                $attendance_time = $base_start_time;
                $attendance_end_time = $base_end_time;
                $staff_logout_time = "Non";
-               $attendance_out_status = "Non";								
+               $attendance_out_status = "<span class='label label-default'>Non Work Day</span>";								
 				}
 				elseif ($check_workday_type == 1)
 				{
@@ -674,6 +762,8 @@ class Attendance extends MX_Controller
 		$del_image 			= "icon-delete.png";
 		$avatar_path		=	base_url()."images/avatars";
    	$department_attendance='';  
+   	
+   	$attendanceToken=0;
    		
    	$tz 		= $this->Attendance_model->getShiftTZviaStaffid($staff);
    	
@@ -734,10 +824,12 @@ class Attendance extends MX_Controller
 	       	if ($p_in_undertime > 0)
 	       	{
 	       		$attendance_status = "Status : Late by ".$in_undertime;
+	       		$attendanceToken=2;
 	       	}
 	       	else
 	       	{
 	            $attendance_status = "Status : On Time";
+	            $attendanceToken=1;
 	       	}
 	       	
 	       	if ($logdate != "")
@@ -759,6 +851,7 @@ class Attendance extends MX_Controller
 						$logtime = "Did Not Clock in.";
 			         $baselogtime = $check_user_shift["base_log_time"];
 			         unset($mobile);
+			         $attendanceToken=3;
 			         
 					}
 					else if (count($check_user_shift)>0&&$check_user_shift["checkday"] == 0)
@@ -768,7 +861,7 @@ class Attendance extends MX_Controller
 						$logtime = "NA";
 			         $baselogtime = "NA";
 			         unset($mobile);
-			         
+			         $attendanceToken=0;
 					}
 					else
 					{						
@@ -779,6 +872,7 @@ class Attendance extends MX_Controller
 							$logtime = "Did Not Clock in.";
 			         	$baselogtime = $check_user_shift["base_log_time"];
 			         	unset($mobile);
+			         	$attendanceToken=3;
 						}
 						else
 						{
@@ -787,11 +881,29 @@ class Attendance extends MX_Controller
 							$logtime = "NA";
 			         	$baselogtime = "NA";
 			         	unset($mobile);
+			         	$attendanceToken=0;
 						}								         
 			      }
 				
 	       }
 				
+				if($attendanceToken==0) //non work
+				{
+				  $attendanceLabel= '<span class="label label-success">v</span>';
+				}
+				else if($attendanceToken==1) //on time
+				{
+					$attendanceLabel= '<span class="label label-success">v</span>';
+				}
+				else if($attendanceToken==2) //late
+				{
+				  $attendanceLabel= '<span class="label label-warning">v</span>';
+				}
+				else //did not clock in
+				{
+					$attendanceLabel= '<span class="label label-danger">x</span>';
+				}
+
 				//$selfie_icon	=	(isset($mobile))?(($mobile==0)?'<i class="fa fa-desktop"></i>':'<i class="fa fa-mobile"></i>'):'';
 				//$map_icon		=	(isset($geolocation)&&($geolocation!='')&&($geolocation!=0))?'<a href="#" data-image="http://maps.googleapis.com/maps/api/staticmap?center='.$geolocation.'&zoom=18&markers=color:red|label:A|'.$geolocation.'&scale=false&size=560x370&maptype=roadmap&format=png&visual_refresh=true" data-alt="Google Map of '.$geolocation.'" class="attendance_map_link" ><i class="fa fa-map-marker"></i></a>':'';
 				$selfie_icon='';	
@@ -800,9 +912,9 @@ class Attendance extends MX_Controller
 													                <div class="box box-danger">
 													                    <div class="box-header with-border">
 													                        <h3 class="box-title">'.$staffname.'</h3>
-													
+																					
 													                        <div class="box-tools pull-right">
-													                            <span class="label label-success">v</span>
+													                            '.$attendanceLabel.'
 													                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
 													                                    class="fa fa-minus"></i>
 													                            </button>

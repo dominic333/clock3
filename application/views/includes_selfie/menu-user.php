@@ -31,9 +31,9 @@
                 </li>
                 <ul class="sub-menu collapse" id="products">
                     <li><a href="<?php echo base_url();?>selfiemyaccount/account">View Profile</a></li>
-                    <!--
+                    
                     <li><a href="<?php echo base_url();?>selfieattendance/attendance">My Attendance</a></li>
-                    -->
+                    
                     <li><a href="<?php echo base_url();?>selfieattendance/attendance/whosaroundtoday">Who's Around Today</a></li>
                 </ul>
                 <?php $calendarView= $this->authentication->checkCalendarViewAccess(); if($calendarView==1){ ?>

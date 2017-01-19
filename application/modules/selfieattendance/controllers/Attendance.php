@@ -166,7 +166,7 @@ class Attendance extends MX_Controller
                $attendance_time = $base_start_time;
                $attendance_end_time = $base_end_time;
                $staff_logout_time = "Non";
-               $attendance_out_status = "Non";								
+               $attendance_out_status = "<span class='label label-default'>Non Work Day</span>";								
 				}
 				elseif ($check_workday_type == 1)
 				{
@@ -430,7 +430,9 @@ class Attendance extends MX_Controller
 		$del_image 			= "icon-delete.png";
 		$avatar_path		=	base_url()."images/avatars";
    	$department_attendance='';  
-   		
+   	
+   	$attendanceToken=0;
+   	
    	$tz 		= $this->Attendance_model->getShiftTZviaStaffid($staff);
    	
    	$d_cid	=	time();
@@ -490,10 +492,12 @@ class Attendance extends MX_Controller
 	       	if ($p_in_undertime > 0)
 	       	{
 	       		$attendance_status = "Status : Late by ".$in_undertime;
+	       		$attendanceToken=2;
 	       	}
 	       	else
 	       	{
 	            $attendance_status = "Status : On Time";
+	            $attendanceToken=1;
 	       	}
 	       	
 	       	if ($logdate != "")
@@ -515,6 +519,7 @@ class Attendance extends MX_Controller
 						$logtime = "Did Not Clock in.";
 			         $baselogtime = $check_user_shift["base_log_time"];
 			         unset($mobile);
+			         $attendanceToken=3;
 			         
 					}
 					else if (count($check_user_shift)>0&&$check_user_shift["checkday"] == 0)
@@ -524,7 +529,7 @@ class Attendance extends MX_Controller
 						$logtime = "NA";
 			         $baselogtime = "NA";
 			         unset($mobile);
-			         
+			         $attendanceToken=0;
 					}
 					else
 					{						
@@ -535,6 +540,7 @@ class Attendance extends MX_Controller
 							$logtime = "Did Not Clock in.";
 			         	$baselogtime = $check_user_shift["base_log_time"];
 			         	unset($mobile);
+			         	$attendanceToken=3;
 						}
 						else
 						{
@@ -543,10 +549,27 @@ class Attendance extends MX_Controller
 							$logtime = "NA";
 			         	$baselogtime = "NA";
 			         	unset($mobile);
+			         	$attendanceToken=0;
 						}								         
 			      }
 				
 	       }
+				if($attendanceToken==0) //non work
+				{
+				  $attendanceLabel= '<span class="label label-success">v</span>';
+				}
+				else if($attendanceToken==1) //on time
+				{
+					$attendanceLabel= '<span class="label label-success">v</span>';
+				}
+				else if($attendanceToken==2) //late
+				{
+				  $attendanceLabel= '<span class="label label-warning">v</span>';
+				}
+				else //did not clock in
+				{
+					$attendanceLabel= '<span class="label label-danger">x</span>';
+				}
 				
 				//$selfie_icon	=	(isset($mobile))?(($mobile==0)?'<i class="fa fa-desktop"></i>':'<i class="fa fa-mobile"></i>'):'';
 				//$map_icon		=	(isset($geolocation)&&($geolocation!='')&&($geolocation!=0))?'<a href="#" data-image="http://maps.googleapis.com/maps/api/staticmap?center='.$geolocation.'&zoom=18&markers=color:red|label:A|'.$geolocation.'&scale=false&size=560x370&maptype=roadmap&format=png&visual_refresh=true" data-alt="Google Map of '.$geolocation.'" class="attendance_map_link" ><i class="fa fa-map-marker"></i></a>':'';
@@ -559,7 +582,7 @@ class Attendance extends MX_Controller
 													                        <h3 class="box-title">'.$staffname.'</h3>
 													
 													                        <div class="box-tools pull-right">
-													                            <span class="label label-success">v</span>
+													                            '.$attendanceLabel.'
 													                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
 													                                    class="fa fa-minus"></i>
 													                            </button>

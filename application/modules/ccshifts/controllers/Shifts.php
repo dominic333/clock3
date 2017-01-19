@@ -849,6 +849,7 @@ class Shifts extends MX_Controller
 		$compIdSess =$this->session->userdata('coid');
 		$watcher	=	$this->db->escape_str($this->input->post('watcher'));
 		$shift	=	$this->db->escape_str($this->input->post('shift'));
+		$selectedWatchers	=	$this->db->escape_str($this->input->post('selectedWatchers'));
 		
 		$totalAssignedWathcers  = $this->site_settings->totalAssignedWathcers();
 		$watcherLimit				= $this->authentication->getWatcherLimit();
@@ -857,6 +858,10 @@ class Shifts extends MX_Controller
 		if($totalAssignedWathcers >= ($watcherLimit*$activeDept))
 		{
 			echo 'limitExceeded';
+		}
+		else if($selectedWatchers>$watcherLimit)
+		{
+		   echo 'overSelected';
 		}
 		else 
 		{

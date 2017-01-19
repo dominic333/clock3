@@ -63,10 +63,14 @@ class Site_settings
 	//Dominic, December 10,2016
 	public function fetchMyNotifications()
 	{
-		$nDateTime 		=  date('Y-m-d H:i:s');
+		$nDateTime =  date('Y-m-d');
+		$startD = $nDateTime.' 00:00:00';
+		$endD   = $nDateTime.' 23:59:59';
+		
 	  	$this->obj->db->select('N.*, SI.staff_name');
 		$this->obj->db->where('N.userID',$this->obj->session->userdata('mid'));     	
-		$this->obj->db->where('N.nDateTime',$nDateTime);     	
+		$this->obj->db->where('N.nDateTime >=',$startD);     	
+		$this->obj->db->where('N.nDateTime <=',$endD);     	
 	  	$this->obj->db->from('notifications AS N');			  		
 		$this->obj->db->join('staff_info AS SI', 'N.actionBy = SI.staff_id','LEFT');		
 		$this->obj->db->order_by('N.nDateTime','DESC');	

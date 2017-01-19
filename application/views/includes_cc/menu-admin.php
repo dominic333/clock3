@@ -20,7 +20,7 @@
             <?php $calendarView= $this->authentication->checkCalendarViewAccess(); if($calendarView==1){ ?>
             <li>
                 <a href="<?php echo base_url();?>ccattendance/attendance/monthiview">
-                    <i class="fa fa-calendar"></i> <span>My Attendance (Calendar View)</span>
+                    <i class="fa fa-calendar"></i> <span>My Calendar</span>
                 </a>
             </li>
             <?php } ?>
