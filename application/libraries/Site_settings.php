@@ -1,89 +1,188 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
-/**
-* Site Sentry security library for Code Igniter applications
- * Class Login
- *
- *	PHP version 5.3
- * @category	Settings
- * @package		common
- * @subpackage	settings
- * @author		Bigil Michael <bigil@cliffsupport.com>
- * @license		Cliff Creation
- * @link        http://heims.com/
- * @since		10-02-2016
- * @Version		1.0
- */
-/**
- * File: site_settings.php
- * Class settings
- *
- *	PHP version 5.3
- * @category	Settings
- * @package		common
- * @subpackage	Settings
- * @author		Bigil Michael <bigil@cliffsupport.com>
- * @license		Cliff Creation
- * @link        http://heims.com
- * @since		10-02-2016
- * @Version		1.0
- */
+
 class Site_settings 
 {
 	function Site_settings()
 	{
 		$CI = $this->obj =& get_instance();
+      //$CI->load->library('session');
 		$CI->load->library('encryption');
+		$CI->load->library('Mobile_Detect');
 	}
-	/**
-		*  @author : Bigil Michael
-		*  @date :11-02-2016
-		*  @desc:Function to set common details  
-		*  @return true/false
-		*/
+
 	function get_site_settings()
 	{		
-		date_default_timezone_set('Asia/Kolkata');
+		date_default_timezone_set('Asia/Singapore');
 		$result_settings	=	$this->obj->db->query('SELECT * FROM settings');
 		$rows	=	$result_settings->result();
 		foreach($rows as $row){
 			$this->obj->config->set_item($row->config_key, $row->config_value);
 		}
-		return true;  		
+		return true; 		
 	}
 	
-  	/**
-		*  @author : Bigil Michael
-		*  @date :11-02-2016
-		*  @desc:Function to save log details
-		*  @return true/false
-		*/
-	function adminlog($description, $equipment_id='', $schedule_id='', $inspection_id= '')
+   // Function to log operations
+   // Dominic: December 06,2016
+	function adminlog($description)
 	{	
-		$data['description'] 	=	($description);
-		$data['done_by']			=	$this->obj->session->userdata('user_id');
-		$data['time'] 				=	time();
-		$data['ipaddress'] 		=	$_SERVER['REMOTE_ADDR'];
-		$data['equipment_id']	=	$equipment_id;
-		$data['schedule_id']		=	$schedule_id;
-		$data['inspection_id']	=	$inspection_id;
-		$this->obj->db->insert('log',$data);		
+		$data['description'] = ascii_to_entities($description);
+		$data['username'] = $this->obj->session->userdata('mid');
+		$data['date'] = date('Y-m-d');
+		$data['time'] = date('H:i:s');
+		$data['ipaddress'] = $_SERVER['REMOTE_ADDR'];	
+		$data['device']=$this->check_mobile();
+		$data['log'] = $data['date']." : ".$data['time']." : User ".$data['username']." : ".$data['description']." : from ".$data['ipaddress']." device: ".$data['device'].PHP_EOL;
+		$path= $this->obj->lang->line("absolute_path")."log/".date('MY').".txt";	
+		write_file($path, $data['log'], 'a+');			
 	}   
+	
+	//Function to add a notification
+	// Dominic: December 09,2016
+	function addNotification($nType,$nMsg,$absenteeID='')
+	{
+	   $compId						= $this->obj->session->userdata('coid');
+	  	$data['companyid'] 		= $compId;
+	  	$data['nType'] 			= $nType;
+	  	$data['nMsg'] 				= $nMsg;
+	  	$data['absenteeID'] 		= $absenteeID;
+	  	$data['actionBy'] 		= $this->obj->session->userdata('mid');
+		
+		
+		$result_settings	=	$this->obj->db->query("SELECT staff_id FROM staff_info WHERE company_id=".$compId." AND is_admin=1 AND staff_status=1");
+		$rows	=	$result_settings->result();
+		foreach($rows as $row)
+		{
+			$data['userID'] 			= $row->staff_id;
+			$data['nDateTime'] 		=  date('Y-m-d H:i:s');
+			
+			$this->obj->db->insert('notifications',$data);
+		}
+	}
+	
+	//Function to fetch my notifications
+	//Dominic, December 10,2016
+	public function fetchMyNotifications()
+	{
+		$nDateTime 		=  date('Y-m-d H:i:s');
+	  	$this->obj->db->select('N.*, SI.staff_name');
+		$this->obj->db->where('N.userID',$this->obj->session->userdata('mid'));     	
+		$this->obj->db->where('N.nDateTime',$nDateTime);     	
+	  	$this->obj->db->from('notifications AS N');			  		
+		$this->obj->db->join('staff_info AS SI', 'N.actionBy = SI.staff_id','LEFT');		
+		$this->obj->db->order_by('N.nDateTime','DESC');	
+		$result_notif = $this->obj->db->get();	
+		return $result_notif->result();
+	}
+	
+	//Function to fetch latest announcements for a user
+	//Dominic, December 10,2016
+	public function fetchLatestAnnouncementsforUser()
+	{
+		$compId	= $this->obj->session->userdata('coid');
+		$this->obj->db->select('A.id,A.title,A.msg,A.date');
+		$this->obj->db->where('A.co_id',$compId);
+		$this->obj->db->where('A.active',1);
+		$this->obj->db->from('announcements as A');
+		$this->obj->db->order_by('A.date','DESC');
+		$this->obj->db->limit(4);
+		$result_company=$this->obj->db->get();
+		//echo $this->db->last_query();
+		return $result_company->result();
+	}
+	
+	//Function to get company plan info
+	//Dominic, Jan 10,2016
+	function companyPlanDetails()
+	{
+		//SELECT company_plans.company_id,plans.* FROM company_plans LEFT JOIN plans ON company_plans.planId=plans.id WHERE company_plans.company_id=84
+		
+		$this->obj->db->select('company_plans.company_id,plans.*');
+		$this->obj->db->where('company_plans.company_id',$this->obj->session->userdata('coid'));     	
+	  	$this->obj->db->from('company_plans');		
+		$this->obj->db->join('plans', 'company_plans.planId=plans.id','LEFT');		
+		$result_users = $this->obj->db->get();	
+		return $result_users->row();
+	}
+	
+	//Function to get company strength
+	//Dominic, Jan 10,2016
+	function getCompanySize()
+	{
+		$this->obj->db->select('COUNT(staff_id) AS totalUsers');
+		$this->obj->db->from('staff_info');
+		$this->obj->db->where('company_id',$this->obj->session->userdata('coid'));
+		$result=$this->obj->db->get();
+		return $result->row()->totalUsers;
+	}
+	
+	//Function to get total department count of a company
+	//Dominic, Jan 10,2016
+	function getCompanyDepartmentSize()
+	{
+		//SELECT COUNT(dept_id) AS total FROM departments WHERE company_id=84
+		$this->obj->db->select('COUNT(dept_id) AS totalDept');
+		$this->obj->db->from('departments');
+		$this->obj->db->where('company_id',$this->obj->session->userdata('coid'));
+		$result=$this->obj->db->get();
+		return $result->row()->totalDept;
+	}
+	
+	
+	//Function to get total department count of a company
+	//Dominic, Jan 10,2016
+	function getCompanyDepartmentShiftSize()
+	{
+		//SELECT COUNT(shift_id) AS totalShifts FROM department_shifts WHERE comp_id=84 AND shift_status=1
+		$this->obj->db->select('COUNT(shift_id) AS totalShifts');
+		$this->obj->db->from('department_shifts');
+		$this->obj->db->where('comp_id',$this->obj->session->userdata('coid'));
+		$this->obj->db->where('shift_status',1);
+		$result=$this->obj->db->get();
+		return $result->row()->totalShifts;
+	}
+	
+	//Function to fetch total assigned watchers
+	//Dominic, Jan 18, 2017
+	function totalAssignedWathcers()
+	{
+		//SELECT COUNT(DISTINCT monitor_info.staff_id) AS totalAssignedWatchers 
+		//FROM monitor_info 
+		//WHERE monitor_info.shift_id IN( SELECT department_shifts.shift_id from department_shifts WHERE department_shifts.comp_id=84)
+		
+		 $totalAssignedWatchers=0;
+     	 $compId	= $this->obj->session->userdata('coid');
+     	 $result_settings	=	$this->obj->db->query("SELECT COUNT(DISTINCT monitor_info.staff_id) AS totalAssignedWatchers  
+			FROM monitor_info
+			WHERE monitor_info.shift_id IN( SELECT department_shifts.shift_id from department_shifts WHERE department_shifts.comp_id=".$compId.")
+     	 ");
+     	 if($result_settings->num_rows() > 0)
+     	 {
+     	 	 $rows	=	$result_settings->result();
+			 foreach($rows as $row)
+			 {
+				$totalAssignedWatchers 	= $row->totalAssignedWatchers;
+			 }
+     	 }
+		 return $totalAssignedWatchers;
+	}
      
-     /**
-		*  @author : Lissy SR
-		*  @date :11-02-2016
-		*  @desc:Function to get currently logged in user details
-		*  @return row as array
-		*/
-     function personal_details(){     		
-     		$this->obj->db->select('U.*, UP.*');
-			$this->obj->db->where('U.id',$this->obj->session->userdata('user_id'));     	
-		  	$this->obj->db->from('users AS U');		
-			$this->obj->db->join('user_personal as UP','UP.user_id=U.id',  'LEFT');     		
-     		$result_privileges = $this->obj->db->get();
-     		//echo $this->obj->db->last_query();
-     		return $result_privileges->row();
-     }
+  
+	//Function to check mobile or table or computer
+	function check_mobile()
+	{
+		
+		$detect = new Mobile_Detect();
+    	if ($detect->isMobile() || $detect->isTablet() || $detect->isAndroidOS()) 
+    	{
+        return 'Mobile';
+    	}
+    	else
+    	{
+    		return 'PC';
+    	}
+	}   
+   
+
 	  /**
 		*  @author : Lissy SR
 		*  @date :25-02-2016

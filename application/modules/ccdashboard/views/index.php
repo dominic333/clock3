@@ -26,12 +26,23 @@
 
                     <div class="info-box-content">
                         <span class="info-box-text">Total Users</span>
-                        <span class="info-box-number">12</span>
-
+                        <span class="info-box-number">
+                        <?php echo (isset($total_Users)) ? $total_Users :set_value('NA'); ?>/<?php echo (isset($companyPlanDetails->userLimit)) ? $companyPlanDetails->userLimit :set_value('NA'); ?>
+                        </span>
+								<?php 
+									if(isset($total_Users) && isset($companyPlanDetails->userLimit) ) 
+									{
+										$userPercentage = round((($total_Users/$companyPlanDetails->userLimit)*100));
+									}
+									else 
+									{
+										$userPercentage = 100;
+									}
+								?>
                         <div class="progress">
-                            <div class="progress-bar" style="width: 100%"></div>
+                            <div class="progress-bar" style="width: <?php echo $userPercentage; ?>%"></div>
                         </div>
-                        <span class="progress-description">70% Increase in 30 Days</span>
+                        <span class="progress-description"></span>
                     </div>
                     <!-- /.info-box-content -->
                 </div>
@@ -39,19 +50,28 @@
             </div>
             <!-- /.col -->
 
+            
             <div class="col-md-3 col-sm-6 col-xs-12">
                 <div class="info-box bg-red">
                     <span class="info-box-icon"><i class="fa fa-calendar"></i></span>
 
                     <div class="info-box-content">
                         <span class="info-box-text">Absents</span>
-                        <span class="info-box-number">1</span>
-
+                        <span class="info-box-number"><?php echo (isset($usersdetails['absent_checkin_users'])) ? $usersdetails['absent_checkin_users'] :'0'; ?> </span>
+								<?php 
+									if(isset($total_Users) && isset($usersdetails['absent_checkin_users']) ) 
+									{
+										$absentPercentage = round((($usersdetails['absent_checkin_users']/$total_Users)*100));
+									}
+									else 
+									{
+										$absentPercentage = 0;
+									}
+								?>
                         <div class="progress">
-                            <div class="progress-bar" style="width: 10%"></div>
+                            <div class="progress-bar" style="width: <?php echo $absentPercentage; ?>%"></div>
                         </div>
                   <span class="progress-description">
-                    70% Increase in 30 Days
                   </span>
                     </div>
                     <!-- /.info-box-content -->
@@ -66,13 +86,21 @@
 
                     <div class="info-box-content">
                         <span class="info-box-text">Late Clock in</span>
-                        <span class="info-box-number">3</span>
-
+                        <span class="info-box-number"><?php echo (isset($usersdetails['late_checkin_users'])) ? $usersdetails['late_checkin_users'] :'0'; ?></span>
+								<?php 
+									if(isset($total_Users) && isset($usersdetails['late_checkin_users']) ) 
+									{
+										$lateClockPercentage = round((($usersdetails['late_checkin_users']/$total_Users)*100));
+									}
+									else 
+									{
+										$lateClockPercentage = 0;
+									}
+								?>
                         <div class="progress">
-                            <div class="progress-bar" style="width: 30%"></div>
+                            <div class="progress-bar" style="width: <?php echo $lateClockPercentage; ?>%"></div>
                         </div>
 					  <span class="progress-description">
-						70% Increase in 30 Days
 					  </span>
                     </div>
                     <!-- /.info-box-content -->
@@ -86,14 +114,22 @@
                     <span class="info-box-icon"><i class="fa fa-circle-o"></i></span>
 
                     <div class="info-box-content">
-                        <span class="info-box-text">Early Clock in</span>
-                        <span class="info-box-number">7</span>
-
+                        <span class="info-box-text">Early Clock Out</span>
+                        <span class="info-box-number"><?php echo (isset($usersdetails['early_checkout_users'])) ? $usersdetails['early_checkout_users'] :'0'; ?></span>
+								<?php 
+									if(isset($total_Users) && isset($usersdetails['early_checkout_users']) ) 
+									{
+										$earlyOutPercentage = round((($usersdetails['early_checkout_users']/$total_Users)*100));
+									}
+									else 
+									{
+										$earlyOutPercentage = 0;
+									}
+								?>
                         <div class="progress">
-                            <div class="progress-bar" style="width: 70%"></div>
+                            <div class="progress-bar" style="width: <?php echo $earlyOutPercentage; ?>%"></div>
                         </div>
                   <span class="progress-description">
-                    70% Increase in 30 Days
                   </span>
                     </div>
                     <!-- /.info-box-content -->
@@ -103,7 +139,8 @@
             <!-- /.col -->
 
         </div>
-        <!-- /.row -->
+        <!-- /.row -->    
+        
 
         <!--========================================================================================================-->
 
@@ -123,7 +160,7 @@
                     <div class="box-body">
 
                         <p>
-                            <a href="announcements.php">
+                            <a href="<?php echo base_url();?>ccannouncements/announcements">
                                 <button class="btn btn-block btn-danger btn-lg" type="button"><span class="pull-left">Create Announcements</span> <span
                                         class="fa fa-plus-circle pull-right"></span></button>
                             </a>
@@ -132,63 +169,38 @@
                         <p>Recent Posts</p>
 
                         <ul class="products-list product-list-in-box">
+                        <?php
+                           $i=0;
+                           $labelArray= array('label-warning','label-info','label-danger','label-success');
+                       		foreach($listAnnouncements as $announcement)
+                       		{
+                        ?>
                             <li class="item">
                                 <div class="product-img">
                                     <img src="<?php echo base_url();?>assets/cc/theme/img/default-50x50.gif" alt="Recent Post">
                                 </div>
                                 <div class="product-info">
-                                    <a href="javascript:void(0)" class="product-title" data-toggle="modal" data-target="#myModalHorizontal">VIP Test Announcement
-                                        <span class="label label-warning pull-right">new</span></a>
-                        <span class="product-description">
-                          14 Jan 2015 4:38 PM
-                        </span>
+                                    <a href="javascript:void(0)" class="product-title latestAnnouncementClass" 
+                                        data-title="<?php echo $announcement->title;?>" data-description="<?php echo $announcement->msg;?>" data-postedDate="<?php echo date('j F Y h:i a', strtotime($announcement->date)); ?>"
+                                        data-toggle="modal" >
+                                        <?php echo $announcement->title; ?>
+                                        <span class="label <?php echo $labelArray[$i]; ?> pull-right">new</span>
+                                    </a>
+				                        <span class="product-description">
+				                          <?php echo date("j F Y h:i a", strtotime($announcement->date)); ?>
+				                        </span>
                                 </div>
                             </li>
-                            <!-- /.item -->
-                            <li class="item">
-                                <div class="product-img">
-                                    <img src="<?php echo base_url();?>assets/cc/theme/img/default-50x50.gif" alt="Product Image">
-                                </div>
-                                <div class="product-info">
-                                    <a href="javascript:void(0)" class="product-title" data-toggle="modal" data-target="#myModalHorizontal">VIP Test Announcement
-                                        <span class="label label-info pull-right">new</span></a>
-                        <span class="product-description">
-                          14 Jan 2015 4:38 PM
-                        </span>
-                                </div>
-                            </li>
-                            <!-- /.item -->
-                            <li class="item">
-                                <div class="product-img">
-                                    <img src="<?php echo base_url();?>assets/cc/theme/img/default-50x50.gif" alt="Product Image">
-                                </div>
-                                <div class="product-info">
-                                    <a href="javascript:void(0)" class="product-title" data-toggle="modal" data-target="#myModalHorizontal">VIP Test Announcement <span
-                                            class="label label-danger pull-right">new</span></a>
-                        <span class="product-description">
-                          14 Jan 2015 4:38 PM
-                        </span>
-                                </div>
-                            </li>
-                            <!-- /.item -->
-                            <li class="item">
-                                <div class="product-img">
-                                    <img src="<?php echo base_url();?>assets/cc/theme/img/default-50x50.gif" alt="Product Image">
-                                </div>
-                                <div class="product-info">
-                                    <a href="javascript:void(0)" class="product-title" data-toggle="modal" data-target="#myModalHorizontal">VIP Test Announcement
-                                        <span class="label label-success pull-right">new</span></a>
-                        <span class="product-description">
-                          14 Jan 2015 4:38 PM
-                        </span>
-                                </div>
-                            </li>
-                            <!-- /.item -->
+
+                        <?php
+                             $i++;
+                             }
+                        ?>
                         </ul>
                     </div>
                     <!-- /.box-body -->
                     <div class="box-footer text-center">
-                        <a href="javascript:void(0)" class="uppercase">View All</a>
+                        <a href="<?php echo base_url();?>ccannouncements/announcements" class="uppercase">View All</a>
                     </div>
                     <!-- /.box-footer -->
                 </div>
@@ -215,17 +227,21 @@
                             <!-- Add the bg color to the header using any of the bg-* classes -->
                             <div class="widget-user-header bg-gray-light">
                                 <div class="widget-user-image">
-                                    <img class="img-circle" src="<?php echo base_url();?>assets/cc/images/voffice128x128.png" alt="User Avatar">
+                                		<?php if($company_details->company_logo!='') {?>
+                     						<img class="img-circle" src="<?php echo base_url();?>images/company/<?php echo  $company_details->company_logo; ?>">
+                     					<?php }else{ ?>
+                     						<img class="img-circle" src="<?php echo base_url();?>assets/cc/images/voffice128x128.png" alt="User Avatar">
+                     					<?php }?>
                                 </div>
                                 <!-- /.widget-user-image -->
-                                <h4 class="widget-user-username">vOffice Philippines Inc</h4>
-                                <h5 class="widget-user-desc">Bonifacio Global City</h5>
+                                <h4 class="widget-user-username"><?php echo $company_details->company_name;?></h4>
+                                <h5 class="widget-user-desc"><?php echo $company_details->company_address;?> </h5>
                             </div>
                             <div class="box-footer no-padding">
                                 <ul class="nav nav-stacked">
-                                    <li><a href="#">Contact Person : Maria Dela Cruz</a></li>
-                                    <li><a href="#">Phone Number : +632 123 4567</a></li>
-                                    <li><a href="#">Email : Maria.dlc@voffice.com.ph</a>
+                                    <li><a href="#">Contact Person : <?php echo $company_details->contact_person;?></a></li>
+                                    <li><a href="#">Phone Number : <?php echo $company_details->contact_number;?></a></li>
+                                    <li><a href="#">Email : <?php echo $company_details->contact_email;?></a>
                                     </li>
                                     <li>
                                     	 <a href="<?php echo base_url();?>ccadministration/administration/contactsupport">
@@ -304,8 +320,8 @@
 <!-- footer here -->
 
 
-<!--=======================================Modal Form========================================-->
-<div class="modal fade" id="myModalHorizontal" tabindex="-1" role="dialog"
+<!--=======================================Latest Announcement Details popup========================================-->
+<div class="modal fade" id="latestAnnouncementInfo" tabindex="-1" role="dialog"
      aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -316,16 +332,16 @@
                     <span aria-hidden="true">&times;</span>
                     <span class="sr-only">Close</span>
                 </button>
-                <h4 class="modal-title" id="myModalLabel">
-                    VPI Test Announcement
+                <h4 class="modal-title" id="latestAnnouncementTitle">
+                    
                 </h4>
-                <p>11 October 2016 9.00 AM</p>
+                <p id="latestAnnouncementPostedDate"></p>
             </div>
 
             <!-- Modal Body -->
             <div class="modal-body">
 
-                <p>Some text in the modal.</p>
+                <p id="latestAnnouncementMsg"></p>
 
             </div>
 

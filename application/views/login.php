@@ -32,6 +32,7 @@
     
     <script type="text/javascript">
       var base_url = '<?php echo base_url();?>';
+      var csrf_token = '<?php echo $this->security->get_csrf_hash()?>';
     </script>
 
 </head>
@@ -43,7 +44,7 @@
 
         <div class="row">
             <div class="col-sm-6 logo">
-                <img class="log" src="<?php echo base_url();?>assets/cc/images/clockin-logo.png" alt="">
+                <img class="log" src="<?php echo base_url();?>assets/cc/images/Clock-In-Logo-01.png" alt="">
                 <p>
                 <h3 class="size"><strong>Attendance & Payroll on the Cloud</strong></h3></p>
             </div>
@@ -93,10 +94,10 @@
     <p><span class="bawah">TROUBLE LOGING IN ?</span> Please contact your HR or Payroll Manager first. For support
         escalation, you can email
         <a class="email" href="mailto:support@clock-in.me">support@clock-in.me</a></p>
-    <p>Realtime attendance tracking by <span class="bawah">Clock-in.me</span> | Powered by
+    <p>Realtime attendance tracking by <span class="bawah"><?php echo site_name();?></span> | Powered by
         <span class="bawah">Google Cloud</span> and <span class="bawah">Webhosting.net.ph</span> | Proudly made in
         Melbourne, Australia |
-        © 2016 Clock-in.me or its affiliates. All rights reserved</p>
+        © <?php echo copyright_year();?> <?php echo site_name();?> or its affiliates. All rights reserved</p>
 </footer>
 
 

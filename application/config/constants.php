@@ -83,3 +83,35 @@ defined('EXIT_USER_INPUT')     OR define('EXIT_USER_INPUT', 7); // invalid user 
 defined('EXIT_DATABASE')       OR define('EXIT_DATABASE', 8); // database error
 defined('EXIT__AUTO_MIN')      OR define('EXIT__AUTO_MIN', 9); // lowest automatically-assigned error code
 defined('EXIT__AUTO_MAX')      OR define('EXIT__AUTO_MAX', 125); // highest automatically-assigned error code
+
+
+//User defined constants
+
+defined('EMAIL_PROTOCOL')        OR define('EMAIL_PROTOCOL', 'smtp'); 
+defined('EMAIL_SMTP_HOST')       OR define('EMAIL_SMTP_HOST', 'http://smtp.sendgrid.net/'); 
+defined('EMAIL_SMTP_PORT')       OR define('EMAIL_SMTP_PORT', 587); 
+defined('EMAIL_SMTP_USER')       OR define('EMAIL_SMTP_USER', 'flexiesolutions'); 
+defined('EMAIL_SMTP_PASS')       OR define('EMAIL_SMTP_PASS', 'ctm342h'); 
+defined('EMAIL_MAILTYPE')        OR define('EMAIL_MAILTYPE', 'html'); 
+defined('EMAIL_CHARSET')         OR define('EMAIL_CHARSET', 'utf-8'); 
+defined('EMAIL_CRLF')            OR define('EMAIL_CRLF', "\r\n"); 
+defined('EMAIL_NEWLINE')         OR define('EMAIL_NEWLINE', "\r\n"); 
+
+// User defined constants for plans
+defined('FREE_USERLIMIT')       OR define('FREE_USERLIMIT', 50); 
+defined('PAID_USERLIMIT')       OR define('PAID_USERLIMIT', 3000); 
+
+defined('FREE_DEPTLIMIT')       OR define('FREE_DEPTLIMIT', 1); 
+defined('PAID_DEPTLIMIT')       OR define('PAID_DEPTLIMIT', 15); 
+
+defined('FREE_SHIFTLIMIT')      OR define('FREE_SHIFTLIMIT', 1); 
+defined('PAID_SHIFTLIMIT')      OR define('PAID_SHIFTLIMIT', 15);
+
+defined('FREE_WATCHERLIMIT')    OR define('FREE_WATCHERLIMIT', 1); 
+defined('PAID_WATCHERLIMIT')    OR define('PAID_WATCHERLIMIT', 10);
+
+defined('FREE_REPORTMONTHLIMIT')    OR define('FREE_REPORTMONTHLIMIT', 3); 
+defined('PAID_REPORTMONTHLIMIT')    OR define('PAID_REPORTMONTHLIMIT', 12);
+
+defined('BASIC_REPORT')    	OR define('BASIC_REPORT', 1); 
+defined('DETAILED_REPORT')    OR define('DETAILED_REPORT', 2);

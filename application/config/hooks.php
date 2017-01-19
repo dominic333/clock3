@@ -1,6 +1,4 @@
-<?php
-defined('BASEPATH') OR exit('No direct script access allowed');
-
+<?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /*
 | -------------------------------------------------------------------------
 | Hooks
@@ -11,3 +9,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |	http://codeigniter.com/user_guide/general/hooks.html
 |
 */
+
+$hook['post_controller_constructor'][] = array(
+                                'function' => 'redirect_ssl',
+                                'filename' => 'ssl.php',
+                                'filepath' => 'hooks'
+                                );
+
+/* End of file hooks.php */
+/* Location: ./application/config/hooks.php */

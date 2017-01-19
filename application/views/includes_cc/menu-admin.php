@@ -17,13 +17,25 @@
                     <i class="fa fa-calendar"></i> <span>My Attendance</span>
                 </a>
             </li>
-
+            <?php $calendarView= $this->authentication->checkCalendarViewAccess(); if($calendarView==1){ ?>
+            <li>
+                <a href="<?php echo base_url();?>ccattendance/attendance/monthiview">
+                    <i class="fa fa-calendar"></i> <span>My Attendance (Calendar View)</span>
+                </a>
+            </li>
+            <?php } ?>
             <li>
                 <a href="<?php echo base_url();?>ccattendance/attendance/whosaroundtoday">
                     <i class="fa fa-users"></i> <span>Who's Around Today</span>
                 </a>
             </li>
-
+            <?php $calendarView= $this->authentication->checkCalendarViewAccess(); if($calendarView==1){ ?>
+            <li>
+                <a href="<?php echo base_url();?>ccattendance/attendance/staffattendance">
+                    <i class="fa fa-calendar"></i> <span>Staff Attendance</span>
+                </a>
+            </li>
+            <?php } ?>
             <li class="treeview">
                 <a href="#">
                     <i class="fa fa-lock"></i> <span>Administrative</span>
@@ -45,10 +57,17 @@
                     </span>
                 </a>
                 <ul class="treeview-menu">
+                	  <?php $departmentsAcces= $this->authentication->checkDepartmentAccess(); if($departmentsAcces==1){ ?>
                     <li><a href="<?php echo base_url();?>ccshifts/shifts"><i class="fa fa-angle-double-right"></i> Add / Edit Department</a></li>
+                    <?php } ?>
                     <li><a href="<?php echo base_url();?>ccshifts/shifts/shifts"><i class="fa fa-angle-double-right"></i> Add / Edit Shift</a></li>
                     <li><a href="<?php echo base_url();?>ccshifts/shifts/users"><i class="fa fa-angle-double-right"></i> Add / Edit User</a></li>
+                    <?php $whiteIPAcces= $this->authentication->checkWhiteListIPAccess(); if($whiteIPAcces==1){ ?>
                     <li><a href="<?php echo base_url();?>ccshifts/shifts/whitelistips"><i class="fa fa-angle-double-right"></i> Add White List IPs</a></li>
+                    <?php } ?>
+                    <?php $leaveManagement= $this->authentication->checkLeaveManagementAccess(); if($leaveManagement==1){ ?>
+                    <li><a href="<?php echo base_url();?>ccattendance/attendance/leaveManagement"><i class="fa fa-angle-double-right"></i> Leave Management</a></li>
+                    <?php } ?>
                 </ul>
             </li>
 
@@ -65,12 +84,19 @@
                 </a>
             </li>
 
+				<?php $reportAcces= $this->authentication->checkReportsAccess(); if($reportAcces==1){ ?>
             <li class="treeview">
                 <a href="<?php echo base_url();?>ccreports/reports">
                     <i class="fa fa-leanpub"></i> <span>Reports</span>
                 </a>
             </li>
-
+				<?php } ?>
+				
+				<li>
+                <a href="<?php echo base_url();?>selfiedashboard/dashboard">
+                    <i class="fa fa-home"></i> <span>Go to Selfie Dashboard</span>
+                </a>
+            </li>
         </ul>
     </section>
     <!-- /.sidebar -->

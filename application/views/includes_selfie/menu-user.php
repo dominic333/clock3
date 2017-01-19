@@ -10,24 +10,42 @@
 
             <ul id="menu-content" class="menu-content collapse out">
                 <li>
+                		<div class="text-center">
+								<span id="clock-large"></span><span id="date-large"></span>
+                     </div>
+                </li>
+                <li>
                     <a href="<?php echo base_url();?>selfiedashboard/dashboard">
                         <i class="fa fa-home fa-lg"></i> Dashboard
                     </a>
                 </li>
-
+               <?php $isadmin=$this->session->userdata('isadmin'); if($isadmin==1) { ?>
+					<li>
+	                <a href="<?php echo base_url();?>ccdashboard/dashboard">
+	                    <i class="fa fa-home"></i> <span>Go to Admin Dashboard</span>
+	                </a>
+	            </li>
+					<?php } ?>
                 <li data-toggle="collapse" data-target="#products" class="collapsed">
                     <a href="#"><i class="fa fa-user fa-lg"></i> Account <span class="arrow"></span></a>
                 </li>
                 <ul class="sub-menu collapse" id="products">
                     <li><a href="<?php echo base_url();?>selfiemyaccount/account">View Profile</a></li>
+                    <!--
                     <li><a href="<?php echo base_url();?>selfieattendance/attendance">My Attendance</a></li>
+                    -->
                     <li><a href="<?php echo base_url();?>selfieattendance/attendance/whosaroundtoday">Who's Around Today</a></li>
                 </ul>
-
-
+                <?php $calendarView= $this->authentication->checkCalendarViewAccess(); if($calendarView==1){ ?>
+                <li>
+                    <a href="<?php echo base_url();?>selfieattendance/attendance/monthiview">
+                        <i class="fa fa-picture-o fa-lg"></i> Monthly Attendance
+                    </a>
+                </li>
+					 <?php } ?>
                 <li>
                     <a href="<?php echo base_url();?>selfiemarking/selfie">
-                        <i class="fa fa-picture-o fa-lg"></i> Selfie
+                        <i class="fa fa-picture-o fa-lg"></i> Selfie Attendance
                     </a>
                 </li>
 

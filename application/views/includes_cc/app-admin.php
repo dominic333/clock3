@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <title>Clock-in | Admin</title>
+    <title><?php echo site_name();?> | Admin</title>
 
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
@@ -30,12 +30,11 @@
     <!-- Mynotepedia Skins. Choose a skin from the css/skins
          folder instead of downloading all of them to reduce the load. -->
     <link rel="stylesheet" href="<?php echo base_url();?>assets/cc/theme/css/skins/_all-skins.min.css">
+    
+    <link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" href="<?php echo base_url();?>assets/cc/plugins/datepicker/datepicker3.css"> 
+    <link rel="stylesheet" href="<?php echo base_url();?>assets/cc/plugins/daterangepicker/daterangepicker.css"> 
 
-    <!-- Date Picker -->
-    <link rel="stylesheet" href="<?php echo base_url();?>assets/cc/plugins/datepicker/datepicker3.css">
-
-    <!-- Daterange picker -->
-    <link rel="stylesheet" href="<?php echo base_url();?>assets/cc/plugins/daterangepicker/daterangepicker.css">
 
     <!-- Bootstrap time Picker -->
     <link rel="stylesheet" href="<?php echo base_url();?>assets/cc/plugins/timepicker/bootstrap-timepicker.min.css">
@@ -48,6 +47,15 @@
 
     <!-- Select2 -->
     <link rel="stylesheet" href="<?php echo base_url();?>assets/cc/plugins/select2/select2.min.css">
+    
+    <link href="<?php echo base_url();?>assets/commoncss/jquery-confirm.css" rel="stylesheet"/>
+    
+    <!-- Full Calendar -->
+    <link rel="stylesheet" href="<?php echo base_url();?>assets/commoncss/fullcalendar.min.css">
+    <link rel="stylesheet" href="<?php echo base_url();?>assets/commoncss/fullcalendar.print.css" media="print">
+
+    <!-- Loader -->
+    <link rel="stylesheet" href="<?php echo base_url();?>assets/commoncss/loader/loader.css">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -55,6 +63,26 @@
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+    
+     <script type="text/javascript">
+      var base_url = '<?php echo base_url();?>';
+      var csrf_token = '<?php echo $this->security->get_csrf_hash()?>';
+    </script>
+    <div id="loader" style="display:none;"></div>
+    
+    <!--Loader-->
+    <script>
+        function showLoader()
+        {
+            document.getElementById("loader").style.display = "block";
+            document.getElementById("myDiv").style.display = "none";  
+        }
+        function hideLoader()
+        {
+            document.getElementById("loader").style.display = "none";
+            document.getElementById("myDiv").style.display = "block";
+        }
+    </script>
 </head>
 
 <body class="hold-transition skin-grey-light sidebar-mini fixed">
@@ -64,11 +92,11 @@
     <!--  HEADER  -->
     <header class="main-header">
         <!-- Logo -->
-        <a href="index.php" class="logo">
+        <a href="<?php echo base_url();?>" class="logo">
             <!-- mini logo for sidebar mini 50x50 pixels -->
             <img src="<?php echo base_url();?>assets/cc/images/ck.png" width="50" class="logo-mini">
             <!-- logo for regular state and mobile devices -->
-            <img src="<?php echo base_url();?>assets/cc/images/clockin-logo.png" width="135">
+            <img src="<?php echo base_url();?>assets/cc/images/Clock-In-Logo-01.png" width="135">
 
         </a>
         <!-- Header Navbar: style can be found in header.less -->
@@ -82,43 +110,43 @@
                 <ul class="nav navbar-nav">
 
                     <!-- Notifications: -->
+                    <?php
+	                     $countNotif= count($mynotifications);
+	                 ?>
                     <li class="dropdown notifications-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <i class="fa fa-bell-o"></i>
-                            <span class="label label-warning">10</span>
+                            <span class="label label-warning"><?php echo $countNotif; ?></span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li class="header">You have 10 notifications</li>
+	                         
+                            <li class="header">You have <?php echo $countNotif; ?> notifications</li>
                             <li>
                                 <!-- inner menu: contains the actual data -->
                                 <ul class="menu">
-                                    <li>
+			                           <?php
+				                           $i=0;
+				                           $labelArray= array('fa-users text-aqua','fa-warning text-yellow','fa-users text-red','fa-shopping-cart text-green','fa-user text-red');
+				                       		foreach($mynotifications as $row)
+				                       		{
+				                        ?>
+                                    <li id="<?php echo 'row'.$row->id; ?>">
                                         <a href="#">
-                                            <i class="fa fa-users text-aqua"></i> 5 new members joined today
+                                            <i class="fa <?php if($row->nType==1){ echo $labelArray[0]; } 
+                                            							else if($row->nType==2){ echo $labelArray[1]; } 
+                                            							else if($row->nType==3){ echo $labelArray[2]; } 
+                                            							else if($row->nType==4){ echo $labelArray[3]; } 
+                                            							else if($row->nType==5){ echo $labelArray[4]; }
+                                            					?>
+                                            	 ">
+                                            
+                                            </i> 
+                                            <?php echo $row->nMsg; ?>
+                                            <?php //echo $row->nMsg.' :'.$row->staff_name; ?>
                                         </a>
                                     </li>
-                                    <li>
-                                        <a href="#">
-                                            <i class="fa fa-warning text-yellow"></i> Very long description here that
-                                            may not fit into the
-                                            page and may cause design problems
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <i class="fa fa-users text-red"></i> 5 new members joined
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <i class="fa fa-shopping-cart text-green"></i> 25 sales made
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <i class="fa fa-user text-red"></i> You changed your username
-                                        </a>
-                                    </li>
+
+                                    <?php } ?>
                                 </ul>
                             </li>
                             <li class="footer"><a href="#">View all</a></li>
@@ -173,7 +201,7 @@
 
 <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
 <script>
-    $.widget.bridge('uibutton', $.ui.button);
+   $.widget.bridge('uibutton', $.ui.button);
 </script>
 
 <!-- Bootstrap 3.3.6 -->
@@ -215,3 +243,4 @@
 <!--kevinmaulana1991@gmail.com-->
 
 
+<div style="display:block;" id="myDiv" class="animate-bottom">

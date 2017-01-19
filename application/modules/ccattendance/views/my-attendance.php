@@ -16,91 +16,19 @@
     <section class="content">
 
         <div class="row">
-            <div class="col-md-8">
+            <div class="col-md-9">
                 <div class="box box-danger">
 
                     <div class="box-header">
 
-                        <div class="row">
-                            <div class="form-group">
-                                <div class="col-md-3">
-
-                                    <div class="input-group date" data-provide="datepicker"
-                                         id='dpfrom'>
-                                        <input type="text" class="form-control" placeholder="From">
-                                        <div class="input-group-addon">
-                                            <span class="glyphicon glyphicon-th"></span>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-3">
-                                    <div class="input-group date" data-provide="datepicker"
-                                         id='dpto'>
-                                        <input type="text" class="form-control" placeholder="To">
-                                        <div class="input-group-addon">
-                                            <span class="glyphicon glyphicon-th"></span>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-3">
-                                    <a href="#" class="btn btn-success"><span
-                                            class="fa fa-search"
-                                            aria-hidden="true"></span>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-
                     </div>
                     <!-- /.box-header -->
+                  
 
+														  
                     <div class="box-body">
                         <div class="table-responsive">
-                            <table id="example1" class="table table-bordered table-striped">
-                                <thead>
-                                <tr>
-                                    <th width="10px">No</th>
-                                    <th>Date</th>
-                                    <th>Clock in Time</th>
-                                    <th>Clock out Time</th>
-                                    <th>Notes</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>01-01-206</td>
-                                    <td>00:00:00 AM</td>
-                                    <td>00:00:00 PM</td>
-                                    <td>Lorem Ipsum Dolor .....</td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>02-01-206</td>
-                                    <td>00:00:00 AM</td>
-                                    <td>00:00:00 PM</td>
-                                    <td>Lorem Ipsum Dolor .....</td>
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td>04-01-206</td>
-                                    <td>00:00:00 AM</td>
-                                    <td>00:00:00 PM</td>
-                                    <td>Lorem Ipsum Dolor .....</td>
-                                </tr>
-                                <tr>
-                                    <td>4</td>
-                                    <td>06-01-206</td>
-                                    <td>Absent</td>
-                                    <td>Absent</td>
-                                    <td>Lorem Ipsum Dolor .....</td>
-                                </tr>
-
-                                </tbody>
-
-                            </table>
+                        	<?php echo (isset($attendance_table)) ? $attendance_table :'Please Select The dates'; ?> 
                         </div>
                     </div>
                     <!-- /.box-body -->
@@ -110,9 +38,11 @@
             </div>
             <!-- /.col-md-8 -->
 
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <!-- Calendar -->
-                <div class="box box-solid bg-green-gradient">
+                <div>
+                <?php /*
+                <div class="box box-solid ">
                     <div class="box-header">
                         <i class="fa fa-calendar"></i>
 
@@ -126,11 +56,38 @@
                         <!-- /. tools -->
                     </div>
                     <!-- /.box-header -->
-                    <div class="box-body no-padding">
+                    <div >
                         <!--The calendar -->
-                        <div id="calendar" style="width: 100%"></div>
+                        
                     </div>
+                   */ ?>
+							<div id="calendar" style="width: 100%"></div>
+                </div>
+                <div> 
+                	  <form id="frm_attendance_search" name="frm_attendance_search" class="form-horizontal" role="form" 
+								action="<?php echo base_url();?>ccattendance/attendance" method="post">
+                        <input type="hidden" name="<?=$this->security->get_csrf_token_name()?>" value="<?=$this->security->get_csrf_hash()?>" />
+                        <div class="row">
+                            <div class="">
 
+                                <div>
+                                     <input id="altField" name="altField" type="hidden">
+                                		 <input id="date_from" name="date_from" data-date-format="dd-mm-yyyy" type="hidden" class="form-control" placeholder="From">
+                                		 <input id="date_to"  name="date_to" data-date-format="dd-mm-yyyy" type="hidden" class="form-control" placeholder="To">
+                                </div>
+										 <div id="dateRanges" >
+										   
+										 </div>
+											
+                                <div class="col-md-3">
+                                    <button type="submit" id="submitThis" name="Submit" value="Submit" class="btn btn-success" disabled><span
+                                            class="fa fa-search"
+                                            aria-hidden="true"></span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+							</form>
                 </div>
                 <!-- /.box -->
 
@@ -144,7 +101,5 @@
     </section>
     <!-- /.content -->
 </div>
-<!-- /.content-wrapper -->
-
-
+<!-- /.content-wrapper --><!-- /.content-wrapper -->
 

@@ -75,6 +75,389 @@ class Authentication
              redirect('/home/login');
        	 }
      }
+     
+     //Function to check if user has access to allow this function
+     //Dominic, December 17,2016
+     function check_admin_access()
+     {
+     	  //Check if we have session userdata which is possible after successful login
+        if($this->CI->session->userdata('mid') && $this->CI->session->userdata('logged_in'))
+        {
+           if($this->CI->session->userdata('isadmin')==1)
+           {
+             return TRUE;
+           }
+           else
+           {
+           	 $this->CI->session->set_flashdata('feedback','Please login!');
+       		 redirect('/home/logout');
+           }
+        }           
+        else
+        {
+          $this->CI->session->set_flashdata('feedback','Please login!');
+          redirect('/home/logout');
+    	 }
+    	 
+     }
+     
+     //Function to check reports access available or not
+     //Dominic, December 21,2016 (for menu link)
+     function checkReportsAccess()
+     {
+		 $reportAcces=0;
+     	 $compIdSess= $this->CI->session->userdata('coid');
+     	 $result_settings	=	$this->CI->db->query("SELECT company_plans.company_id,company_plans.max_users,plans.departments,plans.reports 
+			FROM company_plans
+			LEFT JOIN plans ON plans.id=company_plans.planId
+			WHERE company_plans.company_id=".$compIdSess."
+     	 ");
+		 if($result_settings->num_rows() > 0)
+		 {
+		 	 $rows	=	$result_settings->result();
+		 	 foreach($rows as $row)
+			 {
+				$reportAcces 			= $row->reports;
+			 }
+		 }
+		 return $reportAcces;
+     }
+     
+     //Function to check reports controller access available or not
+     //Dominic, December 21,2016 (for controller)
+     function checkReportsFeaturesAccess()
+     {
+		 $reportAcces=0;
+     	 $compIdSess= $this->CI->session->userdata('coid');
+     	 $result_settings	=	$this->CI->db->query("SELECT company_plans.company_id,company_plans.max_users,plans.departments,plans.reports 
+			FROM company_plans
+			LEFT JOIN plans ON plans.id=company_plans.planId
+			WHERE company_plans.company_id=".$compIdSess."
+     	 ");
+     	 if($result_settings->num_rows() > 0)
+     	 {
+     	 	 $rows	=	$result_settings->result();
+			 foreach($rows as $row)
+			 {
+				$reportAcces 			= $row->reports;
+				if($reportAcces==1)
+				{
+					return TRUE;
+				}
+				else
+				{
+					$this->CI->session->set_flashdata('feedback','Please login!');
+	       		redirect('/home/logout');
+				}
+			 }
+     	 }
+     	 else 
+     	 {
+     	 	$this->CI->session->set_flashdata('feedback','Please login!');
+	      redirect('/home/logout');
+     	 }
+     }
+     
+     //Function to check reports access available or not
+     //Dominic, December 21,2016 (for menu link)
+     function checkDepartmentAccess()
+     {
+		 $departmentsAcces=0;
+     	 $compIdSess= $this->CI->session->userdata('coid');
+     	 $result_settings	=	$this->CI->db->query("SELECT company_plans.company_id,company_plans.max_users,plans.departments,plans.reports 
+			FROM company_plans
+			LEFT JOIN plans ON plans.id=company_plans.planId
+			WHERE company_plans.company_id=".$compIdSess."
+     	 ");
+     	 if($result_settings->num_rows() > 0)
+     	 {
+     	 	 $rows	=	$result_settings->result();
+			 foreach($rows as $row)
+			 {
+				$departmentsAcces 	= $row->departments;
+			 }
+     	 }
+		 return $departmentsAcces;
+     }
+     
+     //Function to check department function access available or not
+     //Dominic, December 21,2016 (for controller)
+     function checkDepartmentFeaturesAccess()
+     {
+		 $departmentsAcces=0;
+     	 $compIdSess= $this->CI->session->userdata('coid');
+     	 $result_settings	=	$this->CI->db->query("SELECT company_plans.company_id,company_plans.max_users,plans.departments,plans.reports 
+			FROM company_plans
+			LEFT JOIN plans ON plans.id=company_plans.planId
+			WHERE company_plans.company_id=".$compIdSess."
+     	 ");
+     	 if($result_settings->num_rows() > 0)
+     	 {
+     		 $rows	=	$result_settings->result();
+			 foreach($rows as $row)
+			 {
+				$departmentsAcces 	= $row->departments;
+				if($departmentsAcces==1)
+				{
+					return TRUE;
+				}
+				else
+				{
+					$this->CI->session->set_flashdata('feedback','Please login!');
+	       		redirect('/home/logout');
+				}
+			 } 
+     	 }
+     	 else
+     	 {
+     	 	$this->CI->session->set_flashdata('feedback','Please login!');
+	      redirect('/home/logout');
+     	 }
+     }
+     
+     //Function to check if whitelistip feature available or not
+     //Dominic, Jan 12, 2017
+     function checkWhiteListIPAccess()
+     {
+		
+		 $whiteIPAcces=0;
+     	 $compIdSess= $this->CI->session->userdata('coid');
+     	 $result_settings	=	$this->CI->db->query("SELECT plans.ipWhiteListing  
+			FROM company_plans
+			LEFT JOIN plans ON plans.id=company_plans.planId
+			WHERE company_plans.company_id=".$compIdSess."
+     	 ");
+     	 if($result_settings->num_rows() > 0)
+     	 {
+     	 	 $rows	=	$result_settings->result();
+			 foreach($rows as $row)
+			 {
+				$whiteIPAcces 	= $row->ipWhiteListing;
+			 }
+     	 }
+		 return $whiteIPAcces;
+     }
+     
+     //Function to check if whitelistip CRUD feature available or not
+     //Dominic, Jan 12, 2017
+     function checkWhiteListIPFeaturesAccess()
+     {
+		 $whiteIPAcces=0;
+     	 $compIdSess= $this->CI->session->userdata('coid');
+     	 $result_settings	=	$this->CI->db->query("SELECT plans.ipWhiteListing  
+			FROM company_plans
+			LEFT JOIN plans ON plans.id=company_plans.planId
+			WHERE company_plans.company_id=".$compIdSess."
+     	 ");
+     	 if($result_settings->num_rows() > 0)
+     	 {
+     		 $rows	=	$result_settings->result();
+			 foreach($rows as $row)
+			 {
+				$whiteIPAcces 	= $row->ipWhiteListing;
+				if($whiteIPAcces==1)
+				{
+					return TRUE;
+				}
+				else
+				{
+					$this->CI->session->set_flashdata('feedback','Please login!');
+	       		redirect('/home/logout');
+				}
+			 } 
+     	 }
+     	 else
+     	 {
+     	 	$this->CI->session->set_flashdata('feedback','Please login!');
+	      redirect('/home/logout');
+     	 }
+     }
+     
+     //Function to check leave management feature access
+     //Dominic, Jan 13, 2017
+     function checkLeaveManagementFeatureAccess()
+     {
+     	 $leaveManagement=0;
+     	 $compIdSess= $this->CI->session->userdata('coid');
+     	 $result_settings	=	$this->CI->db->query("SELECT plans.leaveManagement  
+			FROM company_plans
+			LEFT JOIN plans ON plans.id=company_plans.planId
+			WHERE company_plans.company_id=".$compIdSess."
+     	 ");
+     	 if($result_settings->num_rows() > 0)
+     	 {
+     		 $rows	=	$result_settings->result();
+			 foreach($rows as $row)
+			 {
+				$leaveManagement 	= $row->leaveManagement;
+				if($leaveManagement==1)
+				{
+					return TRUE;
+				}
+				else
+				{
+					$this->CI->session->set_flashdata('feedback','Please login!');
+	       		redirect('/home/logout');
+				}
+			 } 
+     	 }
+     	 else
+     	 {
+     	 	$this->CI->session->set_flashdata('feedback','Please login!');
+	      redirect('/home/logout');
+     	 }
+     }
+     
+     //Function to check leave management access
+     //Dominic, Jan 13, 2017
+     function checkLeaveManagementAccess()
+     {
+		
+		 $leaveManagement=0;
+     	 $compIdSess= $this->CI->session->userdata('coid');
+     	 $result_settings	=	$this->CI->db->query("SELECT plans.leaveManagement  
+			FROM company_plans
+			LEFT JOIN plans ON plans.id=company_plans.planId
+			WHERE company_plans.company_id=".$compIdSess."
+     	 ");
+     	 if($result_settings->num_rows() > 0)
+     	 {
+     	 	 $rows	=	$result_settings->result();
+			 foreach($rows as $row)
+			 {
+				$leaveManagement 	= $row->leaveManagement;
+			 }
+     	 }
+		 return $leaveManagement;
+     }
+     
+     //Function to fetch report download limit
+     //Dominic, Jan 13, 2017
+     function reportMonthLimit()
+     {
+		
+		 $reportMonthLimit=FREE_REPORTMONTHLIMIT;
+     	 $compIdSess= $this->CI->session->userdata('coid');
+     	 $result_settings	=	$this->CI->db->query("SELECT plans.reportMonthLimit  
+			FROM company_plans
+			LEFT JOIN plans ON plans.id=company_plans.planId
+			WHERE company_plans.company_id=".$compIdSess."
+     	 ");
+     	 if($result_settings->num_rows() > 0)
+     	 {
+     	 	 $rows	=	$result_settings->result();
+			 foreach($rows as $row)
+			 {
+				$reportMonthLimit 	= $row->reportMonthLimit;
+			 }
+     	 }
+		 return $reportMonthLimit;
+     }
+     
+     //Function to fetch report download limit
+     //Dominic, Jan 13, 2017
+     function reportType()
+     {
+		
+		 $reportDownload=BASIC_REPORT;
+     	 $compIdSess= $this->CI->session->userdata('coid');
+     	 $result_settings	=	$this->CI->db->query("SELECT plans.reportDownload  
+			FROM company_plans
+			LEFT JOIN plans ON plans.id=company_plans.planId
+			WHERE company_plans.company_id=".$compIdSess."
+     	 ");
+     	 if($result_settings->num_rows() > 0)
+     	 {
+     	 	 $rows	=	$result_settings->result();
+			 foreach($rows as $row)
+			 {
+				$reportDownload 	= $row->reportDownload;
+			 }
+     	 }
+		 return $reportDownload;
+     }
+     
+     //Function to check if calendar view available or not
+     //Dominic, Jan 14, 2017
+     function checkCalendarViewAccess()
+     {
+		
+		 $calendarView=0;
+     	 $compIdSess= $this->CI->session->userdata('coid');
+     	 $result_settings	=	$this->CI->db->query("SELECT plans.calendarView  
+			FROM company_plans
+			LEFT JOIN plans ON plans.id=company_plans.planId
+			WHERE company_plans.company_id=".$compIdSess."
+     	 ");
+     	 if($result_settings->num_rows() > 0)
+     	 {
+     	 	 $rows	=	$result_settings->result();
+			 foreach($rows as $row)
+			 {
+				$calendarView 	= $row->calendarView;
+			 }
+     	 }
+		 return $calendarView;
+     }
+     
+     //Function to check if calendar view feature available or not
+     //Dominic, Jan 12, 2017
+     function checkCalendarViewFeaturesAccess()
+     {
+		 $calendarView=0;
+     	 $compIdSess= $this->CI->session->userdata('coid');
+     	 $result_settings	=	$this->CI->db->query("SELECT plans.calendarView  
+			FROM company_plans
+			LEFT JOIN plans ON plans.id=company_plans.planId
+			WHERE company_plans.company_id=".$compIdSess."
+     	 ");
+     	 if($result_settings->num_rows() > 0)
+     	 {
+     		 $rows	=	$result_settings->result();
+			 foreach($rows as $row)
+			 {
+				$calendarView 	= $row->calendarView;
+				if($calendarView==1)
+				{
+					return TRUE;
+				}
+				else
+				{
+					$this->CI->session->set_flashdata('feedback','Please login!');
+	       		redirect('/home/logout');
+				}
+			 } 
+     	 }
+     	 else
+     	 {
+     	 	$this->CI->session->set_flashdata('feedback','Please login!');
+	      redirect('/home/logout');
+     	 }
+     }
+     
+     //Function to get watcher limit for a company
+     //Dominic, Jan 18,2017
+     function getWatcherLimit()
+     {
+     	 $watcherLimit=0;
+     	 $compIdSess= $this->CI->session->userdata('coid');
+     	 $result_settings	=	$this->CI->db->query("SELECT plans.watcherLimit  
+			FROM company_plans
+			LEFT JOIN plans ON plans.id=company_plans.planId
+			WHERE company_plans.company_id=".$compIdSess."
+     	 ");
+     	 if($result_settings->num_rows() > 0)
+     	 {
+     	 	 $rows	=	$result_settings->result();
+			 foreach($rows as $row)
+			 {
+				$watcherLimit 	= $row->watcherLimit;
+			 }
+     	 }
+		 return $watcherLimit;
+     }
+     
+     
 	
      function logout()
      {

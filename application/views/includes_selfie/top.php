@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <title>Clock-in | User</title>
+    <title><?php echo site_name();?> | User</title>
 
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
@@ -41,13 +41,37 @@
     <!--Font Awesome-->
     <link href="<?php echo base_url();?>assets/snap/plugins/font-awesome-4.3.0/css/font-awesome.min.css" rel="stylesheet">
 
+    <!-- Full Calendar -->
+    <link rel="stylesheet" href="<?php echo base_url();?>assets/commoncss/fullcalendar.min.css">
+    <link rel="stylesheet" href="<?php echo base_url();?>assets/commoncss/fullcalendar.print.css" media="print">
+
+    <!-- Loader -->
+    <link rel="stylesheet" href="<?php echo base_url();?>assets/commoncss/loader/loader.css">
+    <div id="loader" style="display:none;"></div>
+    <!--Loader-->
+    <script>
+        function showLoader()
+        {
+            document.getElementById("loader").style.display = "block";
+            document.getElementById("myDiv").style.display = "none";
+        }
+        function hideLoader()
+        {
+            document.getElementById("loader").style.display = "none";
+            document.getElementById("myDiv").style.display = "block";
+        }
+    </script>
+
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-
+	  <script type="text/javascript">
+      var base_url = '<?php echo base_url();?>';
+      var csrf_token = '<?php echo $this->security->get_csrf_hash()?>';
+    </script>
 </head>
 
 <body style="background-color: #e6e6e6">
@@ -84,58 +108,33 @@
                     <p>Recent Posts</p>
 
                     <ul class="products-list product-list-in-box">
-                        <li class="item">
-                            <div class="product-img">
-                                <img src="<?php echo base_url();?>assets/snap/theme/img/default-50x50.gif" alt="Recent Post">
-                            </div>
-                            <div class="product-info">
-                                <a href="#" class="product-title" data-toggle="modal" data-target="#myModalHorizontal">VIP
-                                    Test Announcement
-                                    <span class="label label-warning pull-right">new</span></a>
-                        <span class="product-description">
-                          14 Jan 2015 4:38 PM
-                        </span>
-                            </div>
-                        </li>
-                        <!-- /.item -->
-                        <li class="item">
-                            <div class="product-img">
-                                <img src="<?php echo base_url();?>assets/snap/theme/img/default-50x50.gif" alt="Product Image">
-                            </div>
-                            <div class="product-info">
-                                <a href="#" class="product-title" data-toggle="modal" data-target="#myModalHorizontal">VIP Test Announcement
-                                    <span class="label label-info pull-right">new</span></a>
-                        <span class="product-description">
-                          14 Jan 2015 4:38 PM
-                        </span>
-                            </div>
-                        </li>
-                        <!-- /.item -->
-                        <li class="item">
-                            <div class="product-img">
-                                <img src="<?php echo base_url();?>assets/snap/theme/img/default-50x50.gif" alt="Product Image">
-                            </div>
-                            <div class="product-info">
-                                <a href="#" class="product-title" data-toggle="modal" data-target="#myModalHorizontal">VIP Test Announcement <span
-                                        class="label label-danger pull-right">new</span></a>
-                        <span class="product-description">
-                          14 Jan 2015 4:38 PM
-                        </span>
-                            </div>
-                        </li>
-                        <!-- /.item -->
-                        <li class="item">
-                            <div class="product-img">
-                                <img src="<?php echo base_url();?>assets/snap/theme/img/default-50x50.gif" alt="Product Image">
-                            </div>
-                            <div class="product-info">
-                                <a href="#" class="product-title" data-toggle="modal" data-target="#myModalHorizontal">VIP Test Announcement
-                                    <span class="label label-success pull-right">new</span></a>
-                        <span class="product-description">
-                          14 Jan 2015 4:38 PM
-                        </span>
-                            </div>
-                        </li>
+                        <?php
+                           $i=0;
+                           $labelArray= array('label-warning','label-info','label-danger','label-success');
+                       		foreach($listAnnouncements as $announcement)
+                       		{
+                        ?>
+                            <li class="item">
+                                <div class="product-img">
+                                    <img src="<?php echo base_url();?>assets/cc/theme/img/default-50x50.gif" alt="Recent Post">
+                                </div>
+                                <div class="product-info">
+                                    <a href="javascript:void(0)" class="product-title latestAnnouncementClass" 
+                                        data-title="<?php echo $announcement->title;?>" data-description="<?php echo $announcement->msg;?>" data-postedDate="<?php echo date('j F Y h:i a', strtotime($announcement->date)); ?>"
+                                        data-toggle="modal" >
+                                        <?php echo $announcement->title; ?>
+                                        <span class="label <?php echo $labelArray[$i]; ?> pull-right">new</span>
+                                    </a>
+				                        <span class="product-description">
+				                          <?php echo date("j F Y h:i a", strtotime($announcement->date)); ?>
+				                        </span>
+                                </div>
+                            </li>
+
+                        <?php
+                             $i++;
+                             }
+                        ?>
                         <!-- /.item -->
                     </ul>
                 </div>
@@ -151,36 +150,36 @@
         <!-- /.col-md-4 -->
 
 
-        <!--=======================================Modal Form========================================-->
-        <div class="modal fade" id="myModalHorizontal" tabindex="-1" role="dialog"
-             aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <!-- Modal Header -->
-                    <div class="modal-header">
-                        <button type="button" class="close"
-                                data-dismiss="modal">
-                            <span aria-hidden="true">&times;</span>
-                            <span class="sr-only">Close</span>
-                        </button>
-                        <h4 class="modal-title" id="myModalLabel">
-                            VPI Test Announcement
-                        </h4>
-                        <p>11 October 2016 9.00 AM</p>
-                    </div>
-
-                    <!-- Modal Body -->
-                    <div class="modal-body">
-
-                        <p>Some text in the modal.</p>
-
-                    </div>
-
-                </div>
+<!--=======================================Latest Announcement Details popup========================================-->
+<div class="modal fade" id="latestAnnouncementInfo" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <button type="button" class="close"
+                        data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title" id="latestAnnouncementTitle">
+                    
+                </h4>
+                <p id="latestAnnouncementPostedDate"></p>
             </div>
+
+            <!-- Modal Body -->
+            <div class="modal-body">
+
+                <p id="latestAnnouncementMsg"></p>
+
+            </div>
+
         </div>
-        <!--=======================================End Of Modal Form========================================-->
+    </div>
+</div>
+<!--=======================================End Of Modal Form========================================-->
 
-
+        <div style="display:block;" id="myDiv" class="animate-bottom">
         <!--  ================================Content Column========================================== -->
         <div class="col-md-8">

@@ -33,7 +33,7 @@
         <section class="content-header">
             <h1>
                 Selfie
-                <small>Lorem Ipsum ....</small>
+                <small></small>
             </h1>
             <ol class="breadcrumb">
                 <li><a href="my-attendance.php"><i class="fa fa-picture-o"></i> Selfie</a></li>
@@ -51,7 +51,7 @@
                     <!-- USERS LIST -->
                     <div class="box box-danger">
                         <div class="box-header with-border">
-                            <h3 class="box-title">Lorem Ipsum.....</h3>
+                            <h3 class="box-title">Mark Attendance</h3>
 
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
@@ -61,30 +61,38 @@
                         <!-- /.box-header -->
                         <div class="box-body">
 
-                            <!-- html5 video-->
+                            <!-- html5 video
                             <video autoplay="true" id="videoElement"></video>
-
-
+                            -->
+                              <input type="hidden" name="geolocation" id="geolocation" value=""/>
+										<video id="videoElement"  autoplay></video>
+										<canvas id="canvas" width="640" height="480" style="display:none"></canvas>
+										<select name="vclocktype" id="vclocktype" class="form-control attendance-control">
+                               	<?php if ($staff_already_in == "" || $staff_mark_absent != ""){ ?>
+                               		<option value="in" selected="selected">Clock In</option>
+                               	<?php }else{ ?>
+                               			<?php if ($staff_break_state == 0){ ?>
+                               				<option value="brkOut">Clock as Taking a Break</option>
+                               				<option value="Out">Clock Out</option>
+                               			<?php }else{ ?>
+                               				<option value="brkin">Clock as Returning from Break</option>
+                               			<?php } ?>
+                               	<?php } ?>
+                              </select>
                         </div>
                         <!-- /.box-body -->
 
                         <div class="box-footer">
-
                             <div class="row">
-                                <div class="col-md-12 col-sm-12 col-xs-12 text-center">
-                                    <p><h4>9 September, 2016 - Monday - 00:00:00 AM</h4></p>
-                                </div>
-
                                 <div class="col-md-4 col-sm-4 col-xs-4 text-center">
-                                    <button class="btn btn-danger pull-left" href="javascript:void(0)">Clock In</button>
+                                 <a class="btn btn-danger pull-left" id="take_selfie_subt" data-staff_id="<?php echo $this->session->userdata('mid');?>" href="#">
+					                     Mark Attendance
+					                  </a>
                                 </div>
-                                <div class="col-md-4 col-sm-4 col-xs-4 text-center">
-                                    <button class="btn btn-danger" href="javascript:void(0)">Break
-                                        Time</button>
-                                </div>
-                                <div class="col-md-4 col-sm-4 col-xs-4 text-center">
-                                    <button class="btn btn-danger pull-right" href="javascript:void(0)">Clock Out</button>
-                                </div>
+                            </div>
+                            
+                            <div class="row">
+                            	  
                             </div>
 
                         </div>
@@ -103,21 +111,3 @@
     </div>
 
 <!-- footer -->
-
-<script>
-    var video = document.querySelector("#videoElement");
-
-    navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia || navigator.oGetUserMedia;
-
-    if (navigator.getUserMedia) {
-        navigator.getUserMedia({video: true}, handleVideo, videoError);
-    }
-
-    function handleVideo(stream) {
-        video.src = window.URL.createObjectURL(stream);
-    }
-
-    function videoError(e) {
-        // do something
-    }
-</script>
