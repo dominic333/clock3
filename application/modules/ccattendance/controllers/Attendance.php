@@ -16,6 +16,14 @@ class Attendance extends MX_Controller
 	
 	//Function to load my attendance
 	//Dominic; Dec 14,2016
+	
+	public function index()
+	{
+		$this->authentication->check_admin_access();
+		$this->monthiview();
+	}
+	
+   /*
 	public function index()
 	{
 		$this->authentication->check_admin_access();
@@ -119,6 +127,7 @@ class Attendance extends MX_Controller
 
 		}
 	}
+   */
 	
 	//Function to compute basic attendance for my attendance view
 	//Dominic; Jan 14,2017
@@ -923,15 +932,18 @@ class Attendance extends MX_Controller
 													                    <div class="box-body">
 													                        <div class="box box-widget widget-user-2">
 													                            <!-- Add the bg color to the header using any of the bg-* classes -->
-													                            <div class="widget-user-header bg-gray-light">
-													                                <div class="widget-user-image">
-													                                    <img class="img-circle" src="'.$fullpath.'" alt="User Avatar">
-													                                </div>
-													                                <h4 class="widget-user-username">'.$staffname.'</h4>
-													                                <h5 class="widget-user-desc">Scheduled Clock in @ <b> '.$baselogtime.'</b></h5>
-													                                <h5 class="widget-user-desc">Actual Clock in @ <b> '.$logtime.'</b></h5>
-													                                <a class="on-time">'.$attendance_status.'</a>
-													                                <h6 class="widget-user-desc">'.$selfie_icon.$map_icon.'</h6>
+
+													                            <div class="text-center">
+													                                <img class="img-bordered" src="' . $fullpath . '" alt="Photo">
+													                            </div>
+
+													                            <div class="bg-gray-light text-center">
+
+													                                <h3>' . $staffname . '</h4>
+													                                <h5>Scheduled Clock in @ <b> ' . $baselogtime . '</b></h5>
+													                                <h5>Actual Clock in @ <b> ' . $logtime . '</b></h5>
+													                                <a class="on-time">' . $attendance_status . '</a>
+													                                <p>' . $selfie_icon . $map_icon . '</p>
 													                            </div>
 													                        </div>
 													                    </div>

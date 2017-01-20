@@ -33,6 +33,7 @@
     <link rel="stylesheet" href="<?php echo base_url();?>assets/snap/plugins/datatables/dataTables.bootstrap.css">
 
     <!-- Date Picker -->
+    <link rel="stylesheet" href="<?php echo base_url();?>assets/snap/plugins/datepicker/jquery-ui.css">
     <link rel="stylesheet" href="<?php echo base_url();?>assets/snap/plugins/datepicker/datepicker3.css">
 
     <!-- Bootstrap time Picker -->
@@ -78,17 +79,17 @@
 
 
 <!-- Page Content -->
-<div class="container">
+<div class="container-fluid">
 
     <div class="row">
 
         <!-- Sidebar Left Column -->
-        <div class="col-md-4">
-				
+        <div class="col-md-3">
+
             <?php
-            
-             $this->load->view('includes_selfie/menu-user'); 
-             
+
+             $this->load->view('includes_selfie/menu-user');
+
             ?>
 
             <!-- Announcements -->
@@ -119,7 +120,7 @@
                                     <img src="<?php echo base_url();?>assets/cc/theme/img/default-50x50.gif" alt="Recent Post">
                                 </div>
                                 <div class="product-info">
-                                    <a href="javascript:void(0)" class="product-title latestAnnouncementClass" 
+                                    <a href="javascript:void(0)" class="product-title latestAnnouncementClass"
                                         data-title="<?php echo $announcement->title;?>" data-description="<?php echo $announcement->msg;?>" data-postedDate="<?php echo date('j F Y h:i a', strtotime($announcement->date)); ?>"
                                         data-toggle="modal" >
                                         <?php echo $announcement->title; ?>
@@ -163,7 +164,7 @@
                     <span class="sr-only">Close</span>
                 </button>
                 <h4 class="modal-title" id="latestAnnouncementTitle">
-                    
+
                 </h4>
                 <p id="latestAnnouncementPostedDate"></p>
             </div>
@@ -182,4 +183,4 @@
 
         <div style="display:block;" id="myDiv" class="animate-bottom">
         <!--  ================================Content Column========================================== -->
-        <div class="col-md-8">
+        <div class="col-md-9">

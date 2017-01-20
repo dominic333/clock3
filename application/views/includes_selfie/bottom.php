@@ -29,7 +29,8 @@
 <script src="<?php echo base_url();?>assets/snap/plugins/datatables/dataTables.bootstrap.min.js"></script>
 
 <!-- datepicker -->
-<script src="<?php echo base_url();?>assets/snap/plugins/datepicker/bootstrap-datepicker.js"></script>
+<script src="<?php echo base_url();?>assets/common/jquery-ui.js"></script>
+<!--<script src="--><?php //echo base_url();?><!--assets/snap/plugins/datepicker/bootstrap-datepicker.js"></script>-->
 
 <!-- bootstrap time picker -->
 <script src="<?php echo base_url();?>assets/snap/plugins/timepicker/bootstrap-timepicker.min.js"></script>

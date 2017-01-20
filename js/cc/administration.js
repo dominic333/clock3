@@ -572,7 +572,6 @@ $(document).ready(function(){
 			},
 			success: function(element) {
 				element
-					.text('').addClass('valid')
 					.closest('.control-group').removeClass('error').addClass('success');
 			}
 		});

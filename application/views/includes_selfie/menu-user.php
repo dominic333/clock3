@@ -6,6 +6,14 @@
         <div class="brand"><img src="<?php echo base_url();?>assets/snap/images/clockin-logo.png" width="135"></div>
         <i class="fa fa-bars fa-2x toggle-btn" data-toggle="collapse" data-target="#menu-content"></i>
 
+        <div class="datesnap">
+            <span id="date-large"></span></span>
+        </div>
+
+        <div class="timesnap">
+            <span id="clock-large"></span>
+        </div>
+
         <div class="menu-list">
 
             <ul id="menu-content" class="menu-content collapse out">

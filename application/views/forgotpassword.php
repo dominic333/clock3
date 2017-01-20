@@ -34,6 +34,9 @@
       var base_url = '<?php echo base_url();?>';
       var csrf_token = '<?php echo $this->security->get_csrf_hash()?>';
     </script>
+    <style type="text/css">
+      .white{ color: #FFFFFF; }
+    </style>
 
 </head>
 
@@ -51,36 +54,30 @@
             <div class="col-sm-5 form-box">
                 <div class="form-top">
                     <div class="form-top-left">
-                        <h3>Login Form</h3>
+                        <h3>Forgot Password Form</h3>
                     </div>
                     <div class="form-top-right">
                         <i class="fa fa-lock"></i>
                     </div>
                 </div>
                 <div class="form-bottom">
-                    <form role="form" id="loginForm" name="loginForm" action="<?php echo base_url();?>home/login" method="post" class="login-form">
+                    <form role="form" id="forgotPassResForm" name="forgotPassResForm" action="<?php echo base_url();?>home/forgotpassword" method="post" class="login-form">
                     		<input type="hidden" name="<?=$this->security->get_csrf_token_name()?>" value="<?=$this->security->get_csrf_hash()?>" />
                         <div class="form-group">
                             <input type="text" id="companyName" name="companyName" placeholder="<?php echo $this->lang->line('companyName');?>" class="form-control" autofocus required>
-                            <label class="error"><?php echo form_error('companyName'); ?></label>
+                            <label class="white"><?php echo form_error('companyName'); ?></label>
                         </div>
                         <div class="form-group">
-                            <input type="text" id="name" name="name" placeholder="<?php echo $this->lang->line('name');?>" class="form-control" required>
-                            <label class="error"><?php echo form_error('name'); ?></label>
+                            <input type="text" id="email" name="email" placeholder="<?php echo $this->lang->line('email');?>" class="form-control" required>
+                            <label class="white"><?php echo form_error('email'); ?></label>
                         </div>
-                        <div class="form-group">
-                            <input type="password" name="password" placeholder="<?php echo $this->lang->line('password');?>" class="form-control" required>
-                            <label class="error"><?php echo form_error('password'); ?></label>
-                        </div>
-                        <button type="submit" class="btn btn-lg"><?php echo $this->lang->line('signin');?></button>
+                        <button type="submit" class="btn btn-lg">Reset Password</button>
 
                         <p></p>
 
                         <div class="form-group">
-                            <input id="remember" name="checkbox" type="checkbox">
-                            <span class="remember">Remember Me</span>
 
-                            <a href="<?php echo base_url();?>home/forgotpassword" class="pull-right remember">Forgot Password ? </a>
+                            <a href="<?php echo base_url();?>home/login" class="pull-right remember">Go to Login Page </a>
                         </div>
                     </form>
                 </div>
@@ -105,12 +102,47 @@
 <script src="<?php echo base_url();?>assets/cc/plugins/login/js/jquery-1.11.1.min.js"></script>
 <script src="<?php echo base_url();?>assets/cc/plugins/login/bootstrap/js/bootstrap.min.js"></script>
 <script src="<?php echo base_url();?>assets/cc/plugins/login/js/jquery.backstretch.min.js"></script>
-
+<script  src="<?php echo base_url();?>assets/common/jquery.validate.min.js"  ></script> 
 <script src="<?php echo base_url();?>assets/cc/plugins/login/js/scripts.js"></script>
 
-<!--[if lt IE 10]>
-<script src="../plugins/login/js/placeholder.js"></script>
-<![endif]-->
+<script type="text/javascript">
+
+$(document).ready(function(){
+
+	//Custom rule; letters only
+	$.validator.addMethod("lettersonly", function(value, element) {
+	return this.optional(element) || /^[a-z\s]+$/i.test(value);
+	}, "Please enter only letters"); 
+
+
+	//Form Validations for Monitor Attendance Form
+	//By Dominic; Dec 12,2016 
+	$('#forgotPassResForm').validate(
+	 {
+	  rules: {
+	     companyName: 
+	     {
+		     required: true,
+		  },
+	     email:
+	     {
+	     	 required: true,
+	     	 email :true
+	     }
+	   },                 
+		highlight: function(element) {
+			  $(element).closest('.control-group').removeClass('success').addClass('white');
+		 },
+		 success: function(element) {
+		  element
+		 .closest('.control-group').removeClass('white').addClass('success');
+		}
+	});
+		
+});
+
+
+</script>
 
 </body>
 

@@ -31,9 +31,11 @@
          folder instead of downloading all of them to reduce the load. -->
     <link rel="stylesheet" href="<?php echo base_url();?>assets/cc/theme/css/skins/_all-skins.min.css">
     
-    <link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
-    <link rel="stylesheet" href="<?php echo base_url();?>assets/cc/plugins/datepicker/datepicker3.css"> 
-    <link rel="stylesheet" href="<?php echo base_url();?>assets/cc/plugins/daterangepicker/daterangepicker.css"> 
+<!--    <link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">-->
+
+    <link rel="stylesheet" href="<?php echo base_url();?>assets/cc/plugins/datepicker/jquery-ui.css">
+    <link rel="stylesheet" href="<?php echo base_url();?>assets/cc/plugins/datepicker/datepicker3.css">
+    <link rel="stylesheet" href="<?php echo base_url();?>assets/cc/plugins/daterangepicker/daterangepicker.css">
 
 
     <!-- Bootstrap time Picker -->
@@ -47,9 +49,9 @@
 
     <!-- Select2 -->
     <link rel="stylesheet" href="<?php echo base_url();?>assets/cc/plugins/select2/select2.min.css">
-    
+
     <link href="<?php echo base_url();?>assets/commoncss/jquery-confirm.css" rel="stylesheet"/>
-    
+
     <!-- Full Calendar -->
     <link rel="stylesheet" href="<?php echo base_url();?>assets/commoncss/fullcalendar.min.css">
     <link rel="stylesheet" href="<?php echo base_url();?>assets/commoncss/fullcalendar.print.css" media="print">

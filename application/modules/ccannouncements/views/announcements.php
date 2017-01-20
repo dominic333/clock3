@@ -35,7 +35,7 @@
                                     <th>Date</th>
                                     <th>Title</th>
                                     <th>Snipet</th>
-                                    <th>Action</th>
+                                    <th width="70px">Action</th>
                                 </tr>
                                 </thead>
                                 <tbody>

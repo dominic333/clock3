@@ -1,5 +1,5 @@
+  $(document).ready(function(){
 
- $(function () {
      $("#myattendance").DataTable();
      $('#example2').DataTable({
          "paging": true,
@@ -12,11 +12,17 @@
 
      //The Calender
      $("#calendar").datepicker();
- });
 
 
+      $("#date_to").datepicker({
+          changeYear: true,
+          minDate: '-12M',
+          maxDate: '+0D',
+      });
 
- $(function () {
-     $('#date_from').datepicker({dateFormat: 'dd/mm/yy'});
-     $('#date_to').datepicker({dateFormat: 'dd/mm/yy'});
- })
+      $("#date_from").datepicker({
+          changeYear: true,
+          minDate: '-12M',
+          maxDate: '+0D',
+      });
+  });

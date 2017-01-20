@@ -17,13 +17,13 @@
                     <i class="fa fa-calendar"></i> <span>My Attendance</span>
                 </a>
             </li>
-            <?php $calendarView= $this->authentication->checkCalendarViewAccess(); if($calendarView==1){ ?>
+            <?php /* $calendarView= $this->authentication->checkCalendarViewAccess(); if($calendarView==1){ ?>
             <li>
                 <a href="<?php echo base_url();?>ccattendance/attendance/monthiview">
                     <i class="fa fa-calendar"></i> <span>My Calendar</span>
                 </a>
             </li>
-            <?php } ?>
+            <?php } */?>
             <li>
                 <a href="<?php echo base_url();?>ccattendance/attendance/whosaroundtoday">
                     <i class="fa fa-users"></i> <span>Who's Around Today</span>

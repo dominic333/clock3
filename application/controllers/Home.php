@@ -44,7 +44,6 @@ class Home extends MX_Controller
 		//By Dominic, Nov 24, 2016
 		public function login()
 		{	
-
 			$this->site_settings->get_site_settings();
 			// Form validation
 			if ($this->form_validation->run('login') === FALSE) 
@@ -98,14 +97,114 @@ class Home extends MX_Controller
 			}		
 		}
 		
+		//Function to login
+		//By Dominic, Nov 24, 2016
+		public function forgotpassword()
+		{	
+			$this->data['alert'] ='';
+			$this->site_settings->get_site_settings();
+			if ($this->form_validation->run('forgotPassResForm') === FALSE) 
+			{
+				$this->load->view('forgotpassword');
+				return;
+			}
+			else
+			{   
+				if(!$this->Home_model->email_company_exists($this->input->post('email'),$this->input->post('companyName')))
+				{					
+					$this->data['alert'] .= '<p>Email Doesnt Not Exists in Company Login</p><br>';
+					//echo validation_errors();
+					$this->load->view('forgotpassword', $this->data);
+					echo "<script>
+						alert('Incorrect information provided');
+						window.location.href='".base_url()."home/forgotpassword';
+						</script>";
+					exit();
+				}
+				else
+				{
+	  				//To email
+				   $email = $this->input->post('email');
+				   $cologin = $this->input->post('companyName');
+	            
+	            $password=$this->generateRandomString();
+	            
+	            $this->Home_model->save_new_password($email,$password);
+	            $this->send_password_reset_email($email,$password);
+	            $this->data['word'] ='Password';
+	            echo "<script>
+						alert('Password Reset And Successfully Mailed');
+						window.location.href='".base_url()."home/login';
+						</script>";
+					exit();
+
+				}
+			}		
+		}
+		
+		
+		function generateRandomString($length = 6) 
+		{
+		    //$characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+		    $characters = 'ABCDEFGHJKMNPQRSTUVWXYZ';
+		    $charactersLength = strlen($characters);
+		    $randomString = '';
+		    for ($i = 0; $i < $length; $i++) {
+		        $randomString .= $characters[rand(0, $charactersLength - 1)];
+		    }
+		    return $randomString;
+		} 
+		
+		//Function to send username and password to client for resetting
+	   //Author FArveen
+	   function send_password_reset_email($email,$password)
+	   { 	   	
+         $config = array(
+			    'protocol' => 'smtp',
+			    'smtp_host' => 'http://smtp.sendgrid.net/',
+			    'smtp_port' => 587,
+			    'smtp_user' => 'flexiesolutions',
+			    'smtp_pass' => 'ctm342h',
+			    'mailtype'  => 'html',
+          	 'charset'   => 'utf-8',
+          	 'crlf' => "\r\n",
+  					 'newline' => "\r\n"
+         );
+			////$config['protocol']= "sendmail";
+	      $this->load->library('email', $config);
+	      $this->email->set_mailtype("html");
+	      
+	      $password=$password;
+         $email_to=$email;
+         $user=$this->Home_model->get_user_name($email);
+         $login=$this->Home_model->get_login_name($email);
+			$subject="clock-in.me : Password Reset Request.";
+			$this->site_settings->get_site_settings();
+         //$from = $this->config->item('smtp_server');
+         $from = "cs@clock-in.me";
+			
+         $this->data['word'] 		=	'Password';
+ 	      $this->data['user'] 		=	$user;
+ 	      $this->data['email_to'] =	$email_to;
+ 	      $this->data['login'] 	=	$login;
+ 	      $this->data['pass'] 		=	$password;
+ 	      
+ 	      $this->data['phone']		=	'+632 917 8111';
+ 		 	$this->data['site']		=	'clock-in.me';	
+ 		 		   
+		   $template = $this->load->view('email_templates/reset_template',$this->data,TRUE); 
+			$this->email->from($from, 'Clock-in.me Customer Care');		
+  			$this->email->to($email_to);
+			$this->email->message($template);	
+			$this->email->subject($subject);		
+  	 		$this->email->send();
+	  	 		      	   
+	   }
+		
 		//Function to logout
 		//By Dominic, Nov 24, 2016
 		function logout()
-		{
-			// save to log table 
-			//$operation = $this->lang->line('log_logout_msg');
-			//$this->site_settings->adminlog($operation);
-			
+		{			
 			//unset and destroy session variables
 			$data = array('mid' => '', 'coid' => '', 'staffname' => '' , 'isadmin' => '' , 'baseurl' => '' , 'logged_in' => '');
 			$this->session->unset_userdata($data);
