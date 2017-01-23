@@ -17,6 +17,7 @@
 			<div class="row">
 				
             <div class="col-md-3">
+                 <?php $leaveManagement= $this->authentication->checkLeaveManagementAccess(); if($leaveManagement==1){ ?>
                 <div class="box box-solid">
                     <div class="box-header with-border">
                         <h4 class="box-title">Draggable Attendance</h4>
@@ -27,21 +28,11 @@
                             <div class="external-event bg-green" data-leavetype="medical" data-leave="leave">Medical Leave</div>
                             <div class="external-event bg-yellow" data-leavetype="casual" data-leave="leave">Casual Leave</div>
                             <div class="external-event bg-aqua" data-leavetype="annual"   data-leave="leave">Annual Leave</div>
-                            <?php /*
-                            <div class="external-event bg-red">Absent</div>
-                            <div class="external-event bg-gray">Did Not Clock Out</div>
-                            <div class="external-event bg-purple">Early Clock Out</div>
-                            <div class="checkbox">
-                                <label for="drop-remove">
-                                    <input type="checkbox" id="drop-remove">
-                                    remove after drop
-                                </label>
-                            </div>
-                           */ ?>
                         </div>
                     </div>
                     <!-- /.box-body -->
                 </div>
+                 <?php } ?>
                 <!-- /. box -->
                 <?php /* ?>
                 <div class="box box-solid">
