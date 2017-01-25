@@ -967,7 +967,7 @@ class Attendance extends MX_Controller
    	$staff 	  = $this->session->userdata('mid');
    	//2016-11-01
    	//$this->input->get('your_field');
-		$obtainedDate = $this->db->escape_str($this->input->get('dateofMonth'));
+		$obtainedDate = $this->db->escape_str($this->input->post('dateofMonth'));
 		$split_date=explode('-',$obtainedDate);
 		$year  = $split_date[0];
 		$month = $split_date[1];

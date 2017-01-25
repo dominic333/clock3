@@ -118,7 +118,7 @@
      	       var post_url = base_url+"ccattendance/attendance/fetchMonthlyAttendance";
 		            $.ajax({
 		            url: post_url,
-		            type: "GET",
+		            type: "POST",
 		            dataType: 'json',
 		            cache: true,
 		            data: {

@@ -15,9 +15,8 @@
         <!-- Main content -->
 		<section class="content">
 			<div class="row">
-				
-            <div class="col-md-3">
-                 <?php $leaveManagement= $this->authentication->checkLeaveManagementAccess(); if($leaveManagement==1){ ?>
+				 <?php $leaveManagement= $this->authentication->checkLeaveManagementAccess(); if($leaveManagement==1){ ?>
+             <div class="col-md-3">
                 <div class="box box-solid">
                     <div class="box-header with-border">
                         <h4 class="box-title">Draggable Attendance</h4>
@@ -32,47 +31,18 @@
                     </div>
                     <!-- /.box-body -->
                 </div>
-                 <?php } ?>
                 <!-- /. box -->
-                <?php /* ?>
-                <div class="box box-solid">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">Create Attendance</h3>
-                    </div>
-                    <div class="box-body">
-                        <div class="btn-group" style="width: 100%; margin-bottom: 10px;">
-                            <!--<button type="button" id="color-chooser-btn" class="btn btn-info btn-block dropdown-toggle" data-toggle="dropdown">Color <span class="caret"></span></button>-->
-                            <ul class="fc-color-picker" id="color-chooser">
-                                <li><a class="text-aqua" href="#"><i class="fa fa-square"></i></a></li>
-                                <li><a class="text-yellow" href="#"><i class="fa fa-square"></i></a></li>
-                                <li><a class="text-green" href="#"><i class="fa fa-square"></i></a></li>
-                                <li><a class="text-red" href="#"><i class="fa fa-square"></i></a></li>
-                                <li><a class="text-purple" href="#"><i class="fa fa-square"></i></a></li>
-                                <li><a class="text-gray" href="#"><i class="fa fa-square"></i></a></li>
-
-                            </ul>
-                        </div>
-                        <!-- /btn-group -->
-                        <div class="input-group">
-                            <input id="new-event" type="text" class="form-control" placeholder="Event Title">
-
-                            <div class="input-group-btn">
-                                <button id="add-new-event" type="button" class="btn btn-primary btn-flat">Add
-                                </button>
-                            </div>
-                            <!-- /btn-group -->
-                        </div>
-                        <!-- /input-group -->
-                    </div>
-                </div>
-                <?php */ ?>
-            </div>
-            
+             </div>
+            <?php } ?>
 				<!-- /.col -->
 				<div>
 
 				</div>
+				<?php $leaveManagement= $this->authentication->checkLeaveManagementAccess(); if($leaveManagement==1){ ?>
 				<div class="col-md-9">
+				<?php } else { ?>
+				<div class="col-md-12">
+				<?php } ?>
 					<div class="box box-primary">
 						<div class="box-body no-padding">
 							<!-- THE CALENDAR -->
