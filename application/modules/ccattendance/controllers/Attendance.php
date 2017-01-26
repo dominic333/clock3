@@ -934,7 +934,7 @@ class Attendance extends MX_Controller
 													                            <!-- Add the bg color to the header using any of the bg-* classes -->
 
 													                            <div class="text-center">
-													                                <img class="img-rounded" src="' . $fullpath . '" alt="Photo">
+													                                <img class="img-rounded img-responsive" src="' . $fullpath . '" alt="Photo">
 													                            </div>
 
 													                            <div class="bg-gray-light text-center">
