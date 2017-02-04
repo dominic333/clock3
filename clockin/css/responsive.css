@@ -1,0 +1,152 @@
+@media (max-width : 767px) {
+   #header{background:linear-gradient(
+      rgba(63,63,63, 0.4), 
+      rgba(63,63,63, 0.4)
+   ), url(../assets/bg_1.png) right 20% top 23% no-repeat;}
+   #header .btn-primary {
+       border: 1px solid #fff;
+       background: none;
+       color: #fff;
+   }
+   #header h1, #header p{color:#fff}
+   p.title {font-size:1.5em;}
+   .navbar-collapse {
+      background-color:#363536;
+   }
+   .navbar-nav {
+      padding:35px 30px;
+   }
+   .navbar-default .navbar-toggle:focus, .navbar-default .navbar-toggle:hover {
+      background:none
+   }
+   .navbar-default .navbar-nav>li>a {
+      color:#fff;
+      font-size:1.2em;
+      font-weight:300;
+      padding-left:0px;
+      padding-right:0px;
+      text-transform:uppercase;
+   }
+   .navbar-default .navbar-nav>.open>a, .navbar-default .navbar-nav>.open>a:focus, .navbar-default .navbar-nav>.open>a:hover {
+      background:none;
+      color:#fff;
+   }
+   .navbar-default .navbar-nav>li>a:focus, .navbar-default .navbar-nav>li>a:hover {
+      color:#fff;
+      border-bottom:1px solid #fff
+   }
+   .navbar-default .navbar-nav .open .dropdown-menu>li>a,
+   .navbar-default .navbar-nav .open .dropdown-menu>li>a:focus,
+   .navbar-default .navbar-nav .open .dropdown-menu>li>a:hover {
+      color:#fff;
+   }
+   
+   #header{
+      padding:300px 0 100px 0;
+      background-position:center right 15%;;
+   }
+   #about{
+      padding:350px 0 50px 0;
+      background-position:center right 55%;
+   }
+   .header h1{
+      font-size:1.8em
+   }
+   .header p{
+      font-size:1em;
+   }
+   #about.header h1{
+      font-size:1.5em
+   }
+   #about.header p{
+      font-size:.9em;
+      line-height:120%
+   }
+   #imac .imac .features{
+      background:none;
+      height:auto
+   }
+   #imac .features img{
+      background:none;
+      width:100%;
+      margin:0;
+      position:initial;
+   }
+   .over .pie_progress__content{
+      margin-top:-20px !important
+   }
+   .pie_progress__number, .pie_progress__content{
+      font-size:30px !important;
+   }
+   #foot p {
+      line-height:100%
+   }
+   #foot .item:not(:first-child) {
+      margin-top:10%;
+   }
+   footer img {
+      height:auto;
+      width:70%
+   }
+   #why .item p span {
+      font-size:1.2em
+   }
+   
+   #pricing .price {
+      font-size:1em;
+      padding:10px !important;
+       line-height: 130%;
+   }
+   #pricing ul li {
+      font-size:1em;
+      padding:10px;
+       line-height: 130%;
+       font-weight:600
+   }
+   #features .features img {padding:0}
+   footer .site p {
+      letter-spacing: 1px;
+   }
+}
+@media (min-width: 768px){
+   .no-padding{padding:0}
+   .no-padding-left{padding-left:0}
+   .no-padding-right{padding-right:0}
+
+}
+@media (min-width: 768px) and (max-width: 991px){
+   #header{background:url(../assets/bg_1.png) right 20% top 23% no-repeat}
+   #imac .imac .features{
+      background:url(../assets/dashboard.png) center center no-repeat;
+      background-size:87.5% 90%;
+      height:600px
+   }
+   #imac .features img{
+      background:none;
+      width:79.3%;
+      margin:0;
+      position:relative;
+      margin-left:72.5px;
+      margin-top:68px;
+   }
+   .over .pie_progress__content{
+      margin-top:-25px !important
+   }
+   .pie_progress__number, .pie_progress__content{
+      font-size:35px !important;
+   }
+   .pie_progress {
+      padding:4% !important;
+   }
+   
+   #pricing .price {
+      font-size:1em;
+      padding:10px !important;
+       line-height: 130%;
+   }
+}
+@media (max-width: 991px) {
+   .navbar .container-fluid {
+      padding: 10px 15px;
+   }
+}

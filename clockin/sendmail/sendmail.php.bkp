@@ -1,0 +1,30 @@
+<?
+require_once('class.phpmailer.php');
+$mail = new PHPMailer();
+
+$mail->IsSMTP();
+$mail->SMTPAuth = true;
+$mail->Host = "smtp.sendgrid.net";
+$mail->Port = 587;
+$mail->Username = "flexiesolutions";
+$mail->Password = "ctm342h";
+
+
+
+$mail->SetFrom('Sales@vOffice.com.my', 'New Order');
+$mail->Subject = ('test');
+$mail->MsgHTML('this is test');
+$mail->AddAddress('Javad@flexiesolutions.com', 'Javad');
+$mail->AddAddress('Sean@flexiesolutions.com', 'Sean');
+echo "server   : smtp.sendgrid.net<br>";
+echo "port     : 587<br>";
+echo "sending test mail to Javad@flexiesolutions.com and Sean@flexiesolutions.com...<br>";
+echo "--------------------------------------------------------------------------------------<br>";
+if($mail->Send()) {
+ 				 echo "Message sent!";
+				} else {
+  					echo "Mailer Error: " . $mail->ErrorInfo;
+					}
+
+
+?>

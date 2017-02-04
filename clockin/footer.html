@@ -1,0 +1,95 @@
+
+   <footer>
+      <div class="container">
+         <div class="row">
+            <div class="col-sm-12 text-center">
+               <img src="assets/clock-in-logo.png" class="img-responsive center-block">
+            </div>
+            <div class="col-sm-12 text-center">
+                  <p>+1617 778 2299</p>
+            </div>
+            <div class="col-sm-12 text-center site no-padding">
+               <p><a href="http://www.clock-in.me">www.clock-in.me</a> | <a href="mailto:ask@clock-in.me">ask@clock-in.me</a></p>
+            </div>
+            <div class="col-sm-4 col-sm-offset-4 text-center">
+               <div class="col-sm-3 col-xs-3"><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></div>
+               <div class="col-sm-3 col-xs-3"><a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a></div>
+               <div class="col-sm-3 col-xs-3"><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></div>
+               <div class="col-sm-3 col-xs-3"><a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a></div>
+            </div>
+         </div>
+      <hr>
+      </div>
+      
+      <div class="container links">
+         <div class="row text-center">
+               <div class="col-sm-3">
+                  <a href="#whyclockin">Why Clock-in.me</a>
+               </div>
+               <div class="col-sm-3">
+                  <a href="about.php">ABOUT</a>
+               </div>
+               <div class="col-sm-3">
+                  <a href="pricing.php">PRICING</a>
+               </div>
+               <div class="col-sm-3">
+                  <a href="signup.php">SIGN UP</a>
+               </div>
+         </div>
+      </div>
+      <div id="copyright" class="container no-padding">
+         <div class="col-sm-12 text-center">
+            2017 Clock-In me. All rights reserved.
+         </div>
+      </div>
+   </footer>
+
+   <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+   <!-- Include all compiled plugins (below), or include individual files as needed -->
+   <script src="js/bootstrap.min.js"></script>
+   <script src="plugin/OwlCarousel/owl.carousel.min.js"></script>
+   <script src="js/text-slider.js"></script>
+   <script src="plugin/asPieProgress/jquery-asPieProgress.min.js"></script>
+   <!-- <script src="plugin/lightbox/js/lightbox.min.js"></script> -->
+   <script>
+      $(document).ready(function(){
+         $(".imac .owl-carousel").owlCarousel({
+            items: 1,
+            loop: true,
+            center: true,
+            lazyload: true,
+            autoplay: true,
+            animateIn: 'fadeIn',
+            animateOut: 'fadeOut',
+            lazyload:true,
+            autoplayTimeout: 3000
+         });
+         $(".owl-carousel").owlCarousel({
+            items: 1,
+            loop: true,
+            center: true,
+            lazyload: true,
+            autoplay: true,
+            autoplayTimeout: 3000
+         });
+         
+         $(".slide").textSlider({
+            timeout: 5000,
+            slideTime: 750
+         });
+         $('.pie_progress').asPieProgress({
+            namespace: 'pie_progress',
+            size: 160
+         });
+         $(window).bind('scroll', function(){
+            $('.pie_progress').each(function(){
+               if($(window).scrollTop() + $(window).height() >= $(this).offset().top){
+                  $(this).asPieProgress('start');
+               }
+            });
+         }).triggerHandler('scroll');
+         
+      });
+   </script>
+</body>
+</html>
