@@ -1,5 +1,8 @@
 <?php 
 
+include "vca_adminClass.php";
+$adminfunc = new vca_adminClass();
+
 function converCurrency($from,$to,$amount){
    $url = "http://www.google.com/finance/converter?a=$amount&from=$from&to=$to"; 
    $request = curl_init(); 
@@ -44,6 +47,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit"])){
    $formState = $_POST["state"];
    $formZipcode = $_POST["zipcode"];
    $formCountry = $_POST["country"];
+   $formUsername = $_POST["username"];
+   $formCompLoginName = $_POST["companyusername"];
+   echo 'athere';
    
    // PAYMENT DETAILS
    $formPayment = $_POST["payment"];
@@ -90,10 +96,85 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit"])){
    );
    
    $_SESSION["c_details"] = $cd_array;
-   
+   $redirect_url = "signup.php";
+   $success_url = "index.php";
    
    if($formPlan == "paid")
       $q = (0.99 * $formNouser) * $formTerms;
+      
+   //Added by Dominic; Feb 06,2017
+   //To add users who applied for free plan  
+   if($formPlan == "free")
+   {
+   	echo 'wereachedfree';
+     $name		= $formFname.' '.$formLname;
+     $username = $formUsername;
+     $coid		= $formCompLoginName;
+     
+	  $check_username_exist = $adminfunc->checkUserCredentialExist("login_name", $username);
+	  $check_coid_exist = $adminfunc->checkCompanyIDExist($coid);
+
+     if ($check_username_exist == 1)
+     {
+         echo "<script language=\"javascript\"> alert('Username already Exist. Please use different Username')</script>";
+         			echo "
+                               	<script>
+				window.location=\"".$redirect_url."\"
+                               	</script>
+                               	";
+     }
+		
+	  if ($check_coid_exist == 1)
+     {
+         echo "<script language=\"javascript\"> alert('Company Acronym already taken. Please use different Company Acronym')</script>";
+         			echo "
+                               	<script>
+				window.location=\"".$redirect_url."\"
+                               	</script>
+                               	";
+     }  
+
+		if (($check_username_exist && $check_coid_exist) != 1)
+		{
+			// Insert info and email
+			$ref_sess = md5(time());
+			//echo "in go";
+			exit(0);
+			$co_id = $adminfunc->addNewCompany($formCname, $formCompLoginName, $name, $formPhoneNo, $formEmail, $formCountry);
+			$adminfunc->addNewCompanyPlan($co_id, $formNouser);
+			$userid = $adminfunc->addNewStaff($co_id, $name, $formUsername, $formEmail, $formPhoneNo, $ref_sess, "1", "0");
+			$adminfunc->updateUserStatus($userid, "0");
+			$adminfunc->addNewVerification($ref_sess, $co_id);
+
+			$msg = "Hello $name! \r\n\r\n";
+	        $msg .= "Thanks you for siging up for Clock-in.me. \r\n";
+	  	     $msg .= "Please go to http://clock-in.me/verifyacct.php?sess=$ref_sess \r\n";
+	        $msg .= "to confirm your email. \r\n";
+	        $msg .= "You will receive another email on how you can login to your Company Dashboard once you have completed the email verification process. \r\n\r\n";
+	        $msg .= "Do contact us at cs@clock-in.me if you require any assistance. \r\n\r\n";
+	        $msg .= "Clock-in.me Support Team :). \r\n";
+	
+	        $subject = "Clock-in.me - Account Confirmation for : ". $username;
+	
+	        $headers = "From: no-reply@clock-in.me" . "\r\n";
+	  	        $to = $email;
+	
+	        mail($to,$subject,$msg,$headers);
+	
+			  //unset($_SESSION["clockin"]);
+	        session_destroy();
+ 
+			// ----- Done ------
+			echo "<script language=\"javascript\"> alert('Signup Process Completed. Please Check your Email Now to Verify Your Email Address.')</script>";
+			echo "
+                               	<script>
+				window.location=\"".$success_url."\"
+                               	</script>
+                               	";
+		}
+ 
+   
+   }
    
    $header = "
    <style>table{font-size:1em;}</style>

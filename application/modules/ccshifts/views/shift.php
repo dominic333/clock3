@@ -22,7 +22,13 @@
                     <div class="box-header">
                         <h3 class="box-title">Manage Shifts</h3>
                         <?php if(isset($total_Shifts) && isset($companyPlanDetails->shiftLimit) ) {
-				            		if($total_Shifts<$companyPlanDetails->shiftLimit)
+                        	
+                        		$compLimit = $companyPlanDetails->shiftLimit;
+                        	   if($shiftLimitException > $companyPlanDetails->shiftLimit)
+                        	   {
+                        	   	$compLimit = $shiftLimitException;
+                        	   }
+				            		if($total_Shifts<$compLimit)
 				            		{
 				             ?>
                         <a href="#" class="btn btn-primary btn-sm pull-right" id="addNewShiftBtn" name="addNewShiftBtn"
@@ -32,7 +38,7 @@
                         </a>
                         <?php }} ?>
                         <label class="pull-right" style="padding-right:10px; padding-top:5px;">
-                        <?php echo (isset($total_Shifts)) ? $total_Shifts :set_value('NA'); ?>/<?php echo (isset($companyPlanDetails->shiftLimit)) ? $companyPlanDetails->shiftLimit :set_value('NA'); ?>
+                        <?php echo (isset($total_Shifts)) ? $total_Shifts :set_value('NA'); ?>/<?php echo (isset($compLimit)) ? $compLimit :set_value('NA'); ?>
                         </label>
                     </div>
                     <!-- /.box-header -->

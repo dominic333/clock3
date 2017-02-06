@@ -899,6 +899,7 @@ class Shifts extends MX_Controller
 		$this->data['total_Users']					=	$this->site_settings->getCompanySize();
 		$this->data['total_Depts']					=	$this->site_settings->getCompanyDepartmentSize();
 		$this->data['total_Shifts']				=	$this->site_settings->getCompanyDepartmentShiftSize();
+		$this->data['shiftLimitException']		=	$this->site_settings->getCompanyShiftException();
 		/*
 		$this->data['profile']			=	$this->site_settings->personal_details();	
 		$this->data['menus_all']		= 	modules::load('menus')->get_menus();

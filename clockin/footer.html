@@ -46,6 +46,8 @@
 
    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
    <!-- Include all compiled plugins (below), or include individual files as needed -->
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.16.0/jquery.validate.min.js"></script>
+
    <script src="js/bootstrap.min.js"></script>
    <script src="plugin/OwlCarousel/owl.carousel.min.js"></script>
    <script src="js/text-slider.js"></script>
@@ -90,6 +92,91 @@
          }).triggerHandler('scroll');
          
       });
+   </script>
+   
+   <script type="text/javascript">
+   /*
+    $(document).ready(function(){
+    	$('#form').validate(
+		{
+			rules: {
+				plan: {
+					required: true
+				},
+				no-user: {
+					required: true,
+					number:true
+				},
+				username: {
+					required: true,
+				},
+				fname: {
+					required: true,
+				},
+				lname: {
+					required: true,
+				},
+				cname: {
+					required: true,
+				},
+				companyusername: {
+					required: true,
+					minlength:4,
+					remote: 
+			    	  {
+							url: base_url+"ccshifts/shifts/check_login_exists",
+							type: "post",
+							data: 
+							{
+								loginName : function(){ return $.trim($("#frm_add_users #login_name").val()); },
+								csrf_test_name : csrf_token
+							}
+					  }
+				},
+				address:{
+					required: true
+				},
+				city:{
+					required: true
+				},
+				state:{
+					required: true
+				},
+				zipcode:{
+					required: true,
+					number:true,
+					maxlength:10
+				},
+				country:{
+					required: true
+				},
+				pnum:{
+					required: true,
+					number:true,
+					maxlength:12
+				},
+				email:{
+					required: true,
+					email:true
+				}
+			},
+			messages: 
+		   {
+				login_name: 
+				 {
+						remote: 'Login name already assigned.'
+				 }
+		   },
+			highlight: function(element) {
+				$(element).closest('.control-group').removeClass('success').addClass('error');
+			},
+			success: function(element) {
+				element
+					.closest('.control-group').removeClass('error').addClass('success');
+			}
+		});
+	 });
+	 */
    </script>
 </body>
 </html>

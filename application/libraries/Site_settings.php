@@ -131,6 +131,17 @@ class Site_settings
 		return $result->row()->totalDept;
 	}
 	
+	//Function to get total department count of a company
+	//Dominic, Feb 06,2017
+	function getCompanyShiftException()
+	{
+		//SELECT shiftLimitException FROM company_plans where company_id=1
+		$this->obj->db->select('shiftLimitException');
+		$this->obj->db->from('company_plans');
+		$this->obj->db->where('company_id',$this->obj->session->userdata('coid'));
+		$result=$this->obj->db->get();
+		return $result->row()->shiftLimitException;
+	}
 	
 	//Function to get total department count of a company
 	//Dominic, Jan 10,2016

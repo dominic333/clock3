@@ -9,7 +9,7 @@
       </div>
       <div class="row">
          <div class="col-sm-10 col-sm-offset-1">
-            <form class="form-horizontal" name="form" action="check.php" method="post">
+            <form class="form-horizontal" id="form" name="form" action="check.php" method="post">
                <div class="form-group">
                   <div class="col-sm-5">
                      <label for="plan-details" class="control-label">Plan Details</label>
@@ -17,14 +17,14 @@
                   <div class="col-sm-7">
                      <!-- ==== MEMBERSHIP PLAN ==== -->
                      <div class="col-sm-5 no-padding-right">
-                        <select class="form-control" name="plan" required>
+                        <select class="form-control" id="plan" name="plan" required>
                            <option value="" selected="" disabled>Select Plan</option>
                            <option value="free">FREE</option>
                            <option value="paid">PAID</option>
                         </select>
                      </div>
                      <div class="col-sm-3 no-padding-left no-padding-right">
-                        <select class="form-control" name="currency">
+                        <select class="form-control" id="currency" name="currency">
                            <option value="usd" selected="select">USD</option>
                            <option value="php">PHP</option>
                            <option value="sgd">SGD</option>
@@ -34,7 +34,7 @@
                      
                      <!-- ==== NUMBER OF USERS ==== -->
                      <div class="col-sm-4 no-padding-left">
-                        <input type="number" class="form-control" name="no-user"  min="1" placeholder="No. of Users" required>
+                        <input type="number" class="form-control" id="no-user" name="no-user"  min="1" placeholder="No. of Users" required>
                         
                      </div>
                      
@@ -63,38 +63,46 @@
                   <div class="col-sm-7">
                   
                      <!-- ==== NAME ==== -->
+                     <div class="col-sm-12 ">
+                        <input type="text" class="form-control" id="username" name="username" placeholder="Username" required>
+                     </div>
+                     
                      <div class="col-sm-6 no-padding-right">
-                        <input type="text" class="form-control" name="fname" placeholder="First name" required>
+                        <input type="text" class="form-control" id="fname" name="fname" placeholder="First name" required>
                      </div>
                      <div class="col-sm-6 no-padding-left">
-                        <input type="text" class="form-control" name="lname" placeholder="Last name" required>
+                        <input type="text" class="form-control" id="lname" name="lname" placeholder="Last name" required>
                      </div>
                      
                      <!-- ==== COMPANY NAME ==== -->
                      <div class="col-sm-12">
-                        <input type="text" class="form-control no-padding" name="cname" placeholder="Company Name" style="margin-bottom:0" required>
+                        <input type="text" class="form-control no-padding" id="cname" name="cname" placeholder="Company Name" style="margin-bottom:0" required>
                         <span id="helpBlock" class="help-block" style="margin-bottom:5%">If you don't have a company name yet, please enter your name here.</span>
+                     </div>
+                     
+                     <div class="col-sm-12 ">
+                        <input type="text" class="form-control" id="companyusername" name="companyusername" placeholder="Company Acronym" required>
                      </div>
                      
                      <!-- ==== ADDRESS ==== -->
                      <div class="col-sm-12">
-                        <textarea name="address" class="form-control" placeholder="Address" required></textarea>
+                        <textarea id="address" name="address" class="form-control" placeholder="Address" required></textarea>
                      </div>
                      
                      <!-- ==== CITY & STATE ==== -->
                      <div class="col-sm-6 no-padding-right">
-                        <input type="text" class="form-control" name="city" placeholder="City" required>
+                        <input type="text" class="form-control" id="city" name="city" placeholder="City" required>
                      </div>
                      <div class="col-sm-6 no-padding-left">
-                        <input type="text" class="form-control" name="state" placeholder="State" required>
+                        <input type="text" class="form-control" id="state" name="state" placeholder="State" required>
                      </div>
                      
                      <!-- ==== ZIPCODE & COUNTRY ==== -->
                      <div class="col-sm-6 no-padding-right">
-                        <input type="text" class="form-control" name="zipcode" placeholder="Postcode / Zipcode" required>
+                        <input type="text" class="form-control" id="zipcode" name="zipcode" placeholder="Postcode / Zipcode" required>
                      </div>
                      <div class="col-sm-6 no-padding-left">
-                        <select class="form-control" name="country" required>
+                        <select class="form-control" id="country" name="country" required>
                            <option value="" selected="" disabled>Select Country</option>
                            <option value="Afganistan">Afghanistan</option>
                            <option value="Albania">Albania</option>
@@ -348,12 +356,12 @@
                      
                      <!-- ==== PHONE NUMBER ==== -->
                      <div class="col-sm-12">
-                        <input type="text" class="form-control" name="pnum" placeholder="Phone Number" required>
+                        <input type="text" class="form-control" id="pnum" name="pnum" placeholder="Phone Number" required>
                      </div>
                      
                      <!-- ==== EMAIL ==== -->
                      <div class="col-sm-12">
-                        <input type="email" class="form-control" name="email" placeholder="Email Address" style="margin-bottom:0" required>
+                        <input type="email" class="form-control" id="email" name="email" placeholder="Email Address" style="margin-bottom:0" required>
                         <span id="helpBlock" class="help-block" style="margin-bottom:5%">Please use an e-mail address which you check regularly.</span>
                      </div>
                      
