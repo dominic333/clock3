@@ -977,7 +977,7 @@ class Attendance extends MX_Controller
 													                            </button>
 													                        </div>
 													                    </div>
-													                    <div class="box-body">
+													                    <div class="box-body" style="min-height:400px;">
 													                        <div class="box box-widget widget-user-2">
 													                            <!-- Add the bg color to the header using any of the bg-* classes -->
 
