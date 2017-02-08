@@ -63,7 +63,27 @@
             },	 
             */
         eventMouseover: function (data, event, view) {
-
+				//if(data.intime)
+				//if (typeof data.intime != 'undefined')
+				if(data.intime.toLowerCase()!='undefined')
+				 {
+				 	var inVar = data.intime;
+				 }
+				 else
+				 {
+				 	var inVar = 'NA';
+				 }
+				 
+				 //if(data.outtime)
+				 //if (typeof data.outtime != 'undefined')
+				 if(data.outtime.toLowerCase()!='undefined')
+				 {
+				 	var outVar = data.outtime;
+				 }
+				 else
+				 {
+				 	var outVar = 'NA';
+				 }
             tooltip = '<div class="tooltiptopicevent" style="width:auto;height:auto;background:#feb811;position:absolute;z-index:10001;padding:10px 10px 10px 10px ;  line-height: 200%;">' 
             				+ 'In ' + ': ' + data.intime + '</br>' + 'Out ' + ': ' + data.outtime + '</div>';
 
@@ -239,7 +259,7 @@
       		  var droppedDate= (dt.format()); 
 				  if(found != -1)
 				  {
-				    var r=confirm("Delete " + calEvent.title);
+				    var r=confirm("Cancel " + calEvent.title);
               	 if (r===true)
               	 {
               	 	 var post_url = base_url+"selfieattendance/attendance/removeRequestedLeave";
@@ -363,9 +383,29 @@
              },
              */
             eventMouseover: function (data, event, view) {
-
+					 
+					 //console.log(data);
+					 //if (typeof data.intime != 'undefined')
+					 if(data.intime.toLowerCase()!='undefined')
+					 {
+					 	var inVar = data.intime;
+					 }
+					 else
+					 {
+					 	var inVar = 'NA';
+					 }
+					 
+					 if(data.outtime.toLowerCase()!='undefined')
+					 {
+					 	var outVar = data.outtime;
+					 }
+					 else
+					 {
+					 	var outVar = 'NA';
+					 }
+					 
                 tooltip = '<div class="tooltiptopicevent" style="width:auto;height:auto;background:#feb811;position:absolute;z-index:10001;padding:10px 10px 10px 10px ;  line-height: 200%;">'
-                    + 'In ' + ': ' + data.intime + '</br>' + 'Out ' + ': ' + data.outtime + '</div>';
+                    + 'In ' + ': ' + inVar + '</br>' + 'Out ' + ': ' + outVar + '</div>';
 
 
                 $("body").append(tooltip);

@@ -82,7 +82,7 @@
 						{
 							$staff_photo=base_url().'assets/cc/images/admin-user.png';
 						}
-				}
+					}
 					
 				?>
             <span class="col-md-4 <?php echo 'd'.$member->dept_id; ?> <?php echo 's'.$member->shift_id; ?>">

@@ -293,6 +293,12 @@
                             </a>
                         </p>
                         <p>
+                            <a href="<?php echo base_url();?>ccshifts/shifts/assignmonitor">
+                                <button class="btn btn-block btn-success btn-lg" type="button"><span class="pull-left">Assign Attendance Watcher(s)</span> <span
+                                        class="fa fa-plus-circle pull-right"></span></button>
+                            </a>
+                        </p>
+                        <p>
                             <a href="<?php echo base_url();?>ccshifts/shifts/whitelistips">
                                 <button class="btn btn-block btn-success btn-lg" type="button"><span class="pull-left">Add White List IPs</span> <span
                                         class="fa fa-plus-circle pull-right"></span></button>

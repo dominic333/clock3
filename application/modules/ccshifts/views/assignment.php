@@ -44,127 +44,205 @@
             <!-- /.col-md-4 -->
         </div>
         <!--/row-->
-
-
-        <div id="users_in_shifts" class="row">
-				<?php foreach($company_members as $member)
-						{
-							if($member->staff_photo==''||$member->staff_photo==' ')
-							{
-								$staff_photo=base_url().'assets/cc/images/admin-user.png';
-							}
-							else
-							{
-								$staff_photo=base_url().'images/users/'.$member->staff_photo;
-							}
-					
-				?>
-            <div id="<?php echo 'user'.$member->staff_id; ?>" class="col-md-4">
-                <!-- USERS LIST -->
-                <div class="box box-danger">
-                    <div class="box-header with-border">
-                        <h3 class="box-title"><?php echo $member->login_name; ?></h3>
-
-                        <div class="box-tools pull-right">
-                            <div class="checkbox">
-                                <label><input id="<?php echo 'shiftUsers'.$member->staff_id; ?>" class="shiftUsersClass" name="shiftUsers" type="checkbox" value="<?php echo $member->staff_id; ?>"></label>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- /.box-header -->
-                    <div class="box-body">
-                        <!-- Widget: user widget style 1 -->
-                        <div class="box box-widget widget-user-2">
-                            <!-- Add the bg color to the header using any of the bg-* classes -->
-                            <div class="widget-user-header bg-gray-light">
-                                <div class="widget-user-image">
-                                    <img class="img-circle" src="<?php echo $staff_photo; ?>" alt="User Avatar">
-                                </div>
-                                <!-- /.widget-user-image -->
-                                <h4 class="widget-user-username"><?php echo $member->staff_name; ?></h4>
-                                <h5 class="widget-user-desc"><?php echo $member->shift_name; ?></h5>
-                            </div>
-                        </div>
-                        <!-- /.widget-user -->
-                    </div>
-                    <!-- /.box-body -->
-                </div>
-                <!--/.box -->
-            </div>
-            <?php } ?>
-
-        </div>
-        <!-- /.row -->
-
+        
         <div class="row">
-            <div class="col-md-12 text-center">
-                <button  class="btn btn-danger">Cancel</button>
-                <button id="assignStafftoShiftBtn" name="assignStafftoShiftBtn" class="btn btn-success">Assign</button>
-            </div>
-        </div>
+		      <div id="exTab1" class="col-md-12">  
+                <ul class="nav nav-pills">
+                    <li class="active">
+                        <a href="#1a" data-toggle="tab">Add Users to Shifts</a>
+                    </li>
+                    <li>
+                        <a href="#2a" data-toggle="tab">Assign Attendance Watchers</a>
+                    </li>
+                </ul>
 
+                <br>
 
-        <div id="attendance_monitoring_staff" class="row">
+                <div class="tab-content clearfix">
+                    <div class="tab-pane active" id="1a">
 
-            <div class="col-md-12">
-                <h3>Attendance Monitoring Staff</h3>
-            </div>
-				<?php foreach($company_members as $member)
-						{
-							if($member->staff_photo==''||$member->staff_photo==' ')
-							{
-								$staff_photo=base_url().'assets/cc/images/admin-user.png';
-							}
-							else
-							{
-								$staff_photo=base_url().'images/users/'.$member->staff_photo;
-							}
-					
-				?>
-            <div id="<?php echo 'monitor'.$member->staff_id; ?>" class="col-md-4">
-                <!-- USERS LIST -->
-                <div class="box box-danger">
-                    <div class="box-header with-border">
-                        <h3 class="box-title"><?php echo $member->login_name; ?></h3>
+                        <div class="row">
+                            <div class="col-md-12">
+											
+										 <div id="users_in_shifts" class="row">
+											<?php foreach($company_members as $member)
+													{
+														/*if($member->staff_photo==''||$member->staff_photo==' ')
+														{
+															$staff_photo=base_url().'assets/cc/images/admin-user.png';
+														}
+														else
+														{
+															$staff_photo=base_url().'images/users/'.$member->staff_photo;
+														}
+														*/
+														if($member->staff_photo==''||$member->staff_photo==' ')
+														{
+															$staff_photo=base_url().'assets/cc/images/admin-user.png';
+														}
+														else
+														{
+															//https://clock-in.me/webapp/images/avatars
+															//$staff_photo=base_url().'images/users/'.$member->staff_photo;
+															$staff_photo='https://clock-in.me/webapp/images/avatars/'.$member->staff_photo;
+									
+															$url=getimagesize($staff_photo);
+															if(!is_array($url))
+															{
+																$staff_photo=base_url().'assets/cc/images/admin-user.png';
+															}
+														}
+												
+											?>
+							            <div id="<?php echo 'user'.$member->staff_id; ?>" class="col-md-4">
+							                <!-- USERS LIST -->
+							                <div class="box box-danger">
+							                    <div class="box-header with-border">
+							                        <h3 class="box-title"><?php echo $member->login_name; ?></h3>
+							
+							                        <div class="box-tools pull-right">
+							                            <div class="checkbox">
+							                                <label><input id="<?php echo 'shiftUsers'.$member->staff_id; ?>" class="shiftUsersClass" name="shiftUsers" type="checkbox" value="<?php echo $member->staff_id; ?>"></label>
+							                            </div>
+							                        </div>
+							                    </div>
+							                    <!-- /.box-header -->
+							                    <div class="box-body">
+							                        <!-- Widget: user widget style 1 -->
+							                        <div class="box box-widget widget-user-2">
+							                            <!-- Add the bg color to the header using any of the bg-* classes -->
+							                            <div class="widget-user-header bg-gray-light">
+							                                <div class="widget-user-image">
+							                                    <img class="img-circle" src="<?php echo $staff_photo; ?>" alt="User Avatar">
+							                                </div>
+							                                <!-- /.widget-user-image -->
+							                                <h4 class="widget-user-username"><?php echo $member->staff_name; ?></h4>
+							                                <h5 class="widget-user-desc"><?php echo $member->shift_name; ?></h5>
+							                            </div>
+							                        </div>
+							                        <!-- /.widget-user -->
+							                    </div>
+							                    <!-- /.box-body -->
+							                </div>
+							                <!--/.box -->
+							            </div>
+							            <?php } ?>
+							
+							        </div>
+							        <!-- /.row -->
+							
+							        <div class="row">
+							            <div class="col-md-12 text-center">
+							                <button  class="btn btn-danger">Cancel</button>
+							                <button id="assignStafftoShiftBtn" name="assignStafftoShiftBtn" class="btn btn-success">Assign</button>
+							            </div>
+							        </div>
 
-                        <div class="box-tools pull-right">
-                            <div class="checkbox">
-                                <label><input id="<?php echo 'monitorUsers'.$member->staff_id; ?>" class="monitorUsersClass" name="monitorUsers" type="checkbox" value="<?php echo $member->staff_id; ?>"></label>
                             </div>
+                            <!-- /.col-md-12 -->
                         </div>
+                        <!-- /.row -->
+
+
                     </div>
-                    <!-- /.box-header -->
-                    <div class="box-body">
-                        <!-- Widget: user widget style 1 -->
-                        <div class="box box-widget widget-user-2">
-                            <!-- Add the bg color to the header using any of the bg-* classes -->
-                            <div class="widget-user-header bg-gray-light">
-                                <div class="widget-user-image">
-                                    <img class="img-circle" src="<?php echo $staff_photo; ?>" alt="User Avatar">
-                                </div>
-                                <!-- /.widget-user-image -->
-                                <h4 class="widget-user-username"><?php echo $member->staff_name; ?></h4>
-                                <h5 class="widget-user-desc"><?php echo $member->shift_name; ?></h5>
+                    <div class="tab-pane" id="2a">
+                        <div class="row">
+                            <div class="col-md-12">
+									        <div id="attendance_monitoring_staff" class="row">
+									
+									            <div class="col-md-12">
+									                <h3>Attendance Monitoring Staff</h3>
+									            </div>
+													<?php foreach($company_members as $member)
+															{
+																/*if($member->staff_photo==''||$member->staff_photo==' ')
+																{
+																	$staff_photo=base_url().'assets/cc/images/admin-user.png';
+																}
+																else
+																{
+																	$staff_photo=base_url().'images/users/'.$member->staff_photo;
+																}
+																*/
+																if($member->staff_photo==''||$member->staff_photo==' ')
+																{
+																	$staff_photo=base_url().'assets/cc/images/admin-user.png';
+																}
+																else
+																{
+																	//https://clock-in.me/webapp/images/avatars
+																	//$staff_photo=base_url().'images/users/'.$member->staff_photo;
+																	$staff_photo='https://clock-in.me/webapp/images/avatars/'.$member->staff_photo;
+											
+																	$url=getimagesize($staff_photo);
+																	if(!is_array($url))
+																	{
+																		$staff_photo=base_url().'assets/cc/images/admin-user.png';
+																	}
+																}
+														
+													?>
+									            <div id="<?php echo 'monitor'.$member->staff_id; ?>" class="col-md-4">
+									                <!-- USERS LIST -->
+									                <div class="box box-danger">
+									                    <div class="box-header with-border">
+									                        <h3 class="box-title"><?php echo $member->login_name; ?></h3>
+									
+									                        <div class="box-tools pull-right">
+									                            <div class="checkbox">
+									                                <label><input id="<?php echo 'monitorUsers'.$member->staff_id; ?>" class="monitorUsersClass" name="monitorUsers" type="checkbox" value="<?php echo $member->staff_id; ?>"></label>
+									                            </div>
+									                        </div>
+									                    </div>
+									                    <!-- /.box-header -->
+									                    <div class="box-body">
+									                        <!-- Widget: user widget style 1 -->
+									                        <div class="box box-widget widget-user-2">
+									                            <!-- Add the bg color to the header using any of the bg-* classes -->
+									                            <div class="widget-user-header bg-gray-light">
+									                                <div class="widget-user-image">
+									                                    <img class="img-circle" src="<?php echo $staff_photo; ?>" alt="User Avatar">
+									                                </div>
+									                                <!-- /.widget-user-image -->
+									                                <h4 class="widget-user-username"><?php echo $member->staff_name; ?></h4>
+									                                <h5 class="widget-user-desc"><?php echo $member->shift_name; ?></h5>
+									                            </div>
+									                        </div>
+									                        <!-- /.widget-user -->
+									                    </div>
+									                    <!-- /.box-body -->
+									                </div>
+									                <!--/.box -->
+									            </div>
+									            <?php } ?>
+									            <!-- /.col-md-4 -->
+									
+									        </div>
+									        <!-- /.row -->
+									
+									        <div class="row">
+									            <div class="col-md-12 text-center">
+									                <button id="removeMonitor" name="removeMonitor" class="btn btn-danger">Remove Monitoring</button>
+									                <button id="assignMonitor" name="assignMonitor" class="btn btn-success">Assign Monitoring</button>
+									            </div>
+									        </div>
+
                             </div>
+                            <!-- /.col-md-12 -->
+
                         </div>
-                        <!-- /.widget-user -->
+                        <!-- /.row -->
+
                     </div>
-                    <!-- /.box-body -->
                 </div>
-                <!--/.box -->
             </div>
-            <?php } ?>
-            <!-- /.col-md-4 -->
+		  </div>
 
-        </div>
-        <!-- /.row -->
 
-        <div class="row">
-            <div class="col-md-12 text-center">
-                <button id="removeMonitor" name="removeMonitor" class="btn btn-danger">Remove Monitoring</button>
-                <button id="assignMonitor" name="assignMonitor" class="btn btn-success">Assign Monitoring</button>
-            </div>
-        </div>
+
+
+
+
 
 
     </section>

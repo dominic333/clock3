@@ -19,7 +19,7 @@
              <div class="col-md-3">
                 <div class="box box-solid">
                     <div class="box-header with-border">
-                        <h4 class="box-title">Draggable Attendance</h4>
+                        <h4 class="box-title">Drag & Drop Your Leave Application</h4>
                     </div>
                     <div class="box-body">
                         <!-- the events -->

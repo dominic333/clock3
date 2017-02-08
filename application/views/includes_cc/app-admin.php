@@ -85,6 +85,23 @@
             document.getElementById("myDiv").style.display = "block";
         }
     </script>
+    <style type="text/css">
+		#listalist
+		{
+			margin: 0px;
+			padding: 0px;
+		}
+		#listalist li
+		{
+			list-style: none;
+		}
+		
+		.pagination li 
+		{
+		  display: inline-block;
+		  padding: 5px;
+		}
+	 </style>
 </head>
 
 <body class="hold-transition skin-grey-light sidebar-mini fixed">

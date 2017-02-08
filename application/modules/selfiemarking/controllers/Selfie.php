@@ -69,7 +69,6 @@ class Selfie extends MX_Controller
 		if($userShiftType==2 && $flexiibleClockin==1)
 		{
 			$flexiUser=1;
-			
 		}
 		else 
 		{
@@ -215,12 +214,12 @@ class Selfie extends MX_Controller
 			
 			//send clockin email if company has paid plan
 			//$p_in_file
-			/*
+			
 			$calendarView= $this->authentication->checkCalendarViewAccess(); 
 			if($calendarView==1){
-			$this->send_clockin_email($p_in_file,$staff_id,$logdatetime);
+			$this->send_clockin_email($p_in_file,$staffid,$showlogdatetime);
 			}
-			*/
+			
 			
 	      echo "Clock $clock_type Logged at $showlogdatetime";
 		}		
@@ -229,7 +228,7 @@ class Selfie extends MX_Controller
    function send_clockin_email($staffphoto,$staff_id,$logdatetime)
 	{
 		$url_log_path 	 	=  "../../../selfies/aLog";
-		$fullpath = $url_log_path."/".$staffphoto;
+		$fullpath = "https://clock-in.me/selfies/aLog/".$staffphoto;
 		
 		$config = array(
 		    'protocol' => 'smtp',
@@ -252,7 +251,16 @@ class Selfie extends MX_Controller
 		$this->site_settings->get_site_settings();
       //$from = $this->config->item('smtp_server');
       $from = "ask@clock-in.me";
- 	      
+ 	   /*
+ 	   $user_details						=	$this->Selfie_model->get_selected_user_details($staff_id);
+ 	   $this->data['name']				=	$user_details->staff_name;
+ 	   $this->data['login']				=	$user_details->login_name;
+ 	   $this->data['email']				=	$user_details->email;
+ 	   $this->data['password']			=	$password;
+ 	   $this->data['company_login']	=	$user_details->company_login;
+ 	   $this->data['company_name']	=	$user_details->company_name;
+ 	   */
+ 	   
  	   $user_data	=	array();
 		$user_data	=	modules::load('users')->getUserDataFromUserID($staff_id);
 
@@ -265,6 +273,7 @@ class Selfie extends MX_Controller
 	 	   $this->data['clockinpic']			=	$fullpath;
 	 	   $this->data['clockintime']			=	$logdatetime;  						
 		}
+		
  	      
  	   //$bcc_list = array('ask@clock-in.me', 'sean@flexiesolutions.com', 'albert.goh@flexiesolutions.com');
  	   $bcc_list = array('dominiccliff88@gmail.com');

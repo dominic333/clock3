@@ -122,7 +122,8 @@ $(document).ready(function(){
       var image_fmt = 'png';
       var ctype = document.getElementById('vclocktype').value;
       var geolocation = document.getElementById('geolocation').value;
-      var furl = base_url+'selfieattendance/attendance/whosaroundtoday';
+      //var furl = base_url+'selfieattendance/attendance/whosaroundtoday';
+      var furl = base_url+'home/logout';
       
 	    if(data_uri!=true&&geolocation!=''&&geolocation!=0)
 	    {
@@ -162,7 +163,7 @@ $(document).ready(function(){
     }
     else
     {
-    	alert('Clock-in Alert!!');
+    	alert('You have Clocked in Successfully!');
     	window.location.replace(furl);
     }
   }

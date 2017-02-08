@@ -37,7 +37,7 @@
       		Do contact us at <a style="color:#0069a6;" href="mailto:ask@clock-in.me">ask@clock-in.me</a> if you require any assistance.<br>
       		<span style="color: #C4171F;font-weight: 600;">Clock-in.me Support Team :). </span>
     		</p>
-  	   </div>
+  	   </div> 
   
 </div>
 <!--/.main-->
