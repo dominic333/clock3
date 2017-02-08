@@ -213,10 +213,71 @@ class Selfie extends MX_Controller
 			$nMsg  = $sName.$notifyMsg;
 			$this->site_settings->addNotification($nType,$nMsg,'');
 			
+			//send clockin email if company has paid plan
+			//$p_in_file
+			/*
+			$calendarView= $this->authentication->checkCalendarViewAccess(); 
+			if($calendarView==1){
+			$this->send_clockin_email($p_in_file,$staff_id,$logdatetime);
+			}
+			*/
 			
 	      echo "Clock $clock_type Logged at $showlogdatetime";
 		}		
    }
+   
+   function send_clockin_email($staffphoto,$staff_id,$logdatetime)
+	{
+		$url_log_path 	 	=  "../../../selfies/aLog";
+		$fullpath = $url_log_path."/".$staffphoto;
+		
+		$config = array(
+		    'protocol' => 'smtp',
+		    'smtp_host' => 'http://smtp.sendgrid.net/',
+		    'smtp_port' => 587,
+		    'smtp_user' => 'flexiesolutions',
+		    'smtp_pass' => 'ctm342h',
+		    'mailtype'  => 'html',
+       	 'charset'   => 'utf-8',
+       	 'crlf' => "\r\n",
+  					 'newline' => "\r\n"
+      );
+		////$config['protocol']= "sendmail";
+      $this->load->library('email', $config);
+      $this->email->set_mailtype("html");
+      
+      //$email_to=$this->input->post('email');
+      $email_to ='dominic@cliffsupport.com';
+      $subject="clock-in.me : Clockin Alert!";
+		$this->site_settings->get_site_settings();
+      //$from = $this->config->item('smtp_server');
+      $from = "ask@clock-in.me";
+ 	      
+ 	   $user_data	=	array();
+		$user_data	=	modules::load('users')->getUserDataFromUserID($staff_id);
+
+		foreach($user_data as $row)
+		{
+			$this->data['name']					=	$row->staff_name;
+			$this->data['company_name']		=	$row->company_name;
+			$this->data['department_name']	=	$row->department_name;
+			$this->data['shift_name']			=	$row->shift_name;
+	 	   $this->data['clockinpic']			=	$fullpath;
+	 	   $this->data['clockintime']			=	$logdatetime;  						
+		}
+ 	      
+ 	   //$bcc_list = array('ask@clock-in.me', 'sean@flexiesolutions.com', 'albert.goh@flexiesolutions.com');
+ 	   $bcc_list = array('dominiccliff88@gmail.com');
+ 	      
+	   $template = $this->load->view('email_templates/clockin_alert_template',$this->data,TRUE); 
+		$this->email->from($from, 'Clock-in.me Customer Care');			
+  		$this->email->to($email_to);
+  		//$this->email->cc($cc_list);
+  		$this->email->bcc($bcc_list);
+		$this->email->message($template);	
+		$this->email->subject($subject);		
+  	 	$this->email->send();
+	}	
 
 	//Function to check mobile or table or computer
 	function check_mobile(){

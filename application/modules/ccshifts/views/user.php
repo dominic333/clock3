@@ -64,8 +64,25 @@
 					}
 					else
 					{
-						$staff_photo=base_url().'images/users/'.$member->staff_photo;
-					}
+						//https://clock-in.me/webapp/images/avatars
+						//$staff_photo=base_url().'images/users/'.$member->staff_photo;
+						$staff_photo='https://clock-in.me/webapp/images/avatars/'.$member->staff_photo;
+						/*
+						if (file_exists($staff_photo)) 
+						{
+						   $staff_photo='https://clock-in.me/webapp/images/avatars/'.$member->staff_photo;
+						} 
+						else 
+						{
+						    $staff_photo=base_url().'assets/cc/images/admin-user.png';
+						}
+						*/
+						$url=getimagesize($staff_photo);
+						if(!is_array($url))
+						{
+							$staff_photo=base_url().'assets/cc/images/admin-user.png';
+						}
+				}
 					
 				?>
             <span class="col-md-4 <?php echo 'd'.$member->dept_id; ?> <?php echo 's'.$member->shift_id; ?>">
@@ -113,7 +130,7 @@
 						          ?>                            
                             <a href="javascript:void(0)" class="btn btn-success fa fa-map-marker rremote_login_link" data-toggle="tooltip" data-placement="bottom" title="Work Remotely?" data-staff_id="<?php echo $member->staff_id; ?>" data-staff_name="<?php echo $member->staff_name; ?>" data-remotelogin="<?php echo $member->work_from_home; ?>" data-staff_photo="<?php echo $staff_photo; ?>" ></a>
 									 <?php } } ?>                            
-                            <a href="javascript:void(0)" class="btn btn-success fa fa-shield mmonitor_attendance_link" data-toggle="tooltip" data-placement="bottom" title="Monitor Attendance?" data-staff_id="<?php echo $member->staff_id; ?>" data-staff_name="<?php echo $member->staff_name; ?>" data-monitor="<?php echo $member->monitor; ?>" ></a>
+                            <a href="javascript:void(0)" class="btn btn-success fa fa-shield mmonitor_attendance_link" data-toggle="tooltip" data-placement="bottom" title="Monitor Attendance?" data-staff_id="<?php echo $member->staff_id; ?>" data-staff_name="<?php echo $member->staff_name; ?>" data-monitor="<?php echo $member->monitor; ?>" data-staff_photo="<?php echo $staff_photo; ?>" ></a>
                             <a href="javascript:void(0)" class="btn btn-danger fa fa-trash delete_user_link"	data-toggle="tooltip" data-placement="bottom" title="Delete User?" data-staff_id="<?php echo $member->staff_id; ?>" data-staff_name="<?php echo $member->staff_name; ?>"  data-staff_photo="<?php echo $staff_photo; ?>"></a>
                         </div>
 
