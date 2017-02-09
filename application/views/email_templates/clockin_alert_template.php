@@ -1,6 +1,12 @@
 <html>
 <head>
 <title></title>
+    <style>
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
 </head>
 <body style="background:#f7f7f7;">
 
@@ -26,7 +32,7 @@
                   Clockin@: <?php echo (isset($clockintime))?$clockintime:'';?>
              </div>
 				<div style="padding: 10px;color: #2E4483;margin-bottom:0;font-size: 15px;line-height: 35px;text-align: center;">
-					<img class="img-responsive" id="my_selfie" src="<?php echo (isset($clockinpic))?$clockinpic:'';?>" alt="my_selfie">
+					<img id="my_selfie" src="<?php echo (isset($clockinpic))?$clockinpic:'';?>" alt="my_selfie">
 				</div>
 
         </div>
