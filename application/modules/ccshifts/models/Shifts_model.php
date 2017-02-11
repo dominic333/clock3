@@ -34,7 +34,7 @@ class Shifts_model extends CI_Model {
           	 				'department_name' 	=>  $this->db->escape_str($this->input->post('department')),                            
 	  		 			);
 						$this->db->insert('departments', $data);
-   
+   					
 						break; 
 						
 		  case 'read':	

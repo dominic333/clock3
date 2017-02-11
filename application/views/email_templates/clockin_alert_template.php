@@ -27,9 +27,10 @@
               <?php echo (isset($name))?$name:'';?>
              </h2>
              <div style="padding: 10px;color: #2E4483;margin-bottom:0;font-size: 15px;line-height: 35px;text-align: center;">
-                  Department: <?php echo (isset($department_name))?$department_name:'';?> <br>
-                  Shift: <?php echo (isset($shift_name))?$shift_name:'';?> <br>
-                  Clockin@: <?php echo (isset($clockintime))?$clockintime:'';?>
+                  <?php echo (isset($department_name))? 'Department: '.$department_name:'';?> <br>
+                  <?php echo (isset($shiftName)) ? 'Shift: '.$shiftName:'';?> <br>
+                  <?php echo (isset($clock))? 'Action:'.$clock:'';?> <br>
+                  <?php echo (isset($clockintime))?'Time: '.$clockintime:'';?>
              </div>
 				<div style="padding: 10px;color: #2E4483;margin-bottom:0;font-size: 15px;line-height: 35px;text-align: center;">
 					<img id="my_selfie" src="<?php echo (isset($clockinpic))?$clockinpic:'';?>" alt="my_selfie">

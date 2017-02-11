@@ -21,6 +21,22 @@ class Site_settings
 		return true; 		
 	}
 	
+	//Function to check user on leave or not
+	//Dominic, Feb 11, 2017
+	function checkUserAbsentOrNot($staffid,$today)
+	{
+	    $absent=0;
+	    //SELECT * FROM staff_attendance_leaves WHERE staff_id=370 AND leave_date='2017-01-17' AND status=1
+     	 $result_settings	=	$this->obj->db->query("SELECT * FROM staff_attendance_leaves 
+     	 	WHERE staff_id=".$staffid." AND leave_date='".$today."' AND status=1
+     	 ");
+		 if($result_settings->num_rows() > 0)
+		 {
+		 	 $absent=1;
+		 }
+		 return $absent;
+	}
+	
    // Function to log operations
    // Dominic: December 06,2016
 	function adminlog($description)

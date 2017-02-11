@@ -941,11 +941,22 @@ class Attendance extends MX_Controller
 			         	$attendanceToken=0;
 						}								         
 			      }
+			      
+			      //check if user is on leave today
+			      $userAbsentOrNot = $this->site_settings->checkUserAbsentOrNot($staffid,$today);
+			      if($userAbsentOrNot==1) //on leave
+			      {
+			      	$attendance_status = "On Leave";
+			      	$logtime = "NA";
+			         $baselogtime = "NA";
+			         $attendanceToken=4;
+			      }
 				
 	       }
+	       
 				if($attendanceToken==0) //non work
 				{
-				  $attendanceLabel= '<span class="label label-success">v</span>';
+				  $attendanceLabel= '<span class="label label-default">v</span>';
 				}
 				else if($attendanceToken==1) //on time
 				{
@@ -954,6 +965,10 @@ class Attendance extends MX_Controller
 				else if($attendanceToken==2) //late
 				{
 				  $attendanceLabel= '<span class="label label-warning">v</span>';
+				}
+				else if($attendanceToken==4) //on leave
+				{
+				  $attendanceLabel= '<span class="label label-primary">a</span>';
 				}
 				else //did not clock in
 				{

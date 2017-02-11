@@ -140,7 +140,7 @@ $(document).ready(function(){
 	    	formdata.append('image_fmt',image_fmt);
 	    	formdata.append('clktype',ctype);
 	    	var ajax = new XMLHttpRequest();
-	    	ajax.addEventListener("load", function(event) { uploadcomplete(event,furl); hideLoader(); }, false);
+	    	ajax.addEventListener("load", function(event) { uploadcomplete(event,furl,ctype); hideLoader(); }, false);
 	    	//ajax.addEventListener("progress", showLoader);
 	    	ajax.open("POST", url);
 	    	//ajax.addEventListener("load", hideLoader);
@@ -155,7 +155,7 @@ $(document).ready(function(){
 	    }
   }
   
-  function uploadcomplete(event,furl){
+  function uploadcomplete(event,furl,ctype){
     var response	=	event.target.responseText.trim();
     if(response=='Failed')
     {
@@ -163,7 +163,23 @@ $(document).ready(function(){
     }
     else
     {
-    	alert('You have Clocked in Successfully!');
+    	if(ctype=='brkOut')
+    	{
+    		alert('Enjoy your break!');
+    	} 
+    	else if(ctype=='brkin')
+    	{
+    		alert("Great! You're back!");
+    	}
+    	else if(ctype=='in')
+    	{
+    		alert('You have Clocked in Successfully!');
+    	}
+    	else
+    	{
+    		alert('You have Clocked out Successfully!');
+    	}
+    	
     	window.location.replace(furl);
     }
   }

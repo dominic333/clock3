@@ -5,8 +5,7 @@ class Attendance_model extends CI_Model {
 	function __construct()
 	{
 		parent::__construct();
-	}
-	
+	}	
 	
 	//Function to get all clock info by date
 	//@Author Farveen
@@ -168,12 +167,13 @@ class Attendance_model extends CI_Model {
 	}
 
 	//Modified to fetch staffs based on shift id (Dec 14,2016)
+	//Modified: Feb 11,2017- made query correct
 	function getAllUsersinDept($sel_shift,$company_id)
 	{      	
 		//$tz_data_q = "SELECT staff_id FROM staff_dept_shift WHERE dept_id='$dept_id'";
 		$this->db->select('staff_dept_shift.staff_id');
-		$this->db->from('department_shifts');
-		$this->db->join('staff_dept_shift','staff_dept_shift.shift_id=department_shifts.shift_id','left');
+		$this->db->from('staff_dept_shift');
+		$this->db->join('department_shifts','staff_dept_shift.shift_id=department_shifts.shift_id','left');
 		$this->db->where('department_shifts.comp_id',$company_id);
 		if($sel_shift!='all')
 		{
@@ -187,6 +187,11 @@ class Attendance_model extends CI_Model {
 		//FROM department_shifts
 		//LEFT JOIN staff_dept_shift ON staff_dept_shift.shift_id=department_shifts.shift_id
 		//WHERE department_shifts.comp_id=84 AND department_shifts.shift_id=213
+		
+		//SELECT staff_dept_shift.staff_id
+		//FROM staff_dept_shift
+		//LEFT JOIN department_shifts ON staff_dept_shift.shift_id=department_shifts.shift_id
+		//WHERE department_shifts.comp_id=84
        
 	}
 

@@ -18,7 +18,7 @@
             <div id="exTab1" class="col-md-12">
                 
                 <ul class="nav nav-pills">
-                    <li class="active">
+                    <li class="<?php echo (isset($tab1)) ? $tab1 : $tab2; ?>">
                         <a href="#1a" data-toggle="tab">Shift Attendance Report</a>
                     </li>
                     <li>
@@ -29,7 +29,7 @@
                 <br>
 
                 <div class="tab-content clearfix">
-                    <div class="tab-pane active" id="1a">
+                    <div class="tab-pane <?php echo (isset($tab1)) ? $tab1 : $tab2; ?>" id="1a">
 
                         <div class="row">
                             <div class="col-md-12">
@@ -114,8 +114,8 @@
 
 
                     </div>
-                    <div class="tab-pane" id="2a">
-                        <div class="row">
+                    <div class="tab-pane <?php echo (isset($tab2)) ? $tab2 : $tab1; ?>" id="2a">
+                        <div class="row" >
                             <div class="col-md-12">
                                 <div class="box box-danger">
                                     <div class="box-header">
@@ -171,7 +171,7 @@
                                                            name="<?= $this->security->get_csrf_token_name() ?>"
                                                            value="<?= $this->security->get_csrf_hash() ?>"/>
                                                     <div class="col-md-3">
-                                                        <button type="submit" name="Submit" id="Submit"
+                                                        <button type="submit" name="Submit" id="SubmitUserAttendance"
                                                                 class="btn btn-success"><span
                                                                 class="fa fa-search"
                                                                 aria-hidden="true"></span>
@@ -188,7 +188,7 @@
                                     </div>
                                     <!-- /.box-header -->
                                     <div class="box-body">
-                                        <div class="table-responsive">
+                                        <div id="attendance_user_div" class="table-responsive">
                                             <?php echo (isset($attendance_user)) ? $attendance_user : 'Please Select The dates'; ?>
                                         </div>
                                     </div>

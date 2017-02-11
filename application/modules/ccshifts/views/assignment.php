@@ -27,13 +27,13 @@
                         <div class="form-group">
                             <label>Select a Shift</label>
                             <select name="shifts" id="shifts" data-placeholder="-- Select A Shift* --"  class="form-control select2" style="width: 100%;" >
-						                  <option value="">-- All Shifts --</option>
-						                  <?php foreach($company_shifts as $shift){?>
-						                  <option value="<?php echo $shift->shift_id;?>">
-						                  <?php echo $shift->shift_name;?>
-						                  </option>
-						                  <?php } ?> 
-						             </select>
+					                  <option value="">-- All Shifts --</option>
+					                  <?php foreach($company_shifts as $shift){?>
+					                  <option value="<?php echo $shift->shift_id;?>">
+					                  <?php echo $shift->shift_name;?>
+					                  </option>
+					                  <?php } ?> 
+						          </select>
                         </div>
                         <!-- /.form-group -->
                     </div>

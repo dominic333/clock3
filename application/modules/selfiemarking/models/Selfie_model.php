@@ -254,6 +254,21 @@ class Selfie_model extends CI_Model {
 	 		return 0;
 	 	}
 	}
+	
+	//Function to fetch attendance watchers for a shift
+	//Dominic, Feb 09 2017
+	function get_attendance_watchers($shiftid)
+	{
+	  //SELECT staff_info.email as email FROM monitor_info, staff_info WHERE 
+	  //monitor_info.staff_id = staff_info.staff_id AND monitor_info.shift_id = '$shiftid' AND monitor_info.monitor='1'
+	   $this->db->select('staff_info.email as email');
+		$this->db->from('monitor_info, staff_info');
+		$this->db->where('monitor_info.staff_id = staff_info.staff_id');
+		$this->db->where('monitor_info.shift_id',$shiftid);
+		$this->db->where('monitor_info.monitor',1);
+		$result=$this->db->get();
+		return $result->result();
+	}
 
 	
 }

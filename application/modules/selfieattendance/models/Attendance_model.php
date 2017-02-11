@@ -7,7 +7,7 @@ class Attendance_model extends CI_Model {
 		parent::__construct();
 	}
 	
-		//Function to get all clock info by date
+	//Function to get all clock info by date
 	//@Author Farveen
 	//Modified By Sajeev: To fetch notes (Feb 04,2016)
 	function getStaffAllClockInfobyDate($staff_id, $f_from_date)
@@ -171,8 +171,8 @@ class Attendance_model extends CI_Model {
 	{      	
 		//$tz_data_q = "SELECT staff_id FROM staff_dept_shift WHERE dept_id='$dept_id'";
 		$this->db->select('staff_dept_shift.staff_id');
-		$this->db->from('department_shifts');
-		$this->db->join('staff_dept_shift','staff_dept_shift.shift_id=department_shifts.shift_id','left');
+		$this->db->from('staff_dept_shift');
+		$this->db->join('department_shifts','staff_dept_shift.shift_id=department_shifts.shift_id','left');
 		$this->db->where('department_shifts.comp_id',$company_id);
 		if($sel_shift!='all')
 		{
