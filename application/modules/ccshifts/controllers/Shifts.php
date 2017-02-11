@@ -764,7 +764,20 @@ class Shifts extends MX_Controller
 		$this->data['company_shifts']			=	$this->Shifts_model->fetchCompanyShifts($compIdSess);
 		$this->data['company_members']		=  $this->Shifts_model->getCompanyMembers($compIdSess);
 		$this->data['view']					=	'ccshifts/assignment';
-		$this->data['footer_includes']	=	'<script src="'.base_url().'js/cc/assign.js" type="text/javascript"></script>';
+		$this->data['footer_includes']	=	'<script src="'.base_url().'js/cc/assign.js" type="text/javascript"></script>
+		<script src="//cdnjs.cloudflare.com/ajax/libs/list.js/1.5.0/list.min.js"></script>
+		<script type="text/javascript">
+			var userList = new List("users_in_shifts", {
+			  valueNames: ["searchStaff"],
+			  page: 6,
+			  pagination: true
+			});
+			var watcherList = new List("attendance_monitoring_staff", {
+			  valueNames: ["searchWatcher"],
+			  page: 6,
+			  pagination: true
+			});
+		</script>';
 		$this->load->view('master', $this->data);		
 	}
 	

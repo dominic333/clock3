@@ -27,13 +27,13 @@
                         <div class="form-group">
                             <label>Select a Shift</label>
                             <select name="shifts" id="shifts" data-placeholder="-- Select A Shift* --"  class="form-control select2" style="width: 100%;" >
-					                  <option value="">-- All Shifts --</option>
-					                  <?php foreach($company_shifts as $shift){?>
-					                  <option value="<?php echo $shift->shift_id;?>">
-					                  <?php echo $shift->shift_name;?>
-					                  </option>
-					                  <?php } ?> 
-						          </select>
+						                  <option value="">-- All Shifts --</option>
+						                  <?php foreach($company_shifts as $shift){?>
+						                  <option value="<?php echo $shift->shift_id;?>">
+						                  <?php echo $shift->shift_name;?>
+						                  </option>
+						                  <?php } ?> 
+						             </select>
                         </div>
                         <!-- /.form-group -->
                     </div>
@@ -64,10 +64,16 @@
                         <div class="row">
                             <div class="col-md-12">
 											
-										 <div id="users_in_shifts" class="row">
+										<div id="users_in_shifts" class="row">
+										<div class="col-md-12">
+									         <h3>Users in Shifts</h3>
+									   </div>
+										<input type="text" class="search" /> </br></br></br>
+										<ul id="listalist" class="list" >
 											<?php foreach($company_members as $member)
 													{
-														/*if($member->staff_photo==''||$member->staff_photo==' ')
+														/*
+														if($member->staff_photo==''||$member->staff_photo==' ')
 														{
 															$staff_photo=base_url().'assets/cc/images/admin-user.png';
 														}
@@ -76,6 +82,7 @@
 															$staff_photo=base_url().'images/users/'.$member->staff_photo;
 														}
 														*/
+														
 														if($member->staff_photo==''||$member->staff_photo==' ')
 														{
 															$staff_photo=base_url().'assets/cc/images/admin-user.png';
@@ -94,7 +101,8 @@
 														}
 												
 											?>
-							            <div id="<?php echo 'user'.$member->staff_id; ?>" class="col-md-4">
+											<li >
+								            <div id="<?php echo 'user'.$member->staff_id; ?>" class="col-md-4">
 							                <!-- USERS LIST -->
 							                <div class="box box-danger">
 							                    <div class="box-header with-border">
@@ -116,7 +124,7 @@
 							                                    <img class="img-circle" src="<?php echo $staff_photo; ?>" alt="User Avatar">
 							                                </div>
 							                                <!-- /.widget-user-image -->
-							                                <h4 class="widget-user-username"><?php echo $member->staff_name; ?></h4>
+							                                <h4 class="widget-user-username searchStaff"><?php echo $member->staff_name; ?></h4>
 							                                <h5 class="widget-user-desc"><?php echo $member->shift_name; ?></h5>
 							                            </div>
 							                        </div>
@@ -125,9 +133,15 @@
 							                    <!-- /.box-body -->
 							                </div>
 							                <!--/.box -->
-							            </div>
+							              </div>										
+											</li>
+
 							            <?php } ?>
-							
+							        </ul>
+							        <ul class="pagination"></ul>
+							        </div>
+							        <div>
+							        
 							        </div>
 							        <!-- /.row -->
 							
@@ -153,9 +167,12 @@
 									            <div class="col-md-12">
 									                <h3>Attendance Monitoring Staff</h3>
 									            </div>
+									            <input type="text" class="search" /> </br></br></br>
+									           <ul id="listalist2" class="list" >
 													<?php foreach($company_members as $member)
 															{
-																/*if($member->staff_photo==''||$member->staff_photo==' ')
+																/*
+																if($member->staff_photo==''||$member->staff_photo==' ')
 																{
 																	$staff_photo=base_url().'assets/cc/images/admin-user.png';
 																}
@@ -164,6 +181,7 @@
 																	$staff_photo=base_url().'images/users/'.$member->staff_photo;
 																}
 																*/
+																
 																if($member->staff_photo==''||$member->staff_photo==' ')
 																{
 																	$staff_photo=base_url().'assets/cc/images/admin-user.png';
@@ -182,6 +200,7 @@
 																}
 														
 													?>
+													<li >
 									            <div id="<?php echo 'monitor'.$member->staff_id; ?>" class="col-md-4">
 									                <!-- USERS LIST -->
 									                <div class="box box-danger">
@@ -204,7 +223,7 @@
 									                                    <img class="img-circle" src="<?php echo $staff_photo; ?>" alt="User Avatar">
 									                                </div>
 									                                <!-- /.widget-user-image -->
-									                                <h4 class="widget-user-username"><?php echo $member->staff_name; ?></h4>
+									                                <h4 class="widget-user-username searchWatcher"><?php echo $member->staff_name; ?></h4>
 									                                <h5 class="widget-user-desc"><?php echo $member->shift_name; ?></h5>
 									                            </div>
 									                        </div>
@@ -214,7 +233,10 @@
 									                </div>
 									                <!--/.box -->
 									            </div>
+									            </li>
 									            <?php } ?>
+									            </ul>
+							        				<ul class="pagination"></ul>
 									            <!-- /.col-md-4 -->
 									
 									        </div>

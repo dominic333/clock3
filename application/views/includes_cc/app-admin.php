@@ -86,12 +86,22 @@
         }
     </script>
     <style type="text/css">
-		#listalist
+		#listalist 
 		{
 			margin: 0px;
 			padding: 0px;
 		}
 		#listalist li
+		{
+			list-style: none;
+		}
+		
+		#listalist2 
+		{
+			margin: 0px;
+			padding: 0px;
+		}
+		#listalist2 li
 		{
 			list-style: none;
 		}
