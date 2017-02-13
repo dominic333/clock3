@@ -1,3 +1,24 @@
+<style>
+    input[type=search] {
+        width: 200px;
+        box-sizing: border-box;
+        border: 2px solid #ccc;
+        border-radius: 4px;
+        font-size: 16px;
+        background-color: white;
+        background-image: url('searchicon.png');
+        background-position: 10px 10px;
+        background-repeat: no-repeat;
+        padding: 12px 20px 12px 40px;
+        -webkit-transition: width 0.4s ease-in-out;
+        transition: width 0.4s ease-in-out;
+    }
+
+    input[type=search]:focus {
+        width: 100%;
+    }
+</style>
+
 <!-- Content Wrapper. Contains page content -->
 
 <div class="content-wrapper">
@@ -69,7 +90,10 @@
                                     <div class="col-md-12">
                                         <h3>Users in Shifts</h3>
                                     </div>
-                                    <input type="hidden" class="search"/> </br></br></br>
+
+                                    <div class="col-md-4">
+                                        <input type="search" class="search" name="search" placeholder="Search.."/> </br></br>
+                                    </div>
 
                                     <div class="row">
                                         <div class="col-md-12">
@@ -181,7 +205,11 @@
                                     <div class="col-md-12">
                                         <h3>Attendance Monitoring Staff</h3>
                                     </div>
-                                    <input type="text" class="search"/> </br></br></br>
+
+                                    <div class="col-md-4">
+                                        <input type="search" class="search" name="search" placeholder="Search.."/> </br></br>
+                                    </div>
+
                                     <div class="row">
                                         <div class="col-md-12">
                                             <ul id="listalist2" class="list">
