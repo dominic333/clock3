@@ -182,14 +182,16 @@
                                         <h3>Attendance Monitoring Staff</h3>
                                     </div>
                                     <input type="text" class="search"/> </br></br></br>
-                                    <ul id="listalist2" class="list">
-                                        <?php foreach ($company_members as $member) {
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <ul id="listalist2" class="list">
+                                                <?php foreach ($company_members as $member) {
 
-                                            if ($member->staff_photo == '' || $member->staff_photo == ' ') {
-                                                $staff_photo = base_url() . 'assets/cc/images/admin-user.png';
-                                            } else {
-                                                $staff_photo = base_url() . 'images/users/' . $member->staff_photo;
-                                            }
+                                                    if ($member->staff_photo == '' || $member->staff_photo == ' ') {
+                                                        $staff_photo = base_url() . 'assets/cc/images/admin-user.png';
+                                                    } else {
+                                                        $staff_photo = base_url() . 'images/users/' . $member->staff_photo;
+                                                    }
 
 
 //																if($member->staff_photo==''||$member->staff_photo==' ')
@@ -198,8 +200,8 @@
 //																}
 //																else
 //																{
-                                            //https://clock-in.me/webapp/images/avatars
-                                            //$staff_photo=base_url().'images/users/'.$member->staff_photo;
+                                                    //https://clock-in.me/webapp/images/avatars
+                                                    //$staff_photo=base_url().'images/users/'.$member->staff_photo;
 //																	$staff_photo='https://clock-in.me/webapp/images/avatars/'.$member->staff_photo;
 //
 //																	$url=getimagesize($staff_photo);
@@ -209,50 +211,55 @@
 //																	}
 //																}
 
-                                            ?>
-                                            <li>
-                                                <div id="<?php echo 'monitor' . $member->staff_id; ?>" class="col-md-4">
-                                                    <!-- USERS LIST -->
-                                                    <div class="box box-danger">
-                                                        <div class="box-header with-border">
-                                                            <h3 class="box-title"><?php echo $member->login_name; ?></h3>
+                                                    ?>
+                                                    <li>
+                                                        <div id="<?php echo 'monitor' . $member->staff_id; ?>"
+                                                             class="col-md-4">
+                                                            <!-- USERS LIST -->
+                                                            <div class="box box-danger">
+                                                                <div class="box-header with-border">
+                                                                    <h3 class="box-title"><?php echo $member->login_name; ?></h3>
 
-                                                            <div class="box-tools pull-right">
-                                                                <div class="checkbox">
-                                                                    <label><input
-                                                                            id="<?php echo 'monitorUsers' . $member->staff_id; ?>"
-                                                                            class="monitorUsersClass"
-                                                                            name="monitorUsers" type="checkbox"
-                                                                            value="<?php echo $member->staff_id; ?>"></label>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <!-- /.box-header -->
-                                                        <div class="box-body">
-                                                            <!-- Widget: user widget style 1 -->
-                                                            <div class="box box-widget widget-user-2">
-                                                                <!-- Add the bg color to the header using any of the bg-* classes -->
-                                                                <div class="widget-user-header bg-gray-light">
-                                                                    <div class="widget-user-image">
-                                                                        <img class="img-circle"
-                                                                             src="<?php echo $staff_photo; ?>"
-                                                                             alt="User Avatar">
+                                                                    <div class="box-tools pull-right">
+                                                                        <div class="checkbox">
+                                                                            <label><input
+                                                                                    id="<?php echo 'monitorUsers' . $member->staff_id; ?>"
+                                                                                    class="monitorUsersClass"
+                                                                                    name="monitorUsers" type="checkbox"
+                                                                                    value="<?php echo $member->staff_id; ?>"></label>
+                                                                        </div>
                                                                     </div>
-                                                                    <!-- /.widget-user-image -->
-                                                                    <h4 class="widget-user-username searchWatcher"><?php echo $member->staff_name; ?></h4>
-                                                                    <h5 class="widget-user-desc"><?php echo $member->shift_name; ?></h5>
                                                                 </div>
+                                                                <!-- /.box-header -->
+                                                                <div class="box-body">
+                                                                    <!-- Widget: user widget style 1 -->
+                                                                    <div class="box box-widget widget-user-2">
+                                                                        <!-- Add the bg color to the header using any of the bg-* classes -->
+                                                                        <div class="widget-user-header bg-gray-light">
+                                                                            <div class="widget-user-image">
+                                                                                <img class="img-circle"
+                                                                                     src="<?php echo $staff_photo; ?>"
+                                                                                     alt="User Avatar">
+                                                                            </div>
+                                                                            <!-- /.widget-user-image -->
+                                                                            <h4 class="widget-user-username searchWatcher"><?php echo $member->staff_name; ?></h4>
+                                                                            <h5 class="widget-user-desc"><?php echo $member->shift_name; ?></h5>
+                                                                        </div>
+                                                                    </div>
+                                                                    <!-- /.widget-user -->
+                                                                </div>
+                                                                <!-- /.box-body -->
                                                             </div>
-                                                            <!-- /.widget-user -->
+                                                            <!--/.box -->
                                                         </div>
-                                                        <!-- /.box-body -->
-                                                    </div>
-                                                    <!--/.box -->
-                                                </div>
-                                            </li>
-                                        <?php } ?>
-                                    </ul>
-                                    <ul class="pagination"></ul>
+                                                    </li>
+                                                <?php } ?>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="col=md-12" style="padding-left: 15px;">
+                                        <ul class="pagination"></ul>
+                                    </div>
                                     <!-- /.col-md-4 -->
 
                                 </div>
