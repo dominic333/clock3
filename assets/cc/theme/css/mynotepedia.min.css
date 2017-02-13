@@ -5199,3 +5199,7 @@ table.text-center, table.text-center td, table.text-center th {
         white-space: normal !important
     }
 }
+
+.border-btn{
+    border: 2px solid #337ab7;
+}

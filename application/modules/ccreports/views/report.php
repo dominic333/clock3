@@ -16,12 +16,12 @@
     <section class="content">
         <div class="row">
             <div id="exTab1" class="col-md-12">
-                
+
                 <ul class="nav nav-pills">
-                    <li class="<?php echo (isset($tab1)) ? $tab1 : $tab2; ?>">
+                    <li class="<?php echo (isset($tab1)) ? $tab1 : $tab2; ?> border-btn">
                         <a href="#1a" data-toggle="tab">Shift Attendance Report</a>
                     </li>
-                    <li>
+                    <li class=" border-btn">
                         <a href="#2a" data-toggle="tab">User Attendance Report</a>
                     </li>
                 </ul>
