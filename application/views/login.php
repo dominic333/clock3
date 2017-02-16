@@ -46,7 +46,7 @@
             <div class="col-sm-6 logo">
                 <img class="log" src="<?php echo base_url();?>assets/cc/images/Clock-In-Logo-01.png" alt="">
                 <p>
-                <h3 class="size"><strong>Attendance & Payroll on the Cloud</strong></h3></p>
+                <h3 class="size"><strong>Attendance on the Cloud</strong></h3></p>
             </div>
             <div class="col-sm-5 form-box">
                 <div class="form-top">
@@ -91,7 +91,7 @@
 
 
 <footer class="foot">
-    <p><span class="bawah">TROUBLE LOGING IN ?</span> Please contact your HR or Payroll Manager first. For support
+    <p><span class="bawah">TROUBLE LOGING IN ?</span> Please contact your HR Manager first. For support
         escalation, you can email
         <a class="email" href="mailto:support@clock-in.me">support@clock-in.me</a></p>
     <p>Realtime attendance tracking by <span class="bawah"><?php echo site_name();?></span> | Powered by

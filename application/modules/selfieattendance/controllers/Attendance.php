@@ -1075,6 +1075,16 @@ class Attendance extends MX_Controller
 	   }
 		echo json_encode($response);
 	}
+	
+	//Function for leave management
+	function leavemanagement()
+	{
+	   $this->data['view']					=	'selfieattendance/leavemanagement';
+	    
+		$this->data['footer_includes']			=	'<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js" type="text/javascript"></script> 
+		  <script src="'.base_url().'js/cc/calendarview.js" type="text/javascript"></script>';
+		$this->load->view('master_selfie', $this->data);
+	}
 
 	function get_common()
 	{

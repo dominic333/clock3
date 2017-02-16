@@ -257,6 +257,7 @@
 				  
 				  var dt = calEvent.start;
       		  var droppedDate= (dt.format()); 
+      		  if((droppedDate > todayDate)){
 				  if(found != -1)
 				  {
 				    var r=confirm("Cancel " + calEvent.title);
@@ -289,8 +290,8 @@
 					   });//end of ajax 
                   
               	 }
-				  }
-
+				  } //found if
+				 }
 	        }
         });
 
@@ -560,6 +561,54 @@
 
 
     });
+    
+    //Function for leave calendar
+    var currentDateL = $('#leaveCalendar').fullCalendar('getDate');
+    var leaveArray =[]; //array to store leaves
+    $('#leaveCalendar').fullCalendar({
+    defaultDate: currentDateL,
+    header: {
+        left: 'prev,next today',
+        center: 'title',
+        right: 'month'
+    },
+    defaultView: 'month',
+    events: [],
+    selectable: true,
+    select: function (start, end, jsEvent, view) {
+
+	    if (moment().diff(start, 'days') > 0) {
+	      $('#leaveCalendar').fullCalendar('unselect');
+	      return false;
+	    }
+	
+	    var dateL = $('#leaveCalendar').fullCalendar('getDate');
+	    obtaniedL = dateL._d;
+	    obtaniedDateL = obtaniedL.toString();
+	    
+	    dateofMonthL = convert(obtaniedDateL);
+	    var date = start.format();
+	    
+	    if (date > dateofMonthL) {
+	    	//console.log(date);
+	      $("#leaveCalendar").fullCalendar('addEventSource', [{
+	        start: start,
+	        end: end,
+	        rendering: 'background',
+	        block: true,
+	      }, ]);
+	     leaveArray.push(date);
+	    }
+	    else
+	    {
+	      $("#leaveCalendar").fullCalendar("unselect");
+	    }        
+        
+    },
+    selectOverlap: function(event) {
+        return ! event.block;
+    }
+ });
     
     //Function to request a leave
     function requestLeave(droppedDate,leaveType)

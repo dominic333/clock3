@@ -70,11 +70,11 @@
         <div class="row">
             <div id="exTab1" class="col-md-12">
                 <ul class="nav nav-pills">
-                    <li class="active border-btn">
+                    <li class="active">
                         <a href="#1a" data-toggle="tab">Add Users to Shifts</a>
                     </li>
-                    <li class="border-btn">
-                        <a href="#2a" data-toggle="tab">Assign Attendance Watchers</a>
+                    <li>
+                        <a href="#2a" data-toggle="tab">Assign Attendance Supervisors</a>
                     </li>
                 </ul>
 
@@ -99,30 +99,32 @@
                                         <div class="col-md-12">
                                             <ul id="listalist" class="list">
                                                 <?php foreach ($company_members as $member) {
+                                                	/*
 
                                                     if ($member->staff_photo == '' || $member->staff_photo == ' ') {
                                                         $staff_photo = base_url() . 'assets/cc/images/admin-user.png';
                                                     } else {
                                                         $staff_photo = base_url() . 'images/users/' . $member->staff_photo;
                                                     }
+                                                    */
 
 
-//														if($member->staff_photo==''||$member->staff_photo==' ')
-//														{
-//															$staff_photo=base_url().'assets/cc/images/admin-user.png';
-//														}
-//														else
-//														{
+														if($member->staff_photo==''||$member->staff_photo==' ')
+														{
+															$staff_photo=base_url().'assets/cc/images/admin-user.png';
+														}
+														else
+														{
                                                     //https://clock-in.me/webapp/images/avatars
                                                     //$staff_photo=base_url().'images/users/'.$member->staff_photo;
-//															$staff_photo='https://clock-in.me/webapp/images/avatars/'.$member->staff_photo;
-//
-//															$url=getimagesize($staff_photo);
-//															if(!is_array($url))
-//															{
-//																$staff_photo=base_url().'assets/cc/images/admin-user.png';
-//															}
-//														}
+															$staff_photo='https://clock-in.me/webapp/images/avatars/'.$member->staff_photo;
+
+															$url=getimagesize($staff_photo);
+															if(!is_array($url))
+															{
+																$staff_photo=base_url().'assets/cc/images/admin-user.png';
+															}
+														}
 
                                                     ?>
                                                     <li>
@@ -203,7 +205,7 @@
                                 <div id="attendance_monitoring_staff" class="row">
 
                                     <div class="col-md-12">
-                                        <h3>Attendance Monitoring Staff</h3>
+                                        <h3>Attendance Supervising Staff</h3>
                                     </div>
 
                                     <div class="col-md-4">
@@ -214,30 +216,32 @@
                                         <div class="col-md-12">
                                             <ul id="listalist2" class="list">
                                                 <?php foreach ($company_members as $member) {
+                                                	/*
 
                                                     if ($member->staff_photo == '' || $member->staff_photo == ' ') {
                                                         $staff_photo = base_url() . 'assets/cc/images/admin-user.png';
                                                     } else {
                                                         $staff_photo = base_url() . 'images/users/' . $member->staff_photo;
                                                     }
+                                                    */
 
 
-//																if($member->staff_photo==''||$member->staff_photo==' ')
-//																{
-//																	$staff_photo=base_url().'assets/cc/images/admin-user.png';
-//																}
-//																else
-//																{
+																if($member->staff_photo==''||$member->staff_photo==' ')
+																{
+																	$staff_photo=base_url().'assets/cc/images/admin-user.png';
+																}
+																else
+																{
                                                     //https://clock-in.me/webapp/images/avatars
                                                     //$staff_photo=base_url().'images/users/'.$member->staff_photo;
-//																	$staff_photo='https://clock-in.me/webapp/images/avatars/'.$member->staff_photo;
-//
-//																	$url=getimagesize($staff_photo);
-//																	if(!is_array($url))
-//																	{
-//																		$staff_photo=base_url().'assets/cc/images/admin-user.png';
-//																	}
-//																}
+																	$staff_photo='https://clock-in.me/webapp/images/avatars/'.$member->staff_photo;
+
+																	$url=getimagesize($staff_photo);
+																	if(!is_array($url))
+																	{
+																		$staff_photo=base_url().'assets/cc/images/admin-user.png';
+																	}
+																}
 
                                                     ?>
                                                     <li>

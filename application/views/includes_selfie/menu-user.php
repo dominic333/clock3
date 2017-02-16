@@ -60,6 +60,12 @@
                         <i class="fa fa-picture-o fa-lg"></i> Selfie Attendance
                     </a>
                 </li>
+                
+                <li>
+                    <a href="<?php echo base_url();?>selfieattendance/attendance/leavemanagement">
+                        <i class="fa fa-picture-o fa-lg"></i> Leave Management
+                    </a>
+                </li>
 
                 <li>
                     <a href="<?php echo base_url();?>home/logout">

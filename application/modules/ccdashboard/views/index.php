@@ -294,7 +294,7 @@
                         </p>
                         <p>
                             <a href="<?php echo base_url();?>ccshifts/shifts/assignmonitor">
-                                <button class="btn btn-block btn-success btn-lg" type="button"><span class="pull-left">Assign Attendance Watcher(s)</span> <span
+                                <button class="btn btn-block btn-success btn-lg" type="button"><span class="pull-left">Assign Attendance Supervisor(s)</span> <span
                                         class="fa fa-plus-circle pull-right"></span></button>
                             </a>
                         </p>
