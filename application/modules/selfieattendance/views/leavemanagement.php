@@ -33,14 +33,17 @@
 				<div class="col-md-12">
 				  <h4>Step 2: Add Note & Select Leave Type</h4>
 				    <div class="box">
-					    <div class="col-md-6">
-					    <textarea> </textarea>
+					    <div class="col-md-4">
+					    	<textarea> </textarea>
 					    </div>
-					    <div class="col-md-6">
-					    <select>
-					    <option>sfdsf</option>
-					    <option>sfdsf</option>
-					    </select>
+					    <div class="col-md-4">
+						    <select>
+						    	<option>sfdsf</option>
+						    	<option>sfdsf</option>
+						    </select>
+					    </div>
+					    <div class="col-md-4">
+					       <input type="submit" id="button">
 					    </div>
 				    </div>
 				</div>
