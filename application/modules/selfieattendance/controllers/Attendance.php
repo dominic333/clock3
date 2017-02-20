@@ -815,6 +815,7 @@ class Attendance extends MX_Controller
    	//$url_log_path 	 	=  "/home/clockin/www/selfies/aLog";
    	$absent_image 		= "image-absent.jpg";
 		$non_work_image 	= "image-nonwork.jpg";
+		$leave_image 	= "image-onleave.jpg";
 		$no_selfies_image = "avatar.png";
 		$del_image 			= "icon-delete.png";
 		$avatar_path		=	base_url()."images/avatars";
@@ -946,6 +947,7 @@ class Attendance extends MX_Controller
 			      $userAbsentOrNot = $this->site_settings->checkUserAbsentOrNot($staffid,$today);
 			      if($userAbsentOrNot==1) //on leave
 			      {
+			      	$fullpath = $avatar_path."/".$leave_image;
 			      	$attendance_status = "On Leave";
 			      	$logtime = "NA";
 			         $baselogtime = "NA";
@@ -1038,7 +1040,42 @@ class Attendance extends MX_Controller
 		$this->load->view('master_selfie', $this->data);
 	}
 	
-	//Function to request a leave
+	//Function to apply for leaves
+	//Feb 20,2017
+	function applyForLeave()
+   {
+   	$staff 		 = $this->session->userdata('mid');
+		$leaveType = $this->input->post('leaveType');
+	   $leaveNote	 = $this->input->post('leaveNote');
+	   $leaveDates	 = $this->input->post('leaveDates');
+	   $totalApplied = sizeof($leaveDates);
+	   $appliedAt = date("YmdHis");
+	   
+	   $attendance	 = $this->Attendance_model->applyForLeave($leaveDates,$leaveType,$leaveNote,$staff,$appliedAt);
+	   $staff_id = $this->db->insert_id();
+	   if($staff_id!='')
+	   {
+	   	$response='success';
+	   }
+	   else
+	   {
+	   	$response = 'failed';
+	   }
+	   
+	   $sName=$this->session->userdata('staffname');
+	   $notifyMsg = $sName.' requested for leave(s)';
+	   $nType = 1; //clockin updates
+		$nMsg  = $sName.$notifyMsg;
+		$this->site_settings->addNotification($nType,$nMsg,'');
+		
+		// save to log table	
+		$operation = 'Staff with id:'.$staff.'. requested for leave.';
+	   $this->site_settings->adminlog($operation);
+	   
+	   echo json_encode($response);
+   }	
+	
+	//Function to request a leave (older one, not in use)
 	//Dominic, Jan 04,2016
 	function requestLeave()
 	{

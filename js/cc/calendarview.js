@@ -562,6 +562,8 @@
 
     });
     
+    // New leave management begins
+    
     //Function for leave calendar
     var currentDateL = $('#leaveCalendar').fullCalendar('getDate');
     var leaveArray =[]; //array to store leaves
@@ -590,7 +592,7 @@
 	    var date = start.format();
 	    
 	    if (date > dateofMonthL) {
-	    	//console.log(date);
+	    	
 	      $("#leaveCalendar").fullCalendar('addEventSource', [{
 	        start: start,
 	        end: end,
@@ -598,6 +600,7 @@
 	        block: true,
 	      }, ]);
 	     leaveArray.push(date);
+	     //console.log(leaveArray);
 	    }
 	    else
 	    {
@@ -608,7 +611,83 @@
     selectOverlap: function(event) {
         return ! event.block;
     }
- });
+   });
+   
+      $('#formLeaveRequest').validate(
+		 {
+		  rules: 
+		  {		    
+		     leaveNote: 
+		     {
+			     required: true
+			  }, 
+		     leavetype: 
+		     {
+		        required: true
+		     }
+		   },     		         
+			highlight: function(element) {
+				  $(element).closest('.control-group').removeClass('success').addClass('error');
+			},
+			success: function(element) {
+			  element
+			 .text('').addClass('valid')
+			 .closest('.control-group').removeClass('error').addClass('success');
+			},
+			 submitHandler: function(form) 
+			 {
+			 	  var post_url = base_url+"selfieattendance/attendance/applyForLeave";
+			 	  var leaveType = $.trim($("#formLeaveRequest #leavetype").val()); 
+			 	  var leaveNote = $.trim($("#formLeaveRequest #leaveNote").val()); 
+			 	  var leaveDates = leaveArray; 
+			 	  $.ajax({
+					 url: post_url,
+					 data: 
+					 {
+						leaveType : leaveType,
+						leaveNote : leaveNote,
+						leaveDates : leaveDates,
+						csrf_test_name : csrf_token
+					 },
+					 type: "POST",
+					 dataType: 'HTML',
+					 beforeSend: function ( xhr ) {
+		               //Add your image loader here
+		               showLoader();
+		          },
+					 success: function(result)
+				    {
+				    	hideLoader(); 
+				      var result= result.trim();
+				      
+				      if(result=="success")
+				      {
+				      	$.alert({
+							    title: 'Leaves Applied!',
+							    content: 'Your leave request has been placed.',
+							    confirm: function(){
+							        
+							    }
+							});
+				      }
+				      else if(result=="failed")
+				      {
+				      	$.alert({
+							    title: 'Sorry!',
+							    content: 'Unable to process your leave request. Please try again',
+							    confirm: function(){
+							        
+							    }
+							});
+				      }
+				      
+					  	$('#formLeaveRequest')[0].reset();					  	
+				    }
+			    });//end of ajax 
+			 }
+		});
+   
+   // New leave management ends
     
     //Function to request a leave
     function requestLeave(droppedDate,leaveType)

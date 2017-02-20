@@ -207,7 +207,7 @@ class Attendance_model extends CI_Model {
 		return $result->row_array();    	
 	}
 	
-	//Function to request a leave
+	//Function to request a leave (not in use)
 	//Dominic, Jan 04,2016
 	function requestLeave($dateofMonth,$leaveType,$staff)
 	{
@@ -239,6 +239,25 @@ class Attendance_model extends CI_Model {
 			$leave='';
 		}
 		$this->db->delete('staff_attendance_leaves', array('staff_id' => $staff,'leave_date' 	=>  $dateofMonth,'leaveType' 	=>  $leave));
+	}
+	
+	//Function to apply for leaves
+	//Dominic, Feb 20,2016
+	function applyForLeave($leaveDates,$leaveType,$leaveNote,$staff,$appliedAt)
+	{
+		$data = array(		                         
+	          	 				'staff_id' 		=>  $staff,                            
+	          	 				'leaveNote' 	=>  $leaveNote,                            
+	          	 				'leaveType' 	=>  $leaveType,                            
+	          	 				'appliedAt' 	=>  $appliedAt,                            
+		  		 			);
+		$totalApplied = sizeof($leaveDates);
+		
+		for($i=0; $i<$totalApplied; $i++)
+		{
+			$data['leave_date'] = $leaveDates[$i];
+			$this->db->insert('staff_attendance_leaves', $data);
+		}
 	}
 
 }

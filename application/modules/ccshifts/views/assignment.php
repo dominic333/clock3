@@ -70,10 +70,10 @@
         <div class="row">
             <div id="exTab1" class="col-md-12">
                 <ul class="nav nav-pills">
-                    <li class="active">
+                    <li class="active border-btn">
                         <a href="#1a" data-toggle="tab">Add Users to Shifts</a>
                     </li>
-                    <li>
+                    <li class="border-btn">
                         <a href="#2a" data-toggle="tab">Assign Attendance Supervisors</a>
                     </li>
                 </ul>

@@ -767,6 +767,7 @@ class Attendance extends MX_Controller
    	//$url_log_path 	 	=  "/home/clockin/www/selfies/aLog";
    	$absent_image 		= "image-absent.jpg";
 		$non_work_image 	= "image-nonwork.jpg";
+		$leave_image 	= "image-onleave.jpg";
 		$no_selfies_image = "avatar.png";
 		$del_image 			= "icon-delete.png";
 		$avatar_path		=	base_url()."images/avatars";
@@ -898,6 +899,7 @@ class Attendance extends MX_Controller
 			      $userAbsentOrNot = $this->site_settings->checkUserAbsentOrNot($staffid,$today);
 			      if($userAbsentOrNot==1) //on leave
 			      {
+			      	$fullpath = $avatar_path."/".$leave_image;
 			      	$attendance_status = "On Leave";
 			      	$logtime = "NA";
 			         $baselogtime = "NA";
