@@ -563,7 +563,15 @@
     });
     
     // New leave management begins
-    
+
+    var events = [];
+    var eventsCache = {};
+
+    var today = moment();
+    var todayDate = today.format("YYYY-MM-DD");
+    var tomorrow = today.add(1, 'days').format("YYYY-MM-DD");
+    var haystack = [ "Medical Leave", "Casual Leave", "Annual Leave" ];
+		  
     //Function for leave calendar
     var currentDateL = $('#leaveCalendar').fullCalendar('getDate');
     var leaveArray =[]; //array to store leaves
@@ -575,7 +583,89 @@
         right: 'month'
     },
     defaultView: 'month',
-    events: [],
+    //events: [],
+    
+            events: function(start, end, timezone, callback) {
+            	
+             //have we already cached this time?
+		        if (events.eventsCache 
+		            && events.eventsCache[start.toString + "-" + end.toString]){
+		
+		                    //if we already have this data, pass it to callback()
+		            callback(eventsCache[start.toString + "-" + end.toString]);
+		            return;
+		        }
+		        
+             var date = $('#leaveCalendar').fullCalendar('getDate');			    
+			    obtanied	= date._d;
+			    obtaniedDate	= obtanied.toString();
+			    //console.log(obtaniedDate);
+			    dateofMonth	= convert(obtaniedDate);
+     	       var post_url = base_url+"ccattendance/attendance/fetchMonthlyAttendance";
+		            $.ajax({
+		            url: post_url,
+		            type: "POST",
+		            dataType: 'json',
+		            cache: true,
+		            data: {
+		                // our hypothetical feed requires UNIX timestamps
+		                //start: start.unix(),
+		                //end: end.unix(),
+		                dateofMonth:dateofMonth,
+		                csrf_test_name : csrf_token
+		            }, 
+                        beforeSend: function ( xhr )
+                        {
+                            //Add your image loader here
+                            showLoader();
+                        },
+		            success: function(result) {
+                        hideLoader();
+		            	 var events = [];
+		            	//if (!events.eventsCache)
+                      //events.eventsCache = {};
+
+            			//store your data
+            			//eventsCache[start.toString + "-" + end.toString] = result;
+            
+		                $.each(result.attendance,function(index,res) 
+		                   {
+		                   	var date = (res.start).split('-'); //To get date,month  and year separately
+		                   	events.push({
+		                   		
+		                    	   title:  res.title,
+		                    	   loc: res.title,
+		                    	   start:res.start,
+		                    	   end:res.end,
+		                    	   intime:res.intime,
+		                    	   outtime:res.outtime,
+		                        allDay: true,
+		                        //url: base_url+'admin/meetings/view/'+meeting.id,
+		                        color: res.borderColor					                    
+		                        });
+		                   });
+		                   
+		                 $.each(result.leaves,function(index,res) 
+		                   {
+		                   	var date = (res.start).split('-'); //To get date,month  and year separately
+		                   	events.push({
+		                   		
+		                    	   title:  res.title,
+		                    	   loc: res.title,
+		                    	   start:res.start,
+		                    	   end:res.end,
+		                    	   intime:res.intime,
+		                    	   outtime:res.outtime,
+		                        allDay: true,
+		                        //url: base_url+'admin/meetings/view/'+meeting.id,
+		                        color: res.borderColor					                    
+		                        });
+		                   });
+		                callback(events);
+		             }
+		          });
+		        },    
+    
     selectable: true,
     select: function (start, end, jsEvent, view) {
 

@@ -1065,7 +1065,7 @@ class Attendance extends MX_Controller
 	   $sName=$this->session->userdata('staffname');
 	   $notifyMsg = $sName.' requested for leave(s)';
 	   $nType = 1; //clockin updates
-		$nMsg  = $sName.$notifyMsg;
+		$nMsg  = $notifyMsg;
 		$this->site_settings->addNotification($nType,$nMsg,'');
 		
 		// save to log table	
