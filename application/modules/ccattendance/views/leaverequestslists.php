@@ -16,6 +16,23 @@
 
     <!-- Main content -->
     <section class="content">
+         <div class="row">
+             <div class="col-md-4">
+                 <div class="box box-default">
+                      <div class="box-body">
+                          <div class="form-group">
+                              <label>Action</label>
+                              <select name="leaveAction" id="leaveAction"  data-placeholder="Action"  class="form-control select2" style="width: 100%;" >
+            							<option value="">Select</option>
+            							<option value="1">Approve Leave Request</option>
+            							<option value="2">Reject Leave Request</option>
+                              </select>
+                          </div>
+                      </div>
+                 </div>
+             </div>
+         </div>
+            
         <div class="row">
             <div class="col-md-12">
                 <div class="box box-danger">
@@ -29,10 +46,12 @@
                             <table id="leaveApplicationList" class="table table-bordered table-striped">
                                 <thead>
                                 <tr>
+                                    <th><input type="checkbox"  id="checkall" ></th>
                                     <th width="10px">No</th>
                                     <th>Date</th>
                                     <th>User</th>
                                     <th>Leave Type</th>
+                                    <th>Reason</th>
                                     <th>Action</th>
                                 </tr>
                                 </thead>
@@ -42,6 +61,7 @@
                                 	foreach($allLeaves as $row){
                                 ?>
                                 <tr id="<?php echo 'row'.$row->id; ?>" >
+                                    <th><input type="checkbox" name="checked_item[]"  value="<?php echo $row->id; ?>"/> </th>
                                     <td><?php echo $i; ?></td>
                                     <td><?php echo $row->leave_date; ?></td>
                                     <td><?php echo $row->staff_name; ?></td>
@@ -54,6 +74,9 @@
                             				  <?php } else{  ?>
                             				 <label class="bg-aqua" data-leavetype="annual" data-leave="leave" style="position: relative;">Annual</label>  
                             				  <?php } ?>                                 
+                                    </td>
+                                    <td>
+                                    <?php echo $row->leaveNote; ?>
                                     </td>
                                     <td>
                                        <?php if($row->status==0) {?>

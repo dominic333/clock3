@@ -46,6 +46,9 @@
 		 //console.log(today);
 		 //console.log(tomorrow);
         //fetchCalenderAttendance(dateofMonth);
+        
+//-------------------------------------------------------------------------------------------------------------------------- // 
+        //My Calendar
         $('#calendar').fullCalendar({
             header: {
                 left: 'prev,next',
@@ -142,9 +145,6 @@
 		            dataType: 'json',
 		            cache: true,
 		            data: {
-		                // our hypothetical feed requires UNIX timestamps
-		                //start: start.unix(),
-		                //end: end.unix(),
 		                dateofMonth:dateofMonth,
 		                csrf_test_name : csrf_token
 		            }, 
@@ -233,12 +233,9 @@
 	                    $(this).remove();
 	                }					 					 
 					 }
-   
-
             },
             /* This constrains it to today or later */
             eventConstraint: {
-            		
                 start: tomorrow,
                 end: '2100-01-01' // hard coded goodness unfortunately
             },
@@ -246,8 +243,7 @@
 		        if (event.clock == 'attendance') {
 		              element.draggable = false;
 		              element.editable = false;
-		        }
-		        
+		        } 
 		     },
 	        eventClick: function(calEvent, jsEvent, view)
 	        {
@@ -364,8 +360,9 @@
 			  });
 			  */
 
-        //Staff Calendar Attendance Starts
 
+//-------------------------------------------------------------------------------------------------------------------------- // 
+        //Staff Calendar Attendance Starts
         $('#staffCalendar').fullCalendar({
 
             header: {
@@ -464,9 +461,6 @@
                     dataType: 'json',
                     cache: true,
                     data: {
-                        // our hypothetical feed requires UNIX timestamps
-                        //start: start.unix(),
-                        //end: end.unix(),
                         user: selectedStaff,
                         dateofMonth:dateofMonth,
                         csrf_test_name : csrf_token
@@ -485,7 +479,7 @@
                         //store your data
                         eventsCache[start.toString + "-" + end.toString] = result;
 
-                        $.each(result,function(index,res) //here we're doing a foeach loop round each city with id as the key and city as the value
+                        $.each(result,function(index,res) 
                         {
                             var date = (res.start).split('-'); //To get date,month  and year separately
                             events.push({
@@ -496,8 +490,6 @@
                                 end:res.end,
                                 intime:res.intime,
                                 outtime:res.outtime,
-                                //start: new Date(date[0],date[1] -1, date[2], hrs_from , time_from[1] ), // will be parsed //date[1] -1 is used becz march is 2 as default bt march is 3 in our database
-                                //end:   new Date(date[0],date[1] -1, date[2] , hrs_to, time_to[1] ),
                                 allDay: false,
                                 //url: base_url+'admin/meetings/view/'+meeting.id,
                                 color: res.borderColor
@@ -533,11 +525,8 @@
                     // if so, remove the element from the "Draggable Events" list
                     $(this).remove();
                 }
-
             }
         });
-
-        //Staff Ca;endar Attebdance Ends
 
         $('#users').change(function() {
 
@@ -558,12 +547,12 @@
             }
             //console.log(dateofMonth);
         });
-
-
+       //Staff Calendar Attebdance Ends
+       
     });
-    
+ 
+//-------------------------------------------------------------------------------------------------------------------------- //    
     // New leave management begins
-
     var events = [];
     var eventsCache = {};
 
@@ -703,6 +692,8 @@
     }
    });
    
+      //Form to validate leave management and place leave request
+      //Dominic, Feb 21,2017
       $('#formLeaveRequest').validate(
 		 {
 		  rules: 
@@ -778,8 +769,10 @@
 		});
    
    // New leave management ends
-    
-    //Function to request a leave
+//-------------------------------------------------------------------------------------------------------------------------- //  
+
+
+    //Function to request a leave (not in use)
     function requestLeave(droppedDate,leaveType)
     {
 		 var post_url = base_url+"selfieattendance/attendance/requestLeave";
@@ -830,7 +823,7 @@
 		 success: function(result)
 	    {
             hideLoader();
-            $.each(result,function(index,res) //here we're doing a foeach loop round each city with id as the key and city as the value
+            $.each(result,function(index,res) 
             {
                 var date = (res.start).split('-'); //To get date,month  and year separately
                 events.push({
@@ -841,8 +834,6 @@
                     end:res.end,
                     intime:res.intime,
                     outtime:res.outtime,
-                    //start: new Date(date[0],date[1] -1, date[2], hrs_from , time_from[1] ), // will be parsed //date[1] -1 is used becz march is 2 as default bt march is 3 in our database
-                    //end:   new Date(date[0],date[1] -1, date[2] , hrs_to, time_to[1] ),
                     allDay: false,
                     //url: base_url+'admin/meetings/view/'+meeting.id,
                     color: res.borderColor

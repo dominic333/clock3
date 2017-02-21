@@ -273,7 +273,7 @@ class Attendance_model extends CI_Model {
 		//WHERE staff_attendance_leaves.status IN (0,1) AND staff_info.company_id=84
 		//ORDER BY staff_attendance_leaves.leave_date ASC
 		
-		$this->db->select("staff_attendance_leaves.id,staff_attendance_leaves.staff_id,staff_attendance_leaves.leave_date,staff_attendance_leaves.status,staff_attendance_leaves.leaveType,staff_info.staff_name",false);									
+		$this->db->select("staff_attendance_leaves.id,staff_attendance_leaves.staff_id,staff_attendance_leaves.leave_date,staff_attendance_leaves.status,staff_attendance_leaves.leaveType,staff_attendance_leaves.leaveNote,staff_info.staff_name",false);									
 		$this->db->from('staff_attendance_leaves');
 		$this->db->join('staff_info','staff_info.staff_id=staff_attendance_leaves.staff_id','LEFT');
 		$this->db->where('staff_info.company_id',$compIdSess);
@@ -306,6 +306,25 @@ class Attendance_model extends CI_Model {
 	   $this->db->where('staff_id',$staffid);
 	   $this->db->where('id',$leaveId);
 	   $this->db->update('staff_attendance_leaves', $data);
+	}
+	
+	//Function to fetch emailids of users applied for leave (bulk leave action)
+	//Dominic, Feb 21,2017
+	function fetchUserEmailIds($selectedLeaves)
+	{
+	  //SELECT DISTINCT staff_attendance_leaves.staff_id, staff_info.staff_name
+	  //FROM staff_attendance_leaves 
+     //LEFT JOIN staff_info ON staff_info.staff_id=staff_attendance_leaves.staff_id
+     //WHERE staff_attendance_leaves.id IN (1,2,6,7)
+     
+      $this->db->distinct();
+      $this->db->select("staff_attendance_leaves.staff_id, staff_info.staff_name,staff_info.email",false);									
+		$this->db->from('staff_attendance_leaves');
+		$this->db->join('staff_info','staff_info.staff_id=staff_attendance_leaves.staff_id','LEFT');
+		$this->db->where_in('staff_attendance_leaves.id', $selectedLeaves);
+		$result=$this->db->get();
+		//echo $this->db->last_query();
+		return $result->result();
 	}
 	
 	

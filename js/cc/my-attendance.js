@@ -43,7 +43,47 @@
      
      $("#leaveApplicationList").DataTable();
      
-     
+   //Function for bulk action in leave requests
+   //Dominic, Feb 21,2017
+
+	$(document).on('change','#leaveAction',function(e){
+		var leaveType=$(this).val();
+		if ($("#leaveApplicationList input:checkbox:checked").length > 0)
+		{	
+			 e.preventDefault();
+			 var selectedLeaves = [];
+			 $('input[name^="checked_item"]:checked').each(function() {
+	   	     selectedLeaves.push($(this).val()); 
+		 		});		 	
+			 //alert(selectedLeaves);
+			
+		    var post_url = base_url+"ccattendance/attendance/bulkActionLeaves";
+		 	 $.ajax({
+				 url: post_url,
+				 data:{	selectedLeaves:selectedLeaves,leaveType:leaveType,csrf_test_name:csrf_token	},
+				 type: "POST",
+				 dataType: 'JSON',
+				 beforeSend: function ( xhr ) 
+				 {
+			        showLoader();
+			    },
+				 success: function(result)
+			    { 
+			      hideLoader(); 	
+			      console.log(result);
+
+			    }
+		   });//end of ajax 
+
+		}
+		else
+		{
+		   alert("Please check at least one box");
+		   $('#leaveAction').val('');
+		   return false;	
+		}	
+	});
+
    //Function to approve leave
 	//By Dominic;  Jan 13,2017
 	$(document).on('click','.approve_leave_link',function (e) 
@@ -63,7 +103,8 @@
 	        showLoader();
 	    },
 		 success: function(result)
-	    { 	
+	    { 
+	      hideLoader(); 	
 	      var result= result.trim();
 	      if(result=="approved")
 	      {	
@@ -75,7 +116,7 @@
 	      	window.location.reload();
 	      }
 	    }
-	  });//end of ajax 
+	   });//end of ajax 
 	 });
 	  
    //Function to reject leave

@@ -113,8 +113,7 @@ class Administration extends MX_Controller
 	  	 	
 	  	 	$this->data['view']					=	'ccadministration/contact-support';
 		   $this->load->view('master', $this->data);	
-		}	
-		
+		}		
 	}	
 	
 	//Bridge: To fetch company info based on company Id

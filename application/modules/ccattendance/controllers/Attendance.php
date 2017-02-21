@@ -1575,6 +1575,89 @@ class Attendance extends MX_Controller
 		}
 	}
 	
+	//Function to bulk approve/reject leaves
+	//Dominic, Feb 21,2017
+	function bulkActionLeaves()
+	{
+		$this->authentication->check_admin_access();
+		$email_list=array();
+		
+		$staff 		 = $this->session->userdata('mid');
+		$leaveType   = $this->input->post('leaveType');
+	   $selectedLeaves = $this->input->post('selectedLeaves');
+	   $totalApplied = sizeof($selectedLeaves);
+	   
+	   if($leaveType == 1)
+		{
+			$leaveTypeMsg = 'approved';
+		}
+		else if($leaveType == 2)
+		{
+			$leaveTypeMsg = 'rejected';
+		}
+	   
+	   if($totalApplied>0)
+	   {
+	   	$userList	 = $this->Attendance_model->fetchUserEmailIds($selectedLeaves);
+	   	
+	    	foreach($userList as $row)
+	      {
+	         $staffName  = 	$row->staff_name;
+	         $staffEmail = 	$row->email;
+	         
+	         $this->bulkLeaveActionMail($leaveTypeMsg,$staffName,$staffEmail);
+		      //$email_list[]=$row->email;  //Get all email 
+		   }
+	   }
+	   echo json_encode($response); 
+	}
+	
+	
+   //Function to send mail to support
+	//By Dominic, Nov 28,2016
+	public function bulkLeaveActionMail($leaveTypeMsg,$staffName,$staffEmail)
+	{
+	  $config = array(
+		    'protocol'  => EMAIL_PROTOCOL,
+		    'smtp_host' => EMAIL_SMTP_HOST,
+		    'smtp_port' => EMAIL_SMTP_PORT,
+		    'smtp_user' => EMAIL_SMTP_USER,
+		    'smtp_pass' => EMAIL_SMTP_PASS,
+		    'mailtype'  => EMAIL_MAILTYPE,
+       	 'charset'   => EMAIL_CHARSET,
+       	 'crlf' 		 => EMAIL_CRLF,
+  			 'newline'   => EMAIL_NEWLINE
+      );
+      
+		////$config['protocol']= "sendmail";
+      $this->load->library('email', $config);
+      $this->email->set_mailtype("html");
+      
+      //$email_to 	= 	$staffEmail;
+      $email_to 	= 	"dominic@cliffsupport.com";
+      $subject="Clock-in.me : Leave Request Status";
+      
+      $from = "ask@clock-in.me";
+ 	      
+ 	   $this->data['leaveActionMessage'] 	=	$leaveTypeMsg;
+ 	   $this->data['staffName'] 	=	$staffName;
+ 	      
+ 	   //$bcc_list = array('ask@clock-in.me', 'sean@flexiesolutions.com', 'albert.goh@flexiesolutions.com');
+ 	   $bcc_list = array('dominiccliff88@gmail.com');
+ 	      
+	   $template = $this->load->view('email_templates/leave_acknowledgement',$this->data,TRUE); 
+		$this->email->from($from, 'Clock-in.me Customer Care');			
+  		$this->email->to($email_to);
+  		//$this->email->cc($cc_list);
+  		$this->email->bcc($bcc_list);
+		$this->email->message($template);	
+		$this->email->subject($subject);		
+  	 	$this->email->send();  	 	
+  	 	
+  	 	
+
+	}
+	
 	function formatStorageDate($date)
 	{
 		$in_date = explode("/", $date);
