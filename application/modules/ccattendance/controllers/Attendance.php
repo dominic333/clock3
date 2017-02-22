@@ -1599,12 +1599,12 @@ class Attendance extends MX_Controller
 	   if($totalApplied>0)
 	   {
 	   	$userList	 = $this->Attendance_model->fetchUserEmailIds($selectedLeaves);
-	   	
+	   	$this->Attendance_model->performBulkEmailAction($selectedLeaves,$leaveType);
 	    	foreach($userList as $row)
 	      {
 	         $staffName  = 	$row->staff_name;
 	         $staffEmail = 	$row->email;
-	         
+	         	         
 	         $this->bulkLeaveActionMail($leaveTypeMsg,$staffName,$staffEmail);
 		      //$email_list[]=$row->email;  //Get all email 
 		   }
@@ -1653,10 +1653,302 @@ class Attendance extends MX_Controller
 		$this->email->message($template);	
 		$this->email->subject($subject);		
   	 	$this->email->send();  	 	
-  	 	
-  	 	
-
 	}
+	
+	//Dominic; Feb 22,2017 
+	function fetchMonthlyLeaveAttendance()
+   {
+   	
+   	$staff 	  = $this->session->userdata('mid');
+   	//2016-11-01
+   	//$this->input->get('your_field');
+		$obtainedDate = $this->db->escape_str($this->input->post('dateofMonth'));
+		$split_date=explode('-',$obtainedDate);
+		$year  = $split_date[0];
+		$month = $split_date[1];
+		
+		$sfromDate = $month.'/'.'01/'.$year; // hard-coded '01' for first day
+		$stoDate   = $month.'/'.'31/'.$year;
+		//$stoDate   = date('m/t/Y');
+   	$fromDate  = $this->formatStorageDate($sfromDate); // hard-coded '01' for first day
+		$toDate    = $this->formatStorageDate($stoDate);
+		
+		//$attendance	= '';
+		$attendance['attendance']	= $this->monthlyLeaveCalendarData($fromDate,$toDate,$staff);
+		$attendance['leaves']	   = $this->leaveCalendarData($fromDate,$toDate,$staff);
+		echo json_encode($attendance);
+		
+	}
+	
+   //Function to fetch attendance data for calendar view
+   //Dominic; Feb 22,2017 
+   function monthlyLeaveCalendarData($f_from_date,$f_to_date,$staff)
+   {
+		$attendance_table=array();
+		$file_path 	 =  "../../selfies/aLog/";
+		//$file_path 	 	=  "/home/clockin/www/selfies/aLog/";
+		$r_cnt 		 = 1;	
+		// Store date to process due to BETWEEN difficiency
+		$q_date = array();
+		$p_date =  $f_from_date;
+		while ($p_date <= $f_to_date)
+		{
+			//echo "Array ".$p_date." ";
+			array_push($q_date, $p_date);	
+			$p_date = date("Y-m-d", strtotime($p_date . ' + 1 day'));
+		}
+						
+		for($dcnt=0; $dcnt < count($q_date); $dcnt++)
+		{
+			$in_invfilter 	= 	"non";
+			$dispute_msg	=	"";  					
+			
+			if ($in_invfilter == "non")
+			{
+				$staff_attendance_info_result = $this->Attendance_model->getStaffAllClockInfobyDate($staff, $q_date[$dcnt]);																									
+				// Get Day - Monday, Tuesday etc.
+				$log_date = $q_date[$dcnt];
+            $timestamp = strtotime($log_date);
+            $check_day = date("l", $timestamp);
+               
+            // Check if Staff is suppose to be working on DAY.
+				// 0 = non work, 1 = Grave yard, 2 = Non Grave Yard
+            $p_check_workday_type = $this->Attendance_model->getStaffShiftTypeviaDay($staff, $check_day);
+               	                  
+            if(isset($p_check_workday_type["shifttype"]))
+            {
+               $check_workday_type 	 = $p_check_workday_type["shifttype"];
+            }
+            else
+            {
+               $check_workday_type 	 = 0;
+            }	
+               
+            if(isset($p_check_workday_type["basestart"]))
+            {
+               $base_start_time 		 = $p_check_workday_type["basestart"];
+            }
+            else
+            {
+               $base_start_time	 	 = '';
+            }
+               
+            if(isset($p_check_workday_type["baseend"]))
+            {
+               $base_end_time 		 = $p_check_workday_type["baseend"];
+            }
+            else
+            {
+               $base_end_time	 	 	= '';
+            }
+               
+            if(isset($p_check_workday_type["baseend"]))
+            {
+               $in_shift = $p_check_workday_type["shiftid"];
+            }
+            else
+            {
+               $in_shift = '';
+            }
+
+				$shift_info = $this->Attendance_model->getShiftDetails_v2($in_shift, $check_day);
+
+				if ($check_workday_type == 0)
+				{
+					// 0 = Non working day
+					$ab_log_date = $q_date[$dcnt];
+					$log_date = $q_date[$dcnt];								
+					$staffname = $this->Attendance_model->getStaffName($staff);
+					$attendanceToken= 2;	
+					$attendance_status = "Non Work Day";
+					$log_time = "Non";
+               $a_in_file = "Non";
+               $a_out_file = "Non";
+               $attendance_time = $base_start_time;
+               $attendance_end_time = $base_end_time;
+               $staff_logout_time = "Non";
+               $attendance_out_status = "Non";								
+				}
+				elseif ($check_workday_type == 1)
+				{
+					// 1 = Grave Yard Work Day - Need Add 1 Day
+						
+					$p_log_date = $log_date;
+					$out_log_date = date('Y-m-d', strtotime($p_log_date . ' + 1 day'));
+					$staff_work_day_info = $this->Attendance_model->getStaffClockInfobyDate($staff, $log_date, "in");
+					$staffname = $this->Attendance_model->getStaffName($staff);
+					// Check in clock in.
+					if (count($staff_work_day_info)==0||$staff_work_day_info["log_time"] == "")
+					{
+						$staff_work_day_infoz = $this->Attendance_model->getStaffClockInfobyDate($staff, $log_date, "ab");
+						$dispute_msg = $staff_work_day_infoz["notes"];								
+						
+						$clockToday = date("Y-m-d");
+						$clockDay = $log_date; //from db
+						
+						$today_clock = strtotime($clockToday);
+						$log_clock = strtotime($clockDay);
+						
+						if ($log_clock > $today_clock) 
+						{ 
+							$attendance_status = "NA"; 
+							$attendance_out_status = "NA";
+							$attendanceToken= 1;
+						}
+						else
+						{
+							$attendance_status = "Absent"; 
+							$attendance_out_status = "Absent";
+							$attendanceToken= 3;
+						}
+
+
+						//$attendance_status = "<span class='label label-danger'>Absent</span>"; 
+						// Process for show in table
+                  //$staffname = $adminfunc->getStaffName($srow["staff_id"]);
+                  $staffname = $this->Attendance_model->getStaffName($staff);
+                  $log_time = "NA";
+                  $a_in_file = "NA";
+                  $a_out_file = "NA";
+                  $attendance_time = $base_start_time;
+                  $attendance_end_time = $base_end_time;
+                  $staff_logout_time = "NA";
+                  
+					}
+					else
+					{
+						$attendance_status="";
+                  $staff_logout_time="";
+                  $log_time="";
+                  $attendanceToken==1;
+					}
+				}
+				elseif ($check_workday_type == 2)
+				{
+					// 2 = Non Grave Yard Work Day
+					$staff_work_day_info = $this->Attendance_model->getStaffClockInfobyDate($staff, $log_date, "in");
+						
+					// Check in clock in.
+					if (count($staff_work_day_info)==0||$staff_work_day_info["log_time"] == "")
+					{
+
+						$staff_work_day_infozz = $this->Attendance_model->getStaffClockInfobyDate($staff, $log_date, "ab");
+						$dispute_msg = $staff_work_day_infozz["notes"];		
+						
+						$clockToday = date("Y-m-d");
+						$clockDay = $log_date; //from db
+						
+						$today_clock = strtotime($clockToday);
+						$log_clock = strtotime($clockDay);
+						
+						if ($log_clock > $today_clock) 
+						{ 
+							$attendance_status = "NA"; 
+							$attendance_out_status = "NA";
+							$attendanceToken= 1;
+						}
+						else
+						{
+							$attendance_status = "Absent"; 
+							$attendance_out_status = "Absent";
+							$attendanceToken= 3;
+						}							
+						
+						//$attendance_status = "<span class='label label-danger'>Absent</span>";
+						// Process for show in table
+						$staffname = $this->Attendance_model->getStaffName($staff);
+						$log_time = "NA";
+                  $a_in_file = "NA";
+                  $a_out_file = "NA";
+                  $attendance_time = $base_start_time; 
+          			$attendance_end_time = $base_end_time;
+						$staff_logout_time = "NA";
+						//$attendance_out_status = "<span class='label label-danger'>Absent</span>";
+					}
+					else
+					{
+						$attendance_status="";
+                  $staff_logout_time="";
+                  $log_time="";
+                  $attendanceToken==1;
+					}
+						
+				}                
+                
+				// 1: NA  //aqua
+				// 2: Non working //aqua
+				// 3: absent //red
+				// 4: on time //green
+				// 5: Late by // light red
+				// 6: Early check out by //crimson red
+				// 7: Did Not Clock Out //yellow
+				// 8: Ok
+				
+				if($attendanceToken==1)
+				{
+					$attendance_table[$dcnt]["backgroundColor"]="#ebebe0"; //Info (aqua)
+            	$attendance_table[$dcnt]["borderColor"]="#ebebe0"; 	 //Info (aqua)
+				}
+				else if($attendanceToken==2)
+				{
+					$attendance_table[$dcnt]["backgroundColor"]="#00c0ef"; //Info (aqua)
+            	$attendance_table[$dcnt]["borderColor"]="#00c0ef"; 	//Info (aqua)
+				}
+				else if($attendanceToken==3)
+				{
+					$attendance_table[$dcnt]["backgroundColor"]="#f56954"; //Info (red)
+            	$attendance_table[$dcnt]["borderColor"]="#f56954"; 	//Info (red)
+				}
+				else if($attendanceToken==4)
+				{
+					$attendance_table[$dcnt]["backgroundColor"]="#00a65a"; //Info (green)
+            	$attendance_table[$dcnt]["borderColor"]="#00a65a"; 	//Info (green)
+				}
+				else if($attendanceToken==5)
+				{
+					$attendance_table[$dcnt]["backgroundColor"]="#ff4d4d"; //Info (light )
+            	$attendance_table[$dcnt]["borderColor"]="#ff4d4d"; 	//Info (green)
+				}
+				else if($attendanceToken==6)
+				{
+					$attendance_table[$dcnt]["backgroundColor"]="#cc0000"; //Info (green)
+            	$attendance_table[$dcnt]["borderColor"]="#cc0000"; 	//Info (green)
+				}
+				else if($attendanceToken==7)
+				{
+					$attendance_table[$dcnt]["backgroundColor"]="#ffcc00"; //Info (green)
+            	$attendance_table[$dcnt]["borderColor"]="#ffcc00"; 	//Info (green)
+				}
+				else if($attendanceToken==8)
+				{
+					$attendance_table[$dcnt]["backgroundColor"]="#00a65a"; //Info (green)
+            	$attendance_table[$dcnt]["borderColor"]="#00a65a"; 	//Info (green)
+				}
+				else
+				{
+					$attendance_table[$dcnt]["backgroundColor"]="#ebebe0";
+            	$attendance_table[$dcnt]["borderColor"]="#ebebe0";
+				}
+				
+            $startFormat = date_create($log_date);
+				$formatDate= date_format ($startFormat, 'Y-m-d');
+            $attendance_table[$dcnt]["start"]=$log_date;
+            $attendance_table[$dcnt]["end"]=$log_date;
+            $attendance_table[$dcnt]["title"]=$attendance_status;
+            $attendance_table[$dcnt]["outtime"]=$staff_logout_time;
+            $attendance_table[$dcnt]["intime"]=$log_time;
+            $attendance_table[$dcnt]["clock"]='attendance';
+            
+            
+            //$attendance_table[$dcnt]["logtime"]=$log_time;
+            
+            $r_cnt++;   
+            $dispute_msg=""; 
+
+		 }
+		}
+		return $attendance_table;   
+   }
 	
 	function formatStorageDate($date)
 	{

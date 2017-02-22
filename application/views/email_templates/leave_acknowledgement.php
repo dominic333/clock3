@@ -27,7 +27,7 @@
               Hi, <?php echo (isset($staffName)) ? $staffName:' there!';?>
              </h2>
              <div style="padding: 10px;color: #2E4483;margin-bottom:0;font-size: 15px;line-height: 35px;text-align: center;">
-                  Your leave(s) for the following dates have been <?php echo (isset($leaveActionMessage)) ? $leaveActionMessage:'';?> <br>
+                  Your leave(s) has been <?php echo (isset($leaveActionMessage)) ? $leaveActionMessage:'';?> <br>
                   <?php echo (isset($shiftName)) ? 'Shift: '.$shiftName:'';?> <br>  
              </div>
         </div>

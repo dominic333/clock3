@@ -590,7 +590,7 @@
 			    obtaniedDate	= obtanied.toString();
 			    //console.log(obtaniedDate);
 			    dateofMonth	= convert(obtaniedDate);
-     	       var post_url = base_url+"ccattendance/attendance/fetchMonthlyAttendance";
+     	       var post_url = base_url+"ccattendance/attendance/fetchMonthlyLeaveAttendance";
 		            $.ajax({
 		            url: post_url,
 		            type: "POST",

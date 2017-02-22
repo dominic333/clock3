@@ -327,6 +327,20 @@ class Attendance_model extends CI_Model {
 		return $result->result();
 	}
 	
+	//
+	function performBulkEmailAction($selectedLeaves,$leaveType)
+	{
+	   $data = array(		
+							'status' 	=> $leaveType                         
+  		 				);
+      for($i=0;$i<sizeof($selectedLeaves);$i++)
+      {
+      	$this->db->where('id',$selectedLeaves[$i]);
+	      $this->db->update('staff_attendance_leaves', $data);
+      }
+	   
+	}
+	
 	
 }
 
