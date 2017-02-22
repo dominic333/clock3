@@ -46,6 +46,11 @@
     <link rel="stylesheet" href="<?php echo base_url();?>assets/commoncss/fullcalendar.min.css">
     <link rel="stylesheet" href="<?php echo base_url();?>assets/commoncss/fullcalendar.print.css" media="print">
 
+    <!--
+
+<link rel="stylesheet" type="text/css" href="<?php echo base_url();?>assets/commoncss/style.css" />
+ -->
+
     <!-- Loader -->
     <link rel="stylesheet" href="<?php echo base_url();?>assets/commoncss/loader/loader.css">
     <div id="loader" style="display:none;"></div>
@@ -73,6 +78,9 @@
       var base_url = '<?php echo base_url();?>';
       var csrf_token = '<?php echo $this->security->get_csrf_hash()?>';
     </script>
+
+
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>assets/commoncss/pignose.calendar.css" />
 </head>
 
 <body style="background-color: #e6e6e6">

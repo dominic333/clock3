@@ -1036,7 +1036,12 @@ class Attendance extends MX_Controller
 		$this->data['attendance_table']	= '';
 		//$this->data['attendance_table']	= $this->attendanceCalendarData($fromDate,$toDate,$staff);
 		$this->data['view']					=	'selfieattendance/monthview';
-		$this->data['footer_includes']			=	'<script src="'.base_url().'js/cc/calendarview.js" type="text/javascript"></script>';
+
+
+		$this->data['footer_includes']			=	'<script src="'.base_url().'js/cc/calendarview.js" type="text/javascript"></script>
+		<script type="text/javascript" src="'.base_url().'assets/common/pignose.calendar.js"></script>
+        <script type="text/javascript" src="'.base_url().'assets/common/pignose_settings.js"></script>
+		';
 		$this->load->view('master_selfie', $this->data);
 	}
 	
