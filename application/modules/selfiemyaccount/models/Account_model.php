@@ -34,5 +34,16 @@ class Account_model extends CI_Model {
 	}
 	
 	
+
+	function update_staff_photo($filename,$staffid)
+	{
+		
+		$data['staff_photo']	=	$filename; 
+    	$this->db->where('staff_id',$staffid);
+	 	$this->db->update('staff_info',$data);
+	
+	
+	}
+	
 }
 

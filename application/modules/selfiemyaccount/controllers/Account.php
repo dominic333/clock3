@@ -49,6 +49,50 @@ class Account extends MX_Controller
 
 	}
 
+	//Function to update profile picture
+	//Gayatri ,23/02/2017
+	function save_selfie()
+   {	
+		
+		//echo "success";
+		$image_fmt 	= $this->input->post('image_fmt');
+		$staffid 	= $this->input->post('staffid');
+		$img 			= $this->input->post('base64image');
+		
+		$result = substr($img, 0, 9);
+		if($result=='[removed]'){ //Checking It Existed or not
+		  	$img = str_replace('[removed]', '', $img);
+		}    
+		$img 			= str_replace('data:image/jpeg;base64,', '', $img);
+		$img 			= str_replace(' ', '+', $img);
+		//$img 			= substr($img,strpos($img,",")+1);// remove the prefix
+		$data 		= base64_decode($img);
+		
+		
+		$file_path	= FCPATH.'images/avatars/';
+		$remove_old_selfies_file = $file_path.$staffid."-*".".".$image_fmt;
+		//unlink($remove_old_selfies_file);
+		system("rm -f $remove_old_selfies_file");
+		
+		$rand_cache  = time();
+		$filename	 = $staffid."-".$rand_cache.".".$image_fmt;
+		
+		$upload_path = $this->lang->line('absolute_path').'avatars/'.$filename;
+		//$upload_path = $file_path.$filename;
+		
+		
+		//if ( ! file_put_contents($upload_path, $data)){
+		if ( ! write_file($upload_path,$data)){
+			echo "Failed";
+		}else{
+			$this->Account_model->update_staff_photo($filename,$staffid);
+			$operation = 'Staff with id:'.$staffid.'. Has update his profile photo:'.$filename.'.';
+	      $this->site_settings->adminlog($operation);
+	      echo $filename;
+		}
+		
+   }
+   
 
 	function get_common()
 	{

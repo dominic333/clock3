@@ -65,8 +65,8 @@
 					else
 					{
 						//https://clock-in.me/webapp/images/avatars
-						//$staff_photo=base_url().'images/users/'.$member->staff_photo;
-						$staff_photo='https://clock-in.me/webapp/images/avatars/'.$member->staff_photo;
+						$staff_photo=base_url().'images/avatars/'.$member->staff_photo;
+						//$staff_photo='https://clock-in.me/webapp/images/avatars/'.$member->staff_photo;
 						/*
 						if (file_exists($staff_photo)) 
 						{

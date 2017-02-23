@@ -43,13 +43,21 @@
 
                         <div class="user-block">
                             <?php if($userImage!=''){ ?>
-                                <img class="img-circle" src="<?php echo base_url();?>images/users/<?php echo  $userImage; ?>">
+                                <img id="my_selfie" class="img-circle" src="<?php echo base_url();?>images/avatars/<?php echo  $userImage; ?>">
                             <?php } else { ?>
-                            <img class="img-circle" src="<?php echo base_url();?>assets/snap/images/admin-user.png" alt="User Image">
+                            <img id="my_selfie" class="img-circle" src="<?php echo base_url();?>assets/snap/images/admin-user.png" alt="User Image">
                             <?php } ?>
+                            
+
+                            
                             <button id="editProfileBtn" name="editProfileBtn"  class="btn btn-warning pull-right" href="javascript:void(0)">Edit Profile</button>
+
+
                                 <span class="username"><?php echo $fullName; ?></span>
                                 <span class="description"><?php echo $companyName; ?></span>
+                                
+                                
+					              <button id="editPic" name="editPic"  class="btn btn-warning pull-right" href="#">Edit Profile Picture</button>
                         </div>
 
                     </div>
@@ -148,3 +156,36 @@
     </section>
 
 </div>
+<!--popup modal for selfie starts-->
+ <div class="modal fade for_hide my-fade" id="take_selfie_modal" >
+    <div class="modal-dialog my-modal">
+      <div class="modal-content">
+        <div class="modal-header reset-header">
+          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only"></span></button>
+          <h4 class="modal-title">Take Selfie</h4>
+        </div>
+        <div class="modal-body">
+  		  	
+         
+         	<?php /* FORM STARTS */ ?>
+        		<?php $attributes = array('name' => 'take_selfie_frm', 'id' => 'take_selfie_frm' ,'method' =>'POST' , 'action' => 'echo base_url()');   //To enable CSRF protection
+        		 echo form_open(base_url().'selfiemyaccount/account/save_selfie/'.$this->session->userdata('mid').'/jpeg.html', $attributes);  ?>    <!-- To enable CSRF protection      -->
+            <div class="">
+            	<div id="my_camera" class="vid"></div>
+       </div>
+       
+       <div class="clearfix"></div>
+      </div><!-- /.modal-content -->
+      
+      <div class="modal-footer">
+      	<button type="button" class="btn btn-danger pull-left show_active" style="margin-right:5px;" data-dismiss="modal">Close</button>
+          		<button  data-staff_id="<?php echo $this->session->userdata('mid');?>" type="button"  id="take_selfie_subt" name="Submit" value="Submit"  class="btn btn-success show_active" >Take Selfie</button>
+            </div> 
+            <?php echo form_close(); ?> 
+    	  		<?php /* FORM ENDS */ ?>   
+      </div>
+      
+    </div><!-- /.modal-dialog -->
+	</div><!-- /.modal --> 
+		
+<!--popup modal for selfie ends-->
