@@ -1,14 +1,47 @@
 /**
  * Created by Dell on 23-Feb-17.
+ *Modified by gayatri - disable past days  and non-working days
  */
 
 $(function() {
 
-    var dateArray =[]
+    var dateArray =[];
     $('#wrapper .version strong').text('v' + pignoseCalendar.VERSION);
     // Toggle type Calendar
+    /*
+	 var post_url = base_url+"selfieattendance/attendance/getNonWorkingDays"; 
+	 var offDays = [] ;
+    $.ajax({
+    	
+  			url:post_url,
+    		data:
+                    {
+                         csrf_test_name : csrf_token
+                    },
+         type: "get",
+         dataType: 'json' ,
+       
+    		success: function (result) {
+         
+			$.each(result.days, function (i, d) {
+					var date = new Date(d).toISOString().slice(0, 10);
+					alert(date);
+					offDays.push(date);
+			}); 
+			    			//a[0]= result.sunday
+    			
+    			//days.push(result);
+    			//console.log(result);
+    		}
+    });
+    
+    */
+
+    
     $('.toggle-calendar').pignoseCalendar({
         toggle: true,
+        minDate:moment(),
+        disabledWeekdays :[],
         select: function(date, obj) {
             var selDate= date[0].format('YYYY-MM-DD');
             if(jQuery.inArray(selDate, dateArray) != -1) {

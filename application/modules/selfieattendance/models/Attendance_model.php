@@ -259,6 +259,23 @@ class Attendance_model extends CI_Model {
 			$this->db->insert('staff_attendance_leaves', $data);
 		}
 	}
+	
+	//function to get non-working days
+	//Gayatri , 23/02/2017
+	
+	function getNonWorkingDays($staff)
+	{
+	
+		$this->db->select('DS.sunday,DS.monday,DS.tuesday, DS.wednesday , DS.thursday, DS.friday , DS.saturday');
+		$this->db->from('staff_dept_shift as SS');
+		$this->db->join('department_shifts as DS','SS.shift_id = DS.shift_id','left');
+
+		$this->db->where('SS.staff_id',$staff);
+		$result= $this->db->get();
+		$res   =  $result->row();
+		return  $res;
+		//echo $this->db->last_query();
+	}
 
 }
 

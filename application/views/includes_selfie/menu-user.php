@@ -47,8 +47,8 @@
                     
                     <li><a href="<?php echo base_url();?>selfieattendance/attendance/whosaroundtoday">Who's Around Today</a></li>
                 </ul>
-                <?php $calendarView= $this->authentication->checkCalendarViewAccess(); if($calendarView==1){ ?>
-                <?php } ?>
+                <?php //$calendarView= $this->authentication->checkCalendarViewAccess(); if($calendarView==1){ ?>
+                <?php //} ?>
                 <li>
                     <a href="<?php echo base_url();?>selfieattendance/attendance/monthiview">
                         <i class="fa fa-picture-o fa-lg"></i> My Attendance
@@ -60,13 +60,13 @@
                         <i class="fa fa-picture-o fa-lg"></i> Selfie Attendance
                     </a>
                 </li>
-                
+                 <?php /*
                 <li>
                     <a href="<?php echo base_url();?>selfieattendance/attendance/leavemanagement">
                         <i class="fa fa-picture-o fa-lg"></i> Leave Management
                     </a>
                 </li>
-
+					 */ ?>
                 <li>
                     <a href="<?php echo base_url();?>home/logout">
                         <i class="fa fa-power-off fa-lg"></i> Logout

@@ -68,7 +68,7 @@
 	display: inline-block;
 	width: 7px;
 	height: 12px;
-	background: url('../image/icon_navs.png') no-repeat 0 0 scroll transparent;
+	background: url('../snap/images/icon_navs.png') no-repeat 0 0 scroll transparent;
 	text-indent: -1000px;
 	vertical-align: middle;
 	overflow: hidden;
@@ -370,7 +370,7 @@
 }
 
 .pignose-calendar.pignose-calendar-dark .pignose-calendar-top .pignose-calendar-top-nav .pignose-calendar-top-icon {
-	background-image: url('../image/icon_navs_dark.png');
+	background-image: url('../snap/images/icon_navs_dark.png');
 }
 
 .pignose-calendar.pignose-calendar-dark .pignose-calendar-header .pignose-calendar-week {

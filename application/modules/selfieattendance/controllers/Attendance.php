@@ -1128,6 +1128,45 @@ class Attendance extends MX_Controller
 		$this->load->view('master_selfie', $this->data);
 	}
 
+	//Get non-working days 
+	//created by gayatri, 23/02/2017
+	
+	function getNonWorkingDays()
+	{
+			  
+	   $staff 		 = $this->session->userdata('mid');
+	   $resultDays  = $this->Attendance_model->getNonWorkingDays($staff);
+ 			//print_r($resultDays);
+		$a[0] =	$resultDays->sunday; //sunday
+		$a[1] = 	$resultDays->monday; //monday
+		$a[2] =	$resultDays->tuesday;
+		$a[3] =	$resultDays->wednesday;
+		$a[4] =	$resultDays->thursday;
+		$a[5] =	$resultDays->friday;
+		$a[6] =	$resultDays->saturday; //saturday
+		
+		//print_r($a);
+		
+		$days = array();
+		$j =0;
+		for($i=0; $i < sizeof($a); $i++)
+		{
+		    if($a[$i]==0)
+		    {
+		       // echo $i;
+		        //array_push($days, $i);
+		        $days[$j] = $i;
+		        $j++;
+		    }
+		}
+ 			echo json_encode($days);
+	
+	}
+
+
+
+
+
 	function get_common()
 	{
 		$this->site_settings->get_site_settings();
