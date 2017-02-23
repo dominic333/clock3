@@ -78,7 +78,7 @@
                                     <label for="loginName" class="col-sm-3 control-label">Login Name</label>
 
                                     <div class="col-sm-7">
-                                        <input id="loginName" name="loginName" value="<?php echo (isset($loginName)) ? $loginName :set_value(''); ?>" type="text" class="form-control readOnlyApplied" placeholder="Login Name" required readonly>
+                                        <input id="loginName" name="loginName" readonly value="<?php echo (isset($loginName)) ? $loginName :set_value(''); ?>" type="text" class="form-control" placeholder="Login Name" required readonly>
                                     </div>
                                 </div>
                                 <!--
