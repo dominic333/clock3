@@ -140,12 +140,117 @@
 
         </div>
         <!-- /.row -->    
-        
+               <div class="row"> 
+            <!--=======================================================================================================-->
 
-        <!--========================================================================================================-->
+        <!-- ********************************Account Management*******************************  -->
 
+
+            <div class="col-md-4">
+                <div class="box box-danger">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Account Management</h3>
+
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
+                                    class="fa fa-minus"></i></button>
+                        </div>
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                        <p>
+                            <a href="<?php echo base_url();?>ccshifts/shifts">
+                                <button class="btn btn-block btn-success btn-lg" type="button"><span class="pull-left">Add New Department</span> <span
+                                        class="fa fa-plus-circle pull-right"></span></button>
+                            </a>
+                        </p>
+                        <p>
+                            <a href="<?php echo base_url();?>ccshifts/shifts/shifts">
+                                <button class="btn btn-block btn-success btn-lg" type="button"><span class="pull-left">Add New Shift</span> <span
+                                        class="fa fa-plus-circle pull-right"></span></button>
+                            </a>
+                        </p>
+                        <p>
+                            <a href="<?php echo base_url();?>ccshifts/shifts/users">
+                                <button class="btn btn-block btn-success btn-lg" type="button"><span class="pull-left">Add New User</span> <span
+                                        class="fa fa-plus-circle pull-right"></span></button>
+                            </a>
+                        </p>
+                        <p>
+                            <a href="<?php echo base_url();?>ccshifts/shifts/assignmonitor">
+                                <button class="btn btn-block btn-success btn-lg" type="button"><span class="pull-left">Assign Attendance Supervisor(s)</span> <span
+                                        class="fa fa-plus-circle pull-right"></span></button>
+                            </a>
+                        </p>
+                        <p>
+                            <a href="<?php echo base_url();?>ccshifts/shifts/whitelistips">
+                                <button class="btn btn-block btn-success btn-lg" type="button"><span class="pull-left">Add White List IPs</span> <span
+                                        class="fa fa-plus-circle pull-right"></span></button>
+                            </a>
+                        </p>
+                    </div>
+                    <!-- /.box-body -->
+
+                </div>
+
+            </div>
+
+
+            <!--=======================================================================================================-->
+            <div class="col-md-4">
+                <div class="box box-danger">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Company Profile</h3>
+
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
+                                    class="fa fa-minus"></i></button>
+                        </div>
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                        <!-- Widget: user widget style 1 -->
+                        <div class="box box-widget widget-user-2">
+                            <!-- Add the bg color to the header using any of the bg-* classes -->
+                            <div class="widget-user-header bg-gray-light">
+                                <div class="widget-user-image">
+                                		<?php if($company_details->company_logo!='') {?>
+                     						<img class="img-circle" src="<?php echo base_url();?>images/company/<?php echo  $company_details->company_logo; ?>">
+                     					<?php }else{ ?>
+                     						<img class="img-circle" src="<?php echo base_url();?>assets/cc/images/voffice128x128.png" alt="User Avatar">
+                     					<?php }?>
+                                </div>
+                                <!-- /.widget-user-image -->
+                                <h4 class="widget-user-username"><?php echo $company_details->company_name;?></h4>
+                                <h5 class="widget-user-desc"><?php echo $company_details->company_address;?> </h5>
+                            </div>
+                            <div class="box-footer no-padding">
+                                <ul class="nav nav-stacked">
+                                    <li><a href="#">Contact Person : <?php echo $company_details->contact_person;?></a></li>
+                                    <li><a href="#">Phone Number : <?php echo $company_details->contact_number;?></a></li>
+                                    <li><a href="#">Email : <?php echo $company_details->contact_email;?></a>
+                                    </li>
+                                    <li>
+                                    	 <a href="<?php echo base_url();?>ccadministration/administration/contactsupport">
+                                    	 	<button type="button" class="btn btn-block btn-default">Contact Support</button>
+                                    	 </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- /.widget-user -->
+
+                    </div>
+                    <!-- /.box-body -->
+
+                </div>
+
+            </div>
+            <!-- /.col-md-4 -->
+            
+                                <!--========================================================================================================-->
         <!-- ANNOUNCEMENTS-->
-        <div class="row">
+
             <div class="col-md-4">
                 <div class="box box-danger">
                     <div class="box-header with-border">
@@ -209,107 +314,6 @@
             </div>
             <!-- /.col-md-4 -->
 
-            <!--=======================================================================================================-->
-            <div class="col-md-4">
-                <div class="box box-danger">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">Company Profile</h3>
-
-                        <div class="box-tools pull-right">
-                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
-                                    class="fa fa-minus"></i></button>
-                        </div>
-                    </div>
-                    <!-- /.box-header -->
-                    <div class="box-body">
-                        <!-- Widget: user widget style 1 -->
-                        <div class="box box-widget widget-user-2">
-                            <!-- Add the bg color to the header using any of the bg-* classes -->
-                            <div class="widget-user-header bg-gray-light">
-                                <div class="widget-user-image">
-                                		<?php if($company_details->company_logo!='') {?>
-                     						<img class="img-circle" src="<?php echo base_url();?>images/company/<?php echo  $company_details->company_logo; ?>">
-                     					<?php }else{ ?>
-                     						<img class="img-circle" src="<?php echo base_url();?>assets/cc/images/voffice128x128.png" alt="User Avatar">
-                     					<?php }?>
-                                </div>
-                                <!-- /.widget-user-image -->
-                                <h4 class="widget-user-username"><?php echo $company_details->company_name;?></h4>
-                                <h5 class="widget-user-desc"><?php echo $company_details->company_address;?> </h5>
-                            </div>
-                            <div class="box-footer no-padding">
-                                <ul class="nav nav-stacked">
-                                    <li><a href="#">Contact Person : <?php echo $company_details->contact_person;?></a></li>
-                                    <li><a href="#">Phone Number : <?php echo $company_details->contact_number;?></a></li>
-                                    <li><a href="#">Email : <?php echo $company_details->contact_email;?></a>
-                                    </li>
-                                    <li>
-                                    	 <a href="<?php echo base_url();?>ccadministration/administration/contactsupport">
-                                    	 	<button type="button" class="btn btn-block btn-default">Contact Support</button>
-                                    	 </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <!-- /.widget-user -->
-
-                    </div>
-                    <!-- /.box-body -->
-
-                </div>
-
-            </div>
-            <!-- /.col-md-4 -->
-
-            <!--=======================================================================================================-->
-            <div class="col-md-4">
-                <div class="box box-danger">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">Account Management</h3>
-
-                        <div class="box-tools pull-right">
-                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
-                                    class="fa fa-minus"></i></button>
-                        </div>
-                    </div>
-                    <!-- /.box-header -->
-                    <div class="box-body">
-                        <p>
-                            <a href="<?php echo base_url();?>ccshifts/shifts">
-                                <button class="btn btn-block btn-success btn-lg" type="button"><span class="pull-left">Add New Department</span> <span
-                                        class="fa fa-plus-circle pull-right"></span></button>
-                            </a>
-                        </p>
-                        <p>
-                            <a href="<?php echo base_url();?>ccshifts/shifts/shifts">
-                                <button class="btn btn-block btn-success btn-lg" type="button"><span class="pull-left">Add New Shift</span> <span
-                                        class="fa fa-plus-circle pull-right"></span></button>
-                            </a>
-                        </p>
-                        <p>
-                            <a href="<?php echo base_url();?>ccshifts/shifts/users">
-                                <button class="btn btn-block btn-success btn-lg" type="button"><span class="pull-left">Add New User</span> <span
-                                        class="fa fa-plus-circle pull-right"></span></button>
-                            </a>
-                        </p>
-                        <p>
-                            <a href="<?php echo base_url();?>ccshifts/shifts/assignmonitor">
-                                <button class="btn btn-block btn-success btn-lg" type="button"><span class="pull-left">Assign Attendance Supervisor(s)</span> <span
-                                        class="fa fa-plus-circle pull-right"></span></button>
-                            </a>
-                        </p>
-                        <p>
-                            <a href="<?php echo base_url();?>ccshifts/shifts/whitelistips">
-                                <button class="btn btn-block btn-success btn-lg" type="button"><span class="pull-left">Add White List IPs</span> <span
-                                        class="fa fa-plus-circle pull-right"></span></button>
-                            </a>
-                        </p>
-                    </div>
-                    <!-- /.box-body -->
-
-                </div>
-
-            </div>
             <!-- /.col-md-4 -->
 
         </div>

@@ -58,6 +58,9 @@
                                 
                                 
 					              <button id="editPic" name="editPic"  class="btn btn-warning pull-right" href="#">Edit Profile Picture</button>
+					              
+					              
+					              <button id="resetPassword" name="resetPassword"  class="btn btn-warning pull-right" href="#">Reset Password</button>
                         </div>
 
                     </div>
@@ -170,7 +173,7 @@
          	<?php /* FORM STARTS */ ?>
         		<?php $attributes = array('name' => 'take_selfie_frm', 'id' => 'take_selfie_frm' ,'method' =>'POST' , 'action' => 'echo base_url()');   //To enable CSRF protection
         		 echo form_open(base_url().'selfiemyaccount/account/save_selfie/'.$this->session->userdata('mid').'/jpeg.html', $attributes);  ?>    <!-- To enable CSRF protection      -->
-            <div class="">
+            <div class="col-md-12">
             	<div id="my_camera" class="vid"></div>
        </div>
        
@@ -189,3 +192,55 @@
 	</div><!-- /.modal --> 
 		
 <!--popup modal for selfie ends-->
+
+
+
+<!--  popup  modal for reset password -->
+ <div class="modal fade for_hide my-fade" id="resetPasswordModal" >
+    <div class="modal-dialog my-modal">
+      <div class="modal-content">
+        <div class="modal-header reset-header">
+          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only"></span></button>
+          <h4 class="modal-title">Reset Password</h4>
+        </div>
+        <div class="modal-body">
+  		  	
+         
+         	<?php /* FORM STARTS */ ?>
+        		<?php $attributes = array('name' => 'resetPassword1', 'id' => 'resetPassword1' ,'method' =>'POST' , 'action' => 'echo base_url()');   //To enable CSRF protection
+        		 echo form_open(base_url().'selfiemyaccount/account/resetPassword/', $attributes);  ?>    <!-- To enable CSRF protection      -->
+            <div class="col-md-12">
+					  				<div class="form-group">
+	                              <label for="newPassword" class="col-sm-3 control-label">New Password</label>
+	
+	                              <div class="col-sm-7">
+	                                  <input id="newPassword" name="newPassword" type="password" class="form-control" placeholder="New password" required>
+	                              </div>
+	                          </div>
+	                          
+	                          <div class="form-group">
+	                              <label for="confirmPasword" class="col-sm-3 control-label">Confirm Password</label>
+	
+	                              <div class="col-sm-7">
+	                                  <input id="confirmPasword" name="confirmPasword"  type="password" class="form-control" placeholder="Confirm password" required>
+	                              </div>
+	                          </div>
+       		</div>
+       
+       <div class="clearfix"></div>
+      </div><!-- /.modal-content -->
+      
+      <div class="modal-footer">
+      	<button type="button" class="btn btn-danger pull-left show_active" style="margin-right:5px;" data-dismiss="modal">Close</button>
+          		<button  data-staff_id="<?php echo $this->session->userdata('mid');?>"  type="button"  id="pswdSubmt" name="Submit" value="Submit"  class="btn btn-success show_active" >Reset password</button>
+            </div> 
+            <?php echo form_close(); ?> 
+    	  		<?php /* FORM ENDS */ ?>   
+      </div>
+      
+    </div><!-- /.modal-dialog -->
+	</div><!-- /.modal --> 
+		
+<!--popup modal for reset password ends-->
+
+

@@ -14,7 +14,7 @@ class Account_model extends CI_Model {
 		$data = array(
 
 			'staff_name' 	=> $this->db->escape_str($this->input->post('fullName')),
-			'login_name' 	=> $this->db->escape_str($this->input->post('loginName')),
+			//'login_name' 	=> $this->db->escape_str($this->input->post('loginName')),
 			'email' 		=> $this->db->escape_str($this->input->post('email')),
 			'contact_number' 	=> $this->db->escape_str($this->input->post('contactNumber'))
 			//'company_city' 		=> $this->db->escape_str($this->input->post('company_city')),
@@ -42,6 +42,28 @@ class Account_model extends CI_Model {
     	$this->db->where('staff_id',$staffid);
 	 	$this->db->update('staff_info',$data);
 	
+	
+	}
+	
+	function resetPassword($staff_id)
+	{
+		$data			=	array(
+								'password'	=> md5($this->db->escape_str($this->input->post('newPassword')))	
+			
+							);	
+							
+		//$r =$this->input->post('newPassword');
+		//echo $r;				
+		$this->db->where('staff_id',$staff_id);
+		$this->db->update('staff_info',$data);
+		if($this->db->affected_rows() > 0)
+		{
+			return true;		
+		
+		}
+		else{
+			return false;		
+		}
 	
 	}
 	

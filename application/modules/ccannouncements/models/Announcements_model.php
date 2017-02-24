@@ -12,11 +12,17 @@ class Announcements_model extends CI_Model
 	//Function to fetch all announcements for a company
 	//By Dominic; Dec 01,2016
 	function fetchAnnouncementsList($compId,$limit='')
-   {    
-		$this->db->select('A.id,A.title,A.msg,A.date');
+   {
+   	//SELECT A.id,A.title,A.msg,A.date, AL.status 
+		//FROM announcements as A
+		//LEFT JOIN announcements_log AS AL ON AL.an_id=A.id
+		//WHERE A.co_id=84 AND A.active=1
+		//ORDER BY A.date DESC    
+		$this->db->select('A.id,A.title,A.msg,A.date,AL.status');
 		$this->db->where('A.co_id',$compId);
 		$this->db->where('A.active',1);
 		$this->db->from('announcements as A');
+		$this->db->join('announcements_log AS AL','AL.an_id=A.id','LEFT');
 		$this->db->order_by('A.date','DESC');
 		if($limit!='') 
 		{

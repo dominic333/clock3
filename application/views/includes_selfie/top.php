@@ -149,7 +149,7 @@
                 </div>
                 <!-- /.box-body -->
                 <div class="box-footer text-center">
-                    <a href="#" class="uppercase">View All</a>
+                    <a href="<?php echo base_url();?>selfiedashboard/dashboard/listAnnouncement" class="uppercase">View All</a>
                 </div>
                 <!-- /.box-footer -->
             </div>

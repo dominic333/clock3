@@ -484,6 +484,19 @@ $config = array(
             'label' => 'Email',
             'rules' => 'trim|required|valid_email|xss_clean|prep_for_form'
         )
+    ),
+    
+    'resetPassword1' => array(
+    		array(
+    			'field' => 'newPassword',
+            'label' => 'New Password',
+            'rules' => 'trim|required|xss_clean|prep_for_form'
+    		),
+    		array(
+    			'field' => 'confirmPassword',
+            'label' => 'Confirm Password',
+            'rules' => 'trim|required|xss_clean|prep_for_form'
+    		)
     )
 );
 ?>

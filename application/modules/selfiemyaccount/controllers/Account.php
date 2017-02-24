@@ -93,6 +93,30 @@ class Account extends MX_Controller
 		
    }
    
+   
+   function resetPassword()
+   {
+   	if ($this->form_validation->run('resetPassword1') === FALSE)
+		{
+			redirect('selfiemyaccount/account');
+		}
+		else 
+		{
+		   	$staff_id	=		$this->session->userdata('mid');
+		   	$result		= 		$this->Account_model->resetPassword($staff_id);
+		   	if($result == true)
+		   	{
+						
+						echo "true";   	
+		   	
+		   	}
+		   	else {
+		   			echo "false";
+		   	}
+		   	//echo "Success"+$staff_id; 
+		  }
+   	
+   }
 
 	function get_common()
 	{

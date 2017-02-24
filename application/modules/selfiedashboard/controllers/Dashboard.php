@@ -36,11 +36,37 @@ class Dashboard extends MX_Controller
 		
 	}	
 
+	function listAnnouncement()
+	{
+		$limit='';
+		$compIdSess =$this->session->userdata('coid');		
+		$this->data['listAnnouncement']	=	modules::load('ccannouncements/announcements')->getLatestAnnouncements($compIdSess,$limit);
+		//$userIdSess =$this->session->userdata('mid');
+		$this->data['view']		= 	'selfiedashboard/listAnnouncement'; 
+		$this->load->view('master_selfie',$this->data);
+	}
+	
+	function readAnnouncement()
+	{	
+		$announcement_id	=		$this->input->post('announcementId');
+		$staff_id			=		$this->session->userdata('mid');
+		$result 				= 		$this->Dashboard_model->readAnnouncement($announcement_id,$staff_id);
+		if($result == true)
+		{
+			echo "OK";				
+		}
+		else 
+		{
+			echo "false" ;	
+		}
+	
+	}
 
 	function get_common()
 	{
 		$this->data['listAnnouncements']	=	$this->site_settings->fetchLatestAnnouncementsforUser();
 		$this->site_settings->get_site_settings();
+		$this->data['footer_includes']			=	'<script src="'.base_url().'js/snap/dashboard.js" type="text/javascript"></script>';	
 	}
 }
 

@@ -53,7 +53,92 @@ $(document).ready(function(){
         });
         
 
+		  $('#resetPassword1').validate({
+
+				 	rules: {
+				         	newPassword: { 
+				           			required: true,
+				           			min: 6
+
+				        		 } , 
+				
+				             confirmPassword: { 
+
+				                   	equalTo: "#resetPassword1 #newPassword"
+	
+				               }
+				     },
+				     messages:{
+				     		      confirmPassword :" Enter Confirm Password Same as Password"
+				     },
+				     
+				   
+				     highlight: function(element)
+		            {
+		                $(element).closest('.form-control').removeClass('success').addClass('error');
+		            },
+		            success: function(element)
+		            {
+		
+		                $(element).closest('.form-control').removeClass('error').addClass('success');
+		            }
+
+			});
+
+
+
 });
+
+/**************************Reset Password*****************************/
+
+
+
+$(document).on('click','#resetPassword',function (e) {
+	e.preventDefault();
+	$('#resetPasswordModal').modal('show');
+	
+});
+$(document).on('click','#pswdSubmt',function (e) {
+		e.preventDefault();
+		var staff_id	= $(this).data('staff_id');
+		var newPassword	=	$('#newPassword').val();
+		//alert(newPassword);
+		var url = base_url+"selfiemyaccount/account/resetPassword";
+		$.ajax({
+		
+				   url: url,
+				   data: {staff_id :staff_id,newPassword : newPassword,csrf_test_name : csrf_token},
+				   type: "POST",
+				   dataType: 'HTML',
+				  
+					success : function (result) {
+					
+								$('#resetPasswordModal').modal('hide');
+								if(result == 'true')
+								{
+									
+									alert('Successfully reset password');
+									
+								}
+								else {
+								
+									//alert('Sorry try again');
+								}					
+					
+					}
+		
+		
+		});
+	
+	
+	
+		
+});
+
+
+/**********************************End of reset Password*****************************************/
+
+
 $(document).on('click','#editPic',function (e) {
 	e.preventDefault();
 	$('#take_selfie_modal').modal('show');
@@ -67,10 +152,10 @@ $(document).on('click','#take_selfie_subt',function (e) {
 });
 	
 Webcam.set({
-	  width: 220,
-     height: 180,
-     dest_width: 220,
-     dest_height: 180,
+	  width: 500,
+     height: 400,
+     dest_width: 500,
+     dest_height: 400,
      image_format: 'jpeg',
      jpeg_quality: 90,
      force_flash: false

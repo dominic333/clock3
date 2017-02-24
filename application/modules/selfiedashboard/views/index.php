@@ -128,7 +128,7 @@
                                         <div class="widget-user-header bg-gray-light">
                                             <div class="widget-user-image">
                                                 <?php if($row->staff_photo!='') {?>
-                                                    <img class="img-circle" src="<?php echo base_url();?>images/users/<?php echo  $row->staff_photo; ?>">
+                                                    <img class="img-circle" src="<?php echo base_url();?>images/avatars/<?php echo  $row->staff_photo; ?>">
                                                 <?php } else{ ?>
                                                 <img class="img-circle" src="<?php echo base_url();?>assets/snap/images/admin-user.png"
                                                      alt="User Avatar">
