@@ -36,7 +36,24 @@ class Dashboard extends MX_Controller
 	function markAllNotificationsAsRead()
 	{
 	  $staffId	=		$this->session->userdata('mid');
-	  $result		= 		$this->Dashboard_model->markAllNotificationsAsRead($staffId);
+	  $result	= 		$this->Dashboard_model->markAllNotificationsAsRead($staffId);
+   	if($result == true)
+   	{	
+			echo "true";   	
+   	}
+   	else 
+   	{
+   		echo "false";
+   	}
+	}
+	
+	//Function to mark a notifications a read
+	//Dominic, Feb 27, 2017
+	function markThisNotificationsAsRead()
+	{
+	  $staffId	=		$this->session->userdata('mid');
+	  $notification = $this->input->post('notification');
+	  $result	= 		$this->Dashboard_model->markThisNotificationsAsRead($notification);
    	if($result == true)
    	{	
 			echo "true";   	

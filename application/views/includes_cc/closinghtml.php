@@ -20,7 +20,7 @@
 			$(document).on('click','#clearAllNotificationsLink',function (e) 
 			{
 				e.preventDefault();
-				//alert('hi');
+				  
 				  var post_url = base_url+"ccdashboard/dashboard/markAllNotificationsAsRead";
 			 	  $.ajax({
 					 url: post_url,
@@ -45,7 +45,38 @@
 					  	
 				    }
 			    });//end of ajax 
-			}); 	
+			}); 
+			
+			$(document).on('click','.clearThisNotification',function (e) 
+			{
+				  e.preventDefault();
+				  var notification =	  $(this).attr("data-notification");	
+				  var post_url = base_url+"ccdashboard/dashboard/markThisNotificationsAsRead";
+			 	  $.ajax({
+					 url: post_url,
+					 data:
+					 {
+					 	 notification : notification,
+						 csrf_test_name : csrf_token
+					 },
+					 type: "POST",
+					 dataType: 'HTML',
+					 success: function(result)
+				    {
+						if(result == 'true')
+						{
+							$('#row'+notification).remove();
+						}
+						else 
+						{
+						 alert('Sorry try again');
+						}
+					  	
+				    }
+			    });//end of ajax 
+			});
+			
+			
 		
 		});
 </script>

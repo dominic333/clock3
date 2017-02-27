@@ -1477,7 +1477,7 @@ class Attendance extends MX_Controller
 
 	//Function to fetch staff attendance in calendar view
 	//Jan 01, 2017
-	function staffattendance()
+	function staffattendance($selUser='')
 	{
 		$this->authentication->check_admin_access();
 		$this->authentication->checkCalendarViewFeaturesAccess();
@@ -1488,7 +1488,14 @@ class Attendance extends MX_Controller
 		$toDate    = $this->formatStorageDate($stoDate);
 		$staff 	  = $this->session->userdata('mid');
 		$this->data['attendance_table']	= '';
-		$this->data['myID']	= $this->session->userdata('mid');
+		if(isset($selUser) && !empty($selUser))
+		{
+			$this->data['myID']	= $selUser;
+		}
+		else
+		{
+			$this->data['myID']	= $this->session->userdata('mid');
+		}	
 		$this->data['users']	  = $this->Attendance_model->getCompanyUsers($compIdSess);
 		//$this->data['attendance_table']	= $this->attendanceCalendarData($fromDate,$toDate,$staff);
 		$this->data['view']					=	'ccattendance/staffattendancecalendar';

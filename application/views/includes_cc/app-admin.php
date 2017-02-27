@@ -155,23 +155,36 @@
                                 <ul class="menu">
 			                           <?php
 				                           $i=0;
-				                           $labelArray= array('fa-users text-aqua','fa-warning text-yellow','fa-users text-red','fa-shopping-cart text-green','fa-user text-red');
+				                           $labelArray= array('fa-users text-aqua','fa-warning text-yellow','fa-users text-red','fa-shopping-cart text-green','fa-user text-red','fa-user text-primary');
 				                       		foreach($mynotifications as $row)
 				                       		{
+				                       			$nUser= $row->actionBy;
+				                       			if($row->nType==1) //clockin
+				                       			{
+				                       				$url= base_url().'ccattendance/attendance/staffattendance/'.$nUser;
+				                       			}
+				                       			else if($row->nType==6) //absent
+				                       			{
+				                       				$url= base_url().'ccattendance/attendance/leaveManagement';
+				                       			}
+				                       			else
+				                       			{
+				                       				$url ='#';
+				                       			}
 				                        ?>
                                     <li id="<?php echo 'row'.$row->id; ?>" class="activeNotifications">
-                                        <a href="#">
+                                        <a href="<?php echo $url; ?>" data-notification="<?php echo $row->id; ?>" class="" >
                                             <i class="fa <?php if($row->nType==1){ echo $labelArray[0]; } 
                                             							else if($row->nType==2){ echo $labelArray[1]; } 
                                             							else if($row->nType==3){ echo $labelArray[2]; } 
                                             							else if($row->nType==4){ echo $labelArray[3]; } 
                                             							else if($row->nType==5){ echo $labelArray[4]; }
+                                            							else if($row->nType==6){ echo $labelArray[6]; }
                                             					?>
                                             	 ">
                                             
                                             </i> 
                                             <?php echo $row->nMsg; ?>
-                                            <?php //echo $row->nMsg.' :'.$row->staff_name; ?>
                                         </a>
                                     </li>
 
