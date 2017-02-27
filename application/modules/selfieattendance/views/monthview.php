@@ -94,7 +94,8 @@
 
                                         <div class="box-body">
                                             <div class="toggle-calendar"></div>
-                                            <div></div>
+                                            <div class="box1"></div>
+
                                             <h5 class="box-title text-bold">Step 2: Add Note & Select Leave Type</h5>
                                             <form id="formLeaveRequest2" name="formLeaveRequest2" method="POST"
                                                   class="form-horizontal">
@@ -130,49 +131,6 @@
                                 </div>
 
                             </div>
-
-<!--                            <div class="col-md-12">-->
-<!--                                <div class="box box-danger">-->
-<!--                                    <div class="box-header with-border">-->
-<!--                                        <h3 class="box-title">Step 2: Add Note & Select Leave Type</h3>-->
-<!--                                        <h5>Fill Form</h5>-->
-<!--                                        <div class="box-tools pull-right">-->
-<!--                                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i-->
-<!--                                                    class="fa fa-minus"></i></button>-->
-<!--                                        </div>-->
-<!--                                    </div>-->
-<!--                                    <div class="box-body">-->
-<!--                                        <form id="formLeaveRequest2" name="formLeaveRequest2" method="POST"-->
-<!--                                              class="form-horizontal">-->
-<!--                                            <div class="box-body">-->
-<!--                                                <div class="form-group">-->
-<!--                                                    <label for="inputEmail3" class="col-sm-2 control-label">Add-->
-<!--                                                        Note</label>-->
-<!---->
-<!--                                                    <div class="col-sm-10">-->
-<!--                                                    <textarea class="form-control" rows="3" name="leaveNote"-->
-<!--                                                              id="leaveNote"></textarea>-->
-<!--                                                    </div>-->
-<!--                                                </div>-->
-<!--                                                <div class="form-group">-->
-<!--                                                    <label class="col-sm-2 control-label">Leave Type</label>-->
-<!--                                                    <div class="col-sm-10">-->
-<!--                                                        <select id="leavetype" name="leavetype" class="form-control">-->
-<!--                                                            <option value="">Select a Leave Form</option>-->
-<!--                                                            <option value="medical">Medical Leave</option>-->
-<!--                                                            <option value="casual">Casual Leave</option>-->
-<!--                                                            <option value="annual">Annual Leave</option>-->
-<!--                                                        </select>-->
-<!--                                                    </div>-->
-<!--                                                </div>-->
-<!--                                            </div>-->
-<!--                                            <div class="box-footer">-->
-<!--                                                <button type="submit" class="btn btn-success pull-right">Submit</button>-->
-<!--                                            </div>-->
-<!--                                        </form>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                            </div>-->
 
                         </div>
 

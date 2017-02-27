@@ -58,7 +58,7 @@ $(function () {
                 '.' +
                 '<br /><br />' +
                 'Active dates<br /><br />' +
-                '<div class="active-dates"></div>');
+                '<div class="active-dates"></div><br />');
 
             for (var idx in obj.storage.activeDates) {
 
