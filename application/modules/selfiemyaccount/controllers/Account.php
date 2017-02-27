@@ -98,7 +98,7 @@ class Account extends MX_Controller
    {
    	if ($this->form_validation->run('resetPassword1') === FALSE)
 		{
-			redirect('selfiemyaccount/account');
+			echo "false";
 		}
 		else 
 		{
@@ -107,14 +107,14 @@ class Account extends MX_Controller
 		   	if($result == true)
 		   	{
 						
-						echo "true";   	
+					echo "true";   	
 		   	
 		   	}
-		   	else {
+		   	else 
+		   	{
 		   			echo "false";
 		   	}
-		   	//echo "Success"+$staff_id; 
-		  }
+		}
    	
    }
 

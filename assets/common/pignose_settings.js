@@ -137,6 +137,8 @@ $(function() {
 
                                 }
                             });
+//                            alert("Leave Applied");
+
                         }
                         else if(result=="failed")
                         {
@@ -150,6 +152,7 @@ $(function() {
                         }
 
                         $('#formLeaveRequest2')[0].reset();
+                        location.reload();
                     }
                 });//end of ajax
             }

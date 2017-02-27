@@ -1060,11 +1060,11 @@ class Attendance extends MX_Controller
 	   $staff_id = $this->db->insert_id();
 	   if($staff_id!='')
 	   {
-	   	$response='success';
+	   	$response = "success";
 	   }
 	   else
 	   {
-	   	$response = 'failed';
+	   	$response = "failed";
 	   }
 	   
 	   $sName=$this->session->userdata('staffname');

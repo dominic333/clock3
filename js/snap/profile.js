@@ -58,20 +58,36 @@ $(document).ready(function(){
 				 	rules: {
 				         	newPassword: { 
 				           			required: true,
-				           			min: 6
-
 				        		 } , 
-				
-				             confirmPassword: { 
-
-				                   	equalTo: "#resetPassword1 #newPassword"
-	
-				               }
+				             confirmPassword: {   
+			                   	equalTo: "#resetPassword1 #newPassword",
+			                   	required: true
+				             }
 				     },
-				     messages:{
-				     		      confirmPassword :" Enter Confirm Password Same as Password"
-				     },
-				     
+				     submitHandler: function(form) {
+					 	  var post_url = base_url+"selfiemyaccount/account/resetPassword";
+					 	  $.ajax({
+							 url: post_url,
+							 data:$('#resetPassword1').serialize(),
+							 type: "POST",
+							 dataType: 'HTML',
+							 success: function(result)
+						    {
+                        $('#resetPasswordModal').modal('hide');
+								if(result == 'true')
+								{
+									alert('Successfully reset password');
+								}
+								else 
+								{
+								 alert('Sorry try again');
+								}
+							  	
+						    }
+					    });//end of ajax 
+								
+							
+					 },
 				   
 				     highlight: function(element)
 		            {
@@ -98,6 +114,7 @@ $(document).on('click','#resetPassword',function (e) {
 	$('#resetPasswordModal').modal('show');
 	
 });
+/*
 $(document).on('click','#pswdSubmt',function (e) {
 		e.preventDefault();
 		var staff_id	= $(this).data('staff_id');
@@ -129,11 +146,9 @@ $(document).on('click','#pswdSubmt',function (e) {
 		
 		
 		});
-	
-	
-	
 		
 });
+*/
 
 
 /**********************************End of reset Password*****************************************/
