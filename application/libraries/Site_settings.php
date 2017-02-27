@@ -87,6 +87,7 @@ class Site_settings
 		$this->obj->db->where('N.userID',$this->obj->session->userdata('mid'));     	
 		$this->obj->db->where('N.nDateTime >=',$startD);     	
 		$this->obj->db->where('N.nDateTime <=',$endD);     	
+		$this->obj->db->where('N.readStatus',0);     	
 	  	$this->obj->db->from('notifications AS N');			  		
 		$this->obj->db->join('staff_info AS SI', 'N.actionBy = SI.staff_id','LEFT');		
 		$this->obj->db->order_by('N.nDateTime','DESC');	

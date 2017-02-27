@@ -14,6 +14,40 @@
 		   $('#latestAnnouncementMsg').html(description);
 		   $('#latestAnnouncementInfo').modal('show');  
 		}); 
+		
+		$(document).ready(function(){
+	
+			$(document).on('click','#clearAllNotificationsLink',function (e) 
+			{
+				e.preventDefault();
+				//alert('hi');
+				  var post_url = base_url+"ccdashboard/dashboard/markAllNotificationsAsRead";
+			 	  $.ajax({
+					 url: post_url,
+					 data:
+					 {
+						 csrf_test_name : csrf_token
+					 },
+					 type: "POST",
+					 dataType: 'HTML',
+					 success: function(result)
+				    {
+						if(result == 'true')
+						{
+							$('.activeNotifications').remove();
+							$('#countNotification1').html('0');
+							$('#countNotification2').html('You have 0 notifications');
+						}
+						else 
+						{
+						 alert('Sorry try again');
+						}
+					  	
+				    }
+			    });//end of ajax 
+			}); 	
+		
+		});
 </script>
 </body>
 

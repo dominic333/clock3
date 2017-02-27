@@ -145,11 +145,11 @@
                     <li class="dropdown notifications-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <i class="fa fa-bell-o"></i>
-                            <span class="label label-warning"><?php echo $countNotif; ?></span>
+                            <span id="countNotification1" class="label label-warning"><?php echo $countNotif; ?></span>
                         </a>
                         <ul class="dropdown-menu">
 	                         
-                            <li class="header">You have <?php echo $countNotif; ?> notifications</li>
+                            <li id="countNotification2" class="header">You have <?php echo $countNotif; ?> notifications</li>
                             <li>
                                 <!-- inner menu: contains the actual data -->
                                 <ul class="menu">
@@ -159,7 +159,7 @@
 				                       		foreach($mynotifications as $row)
 				                       		{
 				                        ?>
-                                    <li id="<?php echo 'row'.$row->id; ?>">
+                                    <li id="<?php echo 'row'.$row->id; ?>" class="activeNotifications">
                                         <a href="#">
                                             <i class="fa <?php if($row->nType==1){ echo $labelArray[0]; } 
                                             							else if($row->nType==2){ echo $labelArray[1]; } 
@@ -178,7 +178,7 @@
                                     <?php } ?>
                                 </ul>
                             </li>
-                            <li class="footer"><a href="#">View all</a></li>
+                            <li class="footer"><a id="clearAllNotificationsLink" >Clear all</a></li>
                         </ul>
                     </li>
 

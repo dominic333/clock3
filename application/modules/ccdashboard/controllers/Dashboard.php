@@ -30,6 +30,22 @@ class Dashboard extends MX_Controller
 		$this->load->view('master', $this->data);	
 		
 	}	
+	
+	//Function to mark all notifications as read
+	//Dominic, Feb 27, 2017
+	function markAllNotificationsAsRead()
+	{
+	  $staffId	=		$this->session->userdata('mid');
+	  $result		= 		$this->Dashboard_model->markAllNotificationsAsRead($staffId);
+   	if($result == true)
+   	{	
+			echo "true";   	
+   	}
+   	else 
+   	{
+   		echo "false";
+   	}
+	}
 
 
 	function get_common()
