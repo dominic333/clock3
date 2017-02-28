@@ -1,7 +1,7 @@
 
 <!-- Content Wrapper. Contains page content -->
 
-<div class="content-wrapper">
+<div class="contentfirst">
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
