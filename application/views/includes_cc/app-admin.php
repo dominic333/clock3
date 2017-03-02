@@ -30,7 +30,7 @@
     <!-- Mynotepedia Skins. Choose a skin from the css/skins
          folder instead of downloading all of them to reduce the load. -->
     <link rel="stylesheet" href="<?php echo base_url();?>assets/cc/theme/css/skins/_all-skins.min.css">
-    
+
 <!--    <link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">-->
 
     <link rel="stylesheet" href="<?php echo base_url();?>assets/cc/plugins/datepicker/jquery-ui.css">
@@ -65,19 +65,19 @@
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
-    
+
      <script type="text/javascript">
       var base_url = '<?php echo base_url();?>';
       var csrf_token = '<?php echo $this->security->get_csrf_hash()?>';
     </script>
     <div id="loader" style="display:none;"></div>
-    
+
     <!--Loader-->
     <script>
         function showLoader()
         {
             document.getElementById("loader").style.display = "block";
-            document.getElementById("myDiv").style.display = "none";  
+            document.getElementById("myDiv").style.display = "none";
         }
         function hideLoader()
         {
@@ -86,7 +86,7 @@
         }
     </script>
     <style type="text/css">
-		#listalist 
+		#listalist
 		{
 			margin: 0px;
 			padding: 0px;
@@ -95,8 +95,8 @@
 		{
 			list-style: none;
 		}
-		
-		#listalist2 
+
+		#listalist2
 		{
 			margin: 0px;
 			padding: 0px;
@@ -105,7 +105,7 @@
 		{
 			list-style: none;
 		}
-		
+
 		.pagination li 
 		{
 		  display: inline-block;
@@ -148,7 +148,7 @@
                             <span id="countNotification1" class="label label-warning"><?php echo $countNotif; ?></span>
                         </a>
                         <ul class="dropdown-menu">
-	                         
+
                             <li id="countNotification2" class="header">You have <?php echo $countNotif; ?> notifications</li>
                             <li>
                                 <!-- inner menu: contains the actual data -->
@@ -174,16 +174,16 @@
 				                        ?>
                                     <li id="<?php echo 'row'.$row->id; ?>" class="activeNotifications">
                                         <a href="<?php echo $url; ?>" data-notification="<?php echo $row->id; ?>" class="" >
-                                            <i class="fa <?php if($row->nType==1){ echo $labelArray[0]; } 
-                                            							else if($row->nType==2){ echo $labelArray[1]; } 
-                                            							else if($row->nType==3){ echo $labelArray[2]; } 
-                                            							else if($row->nType==4){ echo $labelArray[3]; } 
+                                            <i class="fa <?php if($row->nType==1){ echo $labelArray[0]; }
+                                            							else if($row->nType==2){ echo $labelArray[1]; }
+                                            							else if($row->nType==3){ echo $labelArray[2]; }
+                                            							else if($row->nType==4){ echo $labelArray[3]; }
                                             							else if($row->nType==5){ echo $labelArray[4]; }
                                             							else if($row->nType==6){ echo $labelArray[6]; }
                                             					?>
                                             	 ">
-                                            
-                                            </i> 
+
+                                            </i>
                                             <?php echo $row->nMsg; ?>
                                         </a>
                                     </li>
@@ -198,14 +198,22 @@
                     <!-- User Account: style can be found in dropdown.less -->
                     <li class="dropdown user user-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <img src="<?php echo base_url();?>assets/cc/images/admin-user.png" class="user-image" alt="User Image">
+                            <?php $mypic	= $this->site_settings->fetchMyPic();  if($mypic != ""){?>
+                                <img src="<?php echo base_url();?>images/avatars/<?php echo $mypic;?>" class="user-image" alt="User Image">
+											<?php } else{?>
+                                <img src="<?php echo base_url();?>assets/snap/images/admin-user.png" class="user-image" alt="User Image">
+										<?php	} ?>
                             <span class="hidden-xs"><?php echo $this->session->userdata('staffname'); ?></span>
                         </a>
                         <ul class="dropdown-menu">
                             <!-- User image -->
-                            <li class="user-header">
-                                <img src="<?php echo base_url();?>assets/cc/images/admin-user.png" class="img-circle" alt="User Image">
 
+                            <li class="user-header">
+                                <?php $mypic	= $this->site_settings->fetchMyPic();  if($mypic != ""){?>
+                                <img src="<?php echo base_url();?>images/avatars/<?php echo $mypic;?>" class="user-image" alt="User Image">
+											<?php } else{?>
+                                <img src="<?php echo base_url();?>assets/snap/images/admin-user.png" class="user-image" alt="User Image">
+										<?php	} ?>
                                 <p>
                                     <?php echo $this->session->userdata('staffname'); ?>
                                 </p>
