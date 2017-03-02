@@ -106,7 +106,7 @@
 			list-style: none;
 		}
 
-		.pagination li 
+		.pagination li
 		{
 		  display: inline-block;
 		  padding: 5px;
