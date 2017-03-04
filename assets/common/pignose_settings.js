@@ -40,7 +40,7 @@ $(function () {
 
     $('.toggle-calendar').pignoseCalendar({
         toggle: true,
-        minDate: moment(),
+        minDate: moment().add(-1, 'days'),
         disabledWeekdays: [],
         select: function (date, obj) {
             var selDate = date[0].format('YYYY-MM-DD');

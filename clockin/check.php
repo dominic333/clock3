@@ -49,17 +49,17 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit"])){
    $formCountry = $_POST["country"];
    $formUsername = $_POST["username"];
    $formCompLoginName = $_POST["companyusername"];
-   echo 'athere';
+  // echo 'athere';
    
    // PAYMENT DETAILS
-   $formPayment = $_POST["payment"];
+   $formPayment = isset($_POST["payment"]);
    $ccname = $_POST["ccname"];
    $ccnum  = str_replace("-", "", $_POST["ccnum"]); 
-   $ccmonth = $_POST["ccmonth"];
-   $ccyear = $_POST["ccyear"]; 
+   $ccmonth =isset($_POST["ccmonth"]);
+   $ccyear = isset($_POST["ccyear"]); 
    $ccbank = $_POST["ccbank"];
    $ccv = $_POST["ccv"];
-   $disp_card = "xxxx-xxxx-xxxx-" . substr($formCCnum,-4,4);
+   $disp_card = "xxxx-xxxx-xxxx-" . substr($ccnum,-4,4);
    
    $from_currency    = 'USD';
    $to_currency    = $formCurrency;
@@ -71,7 +71,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit"])){
 
    $dis = ($finalData[1] * $bank_conversion_rate_discount);
    $price = $finalData[1] - $dis;
-   $price = number_format($price, 2,'', '');
+   $total = number_format($price, 2,'', '');
    
    
    $cd_array = array(
@@ -98,22 +98,26 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit"])){
    $_SESSION["c_details"] = $cd_array;
    $redirect_url = "signup.php";
    $success_url = "index.php";
+   $q=0;
+   if($formPlan == "paid"){
+ 	 $q = (0.99 * $formNouser) * $formTerms;
    
-   if($formPlan == "paid")
-      $q = (0.99 * $formNouser) * $formTerms;
+   }
+      
       
    //Added by Dominic; Feb 06,2017
-   //To add users who applied for free plan  
+   //To add users who applied for free plan
+   //Modified by Annie,  removed functions that are not used  
    if($formPlan == "free")
    {
-   	echo 'wereachedfree';
+   	//echo 'wereachedfree';
      $name		= $formFname.' '.$formLname;
      $username = $formUsername;
      $coid		= $formCompLoginName;
      
 	  $check_username_exist = $adminfunc->checkUserCredentialExist("login_name", $username);
 	  $check_coid_exist = $adminfunc->checkCompanyIDExist($coid);
-
+	 //echo $check_username_exist;
      if ($check_username_exist == 1)
      {
          echo "<script language=\"javascript\"> alert('Username already Exist. Please use different Username')</script>";
@@ -133,20 +137,24 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit"])){
                                	</script>
                                	";
      }  
+  /*   $test =$adminfunc->getStaffProfile(1511);
+    print_r($test)*/;
 
 		if (($check_username_exist && $check_coid_exist) != 1)
 		{
 			// Insert info and email
+			//echo "reached here insert info";
 			$ref_sess = md5(time());
 			//echo "in go";
-			exit(0);
+			//exit(0);
 			$co_id = $adminfunc->addNewCompany($formCname, $formCompLoginName, $name, $formPhoneNo, $formEmail, $formCountry);
 			$adminfunc->addNewCompanyPlan($co_id, $formNouser);
 			$userid = $adminfunc->addNewStaff($co_id, $name, $formUsername, $formEmail, $formPhoneNo, $ref_sess, "1", "0");
 			$adminfunc->updateUserStatus($userid, "0");
 			$adminfunc->addNewVerification($ref_sess, $co_id);
-
-			$msg = "Hello $name! \r\n\r\n";
+			//echo "co id test"+$co_id;
+			
+			  $msg = "Hello $name! \r\n\r\n";
 	        $msg .= "Thanks you for siging up for Clock-in.me. \r\n";
 	  	     $msg .= "Please go to http://clock-in.me/verifyacct.php?sess=$ref_sess \r\n";
 	        $msg .= "to confirm your email. \r\n";
@@ -157,9 +165,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit"])){
 	        $subject = "Clock-in.me - Account Confirmation for : ". $username;
 	
 	        $headers = "From: no-reply@clock-in.me" . "\r\n";
-	  	        $to = $email;
+	  	        $to = $formEmail;
 	
-	        mail($to,$subject,$msg,$headers);
+	       // mail($to,$subject,$msg,$headers);
 	
 			  //unset($_SESSION["clockin"]);
 	        session_destroy();
@@ -172,9 +180,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit"])){
                                	</script>
                                	";
 		}
- 
-   
-   }
+	}
    
    $header = "
    <style>table{font-size:1em;}</style>
@@ -322,7 +328,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit"])){
    $mail->Host     = "mailgun.securesvr.net";
    $mail->Port     = "587";
 
-   $mail->SetFrom($email, $fullname);
+   $mail->SetFrom($formEmail, $name);
    $mail->Subject = "Clock-in.me Order";
    $mail->Body = $cs;	
 
@@ -335,9 +341,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit"])){
    //$mail->AddAddress("javad@flexiesolutions.com", "Javad");
    //$mail->AddAddress("reymarth.voffice@gmail.com", "Reymarth");
 
-   if($mail->Send()) {			
+  /* if($mail->Send()) {			
       //echo "<script>$('#ty').show();</script>";
-   }
+   }*/
 
    
    if($formPayment == "paypal") {
@@ -503,6 +509,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit"])){
    }
    
    header("Location: payment.php");
+
 }
 ?>
 

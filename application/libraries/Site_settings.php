@@ -20,6 +20,20 @@ class Site_settings
 		}
 		return true; 		
 	}
+
+	//Function to load profile picture
+	//Annie, March 2, 2017
+	function fetchMyPic()
+	{
+     	 
+     	 $myId		= 		$this->obj->session->userdata('mid');
+     	 $this->obj->db->select('staff_photo');
+     	 $this->obj->db->from('staff_info');
+     	 $this->obj->db->where('staff_id',$myId);
+     	 $result=$this->obj->db->get();
+		 return $result->row()->staff_photo;     	 
+		
+	}
 	
 	//Function to check user on leave or not
 	//Dominic, Feb 11, 2017
@@ -172,6 +186,9 @@ class Site_settings
 		$result=$this->obj->db->get();
 		return $result->row()->totalShifts;
 	}
+
+
+
 	
 	//Function to fetch total assigned watchers
 	//Dominic, Jan 18, 2017
@@ -394,5 +411,7 @@ class Site_settings
 		
 		}
 	}
+	
+
 }
 ?>

@@ -160,16 +160,16 @@ class Home extends MX_Controller
 	   function send_password_reset_email($email,$password)
 	   { 	   	
          $config = array(
-			    'protocol' => 'smtp',
-			    'smtp_host' => 'http://smtp.sendgrid.net/',
-			    'smtp_port' => 587,
-			    'smtp_user' => 'flexiesolutions',
-			    'smtp_pass' => 'ctm342h',
-			    'mailtype'  => 'html',
-          	 'charset'   => 'utf-8',
-          	 'crlf' => "\r\n",
-  					 'newline' => "\r\n"
-         );
+			    'protocol'  => EMAIL_PROTOCOL,
+			    'smtp_host' => EMAIL_SMTP_HOST,
+			    'smtp_port' => EMAIL_SMTP_PORT,
+			    'smtp_user' => EMAIL_SMTP_USER,
+			    'smtp_pass' => EMAIL_SMTP_PASS,
+			    'mailtype'  => EMAIL_MAILTYPE,
+	       	 'charset'   => EMAIL_CHARSET,
+	       	 'crlf' 		 => EMAIL_CRLF,
+	  			 'newline'   => EMAIL_NEWLINE
+	      );
 			////$config['protocol']= "sendmail";
 	      $this->load->library('email', $config);
 	      $this->email->set_mailtype("html");

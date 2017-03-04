@@ -51,9 +51,11 @@
                     <li class="active border-btn">
                         <a href="#1a" data-toggle="tab">My Attendance</a>
                     </li>
+                    <?php  $leaveManagement= $this->authentication->checkLeaveManagementAccess(); if($leaveManagement==1){ ?>
                     <li class="border-btn">
                         <a href="#2a" data-toggle="tab">Leave Calendar</a>
                     </li>
+                    <?php } ?>
                 </ul>
                 <br>
 
@@ -77,6 +79,7 @@
 
 
                     </div>
+                     <?php  $leaveManagement= $this->authentication->checkLeaveManagementAccess(); if($leaveManagement==1){ ?>
                     <div class="tab-pane" id="2a">
                         <div class="row">
                             <div class="col-md-12">
@@ -84,7 +87,7 @@
                                     <div class="box box-danger">
                                         <div class="box-header with-border">
                                             <h3 class="box-title">Leave Calendar</h3>
-                                            <h5>You can toggle date and get those dates as array.</h5>
+                                            <h5></h5>
 
                                             <div class="box-tools pull-right">
                                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
@@ -175,6 +178,7 @@
                         <!-- /.row -->
 
                     </div>
+                    <?php } ?>
                 </div>
 
 

@@ -12,7 +12,7 @@
         <div style="border:3px solid #f7f7f7;margin:5px;">
     
     <div style="width:150px; margin:auto; padding: 10px 0;margin-top:15px;">
-        <img src="<?php echo base_url();?>images/logo.png" style="" alt="clock-in.me">
+        <img src="<?php echo $baseurl;?>assets/cc/images/logo.png" style="" alt="clock-in.me">
     </div>
     
     

@@ -55,7 +55,7 @@ class Administration extends MX_Controller
 	public function contactsupport()
 	{
 		$this->authentication->check_admin_access();
-		if ($this->form_validation->run('editCompanyInfoForm') === FALSE) 
+		if ($this->form_validation->run('contactSupportForm') === FALSE) 
 		{
 			$this->data['view']					=	'ccadministration/contact-support';
 		   $this->load->view('master', $this->data);	
@@ -78,11 +78,11 @@ class Administration extends MX_Controller
 	      $this->load->library('email', $config);
 	      $this->email->set_mailtype("html");
 	      
-	      //$email_to 	= 	"ask@clock-in.me";
-	      $email_to 	= 	"dominic@cliffsupport.com";
-	      $email_from	=	$this->input->post('sender_email');
-	      $user			=	$this->input->post('sender_name');
-	      $message		=	$this->input->post('sender_message');
+	      $email_to 	= 	"ask@clock-in.me";
+	      //$email_to 	= 	"dominic@cliffsupport.com";
+	      $email_from	=	$this->input->post('senderEmail');
+	      $user			=	$this->input->post('senderName');
+	      $message		=	$this->input->post('senderMessage');
 	      $subject		=	"clock-in.me : New Query from ".$user;
 	      
 			//$this->site_settings->get_site_settings();
@@ -94,16 +94,17 @@ class Administration extends MX_Controller
 	 	   $this->data['message']		=	$message;
 	 	   $this->data['phone']			=	'+1617 778 2299';
 	 		$this->data['site']			=	'clock-in.me';	   
+	 		$this->data['baseurl']		=	base_url(); 
 		   
-		   //$bcc_list = array('sean@flexiesolutions.com', 'albert.goh@flexiesolutions.com');
-		   $bcc_list = array('dominiccliff88@gmail.com');
+		   $bcc_list = array('sean@flexiesolutions.com', 'albert.goh@flexiesolutions.com');
+		   //$bcc_list = array('dominiccliff88@gmail.com');
 		   		   
-		   //$template = $this->load->view($this->lang->line('admin').'/company/contact_template',$this->data,TRUE); 
+		   $template = $this->load->view('email_templates/contact_template',$this->data,TRUE); 
 			$this->email->from($email_from, $user);			
 	  		$this->email->to($email_to);
 	  		$this->email->reply_to($email_to,'Clock-in.me Support');
 	  		$this->email->bcc($bcc_list);
-			$this->email->message('hola');	
+			$this->email->message($template);	
 			$this->email->subject($subject);		
 	  	 	$this->email->send();
 	  	 	
@@ -133,19 +134,11 @@ class Administration extends MX_Controller
 		return $companyInfo;
 	}
 	
-	
 
 	function get_common()
 	{
 		$this->data['footer_includes']			=	'<script src="'.base_url().'js/cc/administration.js" type="text/javascript"></script>';
 		$this->data['mynotifications']			=	$this->site_settings->fetchMyNotifications();
-		/*
-		$this->site_settings->get_site_settings();
-		$this->data['profile']			=	$this->site_settings->personal_details();	
-		$this->data['menus_all']		= 	modules::load('menus')->get_menus();
-		$this->data['myprivileges']	=	$this->site_settings->myprivileges();
-		
-		*/
 			
 	}
 	

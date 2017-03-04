@@ -10,9 +10,9 @@ class vca_adminClass {
 		//$dbname= 'clockin_maindb';
 		
 		
-		$dbuser= 'clockin_test';
-		$dbpass= 'oc1FRCHXUXaEo';
-		$dbname= 'clockin_testdb';
+		$dbuser= 'clock2';
+		$dbpass= 'd3fault';
+		$dbname= 'clock2';
 		
 		$dbm = mysql_connect ($dbhost, $dbuser, $dbpass) or die ('I cannot connect to the database because: ' . mysql_error());
 		mysql_select_db ($dbname) or die("Could not select database \n"); 
@@ -539,7 +539,7 @@ class vca_adminClass {
                	$data_q = "INSERT INTO company_info (company_login, company_name, contact_person, contact_number, contact_email, company_country, company_status) 
 		VALUES ('$company_id','$coname', '$contact_person', '$contact_number', '$email', '$country', '0')";
                 $result = mysqli_query($vdbm, $data_q);
-
+					//print_r($data_q);
                 if(!$result)
                 {
                   $errno = mysqli_errno($vdbm);
@@ -2179,10 +2179,11 @@ class vca_adminClass {
 	// VCA
 	function getStaffProfile($staffid)
 	{
+				                include "vca_conn.php";
 	        $data_q = "SELECT * FROM staff_info WHERE staff_id='$staffid'";
-		$data_r = mysql_query ($data_q) or die("Could not get Staff Name.\n");
+		$data_r = mysqli_query ($vdbm,$data_q) or die("Could not get Staff Name.\n");
 
-		$fdata = mysql_fetch_assoc($data_r);
+		$fdata = mysqli_fetch_assoc($data_r);
 		return $fdata;
 	}
 
@@ -2569,7 +2570,7 @@ class vca_adminClass {
 
 	function vca_adminClass ()
 	{
-		require_once dirname(__FILE__) . '/../include/config.php';
+		require_once 'config.php';
 		//$vdbm = mysql_connect (DB_HOST, DB_USER, DB_PASSWORD) or die ('I cannot connect to the database because: ' . mysql_error());
 		$vdbm = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
 		if (mysqli_connect_errno())
@@ -2769,6 +2770,13 @@ class vca_adminClass {
 		$data_r = mysql_query ($data_q) or die("Could not get data from ipadnums.\n". mysql_error());
 		return $data_r;
 	}
+	//function by annie for testing db connecitnio
+	function test() {
+		
+		$data_q="select * from company_plans";
+		$data_r = mysql_query ($data_q) or die("Could not get data from ipadnums.\n". mysql_error());
+		return $data_r;
+		}
 	
 	
 }

@@ -123,3 +123,89 @@
     <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
+
+<!-- **************** Modal PopUp for Attendance ******************* -->
+
+ <div class="modal fade for_hide my-fade" id="attendance_modal" >
+    <div class="modal-dialog my-modal">
+      <div class="modal-content">
+        <div class="modal-header reset-header">
+          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only"></span></button>
+          <h4 class="modal-title">Attendance Amendments</h4>
+        </div>
+        <div class="modal-body">
+  		  	
+        		<?php $attributes = array('name' => 'attendance_frm', 'id' => 'attendance_frm' ,'method' =>'POST' , 'action' => 'echo base_url()');   //To enable CSRF protection
+        		 echo form_open(base_url().'ccattendance/attendance/add_notes/'.$this->session->userdata('mid'), $attributes);  ?>    <!-- To enable CSRF protection      -->
+            <div class="col-md-12">
+				
+						<div class="form-group">
+ 						<label for="clock" class="col-sm-3 control-label">Clock Type</label>
+
+						<select name="clock" id="clock" class="form-control" style="width:50%;" >
+							<option>--Select--</option>
+							<option value="in">Clock In</option>
+							<option value="nc">Clock Out</option>
+						</select>					
+						
+						</div>
+						  <div class="form-group" >
+                        <label for="notes" class="col-sm-3 control-label">Notes</label>
+
+                        <div class="col-sm-7" style="padding-bottom: 20px;">
+                        	<textarea name="notes" placeholder="Add notes" id="notes" class="form-control" required></textarea>
+<!--                            <input id="notes" name="notes" type="text" class="form-control" placeholder="Add notes" required>-->
+                        </div>
+                    </div>
+                    
+                    <div class="form-group" >
+                     <div class="col-sm-3">
+								<label>Amend Schedule Clock IN / OUT Time?</label>
+							</div>
+      	                   <div class="col-sm-3" >
+
+                                		<input type="radio" class="set_time" name="set_time" value="yes"class=""/>YES                              		
+
+                            </div> 
+    	                   <div class="col-sm-3" >	   
+ 	                     				<input type="radio" class="set_time" name="set_time" value="no" checked class=""/>NO                              
+                            </div>
+
+                    </div>
+                    <div class="clearfix"></div>
+                    
+                    
+                    <div class="form-group time">
+                    <div class="col-sm-3"><label class="control-label">Select New Schedule Clock IN / OUT Time </label></div>
+                        
+                        <div class="col-sm-3">
+	                        <div class="input-group bootstrap-timepicker timepicker">
+	           							 <input id="timepicker1" name="clocktime" type="text" class="form-control input-small" placeholder="Clock Time">
+	           							 <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+	       						 </div>
+                        </div>
+                        </div>
+                    
+                     
+                         
+                    
+       </div>
+       
+       <div class="clearfix"></div>
+      </div><!-- /.modal-content -->
+                                  <input id="logdate" name="logdate" type="hidden" class="form-control" />
+                                <input type="hidden" name="userid"  id="userid" value=""/>
+      <div class="modal-footer">
+      	<button type="button" class="btn btn-danger pull-left show_active" style="margin-right:5px;" data-dismiss="modal">Close</button>
+          		<button   name="Submit" value="Submit"  class="btn btn-success show_active" >Submit</button></button>
+            </div> 
+            <?php echo form_close(); ?>  
+      </div>
+      
+    </div><!-- /.modal-dialog -->
+	</div><!-- /.modal --> 
+
+
+
+
+<!-- ****************End of Modal popup ************************-->

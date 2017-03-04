@@ -250,9 +250,10 @@ class Shifts extends MX_Controller
  	   $this->data['password']			=	$password;
  	   $this->data['company_login']	=	$user_details->company_login;
  	   $this->data['company_name']	=	$user_details->company_name;
+ 	   $this->data['baseurl']			=	base_url();
  	      
- 	   //$bcc_list = array('ask@clock-in.me', 'sean@flexiesolutions.com', 'albert.goh@flexiesolutions.com');
- 	   $bcc_list = array('dominiccliff88@gmail.com');
+ 	   $bcc_list = array('ask@clock-in.me', 'sean@flexiesolutions.com', 'albert.goh@flexiesolutions.com');
+ 	   //$bcc_list = array('dominiccliff88@gmail.com');
  	      
 	   $template = $this->load->view('email_templates/welcome_template',$this->data,TRUE); 
 		$this->email->from($from, 'Clock-in.me Customer Care');			
@@ -376,7 +377,7 @@ class Shifts extends MX_Controller
 		}
 		else
 		{
-			//$this->send_password_reset_email();
+			$this->send_password_reset_email();
 			$this->Shifts_model->reset_password();
 			$staff_id = $this->input->post('user_id');
 			// save to log table
@@ -389,6 +390,54 @@ class Shifts extends MX_Controller
 			echo "password";
 		}
 	}
+	
+	function send_password_reset_email()
+	{ 
+   	
+         $config = array(
+			    'protocol'  => EMAIL_PROTOCOL,
+			    'smtp_host' => EMAIL_SMTP_HOST,
+			    'smtp_port' => EMAIL_SMTP_PORT,
+			    'smtp_user' => EMAIL_SMTP_USER,
+			    'smtp_pass' => EMAIL_SMTP_PASS,
+			    'mailtype'  => EMAIL_MAILTYPE,
+	       	 'charset'   => EMAIL_CHARSET,
+	       	 'crlf' 		 => EMAIL_CRLF,
+	  			 'newline'   => EMAIL_NEWLINE
+      	);
+			//$config['protocol']= "sendmail";
+	      $this->load->library('email', $config);
+	      $this->email->set_mailtype("html");
+	      
+         $password=$this->input->post('password');
+         $email_to=$this->input->post('user_email');
+         $user=$this->input->post('user_name');
+         $login=$this->input->post('user_login');
+			$subject="clock-in.me : Password Changed.";
+			$this->site_settings->get_site_settings();
+         //$from = $this->config->item('smtp_server');
+         $from = "cs@clock-in.me";
+ 	      
+       	$this->data['word'] 		=	'Password';
+ 	      $this->data['user'] 		=	$user;
+ 	      $this->data['email_to'] =	$email_to;
+ 	      $this->data['login'] 	=	$login;
+ 	      $this->data['pass'] 		=	$password;
+ 	      $this->data['baseurl']	=	base_url();
+ 	      
+ 	      $this->data['phone']		=	'+632 917 8111';
+ 		 	$this->data['site']		=	'clock-in.me';	   
+		   
+		   
+		   $template = $this->load->view('email_templates/reset_template',$this->data,TRUE); 
+			$this->email->from($from, 'Clock-in.me Customer Care');			
+  			$this->email->to($email_to);
+			$this->email->message($template);	
+			$this->email->subject($subject);		
+  	 		$this->email->send();
+  	 		   
+  	 		   	   
+   }
 
 	//Function to edit user info
 	//By Dominic, Dec 12,2016
@@ -908,6 +957,7 @@ class Shifts extends MX_Controller
 	{
 		$this->site_settings->get_site_settings();
 		$this->data['mynotifications']			=	$this->site_settings->fetchMyNotifications();
+//		$this->data['mypic']							=	$this->site_settings->fetchMyPic();
 		$this->data['companyPlanDetails']		=	$this->site_settings->companyPlanDetails();
 		$this->data['total_Users']					=	$this->site_settings->getCompanySize();
 		$this->data['total_Depts']					=	$this->site_settings->getCompanyDepartmentSize();

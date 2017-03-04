@@ -5,7 +5,7 @@
 <body style="background:#f7f7f7;">
 <div style="width: 605px; margin: 0 auto; padding:20px;"><!--/.main-->
   <div style="padding:0 12px;">
-    <div style="width:240px; margin:auto;"><img src="<?php echo base_url();?>images/logo_login.png" style="width:100%;" alt="vRush"></div>
+    <div style="width:240px; margin:auto;"><img src="<?php echo $baseurl;?>assets/cc/images/logo.png" style="width:100%;" alt="clock-in.me"></div>
     <div style="margin-top:-15px;">
       <p style="text-align:center; color:#585753; font-size: 20px;font-family: cursive;">
       	Hello <?php echo (isset($name))?$name:'';?> !
@@ -49,7 +49,6 @@
     	- View your attendance for the week. <br>
 		- Add Explanation notes on any discrepancies for your attendance.  <br>
 		- Update your personal profile.<br>
-		- Change your login password for both \"dashboard\" and \"selfies\" area.  <br>
 		- View Who is Around Today in your department.   <br>
 		- and much more!<br>
     </p>

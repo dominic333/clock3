@@ -11,7 +11,7 @@
     <meta name="format-detection" content="date=no">
     <meta name="format-detection" content="address=no">
     <meta name="format-detection" content="email=no">
-    <title></title>
+    <title>Email Template</title>
 
     <style>
         body {
@@ -123,7 +123,7 @@
 
     <tr>
         <td align="left" style="width: 30%; padding-left: 10px;  padding-top: 10px; padding-bottom: 10px;">
-            <img src="https://clock-in.me/webapp/images/logo_login2.png" alt="clock-in.me"/>
+            <img src="https://clock-in.me/webapp/images/logo_login.png" alt="clock-in.me"/>
         </td>
         <td align="right"
             style="width: 100%; padding-left: 10px;  padding-right: 10px; padding-top: 10px; padding-bottom: 10px;">
@@ -144,17 +144,59 @@
 
     <tr>
         <td colspan="3" align="center" valign="top" style="border-collapse: collapse; border-spacing: 0; margin: 0; padding: 0; padding-left: 6.25%; padding-right: 6.25%; width: 87.5%; font-size: 17px; font-weight: 400; line-height: 160%;
-			padding-top: 25px;
+			padding-top: 10px;
 			color: #000000;
 			font-family: sans-serif;" class="paragraph">
+            <p style="background:#C4171F;padding: 10px 10px;font-family:Arial,sans-serif;color:#fff;font-size: 25px;text-align: center;
+   			 margin: 10px;">Company Name</p>
 
-            <h1 style="font-size: 25px;">Hi <span
-                    style="color: #1376a7;"><strong><?php echo (isset($staffName)) ? $staffName : ' there!'; ?></strong></span>
-            </h1>
-            <p style="font-size: 20px">Your leave(s) has been <span
-                    style="color: #1376a7;"><strong><?php echo (isset($leaveActionMessage)) ? $leaveActionMessage : ''; ?></strong></span>
-                <br>
-                <?php echo (isset($shiftName)) ? 'Shift: ' . $shiftName : ''; ?></p>
+            
+
+<table>
+<tr>
+<td>
+
+            <span style="padding: 10px;color: #2E4483;margin-bottom:0;font-size: 15px;line-height: 35px;text-align: left;">
+                <img id="my_selfie" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRWBu_EL5Nc2-chNicRZYiBsUjChY910nIve8J-oxpU0Uj3ZIRRlQ" align="left" height="200px" width="240px" alt="my_selfie">
+            </span>
+</td>
+<td>
+            <span style="padding: 0px;color: #2E4483;margin-bottom:0;font-size: 15px;line-height: 35px;text-align: left;">
+             <h2 style="padding: 0px;color: #2E4483;margin-bottom:0;font-size: 21px;line-height: 25px;">John Doe</h2>
+            Science Department <br>
+            Morning Shift <br>
+            Action: Clockin <br>
+            Time: 2017-03-02 
+            </span>
+</td>
+</div>
+</tr>
+</table>
+
+<br>
+
+<table>
+<tr>
+<td>
+
+            <span style="padding: 10px;color: #2E4483;margin-bottom:0;font-size: 15px;line-height: 35px;text-align: left;">
+                <img id="my_selfie" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRWBu_EL5Nc2-chNicRZYiBsUjChY910nIve8J-oxpU0Uj3ZIRRlQ" align="left" height="200px" width="240px" alt="my_selfie">
+            </span>
+</td>
+<td>
+            <span style="padding: 0px;color: #2E4483;margin-bottom:0;font-size: 15px;line-height: 35px;text-align: left;">
+             <h2 style="padding: 0px;color: #2E4483;margin-bottom:0;font-size: 21px;line-height: 25px;">John Doe</h2>
+            Science Department <br>
+            Morning Shift <br>
+            Action: Clockin <br>
+            Time: 2017-03-02 
+            </span>
+</td>
+</div>
+</tr>
+</table>
+
+
         </td>
     </tr>
 

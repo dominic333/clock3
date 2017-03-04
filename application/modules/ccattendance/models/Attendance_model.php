@@ -341,6 +341,61 @@ class Attendance_model extends CI_Model {
 	   
 	}
 	
+	//function to modify clock time and add notes
+	//annie, Feb 28,2017
+	function getAttendanceID($date,$id,$clock)
+	{
+			$this->db->select('id');
+			$this->db->where('log_date',$date);
+			$this->db->where('clock_type',$clock);
+			$this->db->where('staff_id',$id);
+			$query	= 	$this->db->get('attendance_log');
+			return $query->row_array();
 	
+	}
+//function to update clock in or clock out time
+	//Annie, Feb 28, 2017
+	
+	function updateNote($data,$clock,$date,$id) 
+	{
+		//UPDATE attendance_log SET notes='some text here', notes_date='2014-12-12' WHERE staff_id=1 AND log_date='2014-12-12' AND clock_type='ab'
+		
+		$this->db->where('log_date',$date);
+		$this->db->where('clock_type',$clock);
+		$this->db->where('staff_id',$id);
+		$this->db->update('attendance_log',$data);
+		return $this->db->affected_rows();
+		
+	}
+	
+	//fucntion to get log time of a user
+	//annie, feb 28,2017
+	function getClockIn($clock,$id,$date)
+	{
+		
+		$this->db->select('base_log_time');
+		$this->db->where('log_date',$date);
+		$this->db->where('clock_type',$clock);
+		$this->db->where('staff_id',$id);
+		$query	=	$this->db->get('attendance_log');		
+
+		return $query->row();
+
+	
+	
+	}
+	
+	//Function to insert attandance log to attendance ammendments
+	//Annie, Feb 28, 2017
+	function insertLog($an_id,$id)
+	{
+		$add_att	=	array(
+								'an_id'	=>	$an_id,
+								'modified_by'	=>	$id
+						);
+		$this->db->insert('attendance_ammendments',$add_att);
+		return $this->db->insert_id();
+	
+	}
 }
 

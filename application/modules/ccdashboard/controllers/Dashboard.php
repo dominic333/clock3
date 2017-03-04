@@ -71,6 +71,7 @@ class Dashboard extends MX_Controller
 		$this->data['mynotifications']			=	$this->site_settings->fetchMyNotifications();	
 		$this->data['companyPlanDetails']		=	$this->site_settings->companyPlanDetails();
 		$this->data['total_Users']					=	$this->site_settings->getCompanySize();
+
 		/*
 		
 		

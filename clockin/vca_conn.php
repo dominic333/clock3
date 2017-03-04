@@ -8,9 +8,9 @@
 		//$dbname= 'clockin_maindb';
 		
 		
-		$dbuser= 'clockin_test';
-		$dbpass= 'oc1FRCHXUXaEo';
-		$dbname= 'clockin_testdb';
+		$dbuser= 'clock2';
+		$dbpass= 'd3fault';
+		$dbname= 'clock2';
 		
                 $vdbm = mysqli_connect($dbhost, $dbuser, $dbpass, $dbname);
                 if (mysqli_connect_errno())

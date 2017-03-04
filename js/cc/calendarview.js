@@ -1,4 +1,7 @@
     $(function () {
+$('#timepicker1').timepicker({
+	showMeridian:false,      showInputs: false,
+	});
 
         /* initialize the external events
          -----------------------------------------------------------------*/
@@ -37,7 +40,7 @@
         var date	=	dateofMonth;
         var events = [];
         var eventsCache = {};
-
+		  var clickedCalendarDate= '';
    	  var today = moment();
 		  var todayDate = today.format("YYYY-MM-DD");
 		  var tomorrow = today.add(1, 'days').format("YYYY-MM-DD");
@@ -374,6 +377,46 @@
                 today: 'today',
                 month: 'month'
             },
+            eventClick: function(calEvent, jsEvent, view)
+	        	{
+	        	  
+	        	  var needle   = calEvent.title;
+	        	  var user 		= $('#users').val();
+	        	  var clock		= 'Late by';
+				  var found	=  needle.indexOf(clock);
+				
+					
+				 /* $.each(clock, function(index, value){
+					    	   var found1 =  needle.indexOf(value);
+					        if (found1 !== -1){
+					            console.log('found in array '+index, value);
+					            found = 1;
+					            }
+					});              
+              
+              */
+              
+              
+				  var date		= calEvent.start;
+				  var  obtained	= date._d;
+
+			     var logdate	= obtained.toString();
+
+			     var dateofMonth	= convert(logdate);
+				$('#attendance_frm')[0].reset();
+
+				 if(found !== -1)
+				  {
+
+						$('#logdate').val(dateofMonth);
+				  		$('#userid').val(user);
+				  		$('#attendance_modal').modal('show');
+						
+				  }
+				  
+//				  fetchCalenderAttendance(dateofMonth,user);
+//found if
+				 },
             /*
              eventRender: function(event, element) {
              //$(element).tooltip({title: event.loc ,placement:'bottom' });

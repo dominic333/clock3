@@ -107,20 +107,34 @@ class Reports_model extends CI_Model {
 	
 	function getStaffShiftTypeviaDay($staff_id, $in_day)
 	{                
-		$starttime = $in_day."_starttime";
-		$endtime = $in_day."_endtime";
-
+		
       /*$data_q = "SELECT department_shifts.$in_day as shifttype, department_shifts.$starttime as basestart, department_shifts.$endtime as baseend,department_shifts.shift_id as shiftid  
 		FROM staff_dept_shift, department_shifts
 		WHERE staff_dept_shift.shift_id = department_shifts.shift_id AND staff_dept_shift.staff_id='$staff_id'";*/
+		$starttime = $in_day."_starttime";
+		$endtime = $in_day."_endtime";
 
-		$this->db->select('DS.'.$in_day.' as shifttype, DS.'.$starttime.' as basestart, DS.'.$endtime.' as baseend,DS.shift_id as shiftid',FALSE);
+		$this->db->select('DS.'.$in_day.' as shifttype, DS.'.$starttime.' as basestart, DS.'.$endtime.' as baseend,DS.shift_id as shiftid,AL.base_log_time,AL.log_date,AL.log_time',FALSE);
 		$this->db->from('staff_dept_shift as SDS');
 		$this->db->join('department_shifts as DS','DS.shift_id= SDS.shift_id');
+		$this->db->join('attendance_log as AL','AL.staff_id= SDS.staff_id');
 		$this->db->where('SDS.staff_id',$staff_id);
 		$result=$this->db->get();
 		//echo $this->db->last_query();
 		//return $result->result_array();
+		return $result->row_array();
+		
+		
+		
+		
+	}
+	function getClockTime($staff_id,$day,$clocktype)
+	{
+		
+		$this->db->where('staff_id',$staff_id);
+		$this->db->where('log_date',$day);
+		$this->db->where('clock_type',$clocktype);
+		$result	=	$this->db->get('attendance_log');
 		return $result->row_array();
 		
 	}
@@ -217,7 +231,8 @@ function getUserBreakOutTiming($userid, $indate)
 		//$result= $result->result_array();
 		$result= $result->result();
 		foreach($result as $rrows){
-			array_push($store_list, $rrows["log_time"]);
+			///array_push($store_list, $rrows["log_time"]);
+			array_push($store_list, $rrows->log_time);
 		}
 		return $store_list;
   }
@@ -239,7 +254,8 @@ function getUserBreakOutTiming($userid, $indate)
 		//$result= $result->result_array();
 		$result= $result->result();
 		foreach($result as $rrows){
-			array_push($store_list, $rrows["log_time"]);
+			//array_push($store_list, $rrows["log_time"]);
+			array_push($store_list, $rrows->log_time);
 		}
 		return $store_list;
   }

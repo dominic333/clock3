@@ -1499,7 +1499,9 @@ class Attendance extends MX_Controller
 		$this->data['users']	  = $this->Attendance_model->getCompanyUsers($compIdSess);
 		//$this->data['attendance_table']	= $this->attendanceCalendarData($fromDate,$toDate,$staff);
 		$this->data['view']					=	'ccattendance/staffattendancecalendar';
-		$this->data['footer_includes']			=	'<script src="'.base_url().'js/cc/calendarview.js" type="text/javascript"></script>';
+		$this->data['footer_includes']			=	'<script src="'.base_url().'js/cc/calendarview.js" type="text/javascript"></script>
+																 <script src="'.base_url().'js/cc/my-attendance.js" type="text/javascript"></script>';
+		
 		$this->load->view('master', $this->data);
 	}
 
@@ -1523,6 +1525,62 @@ class Attendance extends MX_Controller
 		//$attendance	= '';
 		$attendance	= $this->attendanceCalendarData($fromDate,$toDate,$staff);
 		echo json_encode($attendance);
+	}
+	
+	
+	//function to add notes and change clock time
+	//Annie , Feb 28, 2017
+	
+	function add_notes()
+	{
+		$clock 		= 	$this->input->post('clock');
+		$notes 		= 	$this->input->post('notes');
+		$id			=	$this->input->post('user');
+		$date			=	$this->input->post('date');
+		$time			=	$this->input->post('clocktime');
+		$mid			=	$this->session->userdata('mid');
+		$set			=	$this->input->post('set');
+		/*echo $notes;
+		echo $id;*/
+		$data['notes']			=	$notes;
+		
+		if( $set == "yes")
+		{
+			$data['log_time']		=	$time;
+			$data['base_log_time']		=	$time;
+		
+		}
+	/*	else
+		{
+		
+			$time		=	$this->Attendance_model->getClockIn($clock,$id,$date);
+			$data['log_time']		=$time;
+		}*/
+		
+		$result		=	$this->Attendance_model->updateNote($data,$clock,$date,$id);
+		if($result > 0)
+		{
+			$an_id	=	$this->Attendance_model->getAttendanceID($date,$id,$clock);
+			$attid	=	$an_id['id'];
+			$res 		=	$this->Attendance_model->insertLog($attid,$mid);
+			if($res)
+			{
+					$operation = 'Note is added to '.$id.' modified by '.$mid;
+					$this->site_settings->adminlog($operation);				
+					echo "true";
+			
+			}
+			else 
+			{
+					echo "false";
+			
+			}
+		
+		}
+	
+		//echo "Success";
+		//redirect(base_url().'ccattendance/attendance/staffattendance/'.$id);
+		
 	}
 	
 	//Function to view leave request (and approve or reject it)
@@ -1997,6 +2055,7 @@ class Attendance extends MX_Controller
 	function get_common()
 	{
 		$this->data['mynotifications']			=	$this->site_settings->fetchMyNotifications();
+//		$this->data['mypic']							=	$this->site_settings->fetchMyPic();
 		$this->data['footer_includes']			=	'<script src="'.base_url().'js/cc/my-attendance.js" type="text/javascript"></script>';
 		/*
 		$this->site_settings->get_site_settings();

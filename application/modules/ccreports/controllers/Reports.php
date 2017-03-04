@@ -346,7 +346,7 @@ class Reports extends MX_Controller
 	                   		
                            $staff_logout_time = "NA";
 									//$staff_work_day_infoz = $this->Reports_model->getStaffClockInfobyDate($sta[$j], $log_date, "ab");  
-									//$dispute_msg = $staff_work_day_infoz["notes"];	                         
+//									$dispute_msg = $staff_work_day_info["notes"];	                         
                            
                            $attendance_out_status = "<span class='label label-danger'>Absent</span>";
                            unset($in_mobile);
@@ -440,7 +440,7 @@ class Reports extends MX_Controller
 									$staff_logout_time = "NA";
 
 									//$staff_work_day_infoz = $this->Reports_model->getStaffClockInfobyDate($sta[$j], $log_date, "ab");  
-									//$dispute_msg = $staff_work_day_infoz["notes"];										
+//									$dispute_msg = $staff_work_day_info["notes"];										
 									
 									$attendance_out_status = "<span class='label label-danger'>Absent</span>";
 									unset($in_mobile);
@@ -532,6 +532,7 @@ class Reports extends MX_Controller
 		                                                    <td class=\"botline\">$a_in_file</td>
 		                                                    <td class=\"botline\">$a_out_file</td>
 																			 <td class=\"botline\">$dispute_msg</td>
+
 		                                                   </tr>";
 		           $r_cnt++;   
                  $dispute_msg="";    
@@ -556,6 +557,7 @@ class Reports extends MX_Controller
 	                                                 <td class=\"botline\"></td>
 	                                                 <td class=\"botline\"></td>
 																	 <td class=\"botline\"></td>
+																	 <td class=\"botline\"></td>
 	                                                </tr>";
 				}
 				$attendance_user	.= "</tbody>
@@ -570,8 +572,12 @@ class Reports extends MX_Controller
 	//Function to fetch basic user attendance tabular data
 	//Dominic; Jan 14,2017
 	//Feb 11, 2017: Added leave checking and info
+	//modified by Annie, March 3 2017
+	//Dominic. March 03, 2017- fixed Clockin status not showing
+	//Dominic: March 04, 2017: Fixed clock in/out status issues
 	function basicUserAttendanceTabulaData($f_from_date,$f_to_date,$users)
 	{
+
 		$attendance_user='';
 		$staff 		 = $this->session->userdata('mid');
 		$file_path 	 =  "../../selfies/aLog/";
@@ -596,13 +602,11 @@ class Reports extends MX_Controller
 					
 					
 					
-					for ($j=0;$j<count($sta);$j++)
-					{
+					for ($j=0;$j<count($sta);$j++){
 						// filter holder for future use
 						$dispute_msg	=	"";  
 						$in_invfilter = "non";
-						if ($in_invfilter == "non")
-						{
+						if ($in_invfilter == "non"){
 						  // Get Day - Monday, Tuesday etc.
                     $log_date = $q_date[$dcnt];
                     $timestamp = strtotime($log_date);
@@ -614,8 +618,7 @@ class Reports extends MX_Controller
  		              $base_end_time = $p_check_workday_type["baseend"];
  		              $in_shift 	= $p_check_workday_type["shiftid"];
  		              //echo '<br>--------------------check_workday_type : '.$check_workday_type.'--------------------<br>';
- 		              if ($check_workday_type == 0)
- 		              {
+ 		              if ($check_workday_type == 0){
  		              		// 0 = Non working day
 								//echo "In 0 <br>";
 								$ab_log_date = $q_date[$dcnt];
@@ -630,28 +633,30 @@ class Reports extends MX_Controller
 	                     $a_out_file = "NA";
 	                     $attendance_time = "NA";
 	                     $attendance_end_time = "NA";
-	                     //echo '<br>--------------------Non Test--------------------<br>';
+
 	                     $staff_logout_time = "NA";
 	                     $attendance_out_status = "<span class='label label-default'>Non Work Day</span>";
 	                     unset($in_mobile);
                         unset($out_mobile);
- 		              }
- 		              elseif ($check_workday_type == 1)
- 		              {
+	                     
+ 		              }elseif ($check_workday_type == 1){
  		              		// 1 = Grave Yard Work Day - Need Add 1 Day
  		              		$p_log_date = $log_date;
  		              		$out_log_date = date('Y-m-d', strtotime($p_log_date . ' + 1 day'));
  		              		$staff_work_day_info = $this->Reports_model->getStaffClockInfobyDate($sta[$j], $log_date, "in");
  		              		$staffname = $this->Reports_model->getStaffName($sta[$j]);
  		              		
+ 		              		
  		              		// Check in clock in.
- 		              		if (count($staff_work_day_info)==0||$staff_work_day_info["log_time"] == "")
- 		              		{
+ 		              		if (count($staff_work_day_info)==0||$staff_work_day_info["log_time"] == ""){
+ 		              			
  		              			$attendance_status = "<span class='label label-danger'>Absent</span>"; //compute difference
  		              			// Process for show in table
                            //$staffname = $adminfunc->getStaffName($srow["staff_id"]);
                            $staffname = $this->Reports_model->getStaffName($sta[$j]);
                            $log_time = "NA";
+                           $a_in_file = "NA";
+                           $a_out_file = "NA";
                            
                            $abs_checkintime_infoz = $this->Reports_model->getStaffClockInfobyDate($sta[$j], $log_date, "ab");
  		              			$abs_checkouttime_infoz = $this->Reports_model->getStaffClockInfobyDate($sta[$j], $log_date, "nc");
@@ -672,56 +677,81 @@ class Reports extends MX_Controller
  		              			{
  		              				$attendance_end_time = $base_end_time;
  		              			}
- 		              			
-                           $staff_logout_time = "NA";	                         
+	                   		
+                           $staff_logout_time = "NA";
+									//$staff_work_day_infoz = $this->Reports_model->getStaffClockInfobyDate($sta[$j], $log_date, "ab");  
+//									$dispute_msg = $staff_work_day_info["notes"];	                         
                            
-                           $attendance_out_status = "<span class='label label-danger'>Absent</span>.";
+                           $attendance_out_status = "<span class='label label-danger'>Absent</span>";
                            unset($in_mobile);
-                        	unset($out_mobile);	
- 		              		}
- 		              		else
- 		              		{
+                        	unset($out_mobile);
+                        	
+ 		              		}else{
  		              			// Get shift details
                            $p_shift_info = $this->Reports_model->getShiftDetails($in_shift, $check_day);
                            $shift_info   = $p_shift_info->row_array();
-
-      
+                           
+                           // Compute Clock in
+                           $d_attendance_in_time = strtotime($staff_work_day_info["base_log_time"]);
+                           $d_staff_time_in = strtotime($staff_work_day_info["log_time"]);
+                           $p_in_undertime = $d_staff_time_in - $d_attendance_in_time;
+                           $in_undertime = gmdate('H:i:s', $p_in_undertime);
+                           $in_file_name = $staff_work_day_info["attendance_file"];
+                           $a_in_file = "<a href=\"$file_path$in_file_name\" target=\"_blank\">$staffname</a>";
+                           if ($p_in_undertime > 0){
+                           	$attendance_status = "<span class='label label-warning'>Late by : ".$in_undertime."</span>";
+                           }else{
+                           	$attendance_status = "<span class='label label-success'>On Time</span>";
+                           }
                            $log_time = $staff_work_day_info["log_time"];
                            $attendance_time = $staff_work_day_info["base_log_time"];
                            $log_time = $staff_work_day_info["log_time"];
                            
+                           $in_mobile = $staff_work_day_info["mobile"];
                            // Compute Clock out
                            $staff_work_day_out_info = $this->Reports_model->getStaffClockInfobyDate($sta[$j], $out_log_date, "out");
                            //echo '<br>--------------------Clock out 1--------------------<br>';
 									//print_r($staff_work_day_out_info);
-                           if (count($staff_work_day_out_info)>0&&$staff_work_day_out_info["log_time"] != "")
-                           {
+                           if (count($staff_work_day_out_info)>0&&$staff_work_day_out_info["log_time"] != ""){
+                           	
+                           	$d_attendance_out_time = strtotime($staff_work_day_out_info["base_log_time"]);
                            	$staff_logout_time = $staff_work_day_out_info["log_time"];
+                           	$d_staff_time_out = strtotime($staff_work_day_out_info["log_time"]);
+                           	$p_out_undertime = $d_attendance_out_time - $d_staff_time_out;
+                           	$out_undertime = gmdate('H:i:s', $p_out_undertime);
+                           	if ($p_out_undertime > 0){
+                           		$attendance_out_status = "<span class='label label-primary'>Early check out by : ".$out_undertime."</span>";
+                           	}else{
+                           		$attendance_out_status = "<span class='label label-success'>Ok.</span>";
+                           	}
+                           	// Process for show in table
+                           	$file_name = $staff_work_day_out_info["attendance_file"];
+                           	$a_out_file = "<a href=\"$file_path$file_name \" target=\"_blank\">$staffname </a>";
                            	$attendance_end_time = $staff_work_day_out_info["base_log_time"];
-                           }
-                           else
-                           {
+                           	$out_mobile = $staff_work_day_out_info["mobile"];
+                           }else{
+                           	$a_out_file = "";
                            	$staff_logout_time ='';
                            	$attendance_end_time = $shift_info["pday_endtime"];
+                           	$attendance_out_status = "<span class='label label-warning'>Did Not Clock Out.</span>";
                            	unset($out_mobile);
                            }
  		              		}
- 		              }
- 		              elseif ($check_workday_type == 2)
- 		              {
+ 		              }elseif ($check_workday_type == 2){
  		              		// 2 = Non Grave Yard Work Day
  		              		$staff_work_day_info = $this->Reports_model->getStaffClockInfobyDate($sta[$j], $log_date, "in");
  		              		
  		              		// Check in clock in.
- 		              		if (count($staff_work_day_info)==0||$staff_work_day_info["log_time"] == "")
- 		              		{
+ 		              		if (count($staff_work_day_info)==0||$staff_work_day_info["log_time"] == ""){
  		              			$attendance_status = "<span class='label label-danger'>Absent</span>";
  		              			// Process for show in table
  		              			$staffname = $this->Reports_model->getStaffName($sta[$j]);
+ 		              			
                          	$log_time = "NA";
+                         	$a_in_file = "NA";
+                         	$a_out_file = "NA";
                          	
-                         	
-	                        $abs_checkintime_infoz = $this->Reports_model->getStaffClockInfobyDate($sta[$j], $log_date, "ab");
+                           $abs_checkintime_infoz = $this->Reports_model->getStaffClockInfobyDate($sta[$j], $log_date, "ab");
  		              			$abs_checkouttime_infoz = $this->Reports_model->getStaffClockInfobyDate($sta[$j], $log_date, "nc");
  		              			if (!empty($abs_checkintime_infoz["base_log_time"]))
  		              			{
@@ -740,38 +770,66 @@ class Reports extends MX_Controller
  		              			{
  		              				$attendance_end_time = $base_end_time;
  		              			}
- 		              			
- 		              			
-									$staff_logout_time = "NA";										
+	                   		
+									$staff_logout_time = "NA";
+
+									//$staff_work_day_infoz = $this->Reports_model->getStaffClockInfobyDate($sta[$j], $log_date, "ab");  
+//									$dispute_msg = $staff_work_day_info["notes"];										
 									
-									$attendance_out_status = "<span class='label label-danger'>Absent</span>.";
+									$attendance_out_status = "<span class='label label-danger'>Absent</span>";
 									unset($in_mobile);
 									unset($out_mobile);
- 		              		}
- 		              		else
- 		              		{
+ 		              		}else{
  		              			// Get shift details
  		              			$p_shift_info = $this->Reports_model->getShiftDetails($in_shift, $check_day);
  		              			$shift_info   = $p_shift_info->row_array();
  		              			$staffname = $this->Reports_model->getStaffName($sta[$j]);
  		              			
+ 		              			// ---------- Compute Clock in ------------
+ 		              			$d_attendance_in_time = strtotime($staff_work_day_info["base_log_time"]);
+ 		              			$d_staff_time_in = strtotime($staff_work_day_info["log_time"]);
+                           $p_in_undertime = $d_staff_time_in - $d_attendance_in_time;
+                           $in_undertime = gmdate('H:i:s', $p_in_undertime);
+                           $in_file_name = $staff_work_day_info["attendance_file"];
+                           $a_in_file = "<a href=\"$file_path$in_file_name\" target=\"_blank\">$staffname</a>";
+                           if ($p_in_undertime > 0){
+                           	$attendance_status = "<span class='label label-warning'>Late by : ".$in_undertime."</span>";
+                           }else{
+                           	$attendance_status = "<span class='label label-success'>On Time</span>";
+                           }
                            // Process for show in table
                            $staffname = $this->Reports_model->getStaffName($sta[$j]);
                            $log_time = $staff_work_day_info["log_time"];
                            $attendance_time = $shift_info["pday_starttime"]; // Compute
                            $attendance_time = $staff_work_day_info["base_log_time"];
+                           $in_mobile = $staff_work_day_info["mobile"];
                            
                            // --------- Compute Clock out ---------------
 									$staff_work_day_out_info = $this->Reports_model->getStaffClockInfobyDate($sta[$j], $log_date, "out");
-									if (count($staff_work_day_out_info)>0&&$staff_work_day_out_info["log_time"] != "")
-									{
+									//echo '<br>--------------------Clock out 2--------------------<br>';
+									//print_r($staff_work_day_out_info);
+									if (count($staff_work_day_out_info)>0&&$staff_work_day_out_info["log_time"] != ""){
+										$d_attendance_out_time = strtotime($staff_work_day_out_info["base_log_time"]);
 										$staff_logout_time = $staff_work_day_out_info["log_time"];
+										$d_staff_time_out = strtotime($staff_work_day_out_info["log_time"]);
+										$p_out_undertime = $d_attendance_out_time - $d_staff_time_out;
+										$out_undertime = gmdate('H:i:s', $p_out_undertime);
+										if ($p_out_undertime > 0){
+											$attendance_out_status = "<span class='label label-primary'>Early check out by : ".$out_undertime."</span>";
+										}else{
+											$attendance_out_status = "<span class='label label-success'>Ok</span>";
+										}
+										// Process for show in table
+										$out_file_name = $staff_work_day_out_info["attendance_file"];
+										$a_out_file = "<a href=\"$file_path$out_file_name \" target=\"_blank\">$staffname </a>";
 										$attendance_time = $staff_work_day_info["base_log_time"];
 										$attendance_end_time = $staff_work_day_out_info["base_log_time"]; 
-									}
-									else
-									{
+										$out_mobile = $staff_work_day_out_info["mobile"];
+										
+									}else{
 										// Process for show in table
+										$out_file_name = "NA";
+										$a_out_file = "";
 										$staff_logout_time ='';
                               $attendance_time = $base_start_time;
                               $attendance_end_time = $shift_info["pday_endtime"]; 		
@@ -780,29 +838,28 @@ class Reports extends MX_Controller
 									}
  		              		}
  		              }
+
+ 		              //check if user is on leave today
+				        $userAbsentOrNot = $this->site_settings->checkUserAbsentOrNot($sta[$j],$log_date);
+				        if($userAbsentOrNot==1) //on leave
+				        {
+				      	 $attendance_status = "<span class='label label-primary'>On Leave</span>";
+				      	 $attendance_out_status = "<span class='label label-primary'>On Leave</span>";
+				        }
 						}
 						
-						//check if user is on leave today
-				      $userAbsentOrNot = $this->site_settings->checkUserAbsentOrNot($sta[$j],$log_date);
-				      if($userAbsentOrNot==1) //on leave
-				      {
-				      	$attendance_status = "<span class='label label-primary'>On Leave</span>";
-				      	$attendance_out_status = "<span class='label label-primary'>On Leave</span>";
-
-				      }
-				      
 						$selfie_in_icon	=	(isset($in_mobile))?(($in_mobile==0)?'<i class="fa fa-desktop"></i>':'<i class="fa fa-mobile"></i>'):'';
 						$selfie_out_icon	=	(isset($out_mobile))?(($out_mobile==0)?'<i class="fa fa-desktop"></i>':'<i class="fa fa-mobile"></i>'):'';
 						
 						$attendance_user	.= "<tr>
-		                                                    <td class=\"botline\">$r_cnt</td>
-		                                                    <td class=\"botline\">$staffname</td>
-		                                                    <td class=\"botline\">$log_date</td>
-		                                                    <td class=\"botline\">$attendance_time</td>
-		                                                    <td class=\"botline\">$attendance_status</td>
-																			 <td class=\"botline\">$attendance_end_time</td>
-																			 <td class=\"botline\">$attendance_out_status</td>
-		                                                   </tr>";
+                               <td class=\"botline\">$r_cnt</td>
+                               <td class=\"botline\">$staffname</td>
+                               <td class=\"botline\">$log_date</td>
+                               <td class=\"botline\">$attendance_time</td>
+                               <td class=\"botline\">$attendance_status</td>
+										 <td class=\"botline\">$attendance_end_time</td>
+										 <td class=\"botline\">$attendance_out_status</td>
+                              </tr>";
 		           $r_cnt++;   
                  $dispute_msg="";    
                  unset($in_mobile);                                    
@@ -812,20 +869,20 @@ class Reports extends MX_Controller
 				}
 				if($r_cnt==1){
 					$attendance_user	.= "<tr>
-	                                                 <td class=\"botline\"></td>
-	                                                 <td class=\"botline\"></td>
-	                                                 <td class=\"botline\"></td>
-	                                                 <td class=\"botline\">Sorry No Data Found</td>
-																	 <td class=\"botline\"></td>
-																	 <td class=\"botline\"></td>
-																	 <td class=\"botline\"></td>
-	                                                </tr>";
+                                        <td class=\"botline\"></td>
+                                        <td class=\"botline\"></td>
+                                        <td class=\"botline\"></td>
+                                        <td class=\"botline\">Sorry No Data Found</td>
+													 <td class=\"botline\"></td>
+													 <td class=\"botline\"></td>
+													 <td class=\"botline\"></td>
+                                       </tr>";
 				}
 				$attendance_user	.= "</tbody>
 																</table>";
 
-			return $attendance_user;				
-		
+			return $attendance_user;	
+
 	}	
 	
 	
@@ -1154,6 +1211,7 @@ class Reports extends MX_Controller
 	//Function to fetch basic shift attendance tabular data
 	//Dominic; Jan 14,2017
 	//Feb 11, 2017: Added leave checking and info
+	//Dominic March 04, 2017: Fixed clock in/out status issues
 	function basicShiftAttendanceTabulaData($f_from_date,$f_to_date,$shifts)
 	{
 		$attendance_shift='';
@@ -1172,22 +1230,18 @@ class Reports extends MX_Controller
 		
 		$staff_attendance_result	=	$this->Reports_model->getAllStaffWorkList_dept($shifts);
 		$r_cnt 		 = 1;	
-		for($dcnt=0; $dcnt < count($q_date); $dcnt++)
-		{
+		for($dcnt=0; $dcnt < count($q_date); $dcnt++){
 			$sta = array();
-			foreach ($staff_attendance_result as $srow)
-			{
+			foreach ($staff_attendance_result as $srow){
 				array_push($sta, $srow["staff_id"]);
 			}
 
 			
-			for ($j=0;$j<count($sta);$j++)
-			{
+			for ($j=0;$j<count($sta);$j++){
 				// filter holder for future use
 				$dispute_msg	=	"";  
 				$in_invfilter = "non";
-				if ($in_invfilter == "non")
-				{
+				if ($in_invfilter == "non"){
 				  // Get Day - Monday, Tuesday etc.
               $log_date = $q_date[$dcnt];
               $timestamp = strtotime($log_date);
@@ -1199,26 +1253,30 @@ class Reports extends MX_Controller
  		              $base_end_time = $p_check_workday_type["baseend"];
  		              $in_shift 	= $p_check_workday_type["shiftid"];
  		              //echo '<br>--------------------check_workday_type : '.$check_workday_type.'--------------------<br>';
- 		              if ($check_workday_type == 0)
- 		              {
-								$ab_log_date = $q_date[$dcnt];
-								$log_date = $q_date[$dcnt];
-				
-								$staffname = $this->Reports_model->getStaffName($sta[$j]);
-								$shift_info = $this->Reports_model->getShiftDetails_v2($in_shift, $check_day);
-								
-								$attendance_status = "<span class='label label-default'>Non Work Day</span>";
-								$attendance_out_status = "<span class='label label-default'>Non Work Day</span>";
-		                  $log_time = "NA";
-		                  $attendance_time = 'NA';
-		                  $attendance_end_time = 'NA';
-		                  $staff_logout_time = "NA";
-		                  unset($in_mobile);
-		                  unset($out_mobile);
+ 		              if ($check_workday_type == 0){
+ 		              		// 0 = Non working day
+						//echo "In 0 <br>";
+						$ab_log_date = $q_date[$dcnt];
+						$log_date = $q_date[$dcnt];
+		
+						$staffname = $this->Reports_model->getStaffName($sta[$j]);
+						$shift_info = $this->Reports_model->getShiftDetails_v2($in_shift, $check_day);
+						
+						$attendance_status = "<span class='label label-default'>Non Work Day</span>";
+						$attendance_out_status = "<span class='label label-default'>Non Work Day</span>";
+		            $log_time = "NA";
+		            $attendance_time = 'NA';
+		            $attendance_end_time = 'NA';
+		            $staff_logout_time = "NA";
+		                  
+
+                  $a_in_file = "NA";
+                  $a_out_file = "NA";
                   
- 		              }
- 		              elseif ($check_workday_type == 1)
- 		              {
+                  unset($in_mobile);
+                  unset($out_mobile);
+                  
+ 		              }elseif ($check_workday_type == 1){
  		              		// 1 = Grave Yard Work Day - Need Add 1 Day
  		              		$p_log_date = $log_date;
  		              		$out_log_date = date('Y-m-d', strtotime($p_log_date . ' + 1 day'));
@@ -1226,79 +1284,16 @@ class Reports extends MX_Controller
  		              		$staffname = $this->Reports_model->getStaffName($sta[$j]);
  		              		
  		              		// Check in clock in.
- 		              		if (count($staff_work_day_info)==0||$staff_work_day_info["log_time"] == "")
- 		              		{
+ 		              		if (count($staff_work_day_info)==0||$staff_work_day_info["log_time"] == ""){
  		              			
  		              			$attendance_status = "<span class='label label-danger'>Absent</span>"; //compute difference
  		              			// Process for show in table
-		                     //$staffname = $adminfunc->getStaffName($srow["staff_id"]);
-		                     $staffname = $this->Reports_model->getStaffName($sta[$j]);
-		                     $log_time = "NA";
-		                     
-		                     $abs_checkintime_infoz = $this->Reports_model->getStaffClockInfobyDate($sta[$j], $log_date, "ab");
- 		              			$abs_checkouttime_infoz = $this->Reports_model->getStaffClockInfobyDate($sta[$j], $log_date, "nc");
- 		              			if (!empty($abs_checkintime_infoz["base_log_time"]))
- 		              			{
- 		              				$attendance_time = $abs_checkintime_infoz["base_log_time"];
- 		              			}
- 		              			else
- 		              			{
- 		              				$attendance_time = $base_start_time;
- 		              			}
- 		              			
- 		              			if (!empty($abs_checkouttime_infoz["base_log_time"]))
- 		              			{
- 		              				$attendance_end_time = $abs_checkouttime_infoz["base_log_time"];
- 		              			}
- 		              			else
- 		              			{
- 		              				$attendance_end_time = $base_end_time;
- 		              			}
- 		              			
-		                     unset($in_mobile);
-		                     unset($out_mobile);
- 		              		}
- 		              		else
- 		              		{
- 		              			// Get shift details
-		                     $p_shift_info = $this->Reports_model->getShiftDetails($in_shift, $check_day);
-		                     $shift_info   = $p_shift_info->row_array();
-		                     
-		                     $log_time = $staff_work_day_info["log_time"];
-		                     $attendance_time = $staff_work_day_info["base_log_time"];
-		                     $log_time = $staff_work_day_info["log_time"];
-
-		                     // Compute Clock out
-		                     $staff_work_day_out_info = $this->Reports_model->getStaffClockInfobyDate($sta[$j], $out_log_date, "out");
-		                     if (count($staff_work_day_out_info)>0&&$staff_work_day_out_info["log_time"] != "")
-		                     {
-		                     	$staff_logout_time = $staff_work_day_out_info["log_time"];
-		                     	$attendance_end_time = $staff_work_day_out_info["base_log_time"];
-
-		                     }
-		                     else
-		                     {
-		                     	$attendance_end_time = $shift_info["pday_endtime"];
-		                     	$attendance_out_status = "<span class='label label-warning'>Did Not Clock Out.</span>";
-		                     	unset($out_mobile);
-		                     }
- 		              		}
- 		              }
- 		              elseif ($check_workday_type == 2)
- 		              {
- 		              		// 2 = Non Grave Yard Work Day
- 		              		$staff_work_day_info = $this->Reports_model->getStaffClockInfobyDate($sta[$j], $log_date, "in");
- 		              		
- 		              		// Check in clock in.
- 		              		if (count($staff_work_day_info)==0||$staff_work_day_info["log_time"] == "")
- 		              		{
- 		              			$attendance_status = "<span class='label label-danger'>Absent</span>";
- 		              			// Process for show in table
- 		              			$staffname = $this->Reports_model->getStaffName($sta[$j]);
-		                   	$log_time = "NA";
-		                   	$a_in_file = "NA";
-		                   	$a_out_file = "NA";
-		                     
+                     //$staffname = $adminfunc->getStaffName($srow["staff_id"]);
+                     $staffname = $this->Reports_model->getStaffName($sta[$j]);
+                     $log_time = "NA";
+                     $a_in_file = "NA";
+                     $a_out_file = "NA";
+                     
                      		$abs_checkintime_infoz = $this->Reports_model->getStaffClockInfobyDate($sta[$j], $log_date, "ab");
  		              			$abs_checkouttime_infoz = $this->Reports_model->getStaffClockInfobyDate($sta[$j], $log_date, "nc");
  		              			if (!empty($abs_checkintime_infoz["base_log_time"]))
@@ -1317,41 +1312,159 @@ class Reports extends MX_Controller
  		              			else
  		              			{
  		              				$attendance_end_time = $base_end_time;
- 		              			}		                     
-		                     
-									$staff_logout_time = "NA";
-									$attendance_out_status = "<span class='label label-danger'>Absent</span>";
-									unset($in_mobile);
-									unset($out_mobile);
+ 		              			}
+ 		              			
+                     $staff_logout_time = "NA";
+                     $attendance_out_status = "<span class='label label-danger'>Absent</span>";
+                     unset($in_mobile);
+                     unset($out_mobile);
+ 		              		}else{
+ 		              			// Get shift details
+                     $p_shift_info = $this->Reports_model->getShiftDetails($in_shift, $check_day);
+                     $shift_info   = $p_shift_info->row_array();
+                     
+                     // Compute Clock in
+                     $d_attendance_in_time = strtotime($staff_work_day_info["base_log_time"]);
+                     $d_staff_time_in = strtotime($staff_work_day_info["log_time"]);
+                     $p_in_undertime = $d_staff_time_in - $d_attendance_in_time;
+                     $in_undertime = gmdate('H:i:s', $p_in_undertime);
+                     $in_file_name = $staff_work_day_info["attendance_file"];
+                     $a_in_file = "<a href=\"$file_path$in_file_name\" target=\"_blank\">$staffname</a>";
+                     if ($p_in_undertime > 0){
+                     	$attendance_status = "<span class='label label-warning'>Late by : ".$in_undertime."</span>";
+                     }else{
+                     	$attendance_status = "<span class='label label-success'>On Time</span>";
+                     }
+                     $log_time = $staff_work_day_info["log_time"];
+                     $attendance_time = $staff_work_day_info["base_log_time"];
+                     $log_time = $staff_work_day_info["log_time"];
+                     
+                     $in_mobile=$staff_work_day_info["mobile"];
+                     
+                     // Compute Clock out
+                     $staff_work_day_out_info = $this->Reports_model->getStaffClockInfobyDate($sta[$j], $out_log_date, "out");
+                     //echo '<br>--------------------Clock out 1--------------------<br>';
+							//print_r($staff_work_day_out_info);
+                     if (count($staff_work_day_out_info)>0&&$staff_work_day_out_info["log_time"] != ""){
+                     	
+                     	$d_attendance_out_time = strtotime($staff_work_day_out_info["base_log_time"]);
+                     	$staff_logout_time = $staff_work_day_out_info["log_time"];
+                     	$d_staff_time_out = strtotime($staff_work_day_out_info["log_time"]);
+                     	$p_out_undertime = $d_attendance_out_time - $d_staff_time_out;
+                     	$out_undertime = gmdate('H:i:s', $p_out_undertime);
+                     	if ($p_out_undertime > 0){
+                     		$attendance_out_status = "<span class='label label-primary'>Early check out by : ".$out_undertime."</span>";
+                     	}else{
+                     		$attendance_out_status = "<span class='label label-success'>Ok.</span>";
+                     	}
+                     	// Process for show in table
+                     	$file_name = $staff_work_day_out_info["attendance_file"];
+                     	$a_out_file = "<a href=\"$file_path$file_name \" target=\"_blank\">$staffname </a>";
+                     	$attendance_end_time = $staff_work_day_out_info["base_log_time"];
+                     	$out_mobile=$staff_work_day_out_info["mobile"];
+                     }else{
+                     	$a_out_file = "";
+                     	$staff_logout_time ='';
+                     	$attendance_end_time = $shift_info["pday_endtime"];
+                     	$attendance_out_status = "<span class='label label-warning'>Did Not Clock Out.</span>";
+                     	unset($out_mobile);
+                     }
  		              		}
- 		              		else
- 		              		{
+ 		              }elseif ($check_workday_type == 2){
+ 		              		// 2 = Non Grave Yard Work Day
+ 		              		$staff_work_day_info = $this->Reports_model->getStaffClockInfobyDate($sta[$j], $log_date, "in");
+ 		              		
+ 		              		// Check in clock in.
+ 		              		if (count($staff_work_day_info)==0||$staff_work_day_info["log_time"] == ""){
+ 		              			$attendance_status = "<span class='label label-danger'>Absent</span>";
+ 		              			// Process for show in table
+ 		              			$staffname = $this->Reports_model->getStaffName($sta[$j]);
+                   	$log_time = "NA";
+                   	$a_in_file = "NA";
+                   	$a_out_file = "NA";
+
+                     		$abs_checkintime_infoz = $this->Reports_model->getStaffClockInfobyDate($sta[$j], $log_date, "ab");
+ 		              			$abs_checkouttime_infoz = $this->Reports_model->getStaffClockInfobyDate($sta[$j], $log_date, "nc");
+ 		              			if (!empty($abs_checkintime_infoz["base_log_time"]))
+ 		              			{
+ 		              				$attendance_time = $abs_checkintime_infoz["base_log_time"];
+ 		              			}
+ 		              			else
+ 		              			{
+ 		              				$attendance_time = $base_start_time;
+ 		              			}
+ 		              			
+ 		              			if (!empty($abs_checkouttime_infoz["base_log_time"]))
+ 		              			{
+ 		              				$attendance_end_time = $abs_checkouttime_infoz["base_log_time"];
+ 		              			}
+ 		              			else
+ 		              			{
+ 		              				$attendance_end_time = $base_end_time;
+ 		              			}
+
+							$staff_logout_time = "NA";
+							$attendance_out_status = "<span class='label label-danger'>Absent</span>";
+							unset($in_mobile);
+							unset($out_mobile);
+ 		              		}else{
  		              			// Get shift details
  		              			$p_shift_info = $this->Reports_model->getShiftDetails($in_shift, $check_day);
  		              			$shift_info   = $p_shift_info->row_array();
  		              			$staffname = $this->Reports_model->getStaffName($sta[$j]);
  		              			
-		                     // Process for show in table
-		                     $staffname = $this->Reports_model->getStaffName($sta[$j]);
-		                     $log_time = $staff_work_day_info["log_time"];
-		                     $attendance_time = $staff_work_day_info["base_log_time"];
-
-		                     // --------- Compute Clock out ---------------
-									$staff_work_day_out_info = $this->Reports_model->getStaffClockInfobyDate($sta[$j], $log_date, "out");
-									if (count($staff_work_day_out_info)>0&&$staff_work_day_out_info["log_time"] != "")
-									{
-										$staff_logout_time = $staff_work_day_out_info["log_time"];
-										$attendance_time = $staff_work_day_info["base_log_time"];
-										$attendance_end_time = $staff_work_day_out_info["base_log_time"]; 
-									}
-									else
-									{
-										$staff_logout_time ='';
-		                        $attendance_time = $base_start_time;
-		                        $attendance_end_time = $shift_info["pday_endtime"]; 		
-										$attendance_out_status = "<span class='label label-warning'>Did Not Clock Out</span>";
-										unset($out_mobile);
-									}
+ 		              			// ---------- Compute Clock in ------------
+ 		              			$d_attendance_in_time = strtotime($staff_work_day_info["base_log_time"]);
+ 		              			$d_staff_time_in = strtotime($staff_work_day_info["log_time"]);
+                     $p_in_undertime = $d_staff_time_in - $d_attendance_in_time;
+                     $in_undertime = gmdate('H:i:s', $p_in_undertime);
+                     $in_file_name = $staff_work_day_info["attendance_file"];
+                     $a_in_file = "<a href=\"$file_path$in_file_name\" target=\"_blank\">$staffname</a>";
+                     if ($p_in_undertime > 0){
+                     	$attendance_status = "<span class='label label-warning'>Late by : ".$in_undertime."</span>";
+                     }else{
+                     	$attendance_status = "<span class='label label-success'>On Time</span>";
+                     }
+                     // Process for show in table
+                     $staffname = $this->Reports_model->getStaffName($sta[$j]);
+                     $log_time = $staff_work_day_info["log_time"];
+                     $attendance_time = $shift_info["pday_starttime"]; // Compute
+                     $attendance_time = $staff_work_day_info["base_log_time"];
+                     
+                     $in_mobile=$staff_work_day_info["mobile"];
+                     
+                     // --------- Compute Clock out ---------------
+							$staff_work_day_out_info = $this->Reports_model->getStaffClockInfobyDate($sta[$j], $log_date, "out");
+							//echo '<br>--------------------Clock out 2--------------------<br>';
+							//print_r($staff_work_day_out_info);
+							if (count($staff_work_day_out_info)>0&&$staff_work_day_out_info["log_time"] != ""){
+								$d_attendance_out_time = strtotime($staff_work_day_out_info["base_log_time"]);
+								$staff_logout_time = $staff_work_day_out_info["log_time"];
+								$d_staff_time_out = strtotime($staff_work_day_out_info["log_time"]);
+								$p_out_undertime = $d_attendance_out_time - $d_staff_time_out;
+								$out_undertime = gmdate('H:i:s', $p_out_undertime);
+								if ($p_out_undertime > 0){
+									$attendance_out_status = "<span class='label label-primary'>Early check out by : ".$out_undertime."</span>";
+								}else{
+									$attendance_out_status = "<span class='label label-success'>Ok</span>";
+								}
+								// Process for show in table
+								$out_file_name = $staff_work_day_out_info["attendance_file"];
+								$a_out_file = "<a href=\"$file_path$out_file_name \" target=\"_blank\">$staffname </a>";
+								$attendance_time = $staff_work_day_info["base_log_time"];
+								$attendance_end_time = $staff_work_day_out_info["base_log_time"]; 
+								$out_mobile=$staff_work_day_out_info["mobile"];
+								
+							}else{
+								// Process for show in table
+								$out_file_name = "NA";
+								$a_out_file = "";
+								$staff_logout_time ='';
+                        $attendance_time = $base_start_time;
+                        $attendance_end_time = $shift_info["pday_endtime"]; 		
+								$attendance_out_status = "<span class='label label-warning'>Did Not Clock Out.</span>";
+								unset($out_mobile);
+							}
  		              		}
  		              }
  		              
@@ -1365,15 +1478,18 @@ class Reports extends MX_Controller
 				      }
 				}
 				
+				$selfie_in_icon	=	(isset($in_mobile))?(($in_mobile==0)?'<i class="fa fa-desktop"></i>':'<i class="fa fa-mobile"></i>'):'';
+				$selfie_out_icon	=	(isset($out_mobile))?(($out_mobile==0)?'<i class="fa fa-desktop"></i>':'<i class="fa fa-mobile"></i>'):'';
+				
 				$attendance_shift	.= "<tr>
-                                        <td class=\"botline\">$r_cnt</td>
-                                        <td class=\"botline\">$staffname</td>
-                                        <td class=\"botline\">$log_date</td>
-                                        <td class=\"botline\">$attendance_time</td>
-                                        <td class=\"botline\">$attendance_status</td>
-													 <td class=\"botline\">$attendance_end_time</td>
-													 <td class=\"botline\">$attendance_out_status</td>
-                                       </tr>";
+                            <td class=\"botline\">$r_cnt</td>
+                            <td class=\"botline\">$staffname</td>
+                            <td class=\"botline\">$log_date</td>
+                            <td class=\"botline\">$attendance_time</td>
+                            <td class=\"botline\">$attendance_status</td>
+									 <td class=\"botline\">$attendance_end_time</td>
+									 <td class=\"botline\">$attendance_out_status</td>
+                           </tr>";
            $r_cnt++;   
            $dispute_msg="";     
            unset($in_mobile);                                    
@@ -1381,6 +1497,7 @@ class Reports extends MX_Controller
 			}
 			
 		}
+		
 		if($r_cnt==1)
 		{
 			$attendance_shift	.= "<tr>
@@ -1391,12 +1508,12 @@ class Reports extends MX_Controller
 											 <td class=\"botline\"></td>
 											 <td class=\"botline\"></td>
 											 <td class=\"botline\"></td>
-
                                  </tr>";
 		}
 		$attendance_shift	.= "</tbody>
 											</table>";
 		return $attendance_shift;
+
 	}
 	
 	//Function to download_user_attendance

@@ -10,6 +10,64 @@
          "autoWidth": false
      });
 
+$('#timepicker1').timepicker({showMeridian:false   ,   showInputs: false,});
+$('.time').hide();
+
+
+	$('#attendance_frm').validate({
+		 rules:
+            {
+                notes:
+                {
+                    required: true,
+
+                },
+					 clock:
+                {
+                    required: true
+                },
+            },
+            submitHandler: function (form) {
+            	
+            	 var post_url = base_url+"ccattendance/attendance/add_notes";
+            	 var clock 	= 		$('#clock').val();
+    				 var date = $('#logdate').val();
+    				 var notes = $('#notes').val();
+    				 var user = $('#userid').val();
+    				 var clocktime = $('#timepicker1').val();
+    				 var set = $('input[name=set_time]:checked', '#attendance_frm').val();
+
+//					 console.log(set);
+            	 $.ajax({
+            	 
+            	 	url: post_url,
+            	 	data : {
+            	 				clock 	:  clock , 
+            	 				date 		:  date,
+            	 				notes 	:  notes,
+            	 				clocktime:	clocktime,
+            	 				set		:  set,
+            	 				user		:  user,
+            	 				csrf_test_name : csrf_token
+            	 				},
+            	 	type: "POST",
+						dataType: 'HTML',
+            	 	success: function(result){
+								 $('#logdate').attr("value", "");  
+								 if (result == "true")
+								 {
+								 		$('#attendance_modal').modal('hide');
+								 	   fetchCalenderAttendance(date,user);
+								 }
+
+            	 	}
+            	 
+            	 
+            	 });
+            }	
+	
+	
+	});
      //The Calender
      //$("#calendar").datepicker();
      //$(element_or_selector).multiDatesPicker(options_to_initialize_datepicker_and_multidatepicker);
@@ -156,3 +214,33 @@
 	  
 	  
  });
+
+$("input[type='radio']").change(function () {
+		var selection=$(this).val();
+//		alert("Radio button selection changed. Selected: "+selection);
+		if(selection == "yes")
+			{
+				$('.time').show();
+			
+			}
+		else {
+			$('.time').hide();	
+		
+		}
+});
+
+/* $('.set_time').click(function(){
+
+	var set = $('.set_time').val();
+	if(set == "yes")
+	{
+		$('.time').show();
+	
+	}
+	else {
+		$('.time').hide();	
+	
+	}
+
+});
+*/

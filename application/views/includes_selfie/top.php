@@ -120,8 +120,12 @@
                         <?php
                            $i=0;
                            $labelArray= array('label-warning','label-info','label-danger','label-success');
+                           $now = time(); 
                        		foreach($listAnnouncements as $announcement)
                        		{
+                       			$your_date = strtotime($announcement->date);
+										$datediff = $now - $your_date;
+										$days = floor($datediff / (60 * 60 * 24));
                         ?>
                             <li class="item">
                                 <div class="product-img">
@@ -132,7 +136,11 @@
                                         data-title="<?php echo $announcement->title;?>" data-description="<?php echo $announcement->msg;?>" data-postedDate="<?php echo date('j F Y h:i a', strtotime($announcement->date)); ?>"
                                         data-toggle="modal" >
                                         <?php echo $announcement->title; ?>
+                                        <?php if($days <=3) { ?>
                                         <span class="label <?php echo $labelArray[$i]; ?> pull-right">new</span>
+                                        <?php } else { ?>
+                                        <span class="label <?php echo $labelArray[$i]; ?> pull-right"></span>
+                                        <?php } ?>
                                     </a>
 				                        <span class="product-description">
 				                          <?php echo date("j F Y h:i a", strtotime($announcement->date)); ?>
