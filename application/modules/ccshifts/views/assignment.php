@@ -205,7 +205,7 @@
                                 <div id="attendance_monitoring_staff" class="row">
 
                                     <div class="col-md-12">
-                                        <h3>Attendance Supervising Staff</h3>
+                                        <h3>Select Attendance Supervisor</h3>
                                     </div>
 
                                     <div class="col-md-4">

@@ -1446,7 +1446,7 @@ class Attendance extends MX_Controller
 				{
 					$attendance_table[$dcnt]["backgroundColor"]="#f56954"; //Info (red)
             	$attendance_table[$dcnt]["borderColor"]="#f56954"; 	//Info (red)
-            	$attendance_table[$dcnt]["title"]= "AWOL";
+            	$attendance_table[$dcnt]["title"]= "Absent";
 				}
 				else if($attendanceInToken== 6 && $attendanceOutToken== 7)
 				{
