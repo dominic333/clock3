@@ -397,5 +397,20 @@ class Attendance_model extends CI_Model {
 		return $this->db->insert_id();
 	
 	}
+	
+	//Function to get clock time of a user in staffattendance calender
+	//Annie, march 8 ,2017
+	function getClockTime($clock,$id,$date)
+	{
+	
+		$this->db->select('log_time');
+		$this->db->where('clock_type',$clock);
+		$this->db->where('staff_id',$id);
+		$this->db->where('log_date',$date);
+		$query 	=	$this->db->get('attendance_log');
+		return $query->row_array();
+	
+	
+	}
 }
 

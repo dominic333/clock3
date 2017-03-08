@@ -1158,7 +1158,9 @@ class Attendance extends MX_Controller
 					$ab_log_date = $q_date[$dcnt];
 					$log_date = $q_date[$dcnt];								
 					$staffname = $this->Attendance_model->getStaffName($staff);
-					$attendanceToken= 2;	
+					//$attendanceToken= 2;	
+					$attendanceInToken= 1;	
+					$attendanceOutToken= 1;	
 					$attendance_status = "Non Work Day";
 					$log_time = "Non";
                $a_in_file = "Non";
@@ -1192,13 +1194,17 @@ class Attendance extends MX_Controller
 						{ 
 							$attendance_status = "NA"; 
 							$attendance_out_status = "NA";
-							$attendanceToken= 1;
+							//$attendanceToken= 1;
+							$attendanceInToken= 0;	
+							$attendanceOutToken= 0;
 						}
 						else
 						{
 							$attendance_status = "Absent"; 
 							$attendance_out_status = "Absent";
-							$attendanceToken= 3;
+							//$attendanceToken= 3;
+							$attendanceInToken= 2;	
+							$attendanceOutToken= 2;
 						}
 
 
@@ -1232,12 +1238,14 @@ class Attendance extends MX_Controller
 						if ($p_in_undertime > 0)
 						{
 							$attendance_status = "Late by : ".$in_undertime;
-							$attendanceToken= 5;
+							//$attendanceToken= 5;
+							$attendanceInToken= 3;	
 						}
 						else
 						{
 							$attendance_status = "On Time";
-							$attendanceToken= 4;
+							//$attendanceToken= 4;
+							$attendanceInToken= 6;	
 						}
 						$log_time = $staff_work_day_info["log_time"];
 						$attendance_time = $staff_work_day_info["base_log_time"];
@@ -1256,12 +1264,14 @@ class Attendance extends MX_Controller
 							if ($p_out_undertime > 0)
 							{
 							 	$attendance_out_status = "Early check out by : ".$out_undertime;
-							 	$attendanceToken= 6;
+							 	//$attendanceToken= 6;	
+								$attendanceOutToken= 4;
 							}
 							else
 							{
 							 	$attendance_out_status = "Ok.";
-							 	$attendanceToken= 8;
+							 	//$attendanceToken= 8;	
+								$attendanceOutToken= 7;
 							}
 							 	
 							// Process for show in table
@@ -1278,7 +1288,8 @@ class Attendance extends MX_Controller
 							$staff_logout_time = "NA";
                      $attendance_end_time = $shift_info["pday_endtime"];
                      $attendance_out_status = "Did Not Clock Out.";
-                     $attendanceToken= 7;
+                     //$attendanceToken= 7;
+							$attendanceOutToken= 5;
 						}
 							 
 					}
@@ -1305,13 +1316,17 @@ class Attendance extends MX_Controller
 						{ 
 							$attendance_status = "NA"; 
 							$attendance_out_status = "NA";
-							$attendanceToken= 1;
+							//$attendanceToken= 1;
+							$attendanceInToken= 0;	
+							$attendanceOutToken= 0;
 						}
 						else
 						{
 							$attendance_status = "Absent"; 
 							$attendance_out_status = "Absent";
-							$attendanceToken= 3;
+							//$attendanceToken= 3;
+							$attendanceInToken= 2;	
+							$attendanceOutToken= 2;
 						}							
 						
 						//$attendance_status = "<span class='label label-danger'>Absent</span>";
@@ -1341,12 +1356,14 @@ class Attendance extends MX_Controller
 						if($p_in_undertime > 0)
 						{
 							$attendance_status = "Late by : ".$in_undertime;
-							$attendanceToken= 5;
+							//$attendanceToken= 5;
+							$attendanceInToken= 3;	
 						}
 						else
 						{
 							$attendance_status = "On Time";
-							$attendanceToken= 4;
+							//$attendanceToken= 4;
+							$attendanceInToken= 6;	
 						}
 							
 						// Process for show in table
@@ -1369,12 +1386,14 @@ class Attendance extends MX_Controller
 							if ($p_out_undertime > 0)
 							{
 								$attendance_out_status = "Early check out by : ".$out_undertime;
-								$attendanceToken= 6;
+								//$attendanceToken= 6;	
+								$attendanceOutToken= 4;
 							}
 							else
 							{
 								$attendance_out_status = "Ok.";
-								$attendanceToken= 8;
+								//$attendanceToken= 8;
+								$attendanceOutToken= 7;
 							}
 								
 							// Process for show in table
@@ -1394,72 +1413,153 @@ class Attendance extends MX_Controller
                      $attendance_time = $base_start_time;
                      $attendance_end_time = $shift_info["pday_endtime"]; 		
 							$attendance_out_status = "Did Not Clock Out.";
-							$attendanceToken= 7;
+							//$attendanceToken= 7;	
+							$attendanceOutToken= 5;
 						}
 					}
 						
-				}                
+				}   
+				
+				//na =0
+				//non =1
+				//abs =2
+				//latein=3
+				//earlyout=4
+				//didnot=5
+				//ontime=6
+				//ok=7
+				//leave=8
+				
+				if($attendanceInToken== 0 && $attendanceOutToken== 0)
+				{
+					$attendance_table[$dcnt]["backgroundColor"]="#ebebe0"; //Info (aqua)
+            	$attendance_table[$dcnt]["borderColor"]="#ebebe0"; 	 //Info (aqua)
+            	$attendance_table[$dcnt]["title"]= "NA";
+				}  
+				else if($attendanceInToken== 1 && $attendanceOutToken== 1)
+				{
+					$attendance_table[$dcnt]["backgroundColor"]="#00c0ef"; //Info (light blue)
+            	$attendance_table[$dcnt]["borderColor"]="#00c0ef"; 	//Info (light blue)
+            	$attendance_table[$dcnt]["title"]= "Non-working day";
+				}
+				else if($attendanceInToken== 2 && $attendanceOutToken== 2)  
+				{
+					$attendance_table[$dcnt]["backgroundColor"]="#f56954"; //Info (red)
+            	$attendance_table[$dcnt]["borderColor"]="#f56954"; 	//Info (red)
+            	$attendance_table[$dcnt]["title"]= "AWOL";
+				}
+				else if($attendanceInToken== 6 && $attendanceOutToken== 7)
+				{
+					$attendance_table[$dcnt]["backgroundColor"]="#00a65a"; //Info (green)
+            	$attendance_table[$dcnt]["borderColor"]="#00a65a"; 	//Info (green)
+            	$attendance_table[$dcnt]["title"]= "On Time";
+				}   
+				else if($attendanceInToken== 6 && $attendanceOutToken== 4)
+				{
+					$attendance_table[$dcnt]["backgroundColor"]="#FFBF00"; //Info (orange)
+            	$attendance_table[$dcnt]["borderColor"]="#FFBF00"; 	//Info (orange)
+            	$attendance_table[$dcnt]["title"]= $attendance_out_status;
+				}  
+				else if($attendanceInToken== 6 && $attendanceOutToken== 5) 
+				{
+					$attendance_table[$dcnt]["backgroundColor"]="#585858"; //Info (yellow)
+            	$attendance_table[$dcnt]["borderColor"]="#585858"; 	//Info (yellow)
+            	$attendance_table[$dcnt]["title"] = "Did Not Clock Out.";
+				}
+				else if($attendanceInToken== 3 && $attendanceOutToken== 7)   
+				{
+					$attendance_table[$dcnt]["backgroundColor"]="#FFBF00"; //Info (orange)
+            	$attendance_table[$dcnt]["borderColor"]="#FFBF00"; 	//Info (orange)
+            	$attendance_table[$dcnt]["title"]=$attendance_status;
+				}
+				else if($attendanceInToken== 3 && $attendanceOutToken== 4)
+				{
+					$attendance_table[$dcnt]["backgroundColor"]="#FFBF00"; //Info (orange)
+            	$attendance_table[$dcnt]["borderColor"]="#FFBF00"; 	//Info (orange)
+            	$attendance_table[$dcnt]["title"]= $attendance_out_status;
+				}
+				else if($attendanceInToken== 3 && $attendanceOutToken== 5)
+				{
+					$attendance_table[$dcnt]["backgroundColor"]="#585858"; //Info (yellow)
+            	$attendance_table[$dcnt]["borderColor"]="#585858"; 	//Info (yellow)
+            	$attendance_table[$dcnt]["title"] = "Did Not Clock Out.";
+				}
+				else
+				{
+					$attendance_table[$dcnt]["backgroundColor"]="#ebebe0"; //Info (aqua)
+            	$attendance_table[$dcnt]["borderColor"]="#ebebe0"; 	 //Info (aqua)
+            	$attendance_table[$dcnt]["title"]= "NA";
+				}
                 
 				// 1: NA  //aqua
 				// 2: Non working //aqua
 				// 3: absent //red
 				// 4: on time //green
-				// 5: Late by // light red
-				// 6: Early check out by //crimson red
+				// 5: Late by // orange
+				// 6: Early check out by //orange
 				// 7: Did Not Clock Out //yellow
 				// 8: Ok
-				
+				/*
 				if($attendanceToken==1)
 				{
 					$attendance_table[$dcnt]["backgroundColor"]="#ebebe0"; //Info (aqua)
             	$attendance_table[$dcnt]["borderColor"]="#ebebe0"; 	 //Info (aqua)
+            	$attendance_table[$dcnt]["title"]= "NA";
 				}
 				else if($attendanceToken==2)
 				{
-					$attendance_table[$dcnt]["backgroundColor"]="#00c0ef"; //Info (aqua)
-            	$attendance_table[$dcnt]["borderColor"]="#00c0ef"; 	//Info (aqua)
+					$attendance_table[$dcnt]["backgroundColor"]="#00c0ef"; //Info (light blue)
+            	$attendance_table[$dcnt]["borderColor"]="#00c0ef"; 	//Info (light blue)
+            	$attendance_table[$dcnt]["title"]= "Non-working day";
 				}
 				else if($attendanceToken==3)
 				{
 					$attendance_table[$dcnt]["backgroundColor"]="#f56954"; //Info (red)
             	$attendance_table[$dcnt]["borderColor"]="#f56954"; 	//Info (red)
+            	$attendance_table[$dcnt]["title"]= "AWOL";
 				}
 				else if($attendanceToken==4)
 				{
 					$attendance_table[$dcnt]["backgroundColor"]="#00a65a"; //Info (green)
             	$attendance_table[$dcnt]["borderColor"]="#00a65a"; 	//Info (green)
+            	$attendance_table[$dcnt]["title"]= "On Time";
 				}
 				else if($attendanceToken==5)
 				{
-					$attendance_table[$dcnt]["backgroundColor"]="#ff4d4d"; //Info (light )
-            	$attendance_table[$dcnt]["borderColor"]="#ff4d4d"; 	//Info (green)
+					$attendance_table[$dcnt]["backgroundColor"]="#FFBF00"; //Info (orange)
+            	$attendance_table[$dcnt]["borderColor"]="#FFBF00"; 	//Info (orange)
+            	$attendance_table[$dcnt]["title"]=$attendance_status;
 				}
 				else if($attendanceToken==6)
 				{
-					$attendance_table[$dcnt]["backgroundColor"]="#cc0000"; //Info (green)
-            	$attendance_table[$dcnt]["borderColor"]="#cc0000"; 	//Info (green)
+					$attendance_table[$dcnt]["backgroundColor"]="#FFBF00"; //Info (orange)
+            	$attendance_table[$dcnt]["borderColor"]="#FFBF00"; 	//Info (orange)
+            	$attendance_table[$dcnt]["title"]= $attendance_out_status;
 				}
 				else if($attendanceToken==7)
 				{
-					$attendance_table[$dcnt]["backgroundColor"]="#ffcc00"; //Info (green)
-            	$attendance_table[$dcnt]["borderColor"]="#ffcc00"; 	//Info (green)
+					$attendance_table[$dcnt]["backgroundColor"]="#FFFF00"; //Info (yellow)
+            	$attendance_table[$dcnt]["borderColor"]="#FFFF00"; 	//Info (yellow)
+            	$attendance_table[$dcnt]["title"] = "Did Not Clock Out.";
 				}
 				else if($attendanceToken==8)
 				{
 					$attendance_table[$dcnt]["backgroundColor"]="#00a65a"; //Info (green)
             	$attendance_table[$dcnt]["borderColor"]="#00a65a"; 	//Info (green)
+            	$attendance_table[$dcnt]["title"]=$attendance_status;
 				}
 				else
 				{
 					$attendance_table[$dcnt]["backgroundColor"]="#ebebe0";
             	$attendance_table[$dcnt]["borderColor"]="#ebebe0";
-				}
+            	$attendance_table[$dcnt]["title"]=$attendance_status;
+				} */
 				
             $startFormat = date_create($log_date);
 				$formatDate= date_format ($startFormat, 'Y-m-d');
             $attendance_table[$dcnt]["start"]=$log_date;
             $attendance_table[$dcnt]["end"]=$log_date;
-            $attendance_table[$dcnt]["title"]=$attendance_status;
+            //$attendance_table[$dcnt]["title"]=$attendance_status;
             $attendance_table[$dcnt]["outtime"]=$staff_logout_time;
             $attendance_table[$dcnt]["intime"]=$log_time;
             $attendance_table[$dcnt]["clock"]='attendance';
@@ -2049,6 +2149,21 @@ class Attendance extends MX_Controller
 	{
 		$response = $this->company_users_attendance_details();
 		return $response;
+	}
+	
+	
+	//Function to get actual clock time
+	//Annie, march 8,2017
+	function getClockTime()
+	{
+		
+		$clock 		= 	$this->input->post('clock');
+		$id			=	$this->input->post('user');
+		$date			=	$this->input->post('date');
+		$result		=	$this->Attendance_model->getClockTime($clock,$id,$date);
+		return $result;
+	
+			
 	}
 
 

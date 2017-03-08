@@ -53,12 +53,12 @@ $(function () {
                 dateArray.push(selDate);
                 //console.log(dateArray);
             }
-            var $target = obj.calendar.parent().next().show().html('<center><br>You selected<br><h3> ' +
-                (date[0] === null ? 'null' : date[0].format('YYYY-MM-DD</h3></center>')) +
+            var $target = obj.calendar.parent().next().show().html('<center><br>Dates selected for leave application<br><h3> ' +
+                /*(date[0] === null ? 'null' : date[0].format('YYYY-MM-DD')) +
                 '.' +
                 '<br /><br />' +
-                'Active dates<br /><br />' +
-                '<div class="active-dates"></div><br />');
+                'Active dates<br /><br />' +*/
+                '<div class="active-dates"></div></h3></center><br />');
 
             for (var idx in obj.storage.activeDates) {
 

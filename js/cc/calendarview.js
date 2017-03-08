@@ -379,11 +379,13 @@ $('#timepicker1').timepicker({
             },
             eventClick: function(calEvent, jsEvent, view)
 	        	{
-	        	  
-	        	  var needle   = calEvent.title;
-	        	  var user 		= $('#users').val();
-	        	  var clock		= 'Late by';
-				  var found	=  needle.indexOf(clock);
+//	        	  console.log(calEvent);
+	        	  var needle   = 	calEvent.title;
+	        	  var user 		= 	$('#users').val();
+	        	  var clock		= 	'Late by';
+				  var found		=  needle.indexOf(clock);
+				  var intime	= 	calEvent.intime;
+				  var outtime	=	calEvent.outtime;
 				
 					
 				 /* $.each(clock, function(index, value){
@@ -401,6 +403,8 @@ $('#timepicker1').timepicker({
 				  var  obtained	= date._d;
 
 			     var logdate	= obtained.toString();
+			     
+			     
 
 			     var dateofMonth	= convert(logdate);
 				$('#attendance_frm')[0].reset();
@@ -409,6 +413,8 @@ $('#timepicker1').timepicker({
 				  {
 
 						$('#logdate').val(dateofMonth);
+						$('#intime').val(intime);
+						$('#outtime').val(outtime);
 				  		$('#userid').val(user);
 				  		$('#attendance_modal').modal('show');
 						
@@ -533,7 +539,7 @@ $('#timepicker1').timepicker({
                                 end:res.end,
                                 intime:res.intime,
                                 outtime:res.outtime,
-                                allDay: false,
+                                allDay: true,
                                 //url: base_url+'admin/meetings/view/'+meeting.id,
                                 color: res.borderColor
                             });
@@ -877,7 +883,7 @@ $('#timepicker1').timepicker({
                     end:res.end,
                     intime:res.intime,
                     outtime:res.outtime,
-                    allDay: false,
+                    allDay: true,
                     //url: base_url+'admin/meetings/view/'+meeting.id,
                     color: res.borderColor
                 });

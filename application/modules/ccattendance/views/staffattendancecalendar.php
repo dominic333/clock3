@@ -186,7 +186,7 @@
                         <div class="col-sm-3">
                             <div class="input-group bootstrap-timepicker timepicker">
                                 <input id="timepicker1" name="clocktime" type="text" class="form-control input-small"
-                                       placeholder="Clock Time">
+                                       placeholder="Clock Time" style="width: auto;">
                                 <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
                             </div>
                         </div>
@@ -199,6 +199,8 @@
             </div><!-- /.modal-content -->
             <input id="logdate" name="logdate" type="hidden" class="form-control"/>
             <input type="hidden" name="userid" id="userid" value=""/>
+            <input type="hidden" name="intime" id="intime" value=""/>
+            <input type="hidden" name="outtime" id="outtime" value=""/>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger pull-left show_active" style="margin-right:5px;"
                         data-dismiss="modal">Close

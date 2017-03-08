@@ -26,6 +26,35 @@ $('.time').hide();
                 {
                     required: true
                 },
+               /* remote:
+                {
+                					
+                	               		
+                		url 	: base_url+"ccattendance/attendance/getClockTime",
+                		type	:	"GET",
+                		data	: {
+                		
+                					 clock  :	$('#clock').val(),
+                					 date   : 	$('#logdate').val(),
+                					 user   : 	$('#userid').val(),  		
+                		},
+                		dataType : 'json',
+                		success:{
+                					
+                					function (resp) 
+                					{
+                						if(resp){
+ 						                	console.log(resp);
+                						}
+                						
+
+                					}
+                		
+                		
+                		}                	
+                         
+                
+                }*/
             },
             submitHandler: function (form) {
             	
@@ -214,6 +243,25 @@ $('.time').hide();
 	  
 	  
  });
+ 
+$('#attendance_frm #clock').change(function(){
+
+	var select =	$(this).val();
+//	console.log(select);
+	var intime =	$('#intime').val();
+	var outtime =  $('#outtime').val();
+	/*	console.log(intime);
+	console.log(outtime);*/
+	if(select == 'in'){
+		$('#timepicker1').val(intime);	
+	
+	}
+	else if(select == 'nc'){
+		$('#timepicker1').val(outtime);		
+	
+	}
+
+}); 
 
 $("input[type='radio']").change(function () {
 		var selection=$(this).val();

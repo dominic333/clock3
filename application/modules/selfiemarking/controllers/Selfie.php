@@ -190,7 +190,11 @@ class Selfie extends MX_Controller
 			$operation = 'Staff with id:'.$staffid.'. Has '.$clock_type .'.';
 	      $this->site_settings->adminlog($operation);
 			//echo $img;
-			$sName=$this->session->userdata('staffname');
+			
+			
+			//******commented by annie, march 8,2017 , to disable notification for clockin and clockout********
+			
+		/*	$sName=$this->session->userdata('staffname');
 			if ($clock_type == "brkOut")
 			{
 				$notifyMsg=' : Took a break';
@@ -210,7 +214,10 @@ class Selfie extends MX_Controller
 			
 			$nType = 1; //clockin updates
 			$nMsg  = $sName.$notifyMsg;
-			$this->site_settings->addNotification($nType,$nMsg,'');
+			$this->site_settings->addNotification($nType,$nMsg,'');*/
+			//-------******comment ends here*******----//
+			
+						
 			
 			//send clockin email if company has paid plan	
 			/*		
