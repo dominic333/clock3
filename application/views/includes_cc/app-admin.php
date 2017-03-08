@@ -183,7 +183,7 @@
                                             					?>
                                             	 ">
 
-                                            </i><span style="float: right; margin-top: -17px;" class="fa fa-eye"></span>
+                                            </i><span style="float: right; margin-top: -17px; color: #0d6aad;" class="fa fa-eye"></span>
                                             <?php echo $row->nMsg; ?>
                                         </a>
                                     </li>
