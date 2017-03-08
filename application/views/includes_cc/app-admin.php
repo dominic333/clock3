@@ -174,7 +174,7 @@
 				                        ?>
                                     <li id="<?php echo 'row'.$row->id; ?>" class="activeNotifications">
                                         <a href="<?php echo $url; ?>" data-notification="<?php echo $row->id; ?>" class="" >
-                                            <i class="fa <?php if($row->nType==1){ echo $labelArray[0]; } 
+                                            <i class="fa <?php if($row->nType==1){ echo $labelArray[0]; }
                                             							else if($row->nType==2){ echo $labelArray[1]; } 
                                             							else if($row->nType==3){ echo $labelArray[2]; } 
                                             							else if($row->nType==4){ echo $labelArray[3]; } 
@@ -182,8 +182,8 @@
                                             							else if($row->nType==6){ echo $labelArray[6]; }
                                             					?>
                                             	 ">
-                                            
-                                            </i> 
+
+                                            </i><span style="float: right; margin-top: -17px;" class="fa fa-eye"></span>
                                             <?php echo $row->nMsg; ?>
                                         </a>
                                     </li>
@@ -202,12 +202,11 @@
                             
                             	  if($mypic != "")
                             	  {
-                            	  	   /*
 						                  $url=getimagesize($mypic);
 												if(!is_array($url))
 												{
 													$mypic='admin-user.png';
-												}*/
+												}
                             	  	
                             ?>
                                 <img src="<?php echo base_url();?>images/avatars/<?php echo $mypic;?>" class="user-image" alt="User Image">
@@ -228,12 +227,12 @@
                                 <?php $mypic	= $this->site_settings->fetchMyPic(); 
                                  if($mypic != "")
                                  {
-                                 	/*
+                                 	
                                     $url=getimagesize($mypic);
 												if(!is_array($url))
 												{
 													$mypic='admin-user.png';
-												}*/
+												}
 												
 												
 												//$mypic='avatar.png';
