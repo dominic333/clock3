@@ -1,9 +1,3 @@
-<style>
-    .border-btn{
-        border: 2px solid #337ab7;
-    }
-</style>
-
 <div class="contentfirst">
 
     <!-- Content Header (Page header) -->
