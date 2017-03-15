@@ -1533,8 +1533,10 @@ class Reports extends MX_Controller
    
    //Function to download_user_attendance
    //@Author Farveen	
+   //Modified by Dominic, March 11,2017: Added sort by feature
    function download_user_attendance(){
    	$users		 = $this->input->post('umultiSelect');
+   	$sortBy		 = $this->input->post('sortBy');
 		$in_fromdate = $this->input->post('udate_from');
 		$in_todate 	 = $this->input->post('udate_to');
 		$in_users 	 = $users;
@@ -1819,14 +1821,92 @@ class Reports extends MX_Controller
 		
 		fputs($fp,$list);
 		fclose($fp);
+		
+		if($sortBy==2)
+		{
+			$lines = array();
+			$lines = file($attendance_report_url.$csv_filename, FILE_SKIP_EMPTY_LINES | FILE_IGNORE_NEW_LINES);
+	
+	      //print_r($lines);
+	      foreach ($lines as $newline)
+			{
+			    $csv2array[] = explode(',', $newline);
+			}
+	      
+			$heading = array("No","Name","Day","Date","Schedule Time in","Actual Clock in Time","Clock in Status,D/M",
+									"Clock in Explaination Notes","Schedule Clock Out Time","Actual Clock Out Time","Clock Out Status","D/M","Clock Out Explaination Notes",
+									"Total Break","Total Break Hours","Total Working Hours","Working Hours Less Break");
+			$userInfoArray = $this->removeElementWithValue($csv2array, 1, "Name");
+			
+			foreach ($userInfoArray as $key => $row) 
+			{
+			    $newArray[$key]  = $row[1];
+			}
+			array_multisort($newArray, SORT_ASC, $userInfoArray);
+			array_unshift($userInfoArray , $heading);
+			
+			foreach($userInfoArray as $k1 => $inner) 
+			{
+			    unset($userInfoArray[$k1][0]);
+			}
+			
+			$csv_data = $this->array_2_csv($userInfoArray);
+			
+			$f = fopen($filename, "r+");
+			if ($f !== false) 
+			{
+			    ftruncate($f, 0);
+			    fputs($f,$csv_data);
+			    fclose($f);
+			}			
+		}
+		
 		$url = $attendance_report_url.$csv_filename;
 		echo $url;
+		
    }
+   
+
+  
+//Function to remove a row having an element from a multi-dimensional array
+//Dominic, March 11,2017   
+function removeElementWithValue($array, $key, $value)
+{
+  foreach($array as $subKey => $subArray)
+  {
+       if($subArray[$key] == $value)
+       {
+            unset($array[$subKey]);
+       }
+  }
+  return $array;
+}   
+
+//Function to convert an array into csv data
+//Dominic, March 11,2017 
+function array_2_csv($array) 
+{
+     $csv = '';
+     foreach ($array as $item) 
+     {
+         if (is_array($item)) 
+         {
+             $csv .= implode(',',$item);
+             $csv .="\r\n";
+         }else{
+           $csv .= $item;
+           $csv .="\r\n";
+         } 
+
+     }
+     return $csv;
+}
 
 	//Function to download basic attendance report
 	//Dominic; Jan 14,2016
 	function basic_download_user_attendance(){
    	$users		 = $this->input->post('umultiSelect');
+   	$sortBy		 = $this->input->post('sortBy');
 		$in_fromdate = $this->input->post('udate_from');
 		$in_todate 	 = $this->input->post('udate_to');
 		$in_users 	 = $users;
@@ -2113,6 +2193,44 @@ class Reports extends MX_Controller
 		
 		fputs($fp,$list);
 		fclose($fp);
+		
+		if($sortBy==2)
+		{
+			$lines = array();
+			$lines = file($attendance_report_url.$csv_filename, FILE_SKIP_EMPTY_LINES | FILE_IGNORE_NEW_LINES);
+	
+	      //print_r($lines);
+	      foreach ($lines as $newline)
+			{
+			    $csv2array[] = explode(',', $newline);
+			}
+
+			$heading = array("No","Name","Day","Date","Schedule Time in","Clock in Status","Schedule Clock Out Time","Clock Out Status");
+			$userInfoArray = $this->removeElementWithValue($csv2array, 1, "Name");
+			
+			foreach ($userInfoArray as $key => $row) 
+			{
+			    $newArray[$key]  = $row[1];
+			}
+			array_multisort($newArray, SORT_ASC, $userInfoArray);
+			array_unshift($userInfoArray , $heading);
+			
+			foreach($userInfoArray as $k1 => $inner) 
+			{
+			    unset($userInfoArray[$k1][0]);
+			}
+			
+			$csv_data = $this->array_2_csv($userInfoArray);
+			
+			$f = fopen($filename, "r+");
+			if ($f !== false) 
+			{
+			    ftruncate($f, 0);
+			    fputs($f,$csv_data);
+			    fclose($f);
+			}			
+		}	
+			
 		$url = $attendance_report_url.$csv_filename;
 		echo $url;		
 	}

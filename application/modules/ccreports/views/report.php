@@ -82,6 +82,8 @@
                                                             <?php } ?>
                                                         </select>
                                                     </div>
+                                                    
+                                                    
                                                     <input type="hidden"
                                                            name="<?= $this->security->get_csrf_token_name() ?>"
                                                            value="<?= $this->security->get_csrf_hash() ?>"/>
@@ -125,7 +127,7 @@
                                               action="<?php echo base_url(); ?>ccreports/reports/" method="post">
                                             <div class="row">
                                                 <div class="form-group">
-                                                    <div class="col-md-3">
+                                                    <div class="col-md-2">
 
                                                         <div class="input-group date" data-provide="datepicker"
                                                              id='dpfromuser'>
@@ -139,7 +141,7 @@
                                                         </div>
                                                     </div>
 
-                                                    <div class="col-md-3">
+                                                    <div class="col-md-2">
                                                         <div class="input-group date" data-provide="datepicker"
                                                              id='dptouser'>
                                                             <input type="text" class="form-control" placeholder="To"
@@ -167,10 +169,18 @@
                                                             <?php } ?>
                                                         </select>
                                                     </div>
+                                                    
+                                                    <div class="col-md-3" id="dev_hide">
+                                                        <select class="form-control select2" style="width: 100%;"
+                                                                id="sortBy" name="sortBy">
+                                                            <option value="1" selected="selected">Sort by Date</option>
+                                                            <option value="2">Sort by Name</option>
+                                                        </select>
+                                                    </div>
                                                     <input type="hidden"
                                                            name="<?= $this->security->get_csrf_token_name() ?>"
                                                            value="<?= $this->security->get_csrf_hash() ?>"/>
-                                                    <div class="col-md-3">
+                                                    <div class="col-md-2">
                                                         <button type="submit" name="Submit" id="SubmitUserAttendance"
                                                                 class="btn btn-success"><span
                                                                 class="fa fa-search"

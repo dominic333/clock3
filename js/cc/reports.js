@@ -1,7 +1,10 @@
 $(document).ready(function(){
 	
-	
-     $("#attendance_shift_table").DataTable();
+		
+			
+				$('#dev_hide').hide();
+			
+		     $("#attendance_shift_table").DataTable();
      $("#attendance_user_table").DataTable();
      $('#example3').DataTable({
          "paging": true,
@@ -13,7 +16,7 @@ $(document).ready(function(){
      });
         
         
-	   $(".select2").select2();
+	 //  $(".select2").select2();
 	     
 	   //@Farveen
 		//Add Custom Rule For Choosen Plugin
@@ -168,6 +171,24 @@ $(document).ready(function(){
 				    }
 				 });
 			}	
+		});
+		
+		$('#umultiSelect').change(function () {
+			
+			var staff	=	$('#umultiSelect').val();
+			//alert(staff);
+			if(staff == "all")
+			{
+			
+				$('#dev_hide').hide();
+			
+			
+			}
+			else{
+			
+				$('#dev_hide').show();
+			}
+			
 		});
 		
 		

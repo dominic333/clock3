@@ -125,7 +125,7 @@
             <!-- mini logo for sidebar mini 50x50 pixels -->
             <img src="<?php echo base_url();?>assets/cc/images/ck.png" width="50" class="logo-mini">
             <!-- logo for regular state and mobile devices -->
-            <img src="<?php echo base_url();?>assets/cc/images/Clock-In-Logo-01.png" width="100">
+            <img src="<?php echo base_url();?>assets/cc/images/Clock-In-Logo-01.png" width="135">
 
         </a>
         <!-- Header Navbar: style can be found in header.less -->
@@ -183,7 +183,7 @@
                                             					?>
                                             	 ">
 
-                                            </i><span style="float: right; margin-top: -17px; color: #0d6aad;" class="fa fa-eye"></span>
+                                            </i><span style="float: right; margin-top: -17px;" class="fa fa-eye"></span>
                                             <?php echo $row->nMsg; ?>
                                         </a>
                                     </li>
@@ -199,24 +199,24 @@
                     <li class="dropdown user user-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <?php $mypic	= $this->site_settings->fetchMyPic();
-
+                            
                             	  if($mypic != "")
                             	  {
-						                  $url=getimagesize($mypic);
+						                 /* $url=getimagesize($mypic);
 												if(!is_array($url))
 												{
 													$mypic='admin-user.png';
-												}
-
+												}*/
+                            	  	
                             ?>
                                 <img src="<?php echo base_url();?>images/avatars/<?php echo $mypic;?>" class="user-image" alt="User Image">
-											<?php
-
-											}
+											<?php 
+											
+											} 
 											else
 											{
 											?>
-                                <img src="<?php echo base_url();?>assets/snap/images/admin-user.png" class="user-image" alt="User Image">
+                                <img src="<?php echo base_url();?>assets/snap/images/admin-user.png" class="user-image" alt="User Image">											
 										<?php	} ?>
                             <span class="hidden-xs"><?php echo $this->session->userdata('staffname'); ?></span>
                         </a>
@@ -228,11 +228,11 @@
                                  if($mypic != "")
                                  {
                                  	
-                                    $url=getimagesize($mypic);
+                                    /* $url=getimagesize($mypic);
 												if(!is_array($url))
 												{
 													$mypic='admin-user.png';
-												}
+												} */
 												
 												
 												//$mypic='avatar.png';
