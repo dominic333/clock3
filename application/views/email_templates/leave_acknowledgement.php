@@ -123,7 +123,7 @@
 
     <tr>
         <td align="left" style="width: 30%; padding-left: 10px;  padding-top: 10px; padding-bottom: 10px;">
-            <img src="https://clock-in.me/webapp/images/logo_login2.png" alt="clock-in.me"/>
+            <img src="https://clock-in.me/webapp/images/logo_login2.png" alt="clock-in.me" width="100px"/>
         </td>
         <td align="right"
             style="width: 100%; padding-left: 10px;  padding-right: 10px; padding-top: 10px; padding-bottom: 10px;">
