@@ -9,10 +9,14 @@ class vca_adminClass {
 		//$dbpass= 'wzF7#W4]xOyT';
 		//$dbname= 'clockin_maindb';
 		
-		
-		$dbuser= 'clock2';
+		$dbuser= 'clockin_test';
+		$dbpass= 'IAN2?e#(x(Of';
+		$dbname= 'clockin_testdb';
+	
+
+		/*$dbuser= 'clock2';
 		$dbpass= 'd3fault';
-		$dbname= 'clock2';
+		$dbname= 'clock2';*/
 		
 		$dbm = mysql_connect ($dbhost, $dbuser, $dbpass) or die ('I cannot connect to the database because: ' . mysql_error());
 		mysql_select_db ($dbname) or die("Could not select database \n"); 
@@ -441,17 +445,17 @@ class vca_adminClass {
 		$msg .= "Login Company Name: $company_login \r\n";
 		$msg .= "Login Username: $username \r\n";
 		$msg .= "Login Password: $password \r\n\r\n";
-                $msg .= "** Please allow app to make use of camera when prompted. \r\n";
-                $msg .= "** Please select the correct Attendance Option (i.e Clock in or Clock Out). \r\n";
-                $msg .= "** SMILE :) and Click Log Your Attendance! \r\n\r\n";
-                $msg .= "Go to http://clock-in.me/dashboard/ \r\n";
-                $msg .= "Login using the same credential above to \r\n";
-                $msg .= "- View your attendance for the week. \r\n";
-                $msg .= "- Add Explaination notes on any discrepencies for your attendance.  \r\n";
-                $msg .= "- Update your personal profile.  \r\n";
-                $msg .= "- Change your login password for both \"dashboard\" and \"selfies\" area.  \r\n";
-                $msg .= "- View Who is Around Today in your department.  \r\n";
-                $msg .= "- and much more!  \r\n";
+    $msg .= "** Please allow app to make use of camera when prompted. \r\n";
+    $msg .= "** Please select the correct Attendance Option (i.e Clock in or Clock Out). \r\n";
+    $msg .= "** SMILE :) and Click Log Your Attendance! \r\n\r\n";
+    $msg .= "Go to http://clock-in.me/dashboard/ \r\n";
+    $msg .= "Login using the same credential above to \r\n";
+    $msg .= "- View your attendance for the week. \r\n";
+    $msg .= "- Add Explaination notes on any discrepencies for your attendance.  \r\n";
+    $msg .= "- Update your personal profile.  \r\n";
+    $msg .= "- Change your login password for both \"dashboard\" and \"selfies\" area.  \r\n";
+    $msg .= "- View Who is Around Today in your department.  \r\n";
+    $msg .= "- and much more!  \r\n";
 		$msg .= "------------------------------ \r\n\r\n";
                 $msg .= "Do contact us at cs@clock-in.me if you require any assistance. \r\n\r\n";
                 $msg .= "Clock-in.me Support Team :). \r\n";
@@ -467,50 +471,74 @@ class vca_adminClass {
 
 	function sendAdminWelcomeMail($co_id)
         {
-		//include "vca_conn.php";
+		include "vca_conn.php";
+//		echo $co_id;
 		$company_login = $this->getCompanyLogin($co_id);
+//		echo $company_login;
 		$email = $this->getCompanyContactPersonEmail($co_id);
-
+//		echo $email;
 		$staffname = $this->getCompanyContactPerson($co_id);
 		$password = $this->generatePassword();
 		$pre_userinfo = $this->getUserIDviaCompanyID($co_id, $email);
 		$urows = mysqli_fetch_assoc($pre_userinfo);		
 		
+		$companyplan = $this->getCompanyPlan($co_id);
+		$plans = mysqli_fetch_assoc($companyplan);
+//		echo $plans['max_users'];
+//		print_r($companyplan);
 		$this->updateUserPassword($urows["staff_id"], "$password", "password");
 		$username = $urows["login_name"];
 
 		$this->activateAdminAccount($urows["staff_id"]);
 		$this->activateCompany($co_id);
+		
 
-		$msg = "Hello $staffname! \r\n\r\n";
+		$msg  = "Hello $staffname! \r\n\r\n";
 		$msg .= "Welcome to Clock-in.me! \r\n";
-		$msg .= "Your account have been activated and below is your Admin Login. \r\n";
-		$msg .= "--------------------------------------------------------------- \r\n";
-                $msg .= "Go to http://clock-in.me/dashboard/ \r\n";
+		$msg .= "Here is the details of your plan";
+		$msg .= "Your Plan name : ". $plans['planName']."\r\n ";
+		$msg .= "Maximum Number of users:".  $plans['max_users']."\r\n ";
+		$msg .= "_________________________________________________________________________________\r\n\r\n";
+		$msg .= "Admin Login.\r\n\r\n";
+		$msg .= "Below is the login information to log into your Admin Dashboard and to switch Selfie Dashboard to take your selfies  attendance. \r\n";
+
+      $msg .= "Go to https://clock-in.me/cloudapp/ \r\n";
 		$msg .= "Login Company Name: $company_login \r\n";
 		$msg .= "Login Username: $username \r\n";
 		$msg .= "Login Password: $password \r\n\r\n";
-                $msg .= "Login to the Dashboard to \r\n";
-                $msg .= "- Add New Users. \r\n";
-                $msg .= "- Create New Department and Work Shifts. \r\n";
-                $msg .= "- Assign Users to Department and Work Shifts. \r\n";
-                $msg .= "- View your attendance for the week. \r\n";
-                $msg .= "- Add Explaination notes on any discrepencies for your attendance.  \r\n";
-                $msg .= "- Update your personal profile.  \r\n";
-                $msg .= "- Change your login password for both \"dashboard\" and \"selfies\" area.  \r\n";
-                $msg .= "- View Who is Around Today in your department.  \r\n";
-                $msg .= "- and much more!  \r\n";
-		$msg .= "--------------------------------------------------------------- \r\n";
-                $msg .= "Do contact us at cs@clock-in.me if you require any assistance. \r\n\r\n";
-                $msg .= "Clock-in.me Support Team :). \r\n";
+		$msg .= "You will be login as the Admin User.\r\n";
+		$msg .= "Please proceed to create Department, Shift(s), Users (Welcome mail with login info will be email to user) and Add User to Shifts \r\n\r\n";
+		$msg .= "_________________________________________________________________________________\r\n\r\n";
+      $msg .= "Normal User(s) / Staff(s) Login \r\n\r\n";
+   	$msg .= "Your user(s) / staff will receive a Welcome Mail once you have added them from your Admin Dashboard\r\n";
+      $msg .= "To login and Take a Selfies Attendance \r\n";
+      $msg .= "https://clock-in.me/cloudapp \r\n";
+      $msg .= "Login Company Name: $company_login \r\n";
+	   $msg .= "As per user welcome mail\r\n";
+	   $msg .= "As per user welcome mail \r\n\r\n";
+      $msg .= "** Please allow app to make use of camera when prompted.\r\n";
+	   $msg .= "** Select the correct Attendance Option (i.e Clock in or Clock Out).\r\n";
+	   $msg .= "** SMILE :) and Click Mark Your Attendance! \r\n ";              
+		$msg .= "_________________________________________________________________________________\r\n\r\n";
+      $msg .= "To get additional information on how to use Clock-in.me, you can visit http://clock-in.me/home/and download the PDF Guides under the Download option. \r\n\r\n";
+      $msg .= "Thank you once again!\r\n";
+      $msg .= "Clock-in.me Support Team :). \r\n";
+
 
 		$company_name = $this->getCompanyName($co_id);
-                $subject = "Your Login Details at Clock-in.me for : ". $company_name;
+      $subject = "Your Login Details at Clock-in.me for : ". $company_name;
 
 		$headers = "From: no-reply@clock-in.me" . "\r\n";
                 $to = $email;
+//				$to = "annie@cliffsupport.com";
+//				echo $msg;
 
-                mail($to,$subject,$msg,$headers);
+               if(mail($to,$subject,$msg,$headers))
+               {
+               
+               		return true;
+               
+               }
         }
 
 	function addNewDepartment($department_name, $company_id)
@@ -682,6 +710,30 @@ class vca_adminClass {
                        	}
 
                  }
+        }
+        
+        
+        function getCompanyPlan($co_id)
+        {
+        
+        	               	include "vca_conn.php";
+        	               	
+          		$data_q =  "SELECT company_plans.company_id as compid, company_plans.max_users as max_users, plans.planName as planName
+									
+									FROM company_plans, plans WHERE company_plans.planId = plans.id 
+									AND company_plans.company_id='$co_id'";
+//									echo $data_q;
+                $result = mysqli_query($vdbm, $data_q);
+                if(!$result)
+                {
+                        $errno = mysqli_errno($vdbm);
+                       	$error = mysqli_error($vdbm);
+                       	die("Query Error: $error (code: $errno)");
+                }
+                return $result;
+        
+        
+        
         }
 
 	function getCompanyMaxStaff($co_id)

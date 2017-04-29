@@ -152,10 +152,20 @@
             <h1 style="font-size: 25px;">Hi <span
                     style="color: #1376a7;"><strong><?php echo (isset($staffName)) ? $staffName : ' there!'; ?></strong></span>
             </h1>
-            <p style="font-size: 20px">Your leave(s) has been <span
-                    style="color: #1376a7;"><strong><?php echo (isset($leaveActionMessage)) ? $leaveActionMessage : ''; ?></strong></span>
+             <p style="font-size: 20px">Your leave(s) has been <span
+                    style="color: #1376a7;"><strong><?php echo (isset($leaveActionMessage)) ? $leaveActionMessage : ''; ?> for the following date(s): </strong>
+                      <?php foreach($leavedate as $row){ echo $row."  "; } ?>
+            		
+                    </span>
                 <br>
-                <?php echo (isset($shiftName)) ? 'Shift: ' . $shiftName : ''; ?></p>
+                <?php echo (isset($shiftName)) ? 'Shift: ' . $shiftName : ''; ?>
+                
+                
+               
+                
+                
+                
+            </p>
         </td>
     </tr>
 

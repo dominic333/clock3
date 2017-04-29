@@ -299,6 +299,43 @@ class Shifts extends MX_Controller
 			redirect('ccshifts/shifts/users');
 		}	
 	}
+	
+	//Function to change admin rights for users
+	//Annie april 17,2017
+	
+
+	function set_isadmin()
+	{
+		$this->authentication->check_admin_access();
+		if ($this->form_validation->run('isadmin_attendance_frm') === FALSE) 
+		{
+			redirect('ccshifts/shifts/users');
+		}
+		else
+		{
+			$this->Shifts_model->save('Edit_Admin','' );
+	      $staff_id = $this->input->post('istaff_id');
+			$rvaule=$this->input->post('isadmin');
+			if($rvaule==1)
+			{
+				$rval='Enabled';
+			}
+			else
+			{
+				$rval='Disabled';
+			}
+			// save to log table
+			$operation = 'Modified Remote Login for staff ID '.$staff_id;
+         	$this->site_settings->adminlog($operation);
+				
+			$nType = 3; //company updates
+			$nMsg  = 'Admin '.$rval.' for '.$this->input->post('istaff_name');
+			$this->site_settings->addNotification($nType,$nMsg,'');
+				
+			redirect('ccshifts/shifts/users');
+		}	
+	}	
+	
 
 	//Function to change monitor attendance feature
 	//By Dominic, Dec 12,2016

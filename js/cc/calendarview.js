@@ -2,6 +2,7 @@
 $('#timepicker1').timepicker({
 	showMeridian:false,      showInputs: false,
 	});
+	
 
         /* initialize the external events
          -----------------------------------------------------------------*/

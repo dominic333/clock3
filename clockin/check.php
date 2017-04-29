@@ -167,7 +167,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit"])){
 	        $headers = "From: no-reply@clock-in.me" . "\r\n";
 	  	        $to = $formEmail;
 	
-	       // mail($to,$subject,$msg,$headers);
+	        mail($to,$subject,$msg,$headers);
 	
 			  //unset($_SESSION["clockin"]);
 	        session_destroy();

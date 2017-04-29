@@ -131,6 +131,7 @@
                             <a href="javascript:void(0)" class="btn btn-success fa fa-map-marker rremote_login_link" data-toggle="tooltip" data-placement="bottom" title="Work Remotely?" data-staff_id="<?php echo $member->staff_id; ?>" data-staff_name="<?php echo $member->staff_name; ?>" data-remotelogin="<?php echo $member->work_from_home; ?>" data-staff_photo="<?php echo $staff_photo; ?>" ></a>
 									 <?php } } ?>                            
                             <a href="javascript:void(0)" class="btn btn-success fa fa-shield mmonitor_attendance_link" data-toggle="tooltip" data-placement="bottom" title="Monitor Attendance?" data-staff_id="<?php echo $member->staff_id; ?>" data-staff_name="<?php echo $member->staff_name; ?>" data-monitor="<?php echo $member->monitor; ?>" data-staff_photo="<?php echo $staff_photo; ?>" ></a>
+                            <a href="javascript:void(0)" class="btn btn-success fa fa-check-circle isadmin_attendance_link" data-toggle="tooltip" data-placement="bottom" title="Is Admin?" data-staff_id="<?php echo $member->staff_id; ?>" data-staff_name="<?php echo $member->staff_name; ?>" data-isadmin="<?php echo $member->is_admin; ?>" data-staff_photo="<?php echo $staff_photo; ?>" ></a>
                             <a href="javascript:void(0)" class="btn btn-danger fa fa-trash delete_user_link"	data-toggle="tooltip" data-placement="bottom" title="Delete User?" data-staff_id="<?php echo $member->staff_id; ?>" data-staff_name="<?php echo $member->staff_name; ?>"  data-staff_photo="<?php echo $staff_photo; ?>"></a>
                         </div>
 
@@ -187,13 +188,13 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Password</label>
                         <div class="col-sm-9">
-                            <input id="password" name="password" type="password" class="form-control" placeholder="Company" required/>
+                            <input id="password" name="password" type="password" class="form-control" placeholder="Password" required/>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Confirm Password</label>
                         <div class="col-sm-9">
-                            <input id="cpassword" name="cpassword" type="password" class="form-control" placeholder="Address" required/>
+                            <input id="cpassword" name="cpassword" type="password" class="form-control" placeholder="Re enter Password" required/>
                         </div>
                     </div>
                     <div class="form-group">
@@ -376,7 +377,60 @@
   </div>
 </div>
 <!-- Monitor AttendanceModal ends -->
-     
+
+<!-- *******************is admin************************ ------>
+
+<div class="modal fade" id="isadmin_attendance_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Is Admin</h4>
+      </div>
+      <div class="modal-body">
+         <form role="form" id="isadmin_attendance_frm" name="isadmin_attendance_frm" action="<?php echo base_url();?>ccshifts/shifts/set_isadmin" method="post" >
+            <div class="">
+			    	<div class="profile text-center no-box-shadow">
+			      	<div class="profile-head"></div>
+			          	<div class="edit-profile-photo">
+			            	<img class="" id="istaff_photo_src" src="">
+			            </div>
+			      </div>
+			   </div>
+			   
+	        <div class="form-group">
+	            <label>Name</label>
+	            <input type="text" name="istaff_name" id="istaff_name"  class="form-control" placeholder="Staff Name" value="" >	            
+	         </div>
+	         
+	         <div class="form-group">	            
+               <select  name="isadmin"  id="isadmin" class="selectpicker form-control">
+                  <option value="">-- Is admin? --</option>
+                   <option value="0">User HAVE NO Admin Rights</option>
+                                <option value="1">User HAVE Admin Rights</option>               
+               </select>
+	         </div>  	         
+	         
+	         <input type="hidden" name="istaff_id"  id="istaff_id" value=""/>
+	         <input type="hidden" name="<?=$this->security->get_csrf_token_name()?>" value="<?=$this->security->get_csrf_hash()?>" />
+            <input type="hidden" name="Submit" value="Submit"/> 
+	               
+       </form>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger pull-left show_active" data-dismiss="modal">Close</button>
+          <button  form="isadmin_attendance_frm" type="submit"  id="reset_pass_subt" name="Submit" value="Submit"  class="btn btn-success show_active" >Update</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+<!-- is admin ends --------->     
       
       
       

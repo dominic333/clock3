@@ -59,9 +59,19 @@
                                 <?php 
                                  $i=1;
                                 	foreach($allLeaves as $row){
+                                		if($row->status==1)
+                                		{
+                                			$disabledCheckBox = 'disabled';
+                                		}
+                                		else
+                                		{
+                                			$disabledCheckBox = '';
+                                		}
                                 ?>
                                 <tr id="<?php echo 'row'.$row->id; ?>" >
-                                    <th><input type="checkbox" name="checked_item[]"  value="<?php echo $row->id; ?>"/> </th>
+                                    <th>
+                                    	<input type="checkbox" name="checked_item[]" value="<?php echo $row->id; ?>" <?php echo $disabledCheckBox; ?> /> 
+                                    </th>
                                     <td><?php echo $i; ?></td>
                                     <td><?php echo $row->leave_date; ?></td>
                                     <td><?php echo $row->staff_name; ?></td>

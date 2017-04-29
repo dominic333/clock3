@@ -292,6 +292,47 @@ $(document).ready(function(){
 			}	
 		});
 		
+		
+	// change admin
+	//by annie , April 17,2017
+	
+	$(document).on('click','.isadmin_attendance_link',function (e) {
+			
+			e.preventDefault();
+			var staff_id 			= $(this).data('staff_id');
+			var staff_name 		= $(this).data('staff_name');
+			var staff_photo 		= $(this).data('staff_photo');
+			var isadmin 			= $(this).data('isadmin');
+			console.log(staff_name);
+			if(staff_id!='')
+			{
+				document.getElementById("istaff_id").value=staff_id;
+				document.getElementById("istaff_name").value=staff_name;
+				document.getElementById("istaff_photo_src").setAttribute("src", staff_photo);
+				document.getElementById("isadmin").value=isadmin;
+				document.getElementById('istaff_name').readOnly = true;
+				$('#isadmin_attendance_modal').modal('show');		
+			}
+			else
+			{
+				$.alert({
+				    title: 'Invalid Data\'s ',
+				    content: 'Invalid Data,Please Try Other User To Edit',
+				    confirm: function(){
+				      
+				    },
+				    cancel:  function(){
+				       
+				    },
+				});
+			}	
+		});
+		
+		
+		
+		
+		
+		
 		//Change Staff Type- Flexible/Normal
 		//By Dominic; Dec 13,2016 
 		$(document).on('click','.change_user_shiftType',function (e) 

@@ -1714,8 +1714,12 @@ class Attendance extends MX_Controller
 			$staffName	=	$user->staff_name;
 			$staffEmail	=	$user->email;
 			$date = $this->Attendance_model->getLeaveDates($leaveId,$user->staff_id); 
-
-			$this->singleLeaveActionMail($leaveTypeMsg,$staffName,$staffEmail,$date);
+			//print_r($date);
+			foreach($date as $obj)
+			{
+					$value[] = $obj->leave_date;
+			}
+			$this->singleLeaveActionMail($leaveTypeMsg,$staffName,$staffEmail,$value);
 			// save to log table	
 			$operation = 'Leave request '.$leaveId.' approved under company '.$compIdSess;
 			$this->site_settings->adminlog($operation);
@@ -1740,8 +1744,12 @@ class Attendance extends MX_Controller
 			$user	=	$this->Attendance_model->fetchUserDetail($leaveId);
 			$staffName	=	$user->staff_name;
 			$staffEmail	=	$user->email;
-			$date = $this->Attendance_model->getLeaveDates($leaveId,$user->staff_id);        	         
-			$this->singleLeaveActionMail($leaveTypeMsg,$staffName,$staffEmail,$date);
+			$date = $this->Attendance_model->getLeaveDates($leaveId,$user->staff_id);
+			foreach($date as $obj)
+			{
+					$value[] = $obj->leave_date;
+			}        	         
+			$this->singleLeaveActionMail($leaveTypeMsg,$staffName,$staffEmail,$value);
 			// save to log table	
 			$operation = 'Leave request '.$leaveId.' rejected under company '.$compIdSess;
 			$this->site_settings->adminlog($operation);
@@ -1784,9 +1792,14 @@ class Attendance extends MX_Controller
 	         $companyId  = 	$row->company_id;
 	         
 	         $staffId    = $this->Attendance_model->fetchUserIdFromLoginAndCompanyId($loginName,$companyId);
-	 	   	$dates       = $this->Attendance_model->getLeaveDates($selectedLeaves,$staffId);        	         
-	         $this->bulkLeaveActionMail($leaveTypeMsg,$staffName,$staffEmail,$dates);
-		      //$email_list[]=$row->email;  //Get all email 
+	 	   	$dates       = $this->Attendance_model->getLeaveDates($selectedLeaves,$staffId);
+	 	   	foreach($dates as $obj)
+				{
+					$value[] = $obj->leave_date;
+				}
+				print_r($value);        	         
+	         $this->bulkLeaveActionMail($leaveTypeMsg,$staffName,$staffEmail,$value);
+		      $email_list[]=$row->email;  //Get all email 
 		   }
 		   $response ='success';
 	   }
@@ -1814,23 +1827,24 @@ class Attendance extends MX_Controller
       $this->load->library('email', $config);
       $this->email->set_mailtype("html");
       
-      //$email_to 	= 	$staffEmail;
-      $email_to 	= 	"dominic@cliffsupport.com";
+      $email_to 	= 	$staffEmail;
+//      $email_to 	= 	"dominic@cliffsupport.com";
       $subject="Clock-in.me : Leave Request Status";
       
       $from = "ask@clock-in.me";
  	   
- 	   foreach($dates as $row) 
+ 	  /* foreach($dates as $row) 
  	   {
  	     $date[] = $row->leave_date;
- 	   } 
- 	   $dateString  = implode(",",$date); 
+ 	   }*/ 
+ 	   print_r($dates);
+ 	   //$dateString  = implode(",",$date); 
  	   $this->data['leaveActionMessage'] 	=	$leaveTypeMsg;
  	   $this->data['staffName'] 	=	$staffName;
  	   $this->data['baseurl']		=	base_url();
- 	   $this->data['leavedate']	=  $dateString;
- 	   //$bcc_list = array('ask@clock-in.me', 'sean@flexiesolutions.com', 'albert.goh@flexiesolutions.com');
- 	   $bcc_list = array('dominiccliff88@gmail.com');
+ 	   $this->data['leavedate']	=  $dates;
+ 	   $bcc_list = array('ask@clock-in.me', 'sean@flexiesolutions.com', 'albert.goh@flexiesolutions.com');
+ 	   //$bcc_list = array('dominiccliff88@gmail.com');
  	      
 	   $template = $this->load->view('email_templates/leave_acknowledgement',$this->data,TRUE); 
 		$this->email->from($from, 'Clock-in.me Customer Care');			
@@ -1865,8 +1879,8 @@ class Attendance extends MX_Controller
       $this->load->library('email', $config);
       $this->email->set_mailtype("html");
       
-      //$email_to 	= 	$staffEmail;
-      $email_to 	= 	"dominic@cliffsupport.com";
+      $email_to 	= 	$staffEmail;
+//      $email_to 	= 	"dominic@cliffsupport.com";
       $subject="Clock-in.me : Leave Request Status";
       
       $from = "ask@clock-in.me";
@@ -1875,8 +1889,8 @@ class Attendance extends MX_Controller
  	   $this->data['staffName'] 	=	$staffName;
  	   $this->data['leavedate']	=	$date;
  	   $this->data['baseurl']		=	base_url();
- 	   //$bcc_list = array('ask@clock-in.me', 'sean@flexiesolutions.com', 'albert.goh@flexiesolutions.com');
- 	   $bcc_list = array('dominiccliff88@gmail.com');
+ 	   $bcc_list = array('ask@clock-in.me', 'sean@flexiesolutions.com', 'albert.goh@flexiesolutions.com');
+// 	   $bcc_list = array('dominiccliff88@gmail.com');
  	      
 	   $template = $this->load->view('email_templates/leave_acknowledgement',$this->data,TRUE); 
 		$this->email->from($from, 'Clock-in.me Customer Care');			

@@ -7,7 +7,11 @@
 		//$dbpass= 'wzF7#W4]xOyT';
 		//$dbname= 'clockin_maindb';
 		
-		
+	/*	
+		$dbuser= 'clockin_test';
+		$dbpass= 'IAN2?e#(x(Of';
+		$dbname= 'clockin_testdb';*/
+			
 		$dbuser= 'clock2';
 		$dbpass= 'd3fault';
 		$dbname= 'clock2';

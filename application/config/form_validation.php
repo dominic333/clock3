@@ -177,6 +177,23 @@ $config = array(
             'rules' => 'trim|required|xss_clean|prep_for_form'
         )
     ),
+       'isadmin_attendance_frm' => array(
+        array(
+            'field' => 'istaff_name',
+            'label' => 'User Name',
+            'rules' => 'trim|required|xss_clean|prep_for_form'
+        ),
+        array(
+            'field' => 'isadmin',
+            'label' => 'Admin',
+            'rules' => 'trim|required|xss_clean|prep_for_form'
+        ),
+        array(
+            'field' => 'istaff_id',
+            'label' => 'Id',
+            'rules' => 'trim|required|xss_clean|prep_for_form'
+        )
+    ),
     'forgot_user_frm' => array(
         array(
             'field' => 'password',

@@ -277,6 +277,17 @@ class Shifts_model extends CI_Model {
 	               
 				break;
 				
+				
+				case 'Edit_Admin':	
+				$data = array(
+					'is_admin' 	=> $this->db->escape_str($this->input->post('isadmin'))
+				);
+						  		 				
+				$this->db->where('staff_id',$this->input->post('istaff_id'));
+				$this->db->update('staff_info', $data);
+	               
+				break;
+				
 				case 'Edit_StaffType':	
 				$data = array(
 					'staff_type' 	=> $this->db->escape_str($this->input->post('ststaffType'))

@@ -174,7 +174,9 @@ class Attendance_model extends CI_Model {
 		$this->db->select('staff_dept_shift.staff_id');
 		$this->db->from('staff_dept_shift');
 		$this->db->join('department_shifts','staff_dept_shift.shift_id=department_shifts.shift_id','left');
+		$this->db->join('staff_info','staff_dept_shift.staff_id=staff_info.staff_id','left');
 		$this->db->where('department_shifts.comp_id',$company_id);
+		$this->db->where('staff_info.monitor',1);
 		if($sel_shift!='all')
 		{
 		 $this->db->where('department_shifts.shift_id',$sel_shift);
@@ -308,9 +310,9 @@ class Attendance_model extends CI_Model {
 	   $this->db->update('staff_attendance_leaves', $data);
 	}
 	
-	//Function to fetch emailids of users applied for leave (bulk leave action)
+	//Function to fetch emailids of user applied for leave 
 	//Dominic, Feb 21,2017
-	function fetchUserEmailIds($selectedLeaves)
+	function fetchUserDetail($selectedLeaves)
 	{
 	  //SELECT DISTINCT staff_attendance_leaves.staff_id, staff_info.staff_name
 	  //FROM staff_attendance_leaves 
@@ -324,7 +326,60 @@ class Attendance_model extends CI_Model {
 		$this->db->where_in('staff_attendance_leaves.id', $selectedLeaves);
 		$result=$this->db->get();
 		//echo $this->db->last_query();
+		return $result->row();
+	}
+	
+	
+	//Function to fetch emailids of users applied for leave (bulk leave action)
+	//Dominic, Feb 21,2017
+	function fetchUserEmailIds($selectedLeaves)
+	{
+	  //SELECT DISTINCT staff_attendance_leaves.staff_id, staff_info.staff_name
+	  //FROM staff_attendance_leaves 
+     //LEFT JOIN staff_info ON staff_info.staff_id=staff_attendance_leaves.staff_id
+     //WHERE staff_attendance_leaves.id IN (1,2,6,7)
+     
+      $this->db->distinct();
+      $this->db->select("staff_attendance_leaves.staff_id, staff_info.staff_name,staff_info.email,staff_info.login_name,staff_info.company_id",false);									
+		$this->db->from('staff_attendance_leaves');
+		$this->db->join('staff_info','staff_info.staff_id=staff_attendance_leaves.staff_id','LEFT');
+		$this->db->where_in('staff_attendance_leaves.id', $selectedLeaves);
+		$result=$this->db->get();
+		//echo $this->db->last_query();
 		return $result->result();
+	}
+	
+	//Function to fetch user id from login name and company name
+	//Dominic, March 16,2017
+	function fetchUserIdFromLoginAndCompanyId($loginName,$companyId)
+	{
+		$this->db->select('staff_id',FALSE);
+		$this->db->from('staff_info');
+		$this->db->where('company_id',$companyId);
+		$this->db->where('login_name',$loginName);
+		$result=$this->db->get();
+		if($result->num_rows()>0)
+		{
+			return $result->row()->staff_id;
+		}
+		else
+		{
+			return '';
+		}
+	}
+	
+	function getLeaveDates($selectedLeaves,$staff_id)
+	{
+		
+		$this->db->select('leave_date');
+		$this->db->where_in('id',$selectedLeaves);
+		$this->db->where('staff_id',$staff_id);
+		$query = $this->db->get('staff_attendance_leaves');
+		$result= $query->result();
+		//echo $this->db->last_query();
+		return $result;
+	
+	
 	}
 	
 	//

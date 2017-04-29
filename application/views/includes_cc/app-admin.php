@@ -145,7 +145,7 @@
                     <li class="dropdown notifications-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <i class="fa fa-bell-o"></i>
-                            <span id="countNotification1" class="label label-warning"><?php echo $countNotif; ?></span>
+                            <span id="countNotification1" class="label label-warning"><?php if($countNotif > 0){ echo $countNotif;} ?></span>
                         </a>
                         <ul class="dropdown-menu">
 	                         
@@ -155,7 +155,7 @@
                                 <ul class="menu">
 			                           <?php
 				                           $i=0;
-				                           $labelArray= array('fa-users text-aqua','fa-warning text-yellow','fa-users text-red','fa-shopping-cart text-green','fa-user text-red','fa-user text-primary');
+				                           $labelArray= array('fa-users text-aqua','fa-warning text-yellow','fa-users text-red','fa-shopping-cart text-green','fa-user text-red','fa-user text-primary','fa-user text-primary');
 				                       		foreach($mynotifications as $row)
 				                       		{
 				                       			$nUser= $row->actionBy;
@@ -199,25 +199,27 @@
                     <li class="dropdown user user-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <?php $mypic	= $this->site_settings->fetchMyPic();
-                            
-                            	  if($mypic != "")
-                            	  {
-						                 /* $url=getimagesize($mypic);
-												if(!is_array($url))
+                           // echo $mypic;
+                             $url = base_url().'images/avatars/'.$mypic;	
+                                 if($mypic != "")
+                                 {
+                                 	
+                                    $url1=getimagesize($url);
+												if(!is_array($url1))
 												{
-													$mypic='admin-user.png';
-												}*/
+													$url = base_url().'images/avatars/admin-user.png';	
+												} 
+												
                             	  	
                             ?>
-                                <img src="<?php echo base_url();?>images/avatars/<?php echo $mypic;?>" class="user-image" alt="User Image">
+                                <img src="<?php echo $url?>"class="user-image" alt="User Image">
 											<?php 
-											
 											} 
-											else
-											{
+											else{
 											?>
-                                <img src="<?php echo base_url();?>assets/snap/images/admin-user.png" class="user-image" alt="User Image">											
-										<?php	} ?>
+<!--                             			   <img src="<?php echo base_url();?>assets/snap/images/admin-user.png" class="user-image" alt="User Image">		-->
+                             			   									
+											<?php	} ?>
                             <span class="hidden-xs"><?php echo $this->session->userdata('staffname'); ?></span>
                         </a>
                         <ul class="dropdown-menu">
@@ -225,22 +227,23 @@
 
                             <li class="user-header">
                                 <?php $mypic	= $this->site_settings->fetchMyPic(); 
+                                		  $url = base_url().'images/avatars/'.$mypic;	
                                  if($mypic != "")
                                  {
                                  	
-                                    /* $url=getimagesize($mypic);
-												if(!is_array($url))
+                                    $url1=getimagesize($url);
+												if(!is_array($url1))
 												{
-													$mypic='admin-user.png';
-												} */
+													$url = base_url().'images/avatars/admin-user.png';	
+												} 
 												
 												
 												//$mypic='avatar.png';
                             	  	
                                  ?>
-                                <img src="<?php echo base_url();?>images/avatars/<?php echo $mypic;?>" class="user-image" alt="User Image">
+                                <img src="<?php echo $url?>"class="user-image" alt="User Image">
 											<?php } else{?>
-                                <img src="<?php echo base_url();?>assets/snap/images/admin-user.png" class="user-image" alt="User Image">											
+<!--                                <img src="<?php echo base_url();?>assets/snap/images/admin-user.png" class="user-image" alt="User Image">											-->
 										<?php	} ?>
                                 <p>
                                     <?php echo $this->session->userdata('staffname'); ?>

@@ -39,5 +39,29 @@ class Dashboard_model extends CI_Model {
 		}
 	}
 	
+	
+	//function to mark all modifications as read
+	//Annie, Marh 15,2017
+	
+	function markAllNotificationsAsRead($staffid)
+	{
+	
+			$data			=	array(
+										'readStatus'	=> 1	
+									  );	
+			$this->db->where('userID',$staffid);						  
+			$this->db->update('notifications',$data);
+			if($this->db->affected_rows() > 0)
+			{
+				return true;		
+			}
+			else
+			{
+				return false;		
+			}
+	
+	
+	}
+	
 }
 
